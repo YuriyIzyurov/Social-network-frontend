@@ -1,19 +1,19 @@
 import React from "react"
 import s from './MyPosts.module.css'
 
-const MyPosts = () =>{
+const MyPosts = () => {
     return <div className='content'>
+        <div>
+            my post
             <div>
-                my post
-                <div>
-                    <textarea></textarea>
-                    <button>Add post</button>
-                </div>
-            </div>
-            <div className={s.posts}>
-
+                <textarea></textarea>
+                <button>Add post</button>
             </div>
         </div>
+        <div className={s.posts}>
+
+        </div>
+    </div>
 
 }
 

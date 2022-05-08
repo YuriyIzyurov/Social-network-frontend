@@ -1,17 +1,18 @@
 import React from "react"
 import s from './Post.module.css'
 
-const Post = () =>{
+const Post = (props) => {
     return <div>
 
-             <div className={s.item}>
-                 <img src='https://www.meme-arsenal.com/memes/e6adac8c2b0d7958ff9fa0964cf49a6d.jpg'/>
-                 post 1
-                 <div>
-                     <span>Like</span>
-                 </div>
+        <div className={s.item}>
+            <img src='https://www.meme-arsenal.com/memes/e6adac8c2b0d7958ff9fa0964cf49a6d.jpg'/>
+            {props.message}
+            <div>
+                <span>{props.likesCount}</span>
+                <span>Like</span>
             </div>
         </div>
+    </div>
 
 }
 
