@@ -1,24 +1,21 @@
 import React from "react"
 import s from './Profile.module.css'
-import MyPosts from "../MyPosts/MyPosts";
-import Post from "../MyPosts/Post/Post";
+import MyPosts from "./MyPosts/MyPosts";
+import Post from "./MyPosts/Post/Post";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = () => {
+
+const Profile = (props) => {
+
+    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}/>)
     return (
         <div>
-            <div>
-                <img src='https://png.pngtree.com/thumb_back/fw800/back_pic/04/06/69/4958106611a2dbe.jpg'/>
-            </div>
-            <div>
-                ava+descr
-            </div>
+            <ProfileInfo/>
             <MyPosts/>
-            <Post message='Hi are u?' likesCount='5'/>
-            <Post message='Vpered' likesCount='22'/>
-            <Post/>
-            <Post/>
+            {post}
         </div>
     )
 }
+
 
 export default Profile
