@@ -1,0 +1,18 @@
+.nav{
+    grid-area:n;
+    background-color: antiquewhite;
+    padding: 20px;
+}
+.nav a {
+    text-decoration: none;
+}
+
+.item {
+    font-size: 20px;
+    color: cornflowerblue;
+    padding-top: 30px;
+}
+
+.user{
+    display: flex;
+}

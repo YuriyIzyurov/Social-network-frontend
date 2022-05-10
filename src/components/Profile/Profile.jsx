@@ -7,11 +7,11 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = (props) => {
 
-    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}/>)
+    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount} />)
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts addPost={props.addPost}/>
             {post}
         </div>
     )
