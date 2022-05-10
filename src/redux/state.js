@@ -16,7 +16,7 @@ let state = {
         {post: "Hi are you?", id: "1",likesCount: '5'},
         {post: "Whats is going on?", id: "2",likesCount: '22'},
         {post: "Nice 2 meet u", id: "3",likesCount: '14'}],
-            },
+           textArea : ''},
     sidebar: [
         {name: "Sebastian", id: "6", src:'https://vsekidki.ru/uploads/posts/2016-08/1470735121_lecdaa3axdc.jpg'},
         {name: "Venedict", id: "7", src:'https://semantica.in/wp-content/uploads/2018/08/av-427845-1.png'},
@@ -29,7 +29,12 @@ export let addPost = (postText) => {
         likesCount: 0
     }
     state.post.messagesData.push(newPost)
-    rerenderAllTree(state, addPost)
+    rerenderAllTree(state)
+}
+
+export let addNewSymbol = (postText) => {
+    state.post.textArea = postText
+    rerenderAllTree(state)
 }
 
 export default state

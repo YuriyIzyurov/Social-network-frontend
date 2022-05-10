@@ -5,6 +5,10 @@ const MyPosts = (props) => {
     let newPost = React.createRef()
     let submitPost = () => {
         props.addPost(newPost.current.value)
+        props.addNewSymbol('')
+    }
+   let changeArea = () => {
+        props.addNewSymbol(newPost.current.value)
     }
 
     return <div className='content'>
@@ -12,10 +16,10 @@ const MyPosts = (props) => {
             my post
             <div>
                 <div>
-                    <textarea ref={newPost}></textarea>
+                    <textarea onChange={changeArea} ref={newPost} value={props.textArea}/>
                 </div>
                 <div>
-                 <button onClick={submitPost}>Add post</button>
+                    <button onClick={submitPost}>Add post</button>
                 </div>
             </div>
         </div>
