@@ -9,9 +9,14 @@ const Dialogs = (props) => {
     let dialog = props.DialogData.map(n=><DialogItem name={n.name} id={n.id} src={n.src}/>)
     let message = props.privateMessageData.map(m=><Message message={m.message}/>)
 
-    let newMessage = React.createRef();
+
+
     let sendMessage = ()=>{
-        alert(newMessage.current.value)
+
+        props.addMessage()
+    }
+    let changeArea = (onChange) => {
+        props.addNewSymbolMessage(onChange.target.value)
     }
     return <div className={s.dialogs}>
         <div className={s.dialogItems}>
@@ -21,7 +26,7 @@ const Dialogs = (props) => {
             {message}
             <div className={s.sendMessage}>
                 <div>
-                    <textarea ref={newMessage}></textarea>
+                    <textarea onChange={changeArea} value={props.textAreaMess}/>
                 </div>
                 <div>
                     <button onClick={sendMessage}>Send message</button>

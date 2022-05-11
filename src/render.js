@@ -1,7 +1,7 @@
 import React from 'react';
 import App from "./App";
 import ReactDOM from 'react-dom/client';
-import {addNewSymbol, addPost} from "./redux/state";
+import {addMessage, addNewSymbol, addNewSymbolMessage, addPost} from "./redux/state";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export let rerenderAllTree = (state) =>{
@@ -9,7 +9,10 @@ export let rerenderAllTree = (state) =>{
         <React.StrictMode>
             <App state={state}
                  addPost={addPost}
-                 addNewSymbol={addNewSymbol}/>
+                 addNewSymbol={addNewSymbol}
+                 addNewSymbolMessage={addNewSymbolMessage}
+                 addMessage={addMessage}
+            />
         </React.StrictMode>
     );
 }

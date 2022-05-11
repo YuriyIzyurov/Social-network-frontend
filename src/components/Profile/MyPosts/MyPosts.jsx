@@ -2,13 +2,13 @@ import React from "react"
 import s from './MyPosts.module.css'
 
 const MyPosts = (props) => {
-    let newPost = React.createRef()
+
     let submitPost = () => {
-        props.addPost(newPost.current.value)
-        props.addNewSymbol('')
+        props.addPost()
     }
-   let changeArea = () => {
-        props.addNewSymbol(newPost.current.value)
+
+   let changeArea = (onChange) => {
+        props.addNewSymbol(onChange.target.value)
     }
 
     return <div className='content'>
@@ -16,7 +16,7 @@ const MyPosts = (props) => {
             my post
             <div>
                 <div>
-                    <textarea onChange={changeArea} ref={newPost} value={props.textArea}/>
+                    <textarea onChange={changeArea} value={props.textArea}/>
                 </div>
                 <div>
                     <button onClick={submitPost}>Add post</button>
