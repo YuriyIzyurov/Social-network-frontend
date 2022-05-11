@@ -1,9 +1,22 @@
 
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import state from "./redux/state";
-import {rerenderAllTree} from "./render";
+import store from "./redux/state";
+import React from 'react';
+import App from "./App";
+import ReactDOM from 'react-dom/client';
 
-rerenderAllTree(state)
+const root = ReactDOM.createRoot(document.getElementById('root'));
+export let rerenderAllTree = () =>{
+    root.render(
+        <React.StrictMode>
+            <App state={store.getState()}
+                 store={store}
+            />
+        </React.StrictMode>
+    );
+}
+rerenderAllTree()
+store.subscribe(rerenderAllTree)
 
 reportWebVitals();
