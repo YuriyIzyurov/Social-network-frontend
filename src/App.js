@@ -24,11 +24,15 @@ const App = (props) => {
                         <Route path="/dialogs/*" element={<Dialogs privateMessageData={props.state.dialog.privateMessageData}
                                                                    DialogData={props.state.dialog.DialogData}
                                                                    textAreaMess={props.state.dialog.textAreaMess}
-                                                                   store={props.store}
+                                                                   addMessage={props.addMessage}
+                                                                   addNewSymbolMessage={props.addNewSymbolMessage}
+
                         />}/>
                         <Route path="/profile" element={<Profile messagesData={props.state.post.messagesData}
                                                                  textArea={props.state.post.textArea}
-                                                                 store={props.store}/>}/>
+                                                                 addPost={props.addPost}
+                                                                 addNewSymbol={props.addNewSymbol}
+                        />}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

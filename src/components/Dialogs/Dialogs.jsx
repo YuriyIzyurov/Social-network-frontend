@@ -12,11 +12,11 @@ const Dialogs = (props) => {
 
 
     let sendMessage = ()=>{
-        props.store.addMessage()
+        props.addMessage()
     }
 
     let changeArea = (onChange) => {
-        props.store.addNewSymbolMessage(onChange.target.value)
+        props.addNewSymbolMessage(onChange.target.value)
     }
     return <div className={s.dialogs}>
         <div className={s.dialogItems}>

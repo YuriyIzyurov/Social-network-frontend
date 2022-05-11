@@ -1,6 +1,6 @@
 
 let store = {
-    _rerenderAllTree() {
+    _callSubscriber() {
         console.log("zaglushka")},
     _state : {
         dialog: {privateMessageData : [
@@ -27,6 +27,7 @@ let store = {
         return this._state
     },
     addPost() {
+        debugger
         let newPost = {
             post: this._state.post.textArea,
             id: "4",
@@ -34,11 +35,11 @@ let store = {
         }
         this._state.post.messagesData.push(newPost)
         this._state.post.textArea = ''
-        this._rerenderAllTree()
+        this._callSubscriber(this._state)
     },
     addNewSymbol(postText){
         this._state.post.textArea = postText
-        this._rerenderAllTree()
+        this._callSubscriber(this._state)
     },
     addMessage(){
         let newMessage = {
@@ -47,14 +48,14 @@ let store = {
         }
         this._state.dialog.privateMessageData.push(newMessage)
         this._state.dialog.textAreaMess = ''
-        this._rerenderAllTree()
+        this._callSubscriber(this._state)
     },
     addNewSymbolMessage(messText){
         this._state.dialog.textAreaMess = messText
-        this._rerenderAllTree()
+        this._callSubscriber(this._state)
     },
     subscribe(observer){
-        this._rerenderAllTree = observer
+        this._callSubscriber = observer
     }
 }
 

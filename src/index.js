@@ -7,16 +7,19 @@ import App from "./App";
 import ReactDOM from 'react-dom/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-export let rerenderAllTree = () =>{
+export let rerenderAllTree = (state) =>{
     root.render(
         <React.StrictMode>
-            <App state={store.getState()}
-                 store={store}
+            <App state={state}
+                 addPost={store.addPost.bind(store)}
+                 addNewSymbol={store.addNewSymbol.bind(store)}
+                 addMessage={store.addMessage.bind(store)}
+                 addNewSymbolMessage={store.addNewSymbolMessage.bind(store)}
             />
         </React.StrictMode>
     );
 }
-rerenderAllTree()
+rerenderAllTree(store.getState())
 store.subscribe(rerenderAllTree)
 
 reportWebVitals();
