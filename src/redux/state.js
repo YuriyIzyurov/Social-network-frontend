@@ -26,33 +26,36 @@ let store = {
     getState(){
         return this._state
     },
-    addPost() {
-        debugger
-        let newPost = {
-            post: this._state.post.textArea,
-            id: "4",
-            likesCount: 0
+    dispatch(action){
+        switch(action.type) {
+            case "ADD-POST":
+                let newPost = {
+                    post: this._state.post.textArea,
+                    id: "4",
+                    likesCount: 0 }
+                this._state.post.messagesData.push(newPost)
+                this._state.post.textArea = ''
+                this._callSubscriber(this._state)
+                break
+            case "ADD-SYMBOL-POST":
+                this._state.post.textArea = action.newText
+                this._callSubscriber(this._state)
+                break
+            case "SEND-MESSAGE":
+                let newMessage = {
+                    message: this._state.dialog.textAreaMess,
+                    id: "5"
+                }
+                this._state.dialog.privateMessageData.push(newMessage)
+                this._state.dialog.textAreaMess = ''
+                this._callSubscriber(this._state)
+                break
+            case "ADD-SYMBOL-MESS":
+                this._state.dialog.textAreaMess = action.messText
+                this._callSubscriber(this._state)
+                break
+            default: console.log("chto to poshlo ne tak")
         }
-        this._state.post.messagesData.push(newPost)
-        this._state.post.textArea = ''
-        this._callSubscriber(this._state)
-    },
-    addNewSymbol(postText){
-        this._state.post.textArea = postText
-        this._callSubscriber(this._state)
-    },
-    addMessage(){
-        let newMessage = {
-            message: this._state.dialog.textAreaMess,
-            id: "5"
-        }
-        this._state.dialog.privateMessageData.push(newMessage)
-        this._state.dialog.textAreaMess = ''
-        this._callSubscriber(this._state)
-    },
-    addNewSymbolMessage(messText){
-        this._state.dialog.textAreaMess = messText
-        this._callSubscriber(this._state)
     },
     subscribe(observer){
         this._callSubscriber = observer

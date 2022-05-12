@@ -4,11 +4,11 @@ import s from './MyPosts.module.css'
 const MyPosts = (props) => {
 
     let submitPost = () => {
-        props.addPost()
+        props.dispatch({type:"ADD-POST"})
     }
 
    let changeArea = (onChange) => {
-        props.addNewSymbol(onChange.target.value)
+        props.dispatch({type:"ADD-SYMBOL-POST", newText: onChange.target.value})
     }
 
     return <div className='content'>

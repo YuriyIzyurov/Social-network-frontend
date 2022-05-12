@@ -11,10 +11,7 @@ export let rerenderAllTree = (state) =>{
     root.render(
         <React.StrictMode>
             <App state={state}
-                 addPost={store.addPost.bind(store)}
-                 addNewSymbol={store.addNewSymbol.bind(store)}
-                 addMessage={store.addMessage.bind(store)}
-                 addNewSymbolMessage={store.addNewSymbolMessage.bind(store)}
+                 dispatch={store.dispatch.bind(store)}
             />
         </React.StrictMode>
     );

@@ -12,8 +12,7 @@ const Profile = (props) => {
         <div>
             <ProfileInfo/>
             <MyPosts textArea={props.textArea}
-                     addPost={props.addPost}
-                     addNewSymbol={props.addNewSymbol}/>
+                     dispatch={props.dispatch}/>
             {post}
         </div>
     )
