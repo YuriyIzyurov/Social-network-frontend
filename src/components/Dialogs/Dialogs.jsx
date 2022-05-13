@@ -2,6 +2,7 @@ import React from "react"
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {addNewSymbolMessage, sendNewMessage} from "../../redux/state";
 
 
 const Dialogs = (props) => {
@@ -12,11 +13,11 @@ const Dialogs = (props) => {
 
 
     let sendMessage = ()=>{
-        props.dispatch({type:"SEND-MESSAGE"})
+        props.dispatch(sendNewMessage())
     }
 
     let changeArea = (onChange) => {
-        props.dispatch({type: "ADD-SYMBOL-MESS", messText: onChange.target.value})
+        props.dispatch(addNewSymbolMessage(onChange.target.value))
     }
     return <div className={s.dialogs}>
         <div className={s.dialogItems}>

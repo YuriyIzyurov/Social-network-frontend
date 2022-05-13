@@ -1,3 +1,7 @@
+const ADDPOST = "ADD-POST"
+const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
+const SENDMESSAGE = "SEND-MESSAGE"
+const ADDSYMBOLMESS = "ADD-SYMBOL-MESS"
 
 let store = {
     _callSubscriber() {
@@ -28,7 +32,7 @@ let store = {
     },
     dispatch(action){
         switch(action.type) {
-            case "ADD-POST":
+            case ADDPOST:
                 let newPost = {
                     post: this._state.post.textArea,
                     id: "4",
@@ -37,11 +41,11 @@ let store = {
                 this._state.post.textArea = ''
                 this._callSubscriber(this._state)
                 break
-            case "ADD-SYMBOL-POST":
+            case ADDSYMBOLPOST:
                 this._state.post.textArea = action.newText
                 this._callSubscriber(this._state)
                 break
-            case "SEND-MESSAGE":
+            case SENDMESSAGE:
                 let newMessage = {
                     message: this._state.dialog.textAreaMess,
                     id: "5"
@@ -50,7 +54,7 @@ let store = {
                 this._state.dialog.textAreaMess = ''
                 this._callSubscriber(this._state)
                 break
-            case "ADD-SYMBOL-MESS":
+            case ADDSYMBOLMESS:
                 this._state.dialog.textAreaMess = action.messText
                 this._callSubscriber(this._state)
                 break
@@ -61,6 +65,14 @@ let store = {
         this._callSubscriber = observer
     }
 }
+export const addNewPost = () => ({type : ADDPOST})
+
+export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})
+
+export const addNewSymbolMessage = (text) => ({type : ADDSYMBOLMESS, messText : text})
+
+export const sendNewMessage = () => ({type : SENDMESSAGE})
+
 
 window.store = store
 

@@ -1,14 +1,15 @@
 import React from "react"
 import s from './MyPosts.module.css'
+import {addNewPost, addSymbolPost} from "../../../redux/state";
 
 const MyPosts = (props) => {
 
     let submitPost = () => {
-        props.dispatch({type:"ADD-POST"})
+        props.dispatch(addNewPost())
     }
 
    let changeArea = (onChange) => {
-        props.dispatch({type:"ADD-SYMBOL-POST", newText: onChange.target.value})
+        props.dispatch(addSymbolPost(onChange.target.value))
     }
 
     return <div className='content'>
