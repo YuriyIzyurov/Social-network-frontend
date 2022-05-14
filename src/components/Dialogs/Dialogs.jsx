@@ -2,23 +2,17 @@ import React from "react"
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {addNewSymbolMessage, sendNewMessage} from "../../redux/dialogReducer";
-
 
 
 const Dialogs = (props) => {
-
     let dialog = props.DialogData.map(n=><DialogItem name={n.name} id={n.id} src={n.src}/>)
     let message = props.privateMessageData.map(m=><Message message={m.message}/>)
 
-
-
     let sendMessage = ()=>{
-        props.dispatch(sendNewMessage())
+        props.sendMessage()
     }
-
     let changeArea = (onChange) => {
-        props.dispatch(addNewSymbolMessage(onChange.target.value))
+        props.addNewSymMessage(onChange.target.value)
     }
     return <div className={s.dialogs}>
         <div className={s.dialogItems}>

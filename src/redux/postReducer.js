@@ -1,7 +1,14 @@
 const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
 
-const postReducer = (state,action) => {
+let initialState = {
+    messagesData : [
+            {post: "Hi are you?", id: "1",likesCount: '5'},
+            {post: "Whats is going on?", id: "2",likesCount: '22'},
+            {post: "Nice 2 meet u", id: "3",likesCount: '14'}],
+        textArea : ''
+}
+const postReducer = (state = initialState,action) => {
     switch (action.type) {
         case ADDPOST:
             let newPost = {
@@ -11,10 +18,12 @@ const postReducer = (state,action) => {
             }
             state.messagesData.push(newPost)
             state.textArea = ''
-            break;
+            return state
         case ADDSYMBOLPOST:
             state.textArea = action.newText
-            break;
+            return state
+        default:
+            return state
     }
 
 

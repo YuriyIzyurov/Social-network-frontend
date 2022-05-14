@@ -1,19 +1,16 @@
 import React from "react"
 import s from './MyPosts.module.css'
-import {addNewPost, addSymbolPost} from "../../../redux/postReducer";
-
-
+import Post from "./Post/Post";
 
 const MyPosts = (props) => {
 
+    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount} />)
     let submitPost = () => {
-        props.dispatch(addNewPost())
+        props.submitNewPost()
     }
-
    let changeArea = (onChange) => {
-        props.dispatch(addSymbolPost(onChange.target.value))
+        props.addNewSym(onChange.target.value)
     }
-
     return <div className='content'>
         <div>
             my post
@@ -27,12 +24,10 @@ const MyPosts = (props) => {
             </div>
         </div>
         <div className={s.posts}>
-
+            {post}
         </div>
     </div>
 
 }
-
-
 
 export default MyPosts
