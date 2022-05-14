@@ -1,6 +1,8 @@
 import React from "react"
 import s from './MyPosts.module.css'
-import {addNewPost, addSymbolPost} from "../../../redux/state";
+import {addNewPost, addSymbolPost} from "../../../redux/postReducer";
+
+
 
 const MyPosts = (props) => {
 
@@ -30,5 +32,7 @@ const MyPosts = (props) => {
     </div>
 
 }
+
+
 
 export default MyPosts

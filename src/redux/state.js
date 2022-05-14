@@ -1,7 +1,7 @@
-const ADDPOST = "ADD-POST"
-const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
-const SENDMESSAGE = "SEND-MESSAGE"
-const ADDSYMBOLMESS = "ADD-SYMBOL-MESS"
+import postReducer from "./postReducer";
+import dialogReducer from "./dialogReducer";
+import sidebarReducer from "./sidebarReducer";
+
 
 let store = {
     _callSubscriber() {
@@ -28,51 +28,17 @@ let store = {
             {name: "Venedict", id: "7", src:'https://semantica.in/wp-content/uploads/2018/08/av-427845-1.png'},
             {name: "Ameliya", id: "8", src:'https://trikky.ru/wp-content/blogs.dir/1/files/2017/04/2a57bfab998b8c853269f4e700e30f5b.jpg'}]},
     getState(){
-        return this._state
-    },
+        return this._state },
     dispatch(action){
-        switch(action.type) {
-            case ADDPOST:
-                let newPost = {
-                    post: this._state.post.textArea,
-                    id: "4",
-                    likesCount: 0 }
-                this._state.post.messagesData.push(newPost)
-                this._state.post.textArea = ''
-                this._callSubscriber(this._state)
-                break
-            case ADDSYMBOLPOST:
-                this._state.post.textArea = action.newText
-                this._callSubscriber(this._state)
-                break
-            case SENDMESSAGE:
-                let newMessage = {
-                    message: this._state.dialog.textAreaMess,
-                    id: "5"
-                }
-                this._state.dialog.privateMessageData.push(newMessage)
-                this._state.dialog.textAreaMess = ''
-                this._callSubscriber(this._state)
-                break
-            case ADDSYMBOLMESS:
-                this._state.dialog.textAreaMess = action.messText
-                this._callSubscriber(this._state)
-                break
-            default: console.log("chto to poshlo ne tak")
-        }
-    },
+        postReducer(this._state.post, action)
+        dialogReducer(this._state.dialog, action)
+        sidebarReducer(this._state.sidebar, action)
+        this._callSubscriber(this._state)
+        },
     subscribe(observer){
         this._callSubscriber = observer
     }
 }
-export const addNewPost = () => ({type : ADDPOST})
-
-export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})
-
-export const addNewSymbolMessage = (text) => ({type : ADDSYMBOLMESS, messText : text})
-
-export const sendNewMessage = () => ({type : SENDMESSAGE})
-
 
 window.store = store
 
