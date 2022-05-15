@@ -4,12 +4,12 @@ import Post from "./Post/Post";
 
 const MyPosts = (props) => {
 
-    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount} />)
+    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}  />)
     let submitPost = () => {
         props.submitNewPost()
     }
    let changeArea = (onChange) => {
-       debugger
+
         props.addNewSym(onChange.target.value)
     }
     return <div className='content'>

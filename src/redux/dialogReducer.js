@@ -15,21 +15,20 @@ let initialState = {
         {name: "Dmitriy", id: "5", src:'http://pm1.narvii.com/6889/74979d4d2744ec6e27995b6e866f091d04c0b40cr1-515-414v2_uhq.jpg'}]
 }
 const dialogReducer = (state = initialState,action) => {
+
+
     switch (action.type) {
-        case SENDMESSAGE:{
-            let newMessage = {
-                message: state.textAreaMess,
-                id: "5"
+        case SENDMESSAGE:
+            return {
+                ...state,
+                privateMessageData : [...state.privateMessageData, {message: state.textAreaMess, id: "5"}],
+                textAreaMess : ''
             }
-            let stateCopy = {...state}
-            stateCopy.privateMessageData = [...state.privateMessageData]
-            stateCopy.privateMessageData.push(newMessage)
-            stateCopy.textAreaMess = ''
-            return stateCopy}
-        case ADDSYMBOLMESS:{
-            let stateCopy = {...state}
-            stateCopy.textAreaMess = action.messText
-            return stateCopy}
+        case ADDSYMBOLMESS:
+            return {
+                ...state,
+                textAreaMess: action.messText
+            }
         default:
             return state
     }
