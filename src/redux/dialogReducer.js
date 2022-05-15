@@ -16,17 +16,20 @@ let initialState = {
 }
 const dialogReducer = (state = initialState,action) => {
     switch (action.type) {
-        case SENDMESSAGE:
+        case SENDMESSAGE:{
             let newMessage = {
                 message: state.textAreaMess,
                 id: "5"
             }
-            state.privateMessageData.push(newMessage)
-            state.textAreaMess = ''
-            return state;
-        case ADDSYMBOLMESS:
-            state.textAreaMess = action.messText
-            return state
+            let stateCopy = {...state}
+            stateCopy.privateMessageData = [...state.privateMessageData]
+            stateCopy.privateMessageData.push(newMessage)
+            stateCopy.textAreaMess = ''
+            return stateCopy}
+        case ADDSYMBOLMESS:{
+            let stateCopy = {...state}
+            stateCopy.textAreaMess = action.messText
+            return stateCopy}
         default:
             return state
     }

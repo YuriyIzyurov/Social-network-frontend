@@ -10,18 +10,21 @@ let initialState = {
 }
 const postReducer = (state = initialState,action) => {
     switch (action.type) {
-        case ADDPOST:
+        case ADDPOST:{
             let newPost = {
                 post: state.textArea,
                 id: "4",
                 likesCount: 0
             }
-            state.messagesData.push(newPost)
-            state.textArea = ''
-            return state
-        case ADDSYMBOLPOST:
-            state.textArea = action.newText
-            return state
+            let stateCopy = {...state}
+            stateCopy.messagesData = [...state.messagesData]
+            stateCopy.messagesData.push(newPost)
+            stateCopy.textArea = ''
+            return stateCopy}
+        case ADDSYMBOLPOST:{
+            let stateCopy = {...state}
+            stateCopy.textArea = action.newText
+            return stateCopy}
         default:
             return state
     }
