@@ -9,6 +9,7 @@ const MyPosts = (props) => {
         props.submitNewPost()
     }
    let changeArea = (onChange) => {
+       debugger
         props.addNewSym(onChange.target.value)
     }
     return <div className='content'>

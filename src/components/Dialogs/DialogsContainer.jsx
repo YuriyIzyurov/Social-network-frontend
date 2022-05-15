@@ -1,27 +1,19 @@
 import Dialogs from "./Dialogs";
-import React from "react";
 import {addNewSymbolMessage, sendNewMessage} from "../../redux/dialogReducer";
+import {connect} from "react-redux";
 
-const DialogsContainer = (props) => {
-
-    let state = props.store.getState().dialog
-    let sendMessage = () => {
-        props.store.dispatch(sendNewMessage())
+let mapStateToProps = (state) => {
+    return {
+        privateMessageData: state.dialog.privateMessageData,
+        DialogData: state.dialog.DialogData,
+        textAreaMess: state.dialog.textAreaMess
     }
-    let addNewSymMessage = (text) => {
-        props.store.dispatch(addNewSymbolMessage(text))
-    }
-
-    return (
-        <div>
-            <Dialogs privateMessageData={state.privateMessageData}
-                     DialogData={state.DialogData}
-                     textAreaMess={state.textAreaMess}
-                     sendMessage={sendMessage}
-                     addNewSymMessage={addNewSymMessage}
-            />
-        </div>
-    )
 }
-
+let mapDispatchToProps = (dispatch) => {
+    return {
+        sendMessage: () => dispatch(sendNewMessage()),
+        addNewSymMessage:(text) => dispatch(addNewSymbolMessage(text))
+    }
+}
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 export default DialogsContainer

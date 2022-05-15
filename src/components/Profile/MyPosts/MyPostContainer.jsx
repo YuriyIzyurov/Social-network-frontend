@@ -1,26 +1,24 @@
 import MyPosts from "./MyPosts";
-import React from "react"
 import {addNewPost, addSymbolPost} from "../../../redux/postReducer";
+import {connect} from "react-redux";
 
 
-const MyPostContainer = (props) => {
-
-    let state = props.store.getState().post
-    let addNewSym = (text) => {
-        props.store.dispatch(addSymbolPost(text))
+let mapStateToProps = (state) => {
+    return {
+        textArea: state.post.textArea,
+        messagesData: state.post.messagesData
     }
-    let submitNewPost = () => {
-        props.store.dispatch(addNewPost())
-    }
-
-    return (
-        <div>
-            <MyPosts textArea={state.textArea}
-                     messagesData={state.messagesData}
-                     addNewSym={addNewSym}
-                     submitNewPost={submitNewPost}/>
-        </div>
-    )
 }
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addNewSym: (text) => {
+            dispatch(addSymbolPost(text))
+        },
+        submitNewPost: () => {
+            dispatch(addNewPost())
+        }
+    }
+}
+const MyPostContainer = connect(mapStateToProps,mapDispatchToProps)(MyPosts)
 
 export default MyPostContainer
