@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import Users from "./Users";
-import {followToggle} from "../../redux/usersReducer";
+import {followToggle, setUsers} from "../../redux/usersReducer";
 
 const mapStateToProps = (state) => {
 
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 }
 const dispatchStateToProps = (dispatch) =>{
     return {
-        pushFollow: (id) => dispatch(followToggle(id))
+        pushFollow: (id) => dispatch(followToggle(id)),
+        showUsers: (users) => dispatch(setUsers(users))
     }
 }
 const UsersContainer = connect(mapStateToProps, dispatchStateToProps)(Users)
