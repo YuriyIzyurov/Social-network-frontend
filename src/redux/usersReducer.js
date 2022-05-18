@@ -1,7 +1,7 @@
 const FOLLOW = "FOLLOW"
 const SET_USERS = "SET_USERS"
 
-let initialState = {users: []}
+let initialState = {users: [ ]}
 
 
 const usersReducer = (state = initialState, action) => {
@@ -14,7 +14,9 @@ const usersReducer = (state = initialState, action) => {
                 })
             }
         case SET_USERS:
-
+            if(state.users.length > 0) {
+                return state
+            }
             return {
                  ...state,
                 users: [...state.users,...action.users ]

@@ -4,6 +4,7 @@ import s from './Users.module.css'
 
 const Users = (props) => {
     if(props.users.length === 0) {
+
         props.showUsers([{
                 name: "Boris",
                 id: 9,
@@ -27,6 +28,14 @@ const Users = (props) => {
                 status: "Putin xublot",
                 location: {country: "Russia", city: "Ivanovo"},
                 src: 'https://android-obzor.com/wp-content/uploads/2022/02/7-2-300x300.jpg'
+            },
+            {
+                name: "Evgeniy",
+                id: 12,
+                followed: false,
+                status: "Putin privet",
+                location: {country: "Russia", city: "Vladimir"},
+                src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOtTrVh8ptXrryBWa1n6Lu4nvVtTednpYo7g&usqp=CAU'
             }])
     }
     let userList = props.users.map(n=> <UserItem name={n.name}
