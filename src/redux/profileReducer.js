@@ -1,14 +1,18 @@
 const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
+const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
+const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
 
 let initialState = {
     messagesData : [
             {post: "Hi are you?", id: "1",likesCount: '5'},
             {post: "Whats is going on?", id: "2",likesCount: '22'},
             {post: "Nice 2 meet u", id: "3",likesCount: '14'}],
-        textArea : ''
+        textArea : '',
+        profileID: 2,
+        currentProfile: null
 }
-const postReducer = (state = initialState,action) => {
+const profileReducer = (state = initialState, action) => {
 
 
     switch (action.type) {
@@ -24,6 +28,16 @@ const postReducer = (state = initialState,action) => {
                 ...state,
                 textArea: action.newText
             }
+        case CHANGE_PROFILE_ID:
+            return {
+                ...state,
+                profileID: action.id
+            }
+        case SET_CURRENT_PROFILE:
+            return {
+                ...state,
+                currentProfile: action.profile
+            }
         default:
             return state
     }
@@ -31,6 +45,8 @@ const postReducer = (state = initialState,action) => {
 
 }
 export const addNewPost = () => ({type : ADDPOST})
-
 export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})
-export default postReducer
+export const getProfileID = (id) => ({type: CHANGE_PROFILE_ID, id})
+export const setCurrentProfile = (profile) => ({type: SET_CURRENT_PROFILE, profile})
+
+export default profileReducer

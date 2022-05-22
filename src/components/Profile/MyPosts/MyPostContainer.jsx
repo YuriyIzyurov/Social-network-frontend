@@ -1,12 +1,12 @@
 import MyPosts from "./MyPosts";
-import {addNewPost, addSymbolPost} from "../../../redux/postReducer";
+import {addNewPost, addSymbolPost} from "../../../redux/profileReducer";
 import {connect} from "react-redux";
 
 
 let mapStateToProps = (state) => {
     return {
-        textArea: state.post.textArea,
-        messagesData: state.post.messagesData
+        textArea: state.profile.textArea,
+        messagesData: state.profile.messagesData
     }
 }
 

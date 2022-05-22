@@ -7,7 +7,7 @@ import userDefaultPhoto from '../../assets/images/personal-user.png'
 const UserItem = (props) => {
 
     return <div>
-        <NavLink to={"/users/" + props.id} className={navData => navData.isActive ? s.active : s.dialog}>
+        <NavLink to={"/profile/" + props.id} className={navData => navData.isActive ? s.active : s.dialog}>
             <Avatar src={props.photo !== null ? props.photo : userDefaultPhoto }/>
 
             <div>{props.name}</div>

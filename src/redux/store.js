@@ -1,4 +1,4 @@
-import postReducer from "./postReducer";
+import profileReducer from "./profileReducer";
 import dialogReducer from "./dialogReducer";
 import sidebarReducer from "./sidebarReducer";
 
@@ -30,7 +30,7 @@ let store = {
     getState(){
         return this._state },
     dispatch(action){
-        postReducer(this._state.post, action)
+        profileReducer(this._state.post, action)
         dialogReducer(this._state.dialog, action)
         sidebarReducer(this._state.sidebar, action)
         this._callSubscriber(this._state)
