@@ -2,15 +2,16 @@ import React from "react"
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 
+
 const MyPosts = (props) => {
 
     const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}  />)
     let submitPost = () => {
-        props.submitNewPost()
+        props.addNewPost()
     }
    let changeArea = (onChange) => {
 
-        props.addNewSym(onChange.target.value)
+        props.addSymbolPost(onChange.target.value)
     }
     return <div className='content'>
         <div>

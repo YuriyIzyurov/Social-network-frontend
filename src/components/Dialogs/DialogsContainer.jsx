@@ -9,11 +9,6 @@ let mapStateToProps = (state) => {
         textAreaMess: state.dialog.textAreaMess
     }
 }
-let mapDispatchToProps = (dispatch) => {
-    return {
-        sendMessage: () => dispatch(sendNewMessage()),
-        addNewSymMessage:(text) => dispatch(addNewSymbolMessage(text))
-    }
-}
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+
+const DialogsContainer = connect(mapStateToProps, {sendNewMessage, addNewSymbolMessage})(Dialogs)
 export default DialogsContainer

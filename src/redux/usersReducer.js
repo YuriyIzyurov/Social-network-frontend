@@ -2,11 +2,13 @@ const FOLLOW = "FOLLOW"
 const SET_USERS = "SET_USERS"
 const SET_ACTIVE_PAGE = "SET_ACTIVE_PAGE"
 const SET_TOTAL_USERS = "SET_TOTAL_USERS"
+const FETCHING = "FETCHING"
 
 let initialState = {users: [ ],
                     totalUsers: 0,
                     usersOnPage: 5,
-                    activePage: 1}
+                    activePage: 1,
+                    isFetching: false}
 
 
 const usersReducer = (state = initialState, action) => {
@@ -33,6 +35,11 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 totalUsers: action.totalUsers
             }
+        case  FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state
     }
@@ -41,6 +48,9 @@ const usersReducer = (state = initialState, action) => {
 
 export const followToggle = (userID) => ({type : FOLLOW, userID})
 export const setUsers = (users) => ({type: SET_USERS, users})
-export const setActivePageAC = (activePage) => ({type: SET_ACTIVE_PAGE, activePage})
-export const totalUsersAC = (totalUsers) => ({type: SET_TOTAL_USERS, totalUsers})
+export const setActivePage = (activePage) => ({type: SET_ACTIVE_PAGE, activePage})
+export const setTotalUsers = (totalUsers) => ({type: SET_TOTAL_USERS, totalUsers})
+export const dataIsFetching = (isFetching) => ({type: FETCHING, isFetching})
+
+
 export default usersReducer

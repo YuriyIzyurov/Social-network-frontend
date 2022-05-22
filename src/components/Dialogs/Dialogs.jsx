@@ -4,16 +4,17 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 
+
 const Dialogs = (props) => {
-    debugger
+
     let dialog = props.DialogData.map(n=><DialogItem name={n.name} id={n.id} src={n.src}/>)
     let message = props.privateMessageData.map(m=><Message message={m.message} />)
 
     let sendMessage = ()=>{
-        props.sendMessage()
+        props.sendNewMessage()
     }
     let changeArea = (onChange) => {
-        props.addNewSymMessage(onChange.target.value)
+        props.addNewSymbolMessage(onChange.target.value)
     }
     return <div className={s.dialogs}>
         <div className={s.dialogItems}>

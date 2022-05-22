@@ -9,16 +9,7 @@ let mapStateToProps = (state) => {
         messagesData: state.post.messagesData
     }
 }
-let mapDispatchToProps = (dispatch) => {
-    return {
-        addNewSym: (text) => {
-            dispatch(addSymbolPost(text))
-        },
-        submitNewPost: () => {
-            dispatch(addNewPost())
-        }
-    }
-}
-const MyPostContainer = connect(mapStateToProps,mapDispatchToProps)(MyPosts)
+
+const MyPostContainer = connect(mapStateToProps,{addSymbolPost, addNewPost})(MyPosts)
 
 export default MyPostContainer
