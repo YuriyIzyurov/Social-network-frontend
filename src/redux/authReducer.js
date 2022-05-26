@@ -1,25 +1,26 @@
 const SET_USER_AUTH = "SETUSERAUTH"
 
 let initialState = {
-    userID: null,
-    mail: null,
-    login: null
+    email: null,
+    id: null,
+    login: null,
+    isAuth: false
 }
 const authReducer = (state = initialState,action) => {
-
 
     switch (action.type) {
         case SET_USER_AUTH:
             return {
                 ...state,
-                ...action.data
+                ...action.data,
+                isAuth:true
             }
 
         default:
             return state
     }
 }
-export const setUserAuth = (userID,mail,login) => ({type : SET_USER_AUTH, data : {userID,mail,login}})
+export const setUserAuth = (email,id,login) => ({type : SET_USER_AUTH, data : {email,id,login}})
 
 
 export default authReducer

@@ -8,10 +8,11 @@ import axios from "axios";
 class HeaderContainer extends React.Component{
 
     componentDidMount() {
-
         axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true}).then(response => {
-debugger
-            this.props.setUserAuth(response.data)
+
+           if(response.data.resultCode === 0){
+                let {email, id, login} = response.data.data
+                this.props.setUserAuth(email, id, login)}
         })
     }
 
@@ -19,7 +20,13 @@ debugger
        return <Header {...this.props}/>
     }
 }
-const mapStateToProps = (state) =>{}
+const mapStateToProps = (state) =>{
+
+    return {
+        isAuth: state.auth.isAuth,
+        login: state.auth.login
+    }
+}
 
 
 export default connect(mapStateToProps, {setUserAuth})(HeaderContainer)

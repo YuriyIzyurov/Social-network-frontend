@@ -11,7 +11,7 @@ class ProfileContainer extends React.Component {
     componentDidMount() {
         let idFromURL = this.props.router.params.id
         if(!idFromURL){
-            idFromURL = 2
+            idFromURL = 24174
         }
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${idFromURL}`).then(response => {
             this.props.setCurrentProfile(response.data)
