@@ -27,7 +27,10 @@ const Users = (props) => {
                                                      photo={n.photos.large}
                                                      followed={n.followed}
                                                      status={n.status}
-                                                     pushFollow={props.pushFollow}/>)}
+                                                     pushFollow={props.pushFollow}
+                                                     setFollowInProcess={props.setFollowInProcess}
+                                                     followInProcess={props.followInProcess}
+                />)}
             </div>
         </div>
     )

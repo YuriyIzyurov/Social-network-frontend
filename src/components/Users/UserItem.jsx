@@ -3,7 +3,6 @@ import s from './Users.module.css'
 import {NavLink} from "react-router-dom";
 import Avatar from "../Dialogs/DialogItem/Avatar";
 import userDefaultPhoto from '../../assets/images/personal-user.png'
-import axios from "axios";
 import {followAPI} from "../../api/api";
 
 const UserItem = (props) => {
@@ -15,12 +14,22 @@ const UserItem = (props) => {
             <div>{props.name}</div>
         </NavLink>
             {!props.followed
-                ? <button onClick={()=>{followAPI.followUser(props.id).then(data => {
-                    if(data.resultCode === 0)
-                        props.pushFollow(props.id)})}}>FOLLOW</button>
-                : <button onClick={()=>{followAPI.unFollowUser(props.id).then(data => {
-                    if(data.resultCode === 0)
-                        props.pushFollow(props.id)})}}>UNFOLLOW</button>}
+                ? <button disabled={props.followInProcess.some(id => id === props.id)} onClick={()=>{
+                    props.setFollowInProcess(true, props.id)
+                    followAPI.followUser(props.id).then(data => {
+                    if(data.resultCode === 0){
+                        props.pushFollow(props.id)
+                    }
+                        props.setFollowInProcess(false, props.id)})
+                    }}>FOLLOW</button>
+                : <button disabled={props.followInProcess.some(id => id === props.id)} onClick={()=>{
+                    props.setFollowInProcess(true, props.id)
+                    followAPI.unFollowUser(props.id).then(data => {
+                    if(data.resultCode === 0){
+                        props.pushFollow(props.id)
+                    }
+                        props.setFollowInProcess(false, props.id)})
+                }}>UNFOLLOW</button>}
            <div>{props.status}</div>
 
     </div>
