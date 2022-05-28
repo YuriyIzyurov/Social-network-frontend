@@ -9,25 +9,26 @@ import {
 import React from "react";
 import axios from "axios";
 import Preloader from "../../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.dataIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.activePage}&count=${this.props.usersOnPage}`,{withCredentials:true}).then(response => {
+        usersAPI.getUsers(this.props.activePage, this.props.usersOnPage).then(data => {
             this.props.dataIsFetching(false)
-            this.props.setUsers(response.data.items)
-            this.props.setTotalUsers(response.data.totalCount)
+            this.props.setUsers(data.items)
+            this.props.setTotalUsers(data.totalCount)
         })
     }
 
     getUsersOnPage = (n) => {
         this.props.setActivePage(n)
         this.props.dataIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${n}&count=${this.props.usersOnPage}`, {withCredentials:true}).then(response => {
+        usersAPI.getUsers(this.props.activePage, this.props.usersOnPage).then(data => {
             this.props.dataIsFetching(false)
-            this.props.setUsers(response.data.items)
+            this.props.setUsers(data.items)
         })
     }
 
