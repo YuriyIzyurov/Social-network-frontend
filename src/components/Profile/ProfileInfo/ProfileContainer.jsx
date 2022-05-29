@@ -3,6 +3,8 @@ import Profile from "../Profile";
 import {connect} from "react-redux";
 import {getProfileID, setProfileOnPage} from "../../../redux/profileReducer";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router";
+import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
+
 
 
 class ProfileContainer extends React.Component {
@@ -12,17 +14,17 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        if(!this.props.isAuth) return <Navigate to="/login"/>
         return <Profile {...this.props} />
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        currentProfile: state.profile.currentProfile,
-        isAuth: state.auth.isAuth
+        currentProfile: state.profile.currentProfile
     }
 }
+
+
 function withRouter(ProfileContainer){
     function ComponentWithRouterProp(props){
         let location = useLocation()
@@ -36,7 +38,7 @@ function withRouter(ProfileContainer){
     }
     return ComponentWithRouterProp
 }
-export default connect(mapStateToProps, {getProfileID, setProfileOnPage})(withRouter(ProfileContainer))
+export default connect(mapStateToProps, {getProfileID, setProfileOnPage})(withRouter(withRedirectIfNoAuth(ProfileContainer)))
 
 
 
