@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 const FOLLOW = "FOLLOW"
 const SET_USERS = "SET_USERS"
 const SET_ACTIVE_PAGE = "SET_ACTIVE_PAGE"
@@ -45,18 +47,38 @@ const usersReducer = (state = initialState, action) => {
                 isFetching: action.isFetching
             }
         case FOLLOW_IN_PROCESS:
+
             return {
                 ...state,
                 followInProcess: action.isFetching
-                    ? [action.userID]
-                    : [...state.followInProcess.filter(id => id !== action.userID)]
+                    ? [...state.followInProcess, action.userID]
+                    : state.followInProcess.filter(id => id !== action.userID)
             }
         default:
             return state
     }
 
 }
-
+export const handlingUsers =  (activePage,usersOnPage) => {
+    return (dispatch) => {
+        dispatch(dataIsFetching(true))
+        usersAPI.getUsers(activePage, usersOnPage).then(data => {
+            dispatch(dataIsFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalUsers(data.totalCount))
+        })
+    }
+}
+export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
+    return (dispatch) => {
+        dispatch(setActivePage(n))
+        dispatch(dataIsFetching(true))
+        usersAPI.getUsers(activePage, usersOnPage).then(data => {
+            dispatch(dataIsFetching(false))
+            dispatch(setUsers(data.items))
+        })
+    }
+}
 export const followToggle = (userID) => ({type : FOLLOW, userID})
 export const setUsers = (users) => ({type: SET_USERS, users})
 export const setActivePage = (activePage) => ({type: SET_ACTIVE_PAGE, activePage})

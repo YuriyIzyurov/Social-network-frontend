@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
@@ -41,8 +43,17 @@ const profileReducer = (state = initialState, action) => {
         default:
             return state
     }
-
-
+}
+export const setProfileOnPage = (id) => {
+    return (dispatch) => {
+        let idFromURL = id
+        if(!idFromURL){
+            idFromURL = 24174
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${idFromURL}`).then(response => {
+            dispatch(setCurrentProfile(response.data))
+        })
+    }
 }
 export const addNewPost = () => ({type : ADDPOST})
 export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})

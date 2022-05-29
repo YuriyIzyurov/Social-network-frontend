@@ -1,34 +1,20 @@
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
-    dataIsFetching, followActionInProcess,
-    followToggle,
-    setActivePage, setTotalUsers,
-    setUsers
+    followActionInProcess, followToggle, handlingUsers, handlingUsersOnPage
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.dataIsFetching(true)
-        usersAPI.getUsers(this.props.activePage, this.props.usersOnPage).then(data => {
-            this.props.dataIsFetching(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalUsers(data.totalCount)
-        })
+        this.props.handlingUsers(this.props.activePage, this.props.usersOnPage)
     }
 
     getUsersOnPage = (n) => {
-        this.props.setActivePage(n)
-        this.props.dataIsFetching(true)
-        usersAPI.getUsers(this.props.activePage, this.props.usersOnPage).then(data => {
-            this.props.dataIsFetching(false)
-            this.props.setUsers(data.items)
-        })
+        this.props.handlingUsersOnPage(n, this.props.activePage, this.props.usersOnPage)
     }
 
     render() {
@@ -59,4 +45,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {followToggle, setUsers, setActivePage, setTotalUsers, dataIsFetching, followActionInProcess})(UsersContainer)
+export default connect(mapStateToProps, {followToggle, followActionInProcess, handlingUsers, handlingUsersOnPage})(UsersContainer)
