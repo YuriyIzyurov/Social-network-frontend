@@ -3,7 +3,7 @@ import s from './Users.module.css'
 import {NavLink} from "react-router-dom";
 import Avatar from "../Dialogs/DialogItem/Avatar";
 import userDefaultPhoto from '../../assets/images/personal-user.png'
-import {followAPI} from "../../api/api";
+
 
 const UserItem = (props) => {
 
@@ -15,20 +15,11 @@ const UserItem = (props) => {
         </NavLink>
             {!props.followed
                 ? <button disabled={props.followInProcess.some(id => id === props.id)} onClick={()=>{
-                    props.setFollowInProcess(true, props.id)
-                    followAPI.followUser(props.id).then(data => {
-                    if(data.resultCode === 0){
-                        props.pushFollow(props.id)
-                    }
-                        props.setFollowInProcess(false, props.id)})
+                    props.handlingFollowAction(props.id)
+
                     }}>FOLLOW</button>
                 : <button disabled={props.followInProcess.some(id => id === props.id)} onClick={()=>{
-                    props.setFollowInProcess(true, props.id)
-                    followAPI.unFollowUser(props.id).then(data => {
-                    if(data.resultCode === 0){
-                        props.pushFollow(props.id)
-                    }
-                        props.setFollowInProcess(false, props.id)})
+                    props.handlingUnfollowAction(props.id)
                 }}>UNFOLLOW</button>}
            <div>{props.status}</div>
 

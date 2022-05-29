@@ -1,7 +1,10 @@
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
-    followActionInProcess, followToggle, handlingUsers, handlingUsersOnPage
+    handlingFollowAction,
+    handlingUnfollowAction,
+    handlingUsers,
+    handlingUsersOnPage
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
@@ -24,10 +27,12 @@ class UsersContainer extends React.Component {
                                                                 usersOnPage={this.props.usersOnPage}
                                                                 activePage={this.props.activePage}
                                                                 users={this.props.users}
-                                                                pushFollow={this.props.followToggle}
-                                                                getUsersOnPage={this.getUsersOnPage}
-                                                                setFollowInProcess={this.props.followActionInProcess}
                                                                 followInProcess={this.props.followInProcess}
+                                                                getUsersOnPage={this.getUsersOnPage}
+                                                                handlingFollowAction={this.props.handlingFollowAction}
+                                                                handlingUnfollowAction={this.props.handlingUnfollowAction}
+
+
                 />}
 
             </div>
@@ -45,4 +50,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {followToggle, followActionInProcess, handlingUsers, handlingUsersOnPage})(UsersContainer)
+export default connect(mapStateToProps, {handlingUsers, handlingUsersOnPage, handlingFollowAction, handlingUnfollowAction})(UsersContainer)
