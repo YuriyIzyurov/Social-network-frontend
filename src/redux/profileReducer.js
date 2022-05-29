@@ -1,4 +1,5 @@
 import axios from "axios";
+import {usersAPI} from "../api/api";
 
 const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
@@ -50,8 +51,8 @@ export const setProfileOnPage = (id) => {
         if(!idFromURL){
             idFromURL = 24174
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${idFromURL}`).then(response => {
-            dispatch(setCurrentProfile(response.data))
+        usersAPI.getProfile(idFromURL).then(data => {
+            dispatch(setCurrentProfile(data))
         })
     }
 }

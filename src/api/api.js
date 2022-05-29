@@ -1,4 +1,5 @@
 import axios from "axios";
+import {setCurrentProfile} from "../redux/profileReducer";
 
 
 const instance = axios.create({
@@ -13,6 +14,9 @@ const instance = axios.create({
 export const usersAPI =  {
     getUsers (activePage, usersOnPage) {
         return instance.get(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
+    },
+    getProfile(idFromURL){
+        return instance.get(`profile/${idFromURL}`).then(response => response.data)
     }
 }
 
