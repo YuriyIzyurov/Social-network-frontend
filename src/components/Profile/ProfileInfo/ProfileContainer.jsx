@@ -5,6 +5,7 @@ import {getProfileID, setProfileOnPage} from "../../../redux/profileReducer";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router";
 import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
+import {withRouter} from "../../HOC/withRouter";
 
 
 
@@ -23,19 +24,6 @@ let mapStateToProps = (state) => {
     return {
         currentProfile: state.profile.currentProfile
     }
-}
-function withRouter(ProfileContainer){
-    function ComponentWithRouterProp(props){
-        let location = useLocation()
-        let navigate = useNavigate()
-        let params = useParams()
-        return (
-            <ProfileContainer
-                {...props}
-                router={{location, navigate, params}} />
-        )
-    }
-    return ComponentWithRouterProp
 }
 
 
