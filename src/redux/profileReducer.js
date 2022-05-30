@@ -4,6 +4,8 @@ const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
 const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
+const SET_STATUS = "SET_STATUS"
+
 
 let initialState = {
     messagesData : [
@@ -12,7 +14,8 @@ let initialState = {
             {post: "Nice 2 meet u", id: "3",likesCount: '14'}],
         textArea : '',
         profileID: 2,
-        currentProfile: null
+        currentProfile: null,
+        status: ""
 }
 const profileReducer = (state = initialState, action) => {
 
@@ -40,18 +43,39 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 currentProfile: action.profile
             }
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
+
         default:
             return state
     }
 }
 export const setProfileOnPage = (id) => {
     return (dispatch) => {
-        let idFromURL = id
-        if(!idFromURL){
-            idFromURL = 24174
-        }
-        profileAPI.getProfile(idFromURL).then(data => {
+
+        profileAPI.getProfile(id).then(data => {
             dispatch(setCurrentProfile(data))
+        })
+    }
+}
+
+export const getUserStatusInProfile = (id) =>{
+
+    return (dispatch) => {
+        profileAPI.getUserStatus(id).then(data => {
+            dispatch(setStatusOnProfile(data))
+        })
+    }
+}
+export const updateMyStatus = (status) =>{
+    return (dispatch) => {
+        profileAPI.updateStatus(status).then(data => {
+            if(data.resultCode === 0) {
+                dispatch(setStatusOnProfile(status))
+            }
         })
     }
 }
@@ -59,5 +83,8 @@ export const addNewPost = () => ({type : ADDPOST})
 export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})
 export const getProfileID = (id) => ({type: CHANGE_PROFILE_ID, id})
 export const setCurrentProfile = (profile) => ({type: SET_CURRENT_PROFILE, profile})
+export const setStatusOnProfile = (status) => ({type: SET_STATUS, status})
+
+
 
 export default profileReducer

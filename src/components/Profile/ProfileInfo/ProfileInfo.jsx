@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import ProfileStatus from "./ProfileStatus";
 
 
+
 const ProfileInfo = (props) => {
 
     return (
@@ -10,7 +11,7 @@ const ProfileInfo = (props) => {
             <div>
                 <img src={props.currentProfile.photos.large}/>
             </div>
-            <ProfileStatus status={'here we go again'}/>
+                <ProfileStatus status={props.status} updateMyStatus={props.updateMyStatus}/>
             <div>
                 <span>{props.currentProfile.aboutMe}</span>
             </div>

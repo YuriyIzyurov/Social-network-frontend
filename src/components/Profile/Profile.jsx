@@ -13,7 +13,7 @@ const Profile = (props) => {
     if(!props.currentProfile) return <Preloader/>
     return (
         <div>
-            <ProfileInfo currentProfile={props.currentProfile}/>
+            <ProfileInfo currentProfile={props.currentProfile} status={props.status} updateMyStatus={props.updateMyStatus}/>
             <MyPostContainer />
         </div>
     )

@@ -1,9 +1,11 @@
 import React from "react";
 import Profile from "../Profile";
 import {connect} from "react-redux";
-import {getProfileID, setProfileOnPage} from "../../../redux/profileReducer";
-import {Navigate, useLocation, useNavigate, useParams} from "react-router";
-import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
+import {
+    getProfileID,
+    getUserStatusInProfile,
+    setProfileOnPage, updateMyStatus,
+} from "../../../redux/profileReducer";
 import {compose} from "redux";
 import {withRouter} from "../../HOC/withRouter";
 
@@ -12,25 +14,30 @@ import {withRouter} from "../../HOC/withRouter";
 class ProfileContainer extends React.Component {
 
     componentDidMount() {
-        this.props.setProfileOnPage(this.props.router.params.id)
+        let idFromURL = this.props.router.params.id
+        if(!idFromURL){
+            idFromURL = 24174
+        }
+        this.props.setProfileOnPage(idFromURL)
+        this.props.getUserStatusInProfile(idFromURL)
     }
 
     render() {
-        return <Profile {...this.props} />
+        return <Profile {...this.props} updateMyStatus={this.props.updateMyStatus}/>
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        currentProfile: state.profile.currentProfile
+        currentProfile: state.profile.currentProfile,
+        status: state.profile.status
     }
 }
 
 
 export default compose(
-    connect(mapStateToProps, {getProfileID, setProfileOnPage}),
-    withRouter,
-    withRedirectIfNoAuth
+    connect(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus}),
+    withRouter
 )(ProfileContainer)
 
 
