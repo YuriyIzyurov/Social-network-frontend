@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getProfileID, setProfileOnPage} from "../../../redux/profileReducer";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router";
 import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
+import {compose} from "redux";
 
 
 
@@ -23,8 +24,6 @@ let mapStateToProps = (state) => {
         currentProfile: state.profile.currentProfile
     }
 }
-
-
 function withRouter(ProfileContainer){
     function ComponentWithRouterProp(props){
         let location = useLocation()
@@ -38,7 +37,15 @@ function withRouter(ProfileContainer){
     }
     return ComponentWithRouterProp
 }
-export default connect(mapStateToProps, {getProfileID, setProfileOnPage})(withRouter(withRedirectIfNoAuth(ProfileContainer)))
+
+
+export default compose(
+    connect(mapStateToProps, {getProfileID, setProfileOnPage}),
+    withRouter,
+    withRedirectIfNoAuth
+)(ProfileContainer)
+
+
 
 
 
