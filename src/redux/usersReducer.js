@@ -83,7 +83,7 @@ export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
 export const handlingFollowAction = (id) => {
     return (dispatch) => {
         dispatch(followActionInProcess(true, id))
-        followAPI.followUser(id).then(data => {
+        usersAPI.followUser(id).then(data => {
             if(data.resultCode === 0){
                 dispatch(followToggle(id))
             }
@@ -94,7 +94,7 @@ export const handlingFollowAction = (id) => {
 export const handlingUnfollowAction = (id) => {
     return (dispatch) => {
         dispatch(followActionInProcess(true, id))
-        followAPI.unFollowUser(id).then(data => {
+        usersAPI.unFollowUser(id).then(data => {
             if(data.resultCode === 0){
                 dispatch(followToggle(id))
             }

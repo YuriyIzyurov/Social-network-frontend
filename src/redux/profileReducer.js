@@ -1,5 +1,4 @@
-import axios from "axios";
-import {usersAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 
 const ADDPOST = "ADD-POST"
 const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
@@ -51,7 +50,7 @@ export const setProfileOnPage = (id) => {
         if(!idFromURL){
             idFromURL = 24174
         }
-        usersAPI.getProfile(idFromURL).then(data => {
+        profileAPI.getProfile(idFromURL).then(data => {
             dispatch(setCurrentProfile(data))
         })
     }
