@@ -32,6 +32,24 @@ export const handlingAuthData = () => {
         })
     }
 }
+
+export const sendAuthDataOnServ = (email, password, checkbox) => {
+
+    return (dispatch) => {
+        authAPI.submitAuth(email, password, checkbox).then(data => {
+            debugger
+            if(data.resultCode === 0){
+                authAPI.getAuth().then(data => {
+                    if(data.resultCode === 0){
+                        let {mail, id, login} = data.data
+                        dispatch(setUserAuth(mail, id, login))
+
+                    }
+                })
+            }
+        })
+    }
+}
 export const setUserAuth = (email,id,login) => ({type : SET_USER_AUTH, data : {email,id,login}})
 
 
