@@ -1,5 +1,4 @@
 const SENDMESSAGE = "SEND-MESSAGE"
-const ADDSYMBOLMESS = "ADD-SYMBOL-MESS"
 
 let initialState = {
     privateMessageData : [
@@ -16,24 +15,19 @@ let initialState = {
 }
 const dialogReducer = (state = initialState,action) => {
 
-
     switch (action.type) {
         case SENDMESSAGE:
             return {
                 ...state,
-                privateMessageData : [...state.privateMessageData, {message: state.textAreaMess, id: "5"}],
+                privateMessageData : [...state.privateMessageData, {message: action.messageText, id: "5"}],
                 textAreaMess : ''
             }
-        case ADDSYMBOLMESS:
-            return {
-                ...state,
-                textAreaMess: action.messText
-            }
+
         default:
             return state
     }
 }
-export const addNewSymbolMessage = (text) => ({type : ADDSYMBOLMESS, messText : text})
-export const sendNewMessage = () => ({type : SENDMESSAGE})
+
+export const sendNewMessage = (text) => ({type : SENDMESSAGE, messageText : text})
 
 export default dialogReducer

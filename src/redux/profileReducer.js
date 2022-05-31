@@ -1,7 +1,6 @@
 import {profileAPI} from "../api/api";
 
 const ADDPOST = "ADD-POST"
-const ADDSYMBOLPOST = "ADD-SYMBOL-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
 const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
 const SET_STATUS = "SET_STATUS"
@@ -24,15 +23,10 @@ const profileReducer = (state = initialState, action) => {
         case ADDPOST:
             return {
                 ...state,
-                messagesData : [...state.messagesData, {post: state.textArea, id: "4", likesCount: 0}],
+                messagesData : [...state.messagesData, {post: action.newText, id: "4", likesCount: 0}],
                 textArea: ''
             }
 
-        case ADDSYMBOLPOST:
-            return {
-                ...state,
-                textArea: action.newText
-            }
         case CHANGE_PROFILE_ID:
             return {
                 ...state,
@@ -79,8 +73,7 @@ export const updateMyStatus = (status) =>{
         })
     }
 }
-export const addNewPost = () => ({type : ADDPOST})
-export const addSymbolPost = (text) => ({type : ADDSYMBOLPOST, newText : text})
+export const addNewPost = (text) => ({type : ADDPOST, newText : text})
 export const getProfileID = (id) => ({type: CHANGE_PROFILE_ID, id})
 export const setCurrentProfile = (profile) => ({type: SET_CURRENT_PROFILE, profile})
 export const setStatusOnProfile = (status) => ({type: SET_STATUS, status})
