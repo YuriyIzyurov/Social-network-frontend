@@ -3,6 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {Input} from "../../common/FormsControl/Textarea";
 import {maxLength30, required} from "../../utils/validators/validators";
 import {Navigate} from "react-router";
+import s from "./../../common/FormsControl/Textarea.module.css"
 
 const Login = (props) => {
     const onSubmit = (formData) => {
@@ -33,6 +34,9 @@ const LoginForm = (props) => {
             <div>
                 <button type="submit">Login</button>
             </div>
+            {props.error && <div className={s.error}>
+                {props.error}
+            </div>}
         </form>
     )
 }

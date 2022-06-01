@@ -16,7 +16,7 @@ class ProfileContainer extends React.Component {
     componentDidMount() {
         let idFromURL = this.props.router.params.id
         if(!idFromURL){
-            idFromURL = 24174
+            idFromURL = this.props.loggedUser
         }
         this.props.setProfileOnPage(idFromURL)
         this.props.getUserStatusInProfile(idFromURL)
@@ -32,7 +32,8 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         currentProfile: state.profile.currentProfile,
-        status: state.profile.status
+        status: state.profile.status,
+        loggedUser: state.auth.id
     }
 }
 
