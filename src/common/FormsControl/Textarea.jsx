@@ -1,11 +1,11 @@
 import React from "react"
 import s from './Textarea.module.css'
 
-export const Textarea = ({input, meta, ...props}) => {
+const Element = Element => ({input, meta, ...props}) => {
     return (
         <div className={meta.error && meta.submitFailed && s.error}>
             <div>
-                <textarea {...input} {...props}/>
+                <Element {...input} {...props}/>
             </div>
             <div>
                 {meta.error && meta.submitFailed && <span>{meta.error}</span>}
@@ -14,15 +14,5 @@ export const Textarea = ({input, meta, ...props}) => {
     )
 }
 
-export const Input = ({input, meta, ...props}) => {
-    return (
-        <div className={meta.error && meta.submitFailed && s.error}>
-            <div>
-                <input {...input} {...props}/>
-            </div>
-            <div>
-                {meta.error && meta.submitFailed && <span>{meta.error}</span>}
-            </div>
-        </div>
-    )
-}
+export const Textarea = Element("textarea")
+export const Input = Element("input")

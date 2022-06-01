@@ -6,7 +6,7 @@ import {sendAuthDataOnServ} from "../../redux/authReducer";
 
 let mapStateToProps = (state) => {
     return {
-
+        isAuth: state.auth.isAuth
     }
 }
 
