@@ -1,6 +1,8 @@
 import MyPosts from "./MyPosts";
 import {addNewPost} from "../../../redux/profileReducer";
 import {connect} from "react-redux";
+import {compose} from "redux";
+import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
 
 
 let mapStateToProps = (state) => {
@@ -10,6 +12,8 @@ let mapStateToProps = (state) => {
     }
 }
 
-const MyPostContainer = connect(mapStateToProps,{addNewPost})(MyPosts)
+export default compose(
+    connect(mapStateToProps, {addNewPost}),
+    withRedirectIfNoAuth
+)(MyPosts)
 
-export default MyPostContainer

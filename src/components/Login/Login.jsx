@@ -1,9 +1,10 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {Input} from "../../common/FormsControl/Textarea";
+import {maxLength15, required} from "../../utils/validators/validators";
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-
         props.sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe)
     }
     return <div>
@@ -17,10 +18,10 @@ const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={"Login"} component="input" name={"login"}/>
+                <Field placeholder={"Login"} component={Input} validate={[required, maxLength15]} name={"login"}/>
             </div>
             <div>
-                <Field placeholder={"Password"} component="input" name={"password"}/>
+                <Field placeholder={"Password"} component={Input} validate={[required]} name={"password"}/>
             </div>
             <div>
                 <Field component="input" type={"checkbox"} name={"rememberMe"}/> Remember me
