@@ -10,6 +10,13 @@ import React from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
+import {
+    getActivePage, getFollowInProcess,
+    getIsFetching,
+    getTotalUsers,
+    getUsers,
+    getUsersOnPage
+} from "../../redux/user-selectors";
 
 
 class UsersContainer extends React.Component {
@@ -43,12 +50,12 @@ class UsersContainer extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        users: state.userList.users,
-        totalUsers: state.userList.totalUsers,
-        usersOnPage: state.userList.usersOnPage,
-        activePage: state.userList.activePage,
-        isFetching: state.userList.isFetching,
-        followInProcess: state.userList.followInProcess
+        users: getUsers(state),
+        totalUsers: getTotalUsers(state),
+        usersOnPage: getUsersOnPage(state),
+        activePage: getActivePage(state),
+        isFetching: getIsFetching(state),
+        followInProcess: getFollowInProcess(state)
     }
 }
 export default compose(

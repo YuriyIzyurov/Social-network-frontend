@@ -3,12 +3,13 @@ import {addNewPost} from "../../../redux/profileReducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
+import {getMessagesData, getTextArea} from "../../../redux/post-selectors";
 
 
 let mapStateToProps = (state) => {
     return {
-        textArea: state.profile.textArea,
-        messagesData: state.profile.messagesData
+        textArea: getTextArea(state),
+        messagesData: getMessagesData(state)
     }
 }
 
