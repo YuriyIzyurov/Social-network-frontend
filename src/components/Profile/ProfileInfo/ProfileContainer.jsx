@@ -17,6 +17,9 @@ class ProfileContainer extends React.Component {
         let idFromURL = this.props.router.params.id
         if(!idFromURL){
             idFromURL = this.props.loggedUser
+            if(!idFromURL) {
+                this.props.history.push("/login")
+            }
         }
         this.props.setProfileOnPage(idFromURL)
         this.props.getUserStatusInProfile(idFromURL)
