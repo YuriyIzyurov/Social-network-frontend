@@ -1,9 +1,13 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import s from './ProfileInfo.module.css'
 
 const ProfileStatusWithHooks = (props) => {
     let [editMode, setState ] = useState(false)
     let [status, setStatus ] = useState(props.status)
+
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
 
     const updateLocalStatus = (onChange) => {
         setStatus(onChange.target.value)
