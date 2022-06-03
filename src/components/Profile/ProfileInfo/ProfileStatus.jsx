@@ -1,6 +1,6 @@
 import React from "react"
 import s from './ProfileInfo.module.css'
-
+// UNUSED COMPONENT FO COMPARE WITH FUNCTIONAL COMPONENT ProfileStatusWithHooks
 
 class ProfileStatus extends React.Component {
     state = {

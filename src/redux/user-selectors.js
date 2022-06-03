@@ -1,6 +1,9 @@
+import {createSelector} from "reselect";
+
 export const getUsers = (state) => {
     return state.userList.users
 }
+//export const getUsersSuperSelector = createSelector
 
 export const getTotalUsers = (state) => {
     return state.userList.totalUsers
