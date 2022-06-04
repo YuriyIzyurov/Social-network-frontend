@@ -28,23 +28,22 @@ const authReducer = (state = initialState,action) => {
     }
 }
 export const handlingAuthData = () => {
-    return (dispatch) => {
-       return authAPI.getAuth().then(data => {
-            if(data.resultCode === 0){
-                let {email, id, login} = data.data
+    return async (dispatch) => {
+       let response = await authAPI.getAuth()
+            if(response.resultCode === 0){
+                let {email, id, login} = response.data
                 dispatch(setUserAuth(email, id, login))}
-        })
+            return response
     }
 }
 export const sendAuthDataOnServ = (email, password, checkbox) => {
-    return  (dispatch) => {
-        authAPI.submitAuth(email, password, checkbox).then(response => {
+    return async (dispatch) => {
+        let response = await authAPI.submitAuth(email, password, checkbox)
             if(response.resultCode === 0){
                 dispatch(handlingAuthData())
             } else {
                 dispatch(stopSubmit("login", {_error: response.messages[0]}))
             }
-        })
     }
 }
 export const logoutFromServer = () => {

@@ -1,14 +1,14 @@
 import React from "react"
 import s from './Textarea.module.css'
 
-const Element = Element => ({input, meta, ...props}) => {
+const Element = Element => ({input, meta: {error, submitFailed}, ...props}) => {
     return (
-        <div className={meta.error && meta.submitFailed && s.error}>
+        <div className={error && submitFailed && s.error}>
             <div>
                 <Element {...input} {...props}/>
             </div>
             <div>
-                {meta.error && meta.submitFailed && <span>{meta.error}</span>}
+                {error && submitFailed && <span>{error}</span>}
             </div>
         </div>
     )

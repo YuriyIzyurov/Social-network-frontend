@@ -44,26 +44,24 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 export const setProfileOnPage = (id) => {
-    return (dispatch) => {
-        profileAPI.getProfile(id).then(response => {
+    return async (dispatch) => {
+        let response = await profileAPI.getProfile(id)
             dispatch(setCurrentProfile(response))
-        })
+
     }
 }
 export const getUserStatusInProfile = (id) =>{
-    return  (dispatch) => {
-        profileAPI.getUserStatus(id).then(response => {
+    return  async (dispatch) => {
+       let response = await profileAPI.getUserStatus(id)
             dispatch(setStatusOnProfile(response))
-        })
     }
 }
 export const updateMyStatus = (status) =>{
-    return (dispatch) => {
-        profileAPI.updateStatus(status).then(response => {
+    return async (dispatch) => {
+        let response = await profileAPI.updateStatus(status)
             if(response.resultCode === 0) {
                 dispatch(setStatusOnProfile(status))
             }
-        })
     }
 }
 export const addNewPost = (text) => ({type : ADDPOST, newText : text})

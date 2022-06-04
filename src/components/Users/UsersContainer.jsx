@@ -22,11 +22,13 @@ import {
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.handlingUsers(this.props.activePage, this.props.usersOnPage)
+        const {activePage, usersOnPage } = this.props
+        this.props.handlingUsers(activePage,usersOnPage)
     }
 
     getUsersOnPage = (n) => {
-        this.props.handlingUsersOnPage(n, this.props.activePage, this.props.usersOnPage)
+        const {activePage, usersOnPage } = this.props
+        this.props.handlingUsersOnPage(n, activePage, usersOnPage)
     }
 
     render() {

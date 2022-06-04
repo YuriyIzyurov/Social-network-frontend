@@ -10,7 +10,7 @@ const FOLLOW_IN_PROCESS = "FOLLOW_IN_PROCESS"
 let initialState = {users: [ ],
                     totalUsers: 0,
                     usersOnPage: 5,
-                    activePage: 1,
+                    activePage: 2,
                     isFetching: false,
                     followInProcess: []
 
@@ -70,6 +70,7 @@ export const handlingUsers =  (activePage,usersOnPage) => {
     }
 }
 export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
+    debugger
     return async (dispatch) => {
         dispatch(setActivePage(n))
         dispatch(dataIsFetching(true))

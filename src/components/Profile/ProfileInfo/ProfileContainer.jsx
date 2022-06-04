@@ -10,6 +10,7 @@ import {compose} from "redux";
 import {withRouter} from "../../HOC/withRouter";
 import {getCurrentProfile, getId, getStatus} from "../../../redux/profile-selectors";
 import {getAuth} from "../../../redux/auth-selectors";
+import {Navigate} from "react-router";
 
 
 
@@ -21,6 +22,7 @@ class ProfileContainer extends React.Component {
         }
     }
     componentDidMount() {
+
         let idFromURL = this.props.router.params.id
         let loggedUser = this.props.loggedUser
         if(idFromURL){
@@ -34,6 +36,7 @@ class ProfileContainer extends React.Component {
          }
         }
     componentDidUpdate(prevProps, prevState, snapshot) {
+
         let idFromURL = this.props.router.params.id;
         let loggedUser = this.props.loggedUser;
         let isShowMyProfile = this.state.isShowMyProfile;
@@ -51,6 +54,9 @@ class ProfileContainer extends React.Component {
 
 
     render() {
+        if (!this.props.isAuth && !this.props.router.params.id) {
+            return <Navigate to={'/login'} />
+        }
         return <Profile {...this.props} updateMyStatus={this.props.updateMyStatus}/>
     }
 }

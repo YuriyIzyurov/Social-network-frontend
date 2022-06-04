@@ -1,36 +1,24 @@
 import React from "react"
 import UserItem from "./UserItem";
 import s from './Users.module.css'
+import Paginator from "./Paginator";
 
 
 
-const Users = (props) => {
-
-    let pagesCount = Math.ceil(props.totalUsers / props.usersOnPage)
-    let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
-    let curP = props.activePage
-    let curPF = ((curP - 3) < 0) ? 0 : curP - 3
-    let curPL = curP + 3
-    let slicedPages = pages.slice(curPF, curPL)
+const Users = ({totalUsers, usersOnPage, activePage, getUsersOnPage, users, handlingFollowAction, handlingUnfollowAction, followInProcess }) => {
 
     return (
         <div>
-            <div>
-                {slicedPages.map(n => <span onClick={() => props.getUsersOnPage(n)}
-                                            className={props.activePage === n && s.active}>{n}</span>)}
-            </div>
+            <Paginator totalUsers={totalUsers}
+                       usersOnPage={usersOnPage}
+                       activePage={activePage}
+                       getUsersOnPage={getUsersOnPage}/>
             <div className={s.user}>
-                {props.users.map(n => <UserItem name={n.name}
-                                                     id={n.id}
-                                                     photo={n.photos.large}
-                                                     followed={n.followed}
-                                                     status={n.status}
-                                                     handlingFollowAction={props.handlingFollowAction}
-                                                     handlingUnfollowAction={props.handlingUnfollowAction}
-                                                     followInProcess={props.followInProcess}
+                {users.map(u => <UserItem user={u}
+                                          key={u.id}
+                                          handlingFollowAction={handlingFollowAction}
+                                          handlingUnfollowAction={handlingUnfollowAction}
+                                          followInProcess={followInProcess}
                 />)}
             </div>
         </div>

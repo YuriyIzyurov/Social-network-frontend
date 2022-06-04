@@ -11,7 +11,7 @@ const MyPosts = React.memo(({addNewPost, messagesData }) => {
     const onSubmit = (formData) => {
         if(formData.text) addNewPost(formData.text)
     }
-    const post = messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}  />)
+    const post = [...messagesData].reverse().map(m=><Post message={m.post} likesCount={m.likesCount}  />)
 
     const PostForm = ({handleSubmit}) => {
         return <form onSubmit={handleSubmit}>
