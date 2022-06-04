@@ -5,23 +5,22 @@ import {maxLength30, required} from "../../utils/validators/validators";
 import {Navigate} from "react-router";
 import s from "./../../common/FormsControl/Textarea.module.css"
 
-const Login = (props) => {
+const Login = ({sendAuthDataOnServ, isAuth}) => {
     const onSubmit = (formData) => {
-        props.sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe)
+        sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe)
     }
-    if(props.isAuth) {
+    if(isAuth) {
         return <Navigate to={"/profile"}/>
     }
     return <div>
         <h1>LOGIN</h1>
-        <LoginFormRedux onSubmit={onSubmit}  sendAuthDataOnServ={props.sendAuthDataOnServ}/>
+        <LoginFormRedux onSubmit={onSubmit}  sendAuthDataOnServ={sendAuthDataOnServ}/>
     </div>
 }
 
-const LoginForm = (props) => {
-
+const LoginForm = ({handleSubmit, error }) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field placeholder={"Login"} component={Input} validate={[required, maxLength30]} name={"login"}/>
             </div>
@@ -34,8 +33,8 @@ const LoginForm = (props) => {
             <div>
                 <button type="submit">Login</button>
             </div>
-            {props.error && <div className={s.error}>
-                {props.error}
+            {error && <div className={s.error}>
+                {error}
             </div>}
         </form>
     )

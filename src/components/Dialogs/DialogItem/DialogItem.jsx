@@ -4,10 +4,10 @@ import {NavLink} from "react-router-dom";
 import Avatar from "./Avatar";
 
 
-const DialogItem = (props) => {
+const DialogItem = ({id, src, name}) => {
 
     return <div>
-        <NavLink to={"/dialogs/" + props.id} className={navData => navData.isActive ? s.active : s.dialog}><Avatar src={props.src}/>{props.name}</NavLink>
+        <NavLink to={"/dialogs/" + id} className={navData => navData.isActive ? s.active : s.dialog}><Avatar src={src}/>{name}</NavLink>
     </div>
 }
 

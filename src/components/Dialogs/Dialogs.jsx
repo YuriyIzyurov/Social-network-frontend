@@ -7,17 +7,17 @@ import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
 
 
-const Dialogs = (props) => {
+const Dialogs = ({DialogData, privateMessageData, sendNewMessage }) => {
 
-    let dialog = props.DialogData.map(n=><DialogItem name={n.name} id={n.id} src={n.src}/>)
-    let message = props.privateMessageData.map(m=><Message message={m.message} />)
+    let dialog = DialogData.map(n=><DialogItem name={n.name} id={n.id} src={n.src}/>)
+    let message = privateMessageData.map(m=><Message message={m.message} />)
 
     const onSubmit = (formData) => {
-        props.sendNewMessage(formData.message) // Не понимаю, почему не принимает undefined, хотя пустые посты постились при тех же условиях
+        sendNewMessage(formData.message) // Не понимаю, почему не принимает undefined, хотя пустые посты постились при тех же условиях
     }
 
-    const DialogForm = (props) => {
-        return <form onSubmit={props.handleSubmit}>
+    const DialogForm = ({handleSubmit}) => {
+        return <form onSubmit={handleSubmit}>
             <div className={s.sendMessage}>
                 <div>
                     <Field component={Textarea} name={"message"} validate={[maxLength200, minLength2]}/>

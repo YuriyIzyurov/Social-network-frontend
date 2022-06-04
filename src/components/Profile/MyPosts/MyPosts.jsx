@@ -1,4 +1,4 @@
-import React from "react"
+import React, {memo} from "react"
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {Field, reduxForm} from "redux-form";
@@ -6,15 +6,15 @@ import {Textarea} from "../../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../../utils/validators/validators";
 
 
-const MyPosts = (props) => {
+const MyPosts = React.memo(({addNewPost, messagesData }) => {
 
     const onSubmit = (formData) => {
-        if(formData.text) props.addNewPost(formData.text)
+        if(formData.text) addNewPost(formData.text)
     }
-    const post = props.messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}  />)
+    const post = messagesData.map(m=><Post message={m.post} likesCount={m.likesCount}  />)
 
-    const PostForm = (props) => {
-        return <form onSubmit={props.handleSubmit}>
+    const PostForm = ({handleSubmit}) => {
+        return <form onSubmit={handleSubmit}>
             <div>
                 <Field component={Textarea} name={"text"} validate={[maxLength200, minLength2]}/>
             </div>
@@ -38,6 +38,6 @@ const MyPosts = (props) => {
         </div>
     </div>
 
-}
+})
 
 export default MyPosts

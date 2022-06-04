@@ -5,19 +5,19 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({currentProfile, status, updateMyStatus }) => {
 
     return (
         <div>
             <div>
-                <img src={props.currentProfile.photos.large}/>
+                <img src={currentProfile.photos.large}/>
             </div>
-                <ProfileStatusWithHooks status={props.status} updateMyStatus={props.updateMyStatus}/>
+                <ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>
             <div>
-                <span>{props.currentProfile.aboutMe}</span>
+                <span>{currentProfile.aboutMe}</span>
             </div>
             <div className={s.descriptionBlock}>
-                <span>{props.currentProfile.fullName}</span>
+                <span>{currentProfile.fullName}</span>
             </div>
         </div>
     )

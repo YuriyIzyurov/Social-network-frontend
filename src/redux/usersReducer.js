@@ -60,45 +60,45 @@ const usersReducer = (state = initialState, action) => {
 
 }
 export const handlingUsers =  (activePage,usersOnPage) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(dataIsFetching(true))
-        usersAPI.getUsers(activePage, usersOnPage).then(data => {
+        let response = await usersAPI.getUsers(activePage, usersOnPage)
             dispatch(dataIsFetching(false))
-            dispatch(setUsers(data.items))
-            dispatch(setTotalUsers(data.totalCount))
-        })
+            dispatch(setUsers(response.items))
+            dispatch(setTotalUsers(response.totalCount))
+
     }
 }
 export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setActivePage(n))
         dispatch(dataIsFetching(true))
-        usersAPI.getUsers(activePage, usersOnPage).then(data => {
+        let response = await usersAPI.getUsers(activePage, usersOnPage)
             dispatch(dataIsFetching(false))
-            dispatch(setUsers(data.items))
-        })
+            dispatch(setUsers(response.items))
+
     }
 }
 
 export const handlingFollowAction = (id) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(followActionInProcess(true, id))
-        usersAPI.followUser(id).then(data => {
-            if(data.resultCode === 0){
+        let response = await usersAPI.followUser(id)
+            if(response.resultCode === 0){
                 dispatch(followToggle(id))
             }
-            dispatch(followActionInProcess(false, id))})
+            dispatch(followActionInProcess(false, id))
     }
 }
 
 export const handlingUnfollowAction = (id) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(followActionInProcess(true, id))
-        usersAPI.unFollowUser(id).then(data => {
-            if(data.resultCode === 0){
+        let response = await usersAPI.unFollowUser(id)
+            if(response.resultCode === 0){
                 dispatch(followToggle(id))
             }
-            dispatch(followActionInProcess(false, id))})
+            dispatch(followActionInProcess(false, id))
     }
 }
 

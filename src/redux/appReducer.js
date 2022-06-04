@@ -21,8 +21,9 @@ export const setInitializeThunkCreator = () => {
     return (dispatch) => {
         let promise1 = dispatch(handlingAuthData())
         Promise.all([promise1])
-            .then(() => dispatch(setInitialize()))
-
+            .then(() => {
+                dispatch(setInitialize())
+            })
     }
 }
 

@@ -22,7 +22,6 @@ const dialogReducer = (state = initialState,action) => {
                 privateMessageData : [...state.privateMessageData, {message: action.messageText, id: "5"}],
                 textAreaMess : ''
             }
-
         default:
             return state
     }

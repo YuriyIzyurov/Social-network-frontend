@@ -23,44 +23,41 @@ const authReducer = (state = initialState,action) => {
                 ...state,
                 isAuth: false
             }
-
         default:
             return state
     }
 }
 export const handlingAuthData = () => {
     return (dispatch) => {
-        return authAPI.getAuth().then(data => {
+       return authAPI.getAuth().then(data => {
             if(data.resultCode === 0){
                 let {email, id, login} = data.data
                 dispatch(setUserAuth(email, id, login))}
         })
     }
 }
-
 export const sendAuthDataOnServ = (email, password, checkbox) => {
-    return (dispatch) => {
-        authAPI.submitAuth(email, password, checkbox).then(data => {
-            if(data.resultCode === 0){
+    return  (dispatch) => {
+        authAPI.submitAuth(email, password, checkbox).then(response => {
+            if(response.resultCode === 0){
                 dispatch(handlingAuthData())
             } else {
-                dispatch(stopSubmit("login", {_error: data.messages[0]}))
+                dispatch(stopSubmit("login", {_error: response.messages[0]}))
             }
         })
     }
 }
 export const logoutFromServer = () => {
     return (dispatch) => {
-        authAPI.logout().then(data => {
-            if(data.resultCode === 0){
-                authAPI.getAuth().then(data => {
-                    if(data.resultCode === 1){
+            authAPI.logout().then(response => {
+            if(response.resultCode === 0){
+                authAPI.getAuth().then(response => {
+                    if(response.resultCode === 1){
                         dispatch(logoutUser())
                     }
                 })
-
             }
-        })
+         })
     }
 }
 
