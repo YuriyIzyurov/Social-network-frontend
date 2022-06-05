@@ -3,7 +3,7 @@ import Profile from "../Profile";
 import {connect} from "react-redux";
 import {
     getProfileID,
-    getUserStatusInProfile,
+    getUserStatusInProfile, handlePhotoChange,
     setProfileOnPage, updateMyStatus,
 } from "../../../redux/profileReducer";
 import {compose} from "redux";
@@ -57,7 +57,9 @@ class ProfileContainer extends React.Component {
         if (!this.props.isAuth && !this.props.router.params.id) {
             return <Navigate to={'/login'} />
         }
-        return <Profile {...this.props} updateMyStatus={this.props.updateMyStatus}/>
+        return <Profile {...this.props} isShowMyProfile={this.state.isShowMyProfile}
+                                        updateMyStatus={this.props.updateMyStatus}
+                                        handlePhotoChange={this.props.handlePhotoChange}/>
     }
 }
 
@@ -72,7 +74,7 @@ let mapStateToProps = (state) => {
 
 
 export default compose(
-    connect(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus}),
+    connect(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange}),
     withRouter
 )(ProfileContainer)
 

@@ -5,7 +5,6 @@ import {Route, BrowserRouter, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -13,7 +12,9 @@ import LoginContainer from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
-
+import {WithLazyLoading} from "./components/HOC/withLazyLoading";
+let DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+DialogsContainer = WithLazyLoading(DialogsContainer)
 
 class App extends React.Component {
 

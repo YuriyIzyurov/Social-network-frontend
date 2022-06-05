@@ -4,6 +4,7 @@ const ADDPOST = "ADD-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
 const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const SET_PHOTO = "SET_PHOTO"
 
 let initialState = {
     messagesData : [
@@ -39,6 +40,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status
             }
+        case SET_PHOTO:
+            return {
+                ...state,
+                currentProfile: {...state.currentProfile, photos: action.photo}
+            }
         default:
             return state
     }
@@ -64,9 +70,18 @@ export const updateMyStatus = (status) =>{
             }
     }
 }
+export const handlePhotoChange = (file) =>{
+    return async (dispatch) => {
+        let response = await profileAPI.uploadPhoto(file)
+            if(response.resultCode === 0) {
+                dispatch(setPhotoOnProfile(response.data.photos))
+            }
+    }
+}
 export const addNewPost = (text) => ({type : ADDPOST, newText : text})
 export const getProfileID = (id) => ({type: CHANGE_PROFILE_ID, id})
 export const setCurrentProfile = (profile) => ({type: SET_CURRENT_PROFILE, profile})
 export const setStatusOnProfile = (status) => ({type: SET_STATUS, status})
+export const setPhotoOnProfile = (photo) => ({type: SET_PHOTO, photo})
 
 export default profileReducer

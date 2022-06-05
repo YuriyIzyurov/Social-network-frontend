@@ -5,12 +5,18 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
 
-const ProfileInfo = ({currentProfile, status, updateMyStatus }) => {
+const ProfileInfo = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange }) => {
 
+    const OnPhotoSelected = (onChange) => {
+        handlePhotoChange(onChange.target.files[0])
+    }
     return (
         <div>
             <div>
                 <img src={currentProfile.photos.large}/>
+            </div>
+            <div>
+                {!isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}
             </div>
                 <ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>
             <div>
