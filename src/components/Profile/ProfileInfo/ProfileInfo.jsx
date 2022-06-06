@@ -25,7 +25,7 @@ const ProfileInfo = ({currentProfile, status, updateMyStatus, isShowMyProfile, h
             </div>
                 <ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>
             {!editMode && <ProfileData currentProfile={currentProfile}/>}
-            {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ}/>}
+            {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}
             {!isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}
         </div>
     )

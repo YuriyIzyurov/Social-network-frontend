@@ -37,7 +37,7 @@ export const profileAPI = {
         return instance.put('profile/photo',formData).then(response => response.data)
     },
     updateProfileData(newData, userID){
-        let resultData = {
+       /* let resultData = {
             AboutMe: newData.AboutMe,
             userId: userID,
             lookingForAJob: true,
@@ -52,8 +52,8 @@ export const profileAPI = {
                 website: newData.website,
                 youtube: newData.youtube,
                 mainLink: newData.mainLink}
-        }
-        return instance.put('profile',resultData).then(response => response.data)
+        }*/
+        return instance.put('profile',newData).then(response => response.data)
     }
 }
 export const authAPI =  {

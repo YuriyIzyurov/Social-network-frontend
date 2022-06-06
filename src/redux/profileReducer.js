@@ -1,4 +1,5 @@
 import {profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADDPOST = "ADD-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
@@ -51,20 +52,20 @@ const profileReducer = (state = initialState, action) => {
 }
 export const setProfileOnPage = (id) => {
     return async (dispatch) => {
-        let response = await profileAPI.getProfile(id)
+        const response = await profileAPI.getProfile(id)
             dispatch(setCurrentProfile(response))
 
     }
 }
 export const getUserStatusInProfile = (id) =>{
     return  async (dispatch) => {
-       let response = await profileAPI.getUserStatus(id)
+        const response = await profileAPI.getUserStatus(id)
             dispatch(setStatusOnProfile(response))
     }
 }
 export const updateMyStatus = (status) =>{
     return async (dispatch) => {
-        let response = await profileAPI.updateStatus(status)
+        const response = await profileAPI.updateStatus(status)
             if(response.resultCode === 0) {
                 dispatch(setStatusOnProfile(status))
             }
@@ -72,18 +73,30 @@ export const updateMyStatus = (status) =>{
 }
 export const handlePhotoChange = (file) =>{
     return async (dispatch) => {
-        let response = await profileAPI.uploadPhoto(file)
+        const response = await profileAPI.uploadPhoto(file)
             if(response.resultCode === 0) {
                 dispatch(setPhotoOnProfile(response.data.photos))
             }
     }
 }
-export const sendProfileDataOnServ = (newData, userID) =>{
-    return async (dispatch) => {
-        let response = await profileAPI.updateProfileData(newData, userID)
-            if(response.resultCode === 0) {
-               console.log("+")
-            } else console.log('-')
+export const sendProfileDataOnServ = (newData) =>{
+    return async (dispatch, getState) => {
+        const userId = getState().auth.id
+        const response = await profileAPI.updateProfileData(newData)
+        if (response.resultCode === 0) {
+            dispatch(setProfileOnPage(userId))
+        } else {
+            let error = response.messages[0]
+            let errorObj = {'_error': error}
+            let match = error.match(/Invalid url format \(Contacts->(.+)\)/)
+            if (match) {
+                let fieldName = match[1].toLowerCase()
+                errorObj = { 'contacts': {}}
+                errorObj.contacts[fieldName] = error
+            }
+            dispatch(stopSubmit("ProfileInfo", errorObj))
+            throw error
+        }
     }
 }
 export const addNewPost = (text) => ({type : ADDPOST, newText : text})

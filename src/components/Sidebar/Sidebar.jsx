@@ -5,7 +5,7 @@ import SidebarItem from "./SidebarItem";
 
 const Sidebar = (props) => {
 
-    let userOnline = props.nameList.map(n=><SidebarItem name={n.name} id={n.id}  src={n.src}/>)
+    let userOnline = props.nameList.map(n=><SidebarItem name={n.name} id={n.id} key={n.name} src={n.src}/>)
     return (
         <div>
             <div className={s.item}>
