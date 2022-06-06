@@ -35,6 +35,25 @@ export const profileAPI = {
         const formData = new FormData()
         formData.append("image", file)
         return instance.put('profile/photo',formData).then(response => response.data)
+    },
+    updateProfileData(newData, userID){
+        let resultData = {
+            AboutMe: newData.AboutMe,
+            userId: userID,
+            lookingForAJob: true,
+            lookingForAJobDescription: newData.lookingForAJobDescription,
+            fullName: newData.fullName,
+            contacts: {
+                github: newData.github,
+                vk: newData.vk,
+                facebook: newData.facebook,
+                instagram: newData.instagram,
+                twitter: newData.twitter,
+                website: newData.website,
+                youtube: newData.youtube,
+                mainLink: newData.mainLink}
+        }
+        return instance.put('profile',resultData).then(response => response.data)
     }
 }
 export const authAPI =  {

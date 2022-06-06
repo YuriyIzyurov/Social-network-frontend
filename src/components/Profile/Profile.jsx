@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 import Preloader from "../../common/Preloader/Preloader";
 
-const Profile = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange }) => {
+const Profile = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ }) => {
     if(!currentProfile) return <Preloader/>
     return (
         <div>
@@ -11,7 +11,8 @@ const Profile = ({currentProfile, status, updateMyStatus, isShowMyProfile, handl
                          status={status}
                          updateMyStatus={updateMyStatus}
                          isShowMyProfile={isShowMyProfile}
-                         handlePhotoChange={handlePhotoChange}/>
+                         handlePhotoChange={handlePhotoChange}
+                         sendProfileDataOnServ={sendProfileDataOnServ}/>
             <MyPostContainer />
         </div>
     )

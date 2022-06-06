@@ -78,6 +78,14 @@ export const handlePhotoChange = (file) =>{
             }
     }
 }
+export const sendProfileDataOnServ = (newData, userID) =>{
+    return async (dispatch) => {
+        let response = await profileAPI.updateProfileData(newData, userID)
+            if(response.resultCode === 0) {
+               console.log("+")
+            } else console.log('-')
+    }
+}
 export const addNewPost = (text) => ({type : ADDPOST, newText : text})
 export const getProfileID = (id) => ({type: CHANGE_PROFILE_ID, id})
 export const setCurrentProfile = (profile) => ({type: SET_CURRENT_PROFILE, profile})
