@@ -36,23 +36,7 @@ export const profileAPI = {
         formData.append("image", file)
         return instance.put('profile/photo',formData).then(response => response.data)
     },
-    updateProfileData(newData, userID){
-       /* let resultData = {
-            AboutMe: newData.AboutMe,
-            userId: userID,
-            lookingForAJob: true,
-            lookingForAJobDescription: newData.lookingForAJobDescription,
-            fullName: newData.fullName,
-            contacts: {
-                github: newData.github,
-                vk: newData.vk,
-                facebook: newData.facebook,
-                instagram: newData.instagram,
-                twitter: newData.twitter,
-                website: newData.website,
-                youtube: newData.youtube,
-                mainLink: newData.mainLink}
-        }*/
+    updateProfileData(newData){
         return instance.put('profile',newData).then(response => response.data)
     }
 }
@@ -60,11 +44,14 @@ export const authAPI =  {
     getAuth () {
         return instance.get(`auth/me`).then(response => response.data)
     },
-    submitAuth (email, password, rememberMe) {
-        return instance.post("auth/login",{email: email, password: password, rememberMe: rememberMe}).then(response => response.data)
+    submitAuth (email, password, rememberMe, captcha) {
+        return instance.post("auth/login",{email: email, password: password, rememberMe: rememberMe, captcha: captcha}).then(response => response.data)
     },
     logout () {
         return instance.delete("auth/login").then(response => response.data)
+    },
+    getCaptcha() {
+        return instance.get("security/get-captcha-url").then(response => response.data)
     }
 
 }
