@@ -10,33 +10,33 @@ const instance = axios.create({
 
 
 export const usersAPI =  {
-    getUsers (activePage, usersOnPage) {
+    getUsers (activePage:number, usersOnPage:number) {
         return instance.get(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
     },
-    followUser(id) {
+    followUser(id:number) {
         return instance.post(`follow/${id}`,{}).then(response => response.data)
     },
-    unFollowUser(id) {
+    unFollowUser(id:number) {
         return instance.delete(`follow/${id}`).then(response => response.data)
     }
 }
 
 export const profileAPI = {
-    getProfile(idFromURL){
+    getProfile(idFromURL:number){
         return instance.get(`profile/${idFromURL}`).then(response => response.data)
     },
-    getUserStatus(id){
+    getUserStatus(id:number){
         return instance.get(`profile/status/${id}`).then(response => response.data)
     },
-    updateStatus(status){
+    updateStatus(status:string){
         return instance.put('profile/status',{status:status}).then(response => response.data)
     },
-    uploadPhoto(file){
+    uploadPhoto(file:any){
         const formData = new FormData()
         formData.append("image", file)
         return instance.put('profile/photo',formData).then(response => response.data)
     },
-    updateProfileData(newData){
+    updateProfileData(newData:any){
         return instance.put('profile',newData).then(response => response.data)
     }
 }
@@ -44,8 +44,8 @@ export const authAPI =  {
     getAuth () {
         return instance.get(`auth/me`).then(response => response.data)
     },
-    submitAuth (email, password, rememberMe, captcha) {
-        return instance.post("auth/login",{email: email, password: password, rememberMe: rememberMe, captcha: captcha}).then(response => response.data)
+    submitAuth (email:string, password:string, rememberMe:boolean, captcha:string) {
+        return instance.post("auth/login",{email, password, rememberMe, captcha}).then(response => response.data)
     },
     logout () {
         return instance.delete("auth/login").then(response => response.data)

@@ -7,13 +7,22 @@ const SET_CAPTCHA = "SET_CAPTCHA"
 const DEL_CAPTCHA = "DEL_CAPTCHA"
 
 let initialState = {
+    email: null as string | null,
+    id: null as number | null,
+    login: null as string | null,
+    isAuth: false as boolean | false,
+    captcha: null as string | null
+}
+/*let initialState = {
     email: null,
     id: null,
     login: null,
     isAuth: false,
-    captcha: null
-}
-const authReducer = (state = initialState,action) => {
+    captcha:null
+}*/
+export type initialStateType = typeof initialState
+
+const authReducer = (state = initialState,action:any):initialStateType => {
     switch (action.type) {
         case SET_USER_AUTH:
             return {
@@ -41,7 +50,7 @@ const authReducer = (state = initialState,action) => {
     }
 }
 export const handlingAuthData = () => {
-    return async (dispatch) => {
+    return async (dispatch:any) => {
        let response = await authAPI.getAuth()
             if(response.resultCode === 0){
                 let {email, id, login} = response.data
@@ -49,8 +58,8 @@ export const handlingAuthData = () => {
             return response
     }
 }
-export const sendAuthDataOnServ = (email, password, checkbox, captcha = null) => {
-    return async (dispatch) => {
+export const sendAuthDataOnServ = (email:string, password:string, checkbox:boolean, captcha:string) => {
+    return async (dispatch:any) => {
         let response = await authAPI.submitAuth(email, password, checkbox, captcha)
             if(response.resultCode === 0){
                 dispatch(handlingAuthData())
@@ -64,17 +73,16 @@ export const sendAuthDataOnServ = (email, password, checkbox, captcha = null) =>
     }
 }
 export const askForCaptcha = () => {
-    debugger
-    return async (dispatch) => {
+    return async (dispatch:any) => {
         let response = await authAPI.getCaptcha()
         dispatch(setCaptchaImage(response.url))
     }
 }
 export const logoutFromServer = () => {
-    return (dispatch) => {
-            authAPI.logout().then(response => {
+    return (dispatch:any) => {
+            authAPI.logout().then((response) => {
             if(response.resultCode === 0){
-                authAPI.getAuth().then(response => {
+                authAPI.getAuth().then((response) => {
                     if(response.resultCode === 1){
                         dispatch(logoutUser())
                     }
@@ -83,11 +91,22 @@ export const logoutFromServer = () => {
          })
     }
 }
-
-
-export const setUserAuth = (email,id,login) => ({type : SET_USER_AUTH, data : {email,id,login}})
+type AuthDataType = {
+    email: string
+    id: number
+    login: string
+}
+type SetUserAuthActionType = {
+    type: typeof SET_USER_AUTH
+    data: AuthDataType
+}
+type SetCaptchaImage = {
+    type: typeof SET_CAPTCHA
+    imageURL: string
+}
+export const setUserAuth = (email:string,id:number,login:string):SetUserAuthActionType => ({type : SET_USER_AUTH, data : {email,id,login}})
 export const logoutUser = () => ({type : LOGOUT_USER})
-export const setCaptchaImage = (imageURL) => ({type : SET_CAPTCHA, imageURL})
+export const setCaptchaImage = (imageURL:string):SetCaptchaImage => ({type : SET_CAPTCHA, imageURL})
 export const deleteCaptcha = () => ({type : DEL_CAPTCHA})
 
 

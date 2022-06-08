@@ -17,10 +17,17 @@ let DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsCont
 DialogsContainer = WithLazyLoading(DialogsContainer)
 
 class App extends React.Component {
-
+    catchAllErrors = () => {
+        alert("Something go wrong, try again")
+    }
     componentDidMount() {
         this.props.setInitializeThunkCreator()
+        window.addEventListener("unhandledrejection",this.catchAllErrors)
     }
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection",this.catchAllErrors)
+    }
+
     render() {
         if(!this.props.initialized) {
             return <Preloader/>
@@ -32,6 +39,7 @@ class App extends React.Component {
                     <Navbar/>
                     <div className='app-wrapper-content'>
                         <Routes>
+                            <Route path="/" element={<ProfileContainer/>}/>
                             <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                             <Route path="/profile/:id" element={<ProfileContainer/>}/>
                             <Route path="/profile/" element={<ProfileContainer/>}/>
@@ -40,6 +48,7 @@ class App extends React.Component {
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
+                            <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                     </div>
                 </div>

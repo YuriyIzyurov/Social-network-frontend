@@ -1,12 +1,14 @@
-import {handlingAuthData} from "./authReducer";
+import {handlingAuthData} from './authReducer';
 
 const SET_INIT = "SET_INIT"
 
-
-let initialState = {
+export type InitialStateType = {
+    initialized: boolean
+}
+let initialState:InitialStateType = {
     initialized: false
 }
-const appReducer = (state = initialState,action) => {
+const appReducer = (state = initialState,action:any): InitialStateType => {
     switch (action.type) {
         case SET_INIT:
             return {
@@ -18,7 +20,7 @@ const appReducer = (state = initialState,action) => {
     }
 }
 export const setInitializeThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch:any) => {
         let promise1 = dispatch(handlingAuthData())
         Promise.all([promise1])
             .then(() => {
@@ -27,10 +29,10 @@ export const setInitializeThunkCreator = () => {
     }
 }
 
-
-
-export const setInitialize = () => ({type : SET_INIT})
-
+type setInitializeActionType = {
+    type: typeof SET_INIT
+}
+export const setInitialize = ():setInitializeActionType => ({type : SET_INIT})
 
 
 export default appReducer
