@@ -1,5 +1,6 @@
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
 
 const ADDPOST = "ADD-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
@@ -7,33 +8,8 @@ const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
 const SET_STATUS = "SET_STATUS"
 const SET_PHOTO = "SET_PHOTO"
 
-type MessagesDataType = {
-    post: string
-    id: number
-    likesCount: number
-}
-type ContactsType = {
-    github:string
-    vk:string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-}
-type CurrentProfileType = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: ContactsType
-    photos: PhotosType
-}
-type PhotosType = {
-    small: string | null
-    large: string | null
-}
+
+
 let initialState = {
     messagesData : [
             {post: "Hi are you?", id: 1,likesCount: 5},

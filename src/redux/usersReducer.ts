@@ -1,4 +1,5 @@
-import {followAPI, usersAPI} from "../api/api";
+import {usersAPI} from "../api/api";
+import { UserType } from "../typings/types";
 
 const FOLLOW = "FOLLOW"
 const SET_USERS = "SET_USERS"
@@ -7,17 +8,20 @@ const SET_TOTAL_USERS = "SET_TOTAL_USERS"
 const FETCHING = "FETCHING"
 const FOLLOW_IN_PROCESS = "FOLLOW_IN_PROCESS"
 
-let initialState = {users: [ ],
-                    totalUsers: 0,
-                    usersOnPage: 5,
-                    activePage: 2,
+
+
+let initialState = {users: [] as Array<UserType>,
+                    totalUsers: null as number | null,
+                    usersOnPage: null as number | null,
+                    activePage: null as number | null,
                     isFetching: false,
-                    followInProcess: []
+                    followInProcess: [] as Array<number>
 
 }
+export type InitialStateType = typeof initialState
 
 
-const usersReducer = (state = initialState, action) => {
+const usersReducer = (state = initialState, action:any):InitialStateType => {
     switch(action.type){
         case FOLLOW:
             return {
@@ -59,8 +63,8 @@ const usersReducer = (state = initialState, action) => {
     }
 
 }
-export const handlingUsers =  (activePage,usersOnPage) => {
-    return async (dispatch) => {
+export const handlingUsers =  (activePage:number,usersOnPage:number) => {
+    return async (dispatch:any) => {
         dispatch(dataIsFetching(true))
         let response = await usersAPI.getUsers(activePage, usersOnPage)
             dispatch(dataIsFetching(false))
@@ -69,9 +73,9 @@ export const handlingUsers =  (activePage,usersOnPage) => {
 
     }
 }
-export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
-    debugger
-    return async (dispatch) => {
+export  const handlingUsersOnPage = (n:number, activePage:number, usersOnPage:number) => {
+
+    return async (dispatch:any) => {
         dispatch(setActivePage(n))
         dispatch(dataIsFetching(true))
         let response = await usersAPI.getUsers(activePage, usersOnPage)
@@ -81,8 +85,8 @@ export  const handlingUsersOnPage = (n, activePage, usersOnPage) => {
     }
 }
 
-export const handlingFollowAction = (id) => {
-    return async (dispatch) => {
+export const handlingFollowAction = (id:number) => {
+    return async (dispatch:any) => {
         dispatch(followActionInProcess(true, id))
         let response = await usersAPI.followUser(id)
             if(response.resultCode === 0){
@@ -92,8 +96,8 @@ export const handlingFollowAction = (id) => {
     }
 }
 
-export const handlingUnfollowAction = (id) => {
-    return async (dispatch) => {
+export const handlingUnfollowAction = (id:number) => {
+    return async (dispatch:any) => {
         dispatch(followActionInProcess(true, id))
         let response = await usersAPI.unFollowUser(id)
             if(response.resultCode === 0){
@@ -103,13 +107,37 @@ export const handlingUnfollowAction = (id) => {
     }
 }
 
-
-export const followToggle = (userID) => ({type : FOLLOW, userID})
-export const setUsers = (users) => ({type: SET_USERS, users})
-export const setActivePage = (activePage) => ({type: SET_ACTIVE_PAGE, activePage})
-export const setTotalUsers = (totalUsers) => ({type: SET_TOTAL_USERS, totalUsers})
-export const dataIsFetching = (isFetching) => ({type: FETCHING, isFetching})
-export const followActionInProcess = (isFetching, userID) =>({type:FOLLOW_IN_PROCESS, isFetching, userID})
+type FollowToggleType = {
+    type: typeof FOLLOW
+    userID: number
+}
+type SetUsers = {
+    type: typeof SET_USERS
+    users: UserType
+}
+type SetActivePage = {
+    type: typeof SET_ACTIVE_PAGE
+    activePage: number
+}
+type SetTotalUsers = {
+    type: typeof SET_TOTAL_USERS
+    totalUsers: number
+}
+type DataIsFetching = {
+    type: typeof FETCHING
+    isFetching: boolean
+}
+type FollowActionInProcess = {
+    type: typeof FOLLOW_IN_PROCESS
+    isFetching: boolean
+    userID: number
+}
+export const followToggle = (userID:number):FollowToggleType => ({type : FOLLOW, userID})
+export const setUsers = (users: UserType):SetUsers => ({type: SET_USERS, users})
+export const setActivePage = (activePage:number):SetActivePage => ({type: SET_ACTIVE_PAGE, activePage})
+export const setTotalUsers = (totalUsers:number):SetTotalUsers => ({type: SET_TOTAL_USERS, totalUsers})
+export const dataIsFetching = (isFetching:boolean):DataIsFetching => ({type: FETCHING, isFetching})
+export const followActionInProcess = (isFetching:boolean, userID:number):FollowActionInProcess =>({type:FOLLOW_IN_PROCESS, isFetching, userID})
 
 
 export default usersReducer
