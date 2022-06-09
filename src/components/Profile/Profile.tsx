@@ -1,9 +1,21 @@
 import React from "react"
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostContainer from "./MyPosts/MyPostContainer";
+// @ts-ignore
 import Preloader from "../../common/Preloader/Preloader";
+import {CurrentProfileType} from "../../typings/types";
+import MyPostContainer from "./MyPosts/MyPostContainer";
 
-const Profile = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ }) => {
+type PropsType = {
+    currentProfile: CurrentProfileType
+    status:string
+    updateMyStatus:() => void
+    isShowMyProfile: boolean
+    handlePhotoChange: () => void
+    sendProfileDataOnServ:(newData:CurrentProfileType) => void
+
+}
+
+const Profile: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
     if(!currentProfile) return <Preloader/>
     return (
         <div>
@@ -13,7 +25,7 @@ const Profile = ({currentProfile, status, updateMyStatus, isShowMyProfile, handl
                          isShowMyProfile={isShowMyProfile}
                          handlePhotoChange={handlePhotoChange}
                          sendProfileDataOnServ={sendProfileDataOnServ}/>
-            <MyPostContainer />
+           {/* <MyPostContainer/>*/}
         </div>
     )
 }

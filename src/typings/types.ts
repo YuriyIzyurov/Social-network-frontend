@@ -18,8 +18,9 @@ export type CurrentProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: ContactsType
+    contacts: keyof ContactsType
     photos: PhotosType
+    aboutMe: string
 }
 export type PhotosType = {
     small: string | null

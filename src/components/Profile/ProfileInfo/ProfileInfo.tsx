@@ -1,21 +1,30 @@
 import React, {useState} from "react"
-import s from './ProfileInfo.module.css'
-import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+// @ts-ignore
 import userDefaultPhoto from '../../../assets/images/personal-user.png'
 import ProfileData from "./ProfileData";
 import ProfileDataInput from "./ProfileDataInput";
+import {CurrentProfileType} from "../../../typings/types";
 
 
+type PropsType = {
+    currentProfile: CurrentProfileType
+    status:string
+    updateMyStatus:() => void
+    isShowMyProfile: boolean
+    handlePhotoChange: (image: File) => any
+    sendProfileDataOnServ:(newData:CurrentProfileType) => void
 
-const ProfileInfo = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange,sendProfileDataOnServ }) => {
+}
+const ProfileInfo: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange,sendProfileDataOnServ }) => {
 
-    const OnPhotoSelected = (onChange) => {
-        if(onChange.target.files[0]) handlePhotoChange(onChange.target.files[0])
+    const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        if(e.target.files) handlePhotoChange(e.target.files[0])
     }
     let [editMode, changeEditMode] = useState(false)
 
     return (
+
         <div>
             <div>
                 <img src={currentProfile.photos.large || userDefaultPhoto}/>

@@ -75,9 +75,9 @@ export const updateMyStatus = (status:string) =>{
             }
     }
 }
-export const handlePhotoChange = (file:any) =>{
+export const handlePhotoChange = (image:File) =>{
     return async (dispatch:any) => {
-        const response = await profileAPI.uploadPhoto(file)
+        const response = await profileAPI.uploadPhoto(image)
             if(response.resultCode === 0) {
                 dispatch(setPhotoOnProfile(response.data.photos))
             }

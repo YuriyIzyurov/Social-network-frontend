@@ -1,19 +1,24 @@
 import React, {memo} from "react"
+// @ts-ignore
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {Field, reduxForm} from "redux-form";
 import {Textarea} from "../../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../../utils/validators/validators";
+import {MessagesDataType} from "../../../typings/types";
 
+type PropsType = {
+    addNewPost: (text: string) => void
+    messagesData: Array<MessagesDataType>
+}
+const MyPosts: React.FC<PropsType> = ({addNewPost, messagesData }) => {
 
-const MyPosts = React.memo(({addNewPost, messagesData }) => {
-
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: any) => {
         if(formData.text) addNewPost(formData.text)
     }
     const post = [...messagesData].reverse().map(m=><Post message={m.post} likesCount={m.likesCount}  />)
 
-    const PostForm = ({handleSubmit}) => {
+    const PostForm = ({handleSubmit}:any) => {
         return <form onSubmit={handleSubmit}>
             <div>
                 <Field component={Textarea} name={"text"} validate={[maxLength200, minLength2]}/>
@@ -38,6 +43,6 @@ const MyPosts = React.memo(({addNewPost, messagesData }) => {
         </div>
     </div>
 
-})
+}
 
 export default MyPosts

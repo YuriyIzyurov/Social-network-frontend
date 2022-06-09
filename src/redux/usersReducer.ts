@@ -15,7 +15,7 @@ let initialState = {users: [] as Array<UserType>,
                     usersOnPage: null as number | null,
                     activePage: null as number | null,
                     isFetching: false,
-                    followInProcess: [] as Array<number>
+                    followInProcess: [] as Array<number> //array of users ID is now following in process
 
 }
 export type InitialStateType = typeof initialState
@@ -113,7 +113,7 @@ type FollowToggleType = {
 }
 type SetUsers = {
     type: typeof SET_USERS
-    users: UserType
+    users: Array<UserType>
 }
 type SetActivePage = {
     type: typeof SET_ACTIVE_PAGE
@@ -133,7 +133,7 @@ type FollowActionInProcess = {
     userID: number
 }
 export const followToggle = (userID:number):FollowToggleType => ({type : FOLLOW, userID})
-export const setUsers = (users: UserType):SetUsers => ({type: SET_USERS, users})
+export const setUsers = (users: Array<UserType>):SetUsers => ({type: SET_USERS, users})
 export const setActivePage = (activePage:number):SetActivePage => ({type: SET_ACTIVE_PAGE, activePage})
 export const setTotalUsers = (totalUsers:number):SetTotalUsers => ({type: SET_TOTAL_USERS, totalUsers})
 export const dataIsFetching = (isFetching:boolean):DataIsFetching => ({type: FETCHING, isFetching})

@@ -6,7 +6,6 @@ import Paginator from "./Paginator";
 
 
 const Users = ({totalUsers, usersOnPage, activePage, getUsersOnPage, users, handlingFollowAction, handlingUnfollowAction, followInProcess }) => {
-
     return (
         <div>
             <Paginator totalUsers={totalUsers}

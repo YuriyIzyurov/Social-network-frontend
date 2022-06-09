@@ -1,28 +1,36 @@
-import React, {useRef, useState} from "react"
+import React from "react"
+// @ts-ignore
 import s from './ProfileInfo.module.css'
+// @ts-ignore
 import style from "./../../../common/FormsControl/Textarea.module.css"
 import {Field, reduxForm} from "redux-form";
 import {Input} from "../../../common/FormsControl/Textarea";
 import {maxLength200, maxLength30, required} from "../../../utils/validators/validators";
-import styles from "./../../../common/FormsControl/Textarea.module.css"
+import {CurrentProfileType} from "../../../typings/types";
 
-const ProfileDataInput = ({currentProfile, sendProfileDataOnServ, changeEditMode}) => {
+type PropsType = {
+    currentProfile: CurrentProfileType
+    sendProfileDataOnServ: (formData?: any) => any
+    changeEditMode: (type:boolean) => void
+}
+
+const ProfileDataInput: React.FC<PropsType> = ({currentProfile, sendProfileDataOnServ, changeEditMode}) => {
     /*const [checked, setChecked] = useState(false)
     const handleChange = () => setChecked(!checked)*/
-    const sendData = (formData) => {
+    const sendData = (formData:any) => {
          sendProfileDataOnServ(formData)
              .then(() => changeEditMode(false))
 
 
     }
-    const Contact = ({socialMedia, contactValue}) => {
+    const Contact: React.FC<{socialMedia:string}> = ({socialMedia}) => {
         return <div className={s.descriptionBlock}>
             <b>{socialMedia}:</b><Field placeholder={socialMedia} component={Input} validate={[maxLength200]}
                                         name={"contacts." + socialMedia}/>
         </div>
     }
 
-    const ProfileDataInputForm = ({handleSubmit, error}) => {
+    const ProfileDataInputForm: React.FC<{handleSubmit:any, error?:string }> = ({handleSubmit, error}) => {
         return <form onSubmit={handleSubmit}>
             <div className={s.descriptionBlock}>
                 <span>{currentProfile.fullName}</span><Field  placeholder={"nickname"} component={Input}
@@ -42,7 +50,7 @@ const ProfileDataInput = ({currentProfile, sendProfileDataOnServ, changeEditMode
             </div>
             <div>
                 <b>Contacts:</b> {Object.keys(currentProfile.contacts).map(key => {
-                return <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key]}/>
+                return <Contact key={key} socialMedia={key} /*contactValue={currentProfile.contacts[key]}*//>
             })}
             </div>
             <div>
@@ -54,13 +62,14 @@ const ProfileDataInput = ({currentProfile, sendProfileDataOnServ, changeEditMode
         </form>
     }
 
+
     const ProfileDataInputFormRedux = reduxForm(
         {
             form: 'ProfileInfo',
             enableReinitialize: true,
             destroyOnUnmount: false
         }
-    )(ProfileDataInputForm)
+    )(ProfileDataInputForm as any)
 
     return <ProfileDataInputFormRedux initialValues={currentProfile} onSubmit={sendData}/>
 }
