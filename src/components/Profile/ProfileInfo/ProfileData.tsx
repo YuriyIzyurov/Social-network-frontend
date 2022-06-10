@@ -1,5 +1,4 @@
 import React from "react"
-// @ts-ignore
 import s from './ProfileInfo.module.css'
 import {CurrentProfileType} from "../../../typings/types";
 

@@ -1,5 +1,4 @@
 import React, {memo} from "react"
-// @ts-ignore
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {Field, reduxForm} from "redux-form";

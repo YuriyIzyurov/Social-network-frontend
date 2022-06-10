@@ -22,7 +22,12 @@ export type AppStateType = ReturnType<RootReducerType>
 
 
 
-// @ts-ignore
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any,
+        store: any
+    }
+}
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 

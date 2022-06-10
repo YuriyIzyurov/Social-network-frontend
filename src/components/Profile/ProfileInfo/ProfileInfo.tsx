@@ -1,6 +1,5 @@
 import React, {useState} from "react"
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-// @ts-ignore
 import userDefaultPhoto from '../../../assets/images/personal-user.png'
 import ProfileData from "./ProfileData";
 import ProfileDataInput from "./ProfileDataInput";

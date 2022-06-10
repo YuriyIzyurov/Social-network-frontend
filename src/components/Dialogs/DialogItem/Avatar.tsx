@@ -1,7 +1,6 @@
 import React from "react"
-import s from './../Dialogs.module.css'
 
-const Avatar = ({src}) => {
+const Avatar: React.FC<{src:any}> = ({src}) => {
     return <img src={src} width='65px' height='65px' />
 }
 

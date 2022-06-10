@@ -1,5 +1,4 @@
 import React from "react"
-// @ts-ignore
 import s from './Textarea.module.css'
 
 const Element = (Element:any) => ({input, meta: {error, submitFailed}, ...props}: any) => {

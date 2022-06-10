@@ -1,7 +1,5 @@
 import React from "react"
-// @ts-ignore
 import s from './ProfileInfo.module.css'
-// @ts-ignore
 import style from "./../../../common/FormsControl/Textarea.module.css"
 import {Field, reduxForm} from "redux-form";
 import {Input} from "../../../common/FormsControl/Textarea";

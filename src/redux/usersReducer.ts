@@ -11,9 +11,9 @@ const FOLLOW_IN_PROCESS = "FOLLOW_IN_PROCESS"
 
 
 let initialState = {users: [] as Array<UserType>,
-                    totalUsers: null as number | null,
-                    usersOnPage: null as number | null,
-                    activePage: null as number | null,
+                    totalUsers: 0,
+                    usersOnPage: 10,
+                    activePage: 1,
                     isFetching: false,
                     followInProcess: [] as Array<number> //array of users ID is now following in process
 
