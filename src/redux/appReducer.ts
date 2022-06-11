@@ -1,4 +1,6 @@
 import {handlingAuthData} from './authReducer';
+import {ThunkAction} from "redux-thunk/es/types";
+import {AppStateType} from "./reduxStore";
 
 const SET_INIT = "SET_INIT"
 
@@ -8,7 +10,7 @@ export type InitialStateType = {
 let initialState:InitialStateType = {
     initialized: false
 }
-const appReducer = (state = initialState,action:any): InitialStateType => {
+const appReducer = (state = initialState,action:setInitializeActionType): InitialStateType => {
     switch (action.type) {
         case SET_INIT:
             return {
@@ -19,6 +21,8 @@ const appReducer = (state = initialState,action:any): InitialStateType => {
             return state
     }
 }
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, setInitializeActionType>
+
 export const setInitializeThunkCreator = () => {
     return (dispatch:any) => {
         let promise1 = dispatch(handlingAuthData())

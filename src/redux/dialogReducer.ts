@@ -24,7 +24,7 @@ let initialState = {
 }
 export type InitialStateType = typeof initialState
 
-const dialogReducer = (state = initialState,action:any):InitialStateType => {
+const dialogReducer = (state = initialState,action:SendNewMessageType):InitialStateType => {
 
     switch (action.type) {
         case SENDMESSAGE:

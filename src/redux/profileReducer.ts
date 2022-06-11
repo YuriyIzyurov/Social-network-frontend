@@ -1,6 +1,8 @@
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
+import {ThunkAction} from "redux-thunk/es/types";
+import {AppStateType} from "./reduxStore";
 
 const ADDPOST = "ADD-POST"
 const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
@@ -21,7 +23,7 @@ let initialState = {
         status: ""
 }
 export type InitialStateType = typeof initialState
-const profileReducer = (state = initialState, action: any):InitialStateType => {
+const profileReducer = (state = initialState, action: ActionType):InitialStateType => {
 
     switch (action.type) {
         case ADDPOST:
@@ -54,32 +56,36 @@ const profileReducer = (state = initialState, action: any):InitialStateType => {
             return state
     }
 }
-export const setProfileOnPage = (id:number) => {
-    return async (dispatch:any) => {
+
+type ActionType = AddNewPost|GetProfileID|setCurrentProfile|setStatusOnProfile|setPhotoOnProfile
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export const setProfileOnPage = (id:number):ThunkType => {
+    return async (dispatch) => {
         const response = await profileAPI.getProfile(id)
             dispatch(setCurrentProfile(response))
 
     }
 }
-export const getUserStatusInProfile = (id:number) =>{
-    return  async (dispatch:any) => {
+export const getUserStatusInProfile = (id:number):ThunkType =>{
+    return  async (dispatch) => {
         const response = await profileAPI.getUserStatus(id)
             dispatch(setStatusOnProfile(response))
     }
 }
-export const updateMyStatus = (status:string) =>{
-    return async (dispatch:any) => {
+export const updateMyStatus = (status:string):ThunkType =>{
+    return async (dispatch) => {
         const response = await profileAPI.updateStatus(status)
             if(response.resultCode === 0) {
                 dispatch(setStatusOnProfile(status))
             }
     }
 }
-export const handlePhotoChange = (image:File) =>{
-    return async (dispatch:any) => {
+export const handlePhotoChange = (image:File):ThunkType =>{
+    return async (dispatch) => {
         const response = await profileAPI.uploadPhoto(image)
             if(response.resultCode === 0) {
-                dispatch(setPhotoOnProfile(response.data.photos))
+                dispatch(setPhotoOnProfile(response.data))
             }
     }
 }

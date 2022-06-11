@@ -1,8 +1,16 @@
-import React from "react"
+import React, {ReactHTMLElement} from "react"
 import s from './ProfileInfo.module.css'
 // UNUSED COMPONENT FO COMPARE WITH FUNCTIONAL COMPONENT ProfileStatusWithHooks
 
-class ProfileStatus extends React.Component {
+type PropsType = {
+    status: string
+    updateMyStatus: (newStatus: string) => void
+}
+type LocalState = {
+    editMode: boolean
+    status: string
+}
+class ProfileStatus extends React.Component<PropsType, LocalState> {
     state = {
         editMode: false,
         status: this.props.status
@@ -13,10 +21,10 @@ class ProfileStatus extends React.Component {
          this.props.updateMyStatus(this.state.status)
 
     }
-    updateLocalState = (onChange) => {
-        this.setState({status: onChange.target.value})
+    updateLocalState = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({status: e.target.value})
     }
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps:PropsType, prevState:LocalState) {
 
         if(prevProps.status !== this.props.status) {
             this.setState({status: this.props.status})

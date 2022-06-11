@@ -1,3 +1,6 @@
+import {ThunkAction} from "redux-thunk/es/types";
+import {AppStateType} from "../redux/reduxStore";
+
 export type MessagesDataType = {
     post: string
     id: number

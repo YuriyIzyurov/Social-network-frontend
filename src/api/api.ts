@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, {AxiosPromise, AxiosResponse} from "axios";
+import {CurrentProfileType, PhotosType, UserType} from "../typings/types";
 
 const instance = axios.create({
     withCredentials: true,
@@ -8,50 +9,91 @@ const instance = axios.create({
     }
 })
 
-
+export enum ResultCodeForCaptcha  {
+    Success = 0,
+    GoWrong = 1,
+    NeedCaptcha = 10
+}
+export enum ResultCode  {
+    Success = 0,
+    GoWrong = 1
+}
+type GetUsersType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
+}
 export const usersAPI =  {
     getUsers (activePage:number, usersOnPage:number) {
-        return instance.get(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
+        return instance.get<GetUsersType>(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
     },
     followUser(id:number) {
-        return instance.post(`follow/${id}`,{}).then(response => response.data)
+        return instance.post<ResponseType>(`follow/${id}`,{}).then(response => response.data)
     },
     unFollowUser(id:number) {
-        return instance.delete(`follow/${id}`).then(response => response.data)
+        return instance.delete<ResponseType>(`follow/${id}`).then(response => response.data)
     }
 }
 
+type UploadPhotoType = {
+    data: PhotosType
+    resultCode: number
+    messages: Array<string>
+}
 export const profileAPI = {
     getProfile(idFromURL:number){
-        return instance.get(`profile/${idFromURL}`).then(response => response.data)
+        return instance.get<CurrentProfileType>(`profile/${idFromURL}`).then(response => response.data)
     },
     getUserStatus(id:number){
-        return instance.get(`profile/status/${id}`).then(response => response.data)
+        return instance.get<string>(`profile/status/${id}`).then(response => response.data)
     },
     updateStatus(status:string){
-        return instance.put('profile/status',{status:status}).then(response => response.data)
+        return instance.put<ResponseType>('profile/status',{status:status}).then(response => response.data)
     },
     uploadPhoto(file:any){
         const formData = new FormData()
         formData.append("image", file)
-        return instance.put('profile/photo',formData).then(response => response.data)
+        return instance.put<UploadPhotoType>('profile/photo',formData).then(response => response.data)
     },
     updateProfileData(newData:any){
-        return instance.put('profile',newData).then(response => response.data)
+        return instance.put<ResponseType>('profile',newData).then(response => response.data)
     }
+}
+
+type GetAuthType = {
+    data: {
+        id: number
+        email: string
+        login: string
+    }
+    resultCode: ResultCode
+    messages: Array<string>
+}
+type ResponseType = {
+    resultCode: ResultCode
+    messages: Array<string> | []
+    data: any
+}
+type ResponseTypeCaptcha = {
+    resultCode: ResultCodeForCaptcha
+    messages: Array<string> | []
+    data: any
+}
+type GetCaptchaType = {
+    url: string
 }
 export const authAPI =  {
     getAuth () {
-        return instance.get(`auth/me`).then(response => response.data)
+        return instance.get<GetAuthType>(`auth/me`).then(response => response.data)
     },
     submitAuth (email:string, password:string, rememberMe:boolean, captcha:string) {
-        return instance.post("auth/login",{email, password, rememberMe, captcha}).then(response => response.data)
+        return instance.post<ResponseTypeCaptcha>("auth/login",{email, password, rememberMe, captcha}).then(response => response.data)
     },
     logout () {
-        return instance.delete("auth/login").then(response => response.data)
+        return instance.delete<ResponseType>("auth/login").then(response => response.data)
     },
     getCaptcha() {
-        return instance.get("security/get-captcha-url").then(response => response.data)
+        return instance.get<GetCaptchaType>("security/get-captcha-url").then(response => response.data)
     }
 
 }

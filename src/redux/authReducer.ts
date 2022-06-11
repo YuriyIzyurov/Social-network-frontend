@@ -1,5 +1,7 @@
-import {authAPI} from "../api/api";
+import {authAPI, ResultCode, ResultCodeForCaptcha} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {ThunkAction} from "redux-thunk/es/types";
+import {AppStateType} from "./reduxStore";
 
 const SET_USER_AUTH = "SETUSERAUTH"
 const LOGOUT_USER = "LOGOUT_USER"
@@ -13,16 +15,10 @@ let initialState = {
     isAuth: false as boolean | false,
     captcha: null as string | null
 }
-/*let initialState = {
-    email: null,
-    id: null,
-    login: null,
-    isAuth: false,
-    captcha:null
-}*/
+
 export type initialStateType = typeof initialState
 
-const authReducer = (state = initialState,action:any):initialStateType => {
+const authReducer = (state = initialState,action:ActionType):initialStateType => {
     switch (action.type) {
         case SET_USER_AUTH:
             return {
@@ -49,31 +45,34 @@ const authReducer = (state = initialState,action:any):initialStateType => {
             return state
     }
 }
-export const handlingAuthData = () => {
-    return async (dispatch:any) => {
+
+type ActionType = LogoutUser|SetUserAuthActionType|SetCaptchaImage|DeleteCaptcha
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+
+export const handlingAuthData = ():ThunkType => {
+    return async (dispatch) => {
        let response = await authAPI.getAuth()
-            if(response.resultCode === 0){
+            if(response.resultCode === ResultCode.Success){
                 let {email, id, login} = response.data
                 dispatch(setUserAuth(email, id, login))}
-            return response
     }
 }
-export const sendAuthDataOnServ = (email:string, password:string, checkbox:boolean, captcha:string) => {
+export const sendAuthDataOnServ = (email:string, password:string, checkbox:boolean, captcha:string):ThunkType => {
     return async (dispatch:any) => {
         let response = await authAPI.submitAuth(email, password, checkbox, captcha)
-            if(response.resultCode === 0){
+            if(response.resultCode === ResultCodeForCaptcha.Success){
                 dispatch(handlingAuthData())
                 dispatch(deleteCaptcha())
             } else {
-                if(response.resultCode === 10) {
+                if(response.resultCode === ResultCodeForCaptcha.NeedCaptcha) {
                     dispatch(askForCaptcha())
                 }
                 dispatch(stopSubmit("login", {_error: response.messages[0]}))
             }
     }
 }
-export const askForCaptcha = () => {
-    return async (dispatch:any) => {
+export const askForCaptcha = ():ThunkType => {
+    return async (dispatch) => {
         let response = await authAPI.getCaptcha()
         dispatch(setCaptchaImage(response.url))
     }
@@ -81,9 +80,9 @@ export const askForCaptcha = () => {
 export const logoutFromServer = () => {
     return (dispatch:any) => {
             authAPI.logout().then((response) => {
-            if(response.resultCode === 0){
+            if(response.resultCode === ResultCode.Success){
                 authAPI.getAuth().then((response) => {
-                    if(response.resultCode === 1){
+                    if(response.resultCode === ResultCode.GoWrong){
                         dispatch(logoutUser())
                     }
                 })
@@ -103,6 +102,12 @@ type SetUserAuthActionType = {
 type SetCaptchaImage = {
     type: typeof SET_CAPTCHA
     imageURL: string
+}
+type LogoutUser = {
+    type: typeof LOGOUT_USER
+}
+type DeleteCaptcha = {
+    type: typeof DEL_CAPTCHA
 }
 export const setUserAuth = (email:string,id:number,login:string):SetUserAuthActionType => ({type : SET_USER_AUTH, data : {email,id,login}})
 export const logoutUser = () => ({type : LOGOUT_USER})
