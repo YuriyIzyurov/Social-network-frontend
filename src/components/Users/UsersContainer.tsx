@@ -39,7 +39,7 @@ type DispatchPropsType = {
 class UsersContainer extends React.Component<StatePropsType & DispatchPropsType> {
 
     componentDidMount() {
-        debugger
+
         const {activePage, usersOnPage } = this.props
         this.props.handlingUsers(activePage,usersOnPage)
     }

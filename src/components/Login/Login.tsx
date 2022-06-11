@@ -1,12 +1,27 @@
 import React, {useState} from "react";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm, SubmitHandler} from "redux-form";
 import {Input} from "../../common/FormsControl/Textarea";
 import {maxLength30, required} from "../../utils/validators/validators";
 import {Navigate} from "react-router";
 import s from "./../../common/FormsControl/Textarea.module.css"
+import { ThunkType } from "../../redux/authReducer";
+import {DispatchPropsLoginType, StatePropsLoginType} from "./LoginContainer";
 
-const Login = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
-    const onSubmit = (formData) => {
+
+export type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+type OwnPropsTypeForm = {
+    askForCaptcha: () => ThunkType
+    captcha : string | null | undefined
+    sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
+}
+const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
+    const onSubmit = (formData: FormDataType) => {
         sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe,formData.captcha)
     }
     if(isAuth) {
@@ -18,9 +33,9 @@ const Login = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
     </div>
 }
 
-const LoginForm = ({handleSubmit, error, askForCaptcha, captcha}) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsTypeForm> & OwnPropsTypeForm> = ({handleSubmit, error, askForCaptcha, captcha}) => {
 
-    const Captcha = (captcha) => {
+    const Captcha: React.FC<{captcha: string}> = (captcha) => {
 
         return <div>
             <div>
@@ -55,7 +70,7 @@ const LoginForm = ({handleSubmit, error, askForCaptcha, captcha}) => {
     )
 }
 
-let LoginFormRedux = reduxForm({
+let LoginFormRedux = reduxForm<FormDataType,OwnPropsTypeForm>({
     form: 'login'
 })(LoginForm)
 

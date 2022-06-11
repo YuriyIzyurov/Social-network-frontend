@@ -25,7 +25,7 @@ const Profile: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, i
                          isShowMyProfile={isShowMyProfile}
                          handlePhotoChange={handlePhotoChange}
                          sendProfileDataOnServ={sendProfileDataOnServ}/>
-           {/* <MyPostContainer/>*/}
+            {/*<MyPostContainer/>*/}
         </div>
     )
 }

@@ -10,8 +10,6 @@ const instance = axios.create({
 })
 
 export enum ResultCodeForCaptcha  {
-    Success = 0,
-    GoWrong = 1,
     NeedCaptcha = 10
 }
 export enum ResultCode  {
@@ -22,42 +20,6 @@ type GetUsersType = {
     items: Array<UserType>
     totalCount: number
     error: string
-}
-export const usersAPI =  {
-    getUsers (activePage:number, usersOnPage:number) {
-        return instance.get<GetUsersType>(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
-    },
-    followUser(id:number) {
-        return instance.post<ResponseType>(`follow/${id}`,{}).then(response => response.data)
-    },
-    unFollowUser(id:number) {
-        return instance.delete<ResponseType>(`follow/${id}`).then(response => response.data)
-    }
-}
-
-type UploadPhotoType = {
-    data: PhotosType
-    resultCode: number
-    messages: Array<string>
-}
-export const profileAPI = {
-    getProfile(idFromURL:number){
-        return instance.get<CurrentProfileType>(`profile/${idFromURL}`).then(response => response.data)
-    },
-    getUserStatus(id:number){
-        return instance.get<string>(`profile/status/${id}`).then(response => response.data)
-    },
-    updateStatus(status:string){
-        return instance.put<ResponseType>('profile/status',{status:status}).then(response => response.data)
-    },
-    uploadPhoto(file:any){
-        const formData = new FormData()
-        formData.append("image", file)
-        return instance.put<UploadPhotoType>('profile/photo',formData).then(response => response.data)
-    },
-    updateProfileData(newData:any){
-        return instance.put<ResponseType>('profile',newData).then(response => response.data)
-    }
 }
 
 type GetAuthType = {
@@ -70,24 +32,60 @@ type GetAuthType = {
     messages: Array<string>
 }
 type ResponseType = {
-    resultCode: ResultCode
-    messages: Array<string> | []
-    data: any
-}
-type ResponseTypeCaptcha = {
-    resultCode: ResultCodeForCaptcha
+    resultCode: ResultCode | ResultCodeForCaptcha
     messages: Array<string> | []
     data: any
 }
 type GetCaptchaType = {
     url: string
 }
+type UploadPhotoType = {
+    data: {photos: PhotosType}
+    resultCode: number
+    messages: Array<string>
+}
+
+
+export const usersAPI =  {
+    getUsers (activePage:number, usersOnPage:number) {
+        return instance.get<GetUsersType>(`users?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
+    },
+    followUser(id:number) {
+        return instance.post<ResponseType>(`follow/${id}`,{}).then(response => response.data)
+    },
+    unFollowUser(id:number) {
+        return instance.delete<ResponseType>(`follow/${id}`).then(response => response.data)
+    }
+}
+
+
+export const profileAPI = {
+    getProfile(idFromURL:number){
+        return instance.get<CurrentProfileType>(`profile/${idFromURL}`).then(response => response.data)
+    },
+    getUserStatus(id:number){
+        return instance.get<string>(`profile/status/${id}`).then(response => response.data)
+    },
+    updateStatus(status:string){
+        return instance.put<ResponseType>('profile/status',{status:status}).then(response => response.data)
+    },
+    uploadPhoto(file:File){
+        const formData = new FormData()
+        formData.append("image", file)
+        return instance.put<UploadPhotoType>('profile/photo',formData).then(response => response.data)
+    },
+    updateProfileData(newData:any){
+        return instance.put<ResponseType>('profile',newData).then(response => response.data)
+    }
+}
+
+
 export const authAPI =  {
     getAuth () {
         return instance.get<GetAuthType>(`auth/me`).then(response => response.data)
     },
     submitAuth (email:string, password:string, rememberMe:boolean, captcha:string) {
-        return instance.post<ResponseTypeCaptcha>("auth/login",{email, password, rememberMe, captcha}).then(response => response.data)
+        return instance.post<ResponseType>("auth/login",{email, password, rememberMe, captcha}).then(response => response.data)
     },
     logout () {
         return instance.delete<ResponseType>("auth/login").then(response => response.data)

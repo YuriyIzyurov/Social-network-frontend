@@ -1,4 +1,4 @@
-import {profileAPI} from "../api/api";
+import {profileAPI, ResultCode} from "../api/api";
 import {stopSubmit} from "redux-form";
 import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
 import {ThunkAction} from "redux-thunk/es/types";
@@ -76,16 +76,18 @@ export const getUserStatusInProfile = (id:number):ThunkType =>{
 export const updateMyStatus = (status:string):ThunkType =>{
     return async (dispatch) => {
         const response = await profileAPI.updateStatus(status)
-            if(response.resultCode === 0) {
+            if(response.resultCode === ResultCode.Success) {
                 dispatch(setStatusOnProfile(status))
             }
     }
 }
 export const handlePhotoChange = (image:File):ThunkType =>{
+
     return async (dispatch) => {
         const response = await profileAPI.uploadPhoto(image)
-            if(response.resultCode === 0) {
-                dispatch(setPhotoOnProfile(response.data))
+            if(response.resultCode === ResultCode.Success) {
+
+                dispatch(setPhotoOnProfile(response.data.photos))
             }
     }
 }
@@ -94,7 +96,7 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
     return async (dispatch:any, getState:any) => {
         const userId = getState().auth.id
         const response = await profileAPI.updateProfileData(newData)
-        if (response.resultCode === 0) {
+        if (response.resultCode === ResultCode.Success) {
             dispatch(setProfileOnPage(userId))
         } else {
             let error = response.messages[0]
