@@ -1,17 +1,8 @@
 import {usersAPI} from "../api/api";
 import { UserType } from "../typings/types";
-import {AppStateType} from "./reduxStore";
+import {AppStateType, InferActionsTypes} from "./reduxStore";
 import {Dispatch} from "redux";
 import { ThunkAction } from "redux-thunk/es/types";
-
-const FOLLOW = "FOLLOW"
-const SET_USERS = "SET_USERS"
-const SET_ACTIVE_PAGE = "SET_ACTIVE_PAGE"
-const SET_TOTAL_USERS = "SET_TOTAL_USERS"
-const FETCHING = "FETCHING"
-const FOLLOW_IN_PROCESS = "FOLLOW_IN_PROCESS"
-
-
 
 let initialState = {users: [] as Array<UserType>,
                     totalUsers: 0,
@@ -26,34 +17,34 @@ export type InitialStateType = typeof initialState
 
 const usersReducer = (state = initialState, action:ActionType):InitialStateType => {
     switch(action.type){
-        case FOLLOW:
+        case "FOLLOW":
             return {
                 ...state,
                 users: state.users.map(item=>{
                     return item.id === action.userID ? {...item, followed: !item.followed} : item
                 })
             }
-        case SET_USERS:
+        case "SET_USERS":
             return {
                  ...state,
                 users: action.users
             }
-        case SET_ACTIVE_PAGE:
+        case "SET_ACTIVE_PAGE":
             return {
                 ...state,
                 activePage: action.activePage
             }
-        case SET_TOTAL_USERS:
+        case "SET_TOTAL_USERS":
             return {
                 ...state,
                 totalUsers: action.totalUsers
             }
-        case  FETCHING:
+        case  "FETCHING":
             return {
                 ...state,
                 isFetching: action.isFetching
             }
-        case FOLLOW_IN_PROCESS:
+        case "FOLLOW_IN_PROCESS":
 
             return {
                 ...state,
@@ -67,84 +58,60 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
 
 }
 
-type ActionType = FollowToggleType|SetUsers|SetActivePage|SetTotalUsers|DataIsFetching|FollowActionInProcess
+type ActionType = InferActionsTypes<typeof actions>
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
 export const handlingUsers =  (activePage:number,usersOnPage:number): ThunkType => {
     return async (dispatch, getState) => {
-        dispatch(dataIsFetching(true))
+        dispatch(actions.dataIsFetching(true))
         let response = await usersAPI.getUsers(activePage, usersOnPage)
-            dispatch(dataIsFetching(false))
-            dispatch(setUsers(response.items))
-            dispatch(setTotalUsers(response.totalCount))
+            dispatch(actions.dataIsFetching(false))
+            dispatch(actions.setUsers(response.items))
+            dispatch(actions.setTotalUsers(response.totalCount))
 
     }
 }
 export  const handlingUsersOnPage = (n:number, activePage:number, usersOnPage:number):ThunkType => {
 
     return async (dispatch) => {
-        dispatch(setActivePage(n))
-        dispatch(dataIsFetching(true))
+        dispatch(actions.setActivePage(n))
+        dispatch(actions.dataIsFetching(true))
         let response = await usersAPI.getUsers(activePage, usersOnPage)
-            dispatch(dataIsFetching(false))
-            dispatch(setUsers(response.items))
+            dispatch(actions.dataIsFetching(false))
+            dispatch(actions.setUsers(response.items))
 
     }
 }
 
 export const handlingFollowAction = (id:number):ThunkType => {
     return async (dispatch) => {
-        dispatch(followActionInProcess(true, id))
+        dispatch(actions.followActionInProcess(true, id))
         let response = await usersAPI.followUser(id)
             if(response.resultCode === 0){
-                dispatch(followToggle(id))
+                dispatch(actions.followToggle(id))
             }
-            dispatch(followActionInProcess(false, id))
+            dispatch(actions.followActionInProcess(false, id))
     }
 }
 
 export const handlingUnfollowAction = (id:number):ThunkType => {
     return async (dispatch) => {
-        dispatch(followActionInProcess(true, id))
+        dispatch(actions.followActionInProcess(true, id))
         let response = await usersAPI.unFollowUser(id)
             if(response.resultCode === 0){
-                dispatch(followToggle(id))
+                dispatch(actions.followToggle(id))
             }
-            dispatch(followActionInProcess(false, id))
+            dispatch(actions.followActionInProcess(false, id))
     }
 }
-
-type FollowToggleType = {
-    type: typeof FOLLOW
-    userID: number
+export const actions = {
+    followToggle: (userID:number) => ({type : "FOLLOW", userID} as const),
+    setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
+    setActivePage: (activePage:number) => ({type: "SET_ACTIVE_PAGE", activePage} as const),
+    setTotalUsers: (totalUsers:number)=> ({type: "SET_TOTAL_USERS", totalUsers} as const),
+    dataIsFetching: (isFetching:boolean) => ({type: "FETCHING", isFetching} as const),
+    followActionInProcess: (isFetching:boolean, userID:number)=>({type:"FOLLOW_IN_PROCESS", isFetching, userID} as const)
 }
-type SetUsers = {
-    type: typeof SET_USERS
-    users: Array<UserType>
-}
-type SetActivePage = {
-    type: typeof SET_ACTIVE_PAGE
-    activePage: number
-}
-type SetTotalUsers = {
-    type: typeof SET_TOTAL_USERS
-    totalUsers: number
-}
-type DataIsFetching = {
-    type: typeof FETCHING
-    isFetching: boolean
-}
-type FollowActionInProcess = {
-    type: typeof FOLLOW_IN_PROCESS
-    isFetching: boolean
-    userID: number
-}
-export const followToggle = (userID:number):FollowToggleType => ({type : FOLLOW, userID})
-export const setUsers = (users: Array<UserType>):SetUsers => ({type: SET_USERS, users})
-export const setActivePage = (activePage:number):SetActivePage => ({type: SET_ACTIVE_PAGE, activePage})
-export const setTotalUsers = (totalUsers:number):SetTotalUsers => ({type: SET_TOTAL_USERS, totalUsers})
-export const dataIsFetching = (isFetching:boolean):DataIsFetching => ({type: FETCHING, isFetching})
-export const followActionInProcess = (isFetching:boolean, userID:number):FollowActionInProcess =>({type:FOLLOW_IN_PROCESS, isFetching, userID})
 
 
 export default usersReducer

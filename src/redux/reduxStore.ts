@@ -17,9 +17,9 @@ let rootReducer = combineReducers({
     form: formReducer,
     app: appReducer
 })
-type RootReducerType = typeof rootReducer
-export type AppStateType = ReturnType<RootReducerType>
 
+export type AppStateType = ReturnType<typeof rootReducer>
+export type InferActionsTypes<T extends {[key: string]: (...args: any) => any}> = ReturnType<T extends {[key: string]: infer U} ? U : never>
 
 
 declare global {
@@ -30,7 +30,6 @@ declare global {
 }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
-
 
 // @ts-ignore
 window.__store__ = store
