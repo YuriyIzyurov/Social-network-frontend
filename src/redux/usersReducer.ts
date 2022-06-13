@@ -1,7 +1,12 @@
-import {usersAPI} from "../api/api";
 import { UserType } from "../typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
 import { ThunkAction } from "redux-thunk/es/types";
+import {usersAPI} from "../api/usersAPI";
+
+type ActionType = InferActionsTypes<typeof actions>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export type InitialStateType = typeof initialState
+
 
 let initialState = {users: [] as Array<UserType>,
                     totalUsers: 0,
@@ -11,8 +16,6 @@ let initialState = {users: [] as Array<UserType>,
                     followInProcess: [] as Array<number> //array of users ID is now following in process
 
 }
-export type InitialStateType = typeof initialState
-
 
 const usersReducer = (state = initialState, action:ActionType):InitialStateType => {
     switch(action.type){
@@ -56,9 +59,6 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
     }
 
 }
-
-type ActionType = InferActionsTypes<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
 export const handlingUsers =  (activePage:number,usersOnPage:number): ThunkType => {
     return async (dispatch, getState) => {

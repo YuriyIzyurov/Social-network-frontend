@@ -1,24 +1,27 @@
-import {profileAPI, ResultCode} from "../api/api";
+import {ResultCode} from "../api/api";
 import {stopSubmit} from "redux-form";
 import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
-import {ThunkAction} from "redux-thunk/es/types";
-import {AppStateType, InferActionsTypes} from "./reduxStore";
+import {BaseThunkType, InferActionsTypes} from "./reduxStore";
+import {profileAPI} from "../api/profileAPI";
+
+export type InitialStateType = typeof initialState
+type ActionType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionType>
+
 
 let initialState = {
     messagesData : [
-            {post: "Hi are you?", id: 1,likesCount: 5},
-            {post: "Whats is going on?", id: 2,likesCount: 22},
-            {post: "Nice 2 meet u", id: 3,likesCount: 14}] as Array<MessagesDataType>,
-        textArea : '',
-        profileID: null as number | null,
-        currentProfile: null as CurrentProfileType | null,
-        status: ""
+        {post: "Hi are you?", id: 1,likesCount: 5},
+        {post: "Whats is going on?", id: 2,likesCount: 22},
+        {post: "Nice 2 meet u", id: 3,likesCount: 14}] as Array<MessagesDataType>,
+    textArea : '',
+    profileID: null as number | null,
+    currentProfile: null as CurrentProfileType | null,
+    status: ""
 }
-export type InitialStateType = typeof initialState
 const profileReducer = (state = initialState, action: ActionType):InitialStateType => {
-
     switch (action.type) {
-        case "ADDPOST":
+        case "ADD_POST":
             return {
                 ...state,
                 messagesData : [...state.messagesData, {post: action.newText, id: 4, likesCount: 0}],
@@ -49,9 +52,6 @@ const profileReducer = (state = initialState, action: ActionType):InitialStateTy
     }
 }
 
-type ActionType = InferActionsTypes<typeof actions>
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export const setProfileOnPage = (id:number):ThunkType => {
     return async (dispatch) => {
         const response = await profileAPI.getProfile(id)
@@ -84,6 +84,7 @@ export const handlePhotoChange = (image:File):ThunkType =>{
     }
 }
 
+//надо будет затипизировать
 export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
     return async (dispatch:any, getState:any) => {
         const userId = getState().auth.id
@@ -106,7 +107,7 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
     }
 }
 export const actions = {
-    addNewPost: (text: string) => ({type : "ADDPOST", newText : text} as const),
+    addNewPost: (text: string) => ({type : "ADD_POST", newText : text} as const),
     getProfileID: (id: number) => ({type: "CHANGE_PROFILE_ID", id} as const),
     setCurrentProfile: (profile:CurrentProfileType) => ({type: "SET_CURRENT_PROFILE", profile} as const),
     setStatusOnProfile: (status: string) => ({type: "SET_STATUS", status} as const),

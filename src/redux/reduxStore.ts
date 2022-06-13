@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
+import {Action, applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
 import dialogReducer from "./dialogReducer";
 import profileReducer from "./profileReducer";
 import sidebarReducer from "./sidebarReducer";
@@ -7,6 +7,7 @@ import authReducer from "./authReducer";
 import thunk from "redux-thunk";
 import {reducer as formReducer} from "redux-form";
 import appReducer from "./appReducer";
+import {ThunkAction} from "redux-thunk/es/types";
 
 let rootReducer = combineReducers({
     dialog: dialogReducer,
@@ -20,6 +21,7 @@ let rootReducer = combineReducers({
 
 export type AppStateType = ReturnType<typeof rootReducer>
 export type InferActionsTypes<T extends {[key: string]: (...args: any) => any}> = ReturnType<T extends {[key: string]: infer U} ? U : never>
+export type BaseThunkType<A extends Action,R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
 
 
 declare global {

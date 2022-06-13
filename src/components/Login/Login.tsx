@@ -4,8 +4,10 @@ import {Input} from "../../common/FormsControl/Textarea";
 import {maxLength30, required} from "../../utils/validators/validators";
 import {Navigate} from "react-router";
 import s from "./../../common/FormsControl/Textarea.module.css"
-import { ThunkType } from "../../redux/authReducer";
+
 import {DispatchPropsLoginType, StatePropsLoginType} from "./LoginContainer";
+import {BaseThunkType} from "../../redux/reduxStore";
+import {ActionType} from "../../redux/authReducer";
 
 
 export type FormDataType = {
@@ -14,12 +16,13 @@ export type FormDataType = {
     rememberMe: boolean
     captcha: string
 }
-
 type OwnPropsTypeForm = {
     askForCaptcha: () => ThunkType
     captcha : string | null | undefined
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
 }
+type ThunkType = BaseThunkType<ActionType>
+
 const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
     const onSubmit = (formData: FormDataType) => {
         sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe,formData.captcha)

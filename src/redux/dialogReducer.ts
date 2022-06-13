@@ -1,4 +1,5 @@
-const SENDMESSAGE = "SEND-MESSAGE"
+import {InferActionsTypes} from "./reduxStore";
+
 
 type PrivateMessageDataType = {
     message: string
@@ -9,6 +10,9 @@ type DialogDataType = {
     id: number
     src: string
 }
+export type InitialStateType = typeof initialState
+type ActionType = InferActionsTypes<typeof actions>
+
 let initialState = {
     privateMessageData : [
         {message: "Hi are you?", id: 1},
@@ -22,12 +26,11 @@ let initialState = {
         {name: "Anna", id: 4, src:'https://klike.net/uploads/posts/2019-03/1551511784_4.jpg'},
         {name: "Dmitriy", id: 5, src:'http://pm1.narvii.com/6889/74979d4d2744ec6e27995b6e866f091d04c0b40cr1-515-414v2_uhq.jpg'}] as Array<DialogDataType>
 }
-export type InitialStateType = typeof initialState
 
-const dialogReducer = (state = initialState,action:SendNewMessageType):InitialStateType => {
+const dialogReducer = (state = initialState,action:ActionType):InitialStateType => {
 
     switch (action.type) {
-        case SENDMESSAGE:
+        case "SEND_MESSAGE":
             return {
                 ...state,
                 privateMessageData : [...state.privateMessageData, {message: action.messageText, id: 5}],
@@ -37,10 +40,8 @@ const dialogReducer = (state = initialState,action:SendNewMessageType):InitialSt
             return state
     }
 }
-type SendNewMessageType = {
-    type: typeof SENDMESSAGE
-    messageText: string
+export const actions = {
+    sendNewMessage: (text:string) => ({type : "SEND_MESSAGE", messageText : text} as const)
 }
-export const sendNewMessage = (text:string):SendNewMessageType => ({type : SENDMESSAGE, messageText : text})
 
 export default dialogReducer
