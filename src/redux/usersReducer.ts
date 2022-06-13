@@ -1,7 +1,6 @@
 import {usersAPI} from "../api/api";
 import { UserType } from "../typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
-import {Dispatch} from "redux";
 import { ThunkAction } from "redux-thunk/es/types";
 
 let initialState = {users: [] as Array<UserType>,

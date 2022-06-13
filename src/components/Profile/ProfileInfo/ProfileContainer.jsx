@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "../Profile";
 import {connect} from "react-redux";
 import {
-    getProfileID,
+    actions,
     getUserStatusInProfile, handlePhotoChange, sendProfileDataOnServ,
     setProfileOnPage, updateMyStatus,
 } from "../../../redux/profileReducer";
@@ -73,7 +73,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-
+let getProfileID = actions.getProfileID
 export default compose(
     connect(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
     withRouter

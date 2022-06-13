@@ -2,15 +2,7 @@ import {profileAPI, ResultCode} from "../api/api";
 import {stopSubmit} from "redux-form";
 import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
 import {ThunkAction} from "redux-thunk/es/types";
-import {AppStateType} from "./reduxStore";
-
-const ADDPOST = "ADD-POST"
-const CHANGE_PROFILE_ID = "CHANGE_PROFILE_ID"
-const SET_CURRENT_PROFILE = "SET_CURRENT_PROFILE"
-const SET_STATUS = "SET_STATUS"
-const SET_PHOTO = "SET_PHOTO"
-
-
+import {AppStateType, InferActionsTypes} from "./reduxStore";
 
 let initialState = {
     messagesData : [
@@ -26,28 +18,28 @@ export type InitialStateType = typeof initialState
 const profileReducer = (state = initialState, action: ActionType):InitialStateType => {
 
     switch (action.type) {
-        case ADDPOST:
+        case "ADDPOST":
             return {
                 ...state,
                 messagesData : [...state.messagesData, {post: action.newText, id: 4, likesCount: 0}],
                 textArea: ''
             }
-        case CHANGE_PROFILE_ID:
+        case "CHANGE_PROFILE_ID":
             return {
                 ...state,
                 profileID: action.id
             }
-        case SET_CURRENT_PROFILE:
+        case "SET_CURRENT_PROFILE":
             return {
                 ...state,
                 currentProfile: action.profile
             }
-        case SET_STATUS:
+        case "SET_STATUS":
             return {
                 ...state,
                 status: action.status
             }
-        case SET_PHOTO:
+        case "SET_PHOTO":
             return {
                 ...state,
                 currentProfile: {...state.currentProfile, photos: action.photo} as CurrentProfileType
@@ -57,27 +49,27 @@ const profileReducer = (state = initialState, action: ActionType):InitialStateTy
     }
 }
 
-type ActionType = AddNewPost|GetProfileID|setCurrentProfile|setStatusOnProfile|setPhotoOnProfile
+type ActionType = InferActionsTypes<typeof actions>
 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export const setProfileOnPage = (id:number):ThunkType => {
     return async (dispatch) => {
         const response = await profileAPI.getProfile(id)
-            dispatch(setCurrentProfile(response))
+            dispatch(actions.setCurrentProfile(response))
 
     }
 }
 export const getUserStatusInProfile = (id:number):ThunkType =>{
     return  async (dispatch) => {
         const response = await profileAPI.getUserStatus(id)
-            dispatch(setStatusOnProfile(response))
+            dispatch(actions.setStatusOnProfile(response))
     }
 }
 export const updateMyStatus = (status:string):ThunkType =>{
     return async (dispatch) => {
         const response = await profileAPI.updateStatus(status)
             if(response.resultCode === ResultCode.Success) {
-                dispatch(setStatusOnProfile(status))
+                dispatch(actions.setStatusOnProfile(status))
             }
     }
 }
@@ -87,7 +79,7 @@ export const handlePhotoChange = (image:File):ThunkType =>{
         const response = await profileAPI.uploadPhoto(image)
             if(response.resultCode === ResultCode.Success) {
 
-                dispatch(setPhotoOnProfile(response.data.photos))
+                dispatch(actions.setPhotoOnProfile(response.data.photos))
             }
     }
 }
@@ -113,31 +105,13 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
         }
     }
 }
+export const actions = {
+    addNewPost: (text: string) => ({type : "ADDPOST", newText : text} as const),
+    getProfileID: (id: number) => ({type: "CHANGE_PROFILE_ID", id} as const),
+    setCurrentProfile: (profile:CurrentProfileType) => ({type: "SET_CURRENT_PROFILE", profile} as const),
+    setStatusOnProfile: (status: string) => ({type: "SET_STATUS", status} as const),
+    setPhotoOnProfile: (photo: PhotosType) => ({type: "SET_PHOTO", photo} as const)
+}
 
-type AddNewPost = {
-    type: typeof ADDPOST
-    newText: string
-}
-type GetProfileID = {
-    type: typeof CHANGE_PROFILE_ID
-    id: number
-}
-type setCurrentProfile = {
-    type: typeof SET_CURRENT_PROFILE
-    profile: CurrentProfileType
-}
-type setStatusOnProfile = {
-    type: typeof SET_STATUS
-    status: string
-}
-type setPhotoOnProfile = {
-    type: typeof SET_PHOTO
-    photo: PhotosType
-}
-export const addNewPost = (text: string):AddNewPost => ({type : ADDPOST, newText : text})
-export const getProfileID = (id: number):GetProfileID => ({type: CHANGE_PROFILE_ID, id})
-export const setCurrentProfile = (profile:CurrentProfileType):setCurrentProfile => ({type: SET_CURRENT_PROFILE, profile})
-export const setStatusOnProfile = (status: string):setStatusOnProfile => ({type: SET_STATUS, status})
-export const setPhotoOnProfile = (photo: PhotosType):setPhotoOnProfile => ({type: SET_PHOTO, photo})
 
 export default profileReducer

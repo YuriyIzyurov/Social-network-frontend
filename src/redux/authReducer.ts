@@ -1,7 +1,7 @@
 import {authAPI, ResultCode, ResultCodeForCaptcha} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {ThunkAction} from "redux-thunk/es/types";
-import {AppStateType} from "./reduxStore";
+import {AppStateType, InferActionsTypes} from "./reduxStore";
 
 const SET_USER_AUTH = "SETUSERAUTH"
 const LOGOUT_USER = "LOGOUT_USER"
@@ -46,7 +46,7 @@ const authReducer = (state = initialState,action:ActionType):initialStateType =>
     }
 }
 
-type ActionType = LogoutUser|SetUserAuthActionType|SetCaptchaImage|DeleteCaptcha
+type ActionType = InferActionsTypes<typeof actions>
 export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
 export const handlingAuthData = ():ThunkType => {
@@ -54,7 +54,7 @@ export const handlingAuthData = ():ThunkType => {
        let response = await authAPI.getAuth()
             if(response.resultCode === ResultCode.Success){
                 let {email, id, login} = response.data
-                dispatch(setUserAuth(email, id, login))}
+                dispatch(actions.setUserAuth(email, id, login))}
     }
 }
 export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean, captcha:string):ThunkType => {
@@ -62,7 +62,7 @@ export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boo
         let response = await authAPI.submitAuth(email, password, rememberMe, captcha)
             if(response.resultCode === ResultCode.Success){
                 dispatch(handlingAuthData())
-                dispatch(deleteCaptcha())
+                dispatch(actions.deleteCaptcha())
             } else {
                 if(response.resultCode === ResultCodeForCaptcha.NeedCaptcha) {
                     dispatch(askForCaptcha())
@@ -74,7 +74,7 @@ export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boo
 export const askForCaptcha = ():ThunkType => {
     return async (dispatch) => {
         let response = await authAPI.getCaptcha()
-        dispatch(setCaptchaImage(response.url))
+        dispatch(actions.setCaptchaImage(response.url))
     }
 }
 export const logoutFromServer = () => {
@@ -83,36 +83,21 @@ export const logoutFromServer = () => {
             if(response.resultCode === ResultCode.Success){
                 authAPI.getAuth().then((response) => {
                     if(response.resultCode === ResultCode.GoWrong){
-                        dispatch(logoutUser())
+                        dispatch(actions.logoutUser())
                     }
                 })
             }
          })
     }
 }
-type AuthDataType = {
-    email: string
-    id: number
-    login: string
+
+export const actions = {
+    setUserAuth: (email:string,id:number,login:string) => ({type : SET_USER_AUTH, data : {email,id,login}} as const),
+    logoutUser: () => ({type : LOGOUT_USER} as const),
+    setCaptchaImage: (imageURL:string) => ({type : SET_CAPTCHA, imageURL} as const),
+    deleteCaptcha: () => ({type : DEL_CAPTCHA} as const)
 }
-type SetUserAuthActionType = {
-    type: typeof SET_USER_AUTH
-    data: AuthDataType
-}
-type SetCaptchaImage = {
-    type: typeof SET_CAPTCHA
-    imageURL: string
-}
-type LogoutUser = {
-    type: typeof LOGOUT_USER
-}
-type DeleteCaptcha = {
-    type: typeof DEL_CAPTCHA
-}
-export const setUserAuth = (email:string,id:number,login:string):SetUserAuthActionType => ({type : SET_USER_AUTH, data : {email,id,login}})
-export const logoutUser = () => ({type : LOGOUT_USER})
-export const setCaptchaImage = (imageURL:string):SetCaptchaImage => ({type : SET_CAPTCHA, imageURL})
-export const deleteCaptcha = () => ({type : DEL_CAPTCHA})
+
 
 
 export default authReducer

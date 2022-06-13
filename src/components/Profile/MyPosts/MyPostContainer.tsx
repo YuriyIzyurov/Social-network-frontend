@@ -1,11 +1,12 @@
 import MyPosts from "./MyPosts";
-import {addNewPost} from "../../../redux/profileReducer";
+
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {withRedirectIfNoAuth} from "../../HOC/withRedirectIfNoAuth";
 import {getMessagesData, getTextArea} from "../../../redux/post-selectors";
 import {AppStateType} from "../../../redux/reduxStore";
 import {MessagesDataType} from "../../../typings/types";
+import { actions } from "../../../redux/profileReducer";
 
 
 let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array<MessagesDataType> } => {
@@ -14,7 +15,7 @@ let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array
         messagesData: getMessagesData(state)
     }
 }
-
+let addNewPost = actions.addNewPost
 export default compose(
     connect(mapStateToProps, {addNewPost}),
     withRedirectIfNoAuth
