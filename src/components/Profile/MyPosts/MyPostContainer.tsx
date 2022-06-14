@@ -7,6 +7,7 @@ import {getMessagesData, getTextArea} from "../../../redux/post-selectors";
 import {AppStateType} from "../../../redux/reduxStore";
 import {MessagesDataType} from "../../../typings/types";
 import { actions } from "../../../redux/profileReducer";
+import {ComponentType} from "react";
 
 
 let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array<MessagesDataType> } => {
@@ -16,7 +17,7 @@ let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array
     }
 }
 let addNewPost = actions.addNewPost
-export default compose(
+export default compose<ComponentType>(
     connect(mapStateToProps, {addNewPost}),
     withRedirectIfNoAuth
 )(MyPosts)

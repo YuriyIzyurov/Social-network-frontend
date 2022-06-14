@@ -37,3 +37,17 @@ export type UserType = {
     followed: boolean
     photos:PhotosType
 }
+export type ArrayOfUsersType = {
+    nameList: Array<DialogDataType>
+}
+
+export type PrivateMessageDataType = {
+    message: string
+    id: number
+}
+export type DialogDataType = {
+    name: string
+    id: number
+    src: string
+}
+

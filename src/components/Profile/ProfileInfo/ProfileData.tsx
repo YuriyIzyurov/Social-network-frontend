@@ -1,6 +1,6 @@
 import React from "react"
 import s from './ProfileInfo.module.css'
-import {CurrentProfileType} from "../../../typings/types";
+import {ContactsType, CurrentProfileType} from "../../../typings/types";
 
 
 const ProfileData: React.FC<{currentProfile: CurrentProfileType}> = ({currentProfile}) => {
@@ -25,8 +25,9 @@ const ProfileData: React.FC<{currentProfile: CurrentProfileType}> = ({currentPro
             {currentProfile.lookingForAJob && <div><b>Looking for a job description:</b> {currentProfile.lookingForAJobDescription}</div>}
         </div>
         <div>
-            <b>Contacts:</b> {Object.keys(currentProfile.contacts).map((key:any) => {
-            return  <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key]}/>
+            <b>Contacts:</b> {Object.keys(currentProfile.contacts).map((key:string) => {
+                //todo: change key as any
+            return  <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key as any]}/>
         })}
         </div>
     </div>

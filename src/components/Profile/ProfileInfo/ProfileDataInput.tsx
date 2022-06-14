@@ -1,34 +1,35 @@
 import React from "react"
 import s from './ProfileInfo.module.css'
 import style from "./../../../common/FormsControl/Textarea.module.css"
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../../../common/FormsControl/Textarea";
 import {maxLength200, maxLength30, required} from "../../../utils/validators/validators";
-import {CurrentProfileType} from "../../../typings/types";
+import {ContactsType, CurrentProfileType} from "../../../typings/types";
 
-type PropsType = {
-    currentProfile: CurrentProfileType
+type PropsDataType = {
     sendProfileDataOnServ: (formData?: any) => any
     changeEditMode: (type:boolean) => void
+    currentProfile: CurrentProfileType
+}
+type PropsFormDataType = {
 }
 
-const ProfileDataInput: React.FC<PropsType> = ({currentProfile, sendProfileDataOnServ, changeEditMode}) => {
-    /*const [checked, setChecked] = useState(false)
-    const handleChange = () => setChecked(!checked)*/
-    const sendData = (formData:any) => {
+
+const ProfileDataInput: React.FC<PropsDataType> = ({currentProfile, sendProfileDataOnServ, changeEditMode}) => {
+
+    const sendData = (formData:CurrentProfileType) => {
          sendProfileDataOnServ(formData)
              .then(() => changeEditMode(false))
-
-
     }
-    const Contact: React.FC<{socialMedia:string}> = ({socialMedia}) => {
+
+    const Contact: React.FC<{socialMedia:string, contactValue:string}> = ({socialMedia}) => {
         return <div className={s.descriptionBlock}>
             <b>{socialMedia}:</b><Field placeholder={socialMedia} component={Input} validate={[maxLength200]}
                                         name={"contacts." + socialMedia}/>
         </div>
     }
 
-    const ProfileDataInputForm: React.FC<{handleSubmit:any, error?:string }> = ({handleSubmit, error}) => {
+    const ProfileDataInputForm: React.FC<InjectedFormProps<CurrentProfileType, PropsFormDataType> & PropsFormDataType> = ({handleSubmit, error}) => {
         return <form onSubmit={handleSubmit}>
             <div className={s.descriptionBlock}>
                 <span>{currentProfile.fullName}</span><Field  placeholder={"nickname"} component={Input}
@@ -48,7 +49,8 @@ const ProfileDataInput: React.FC<PropsType> = ({currentProfile, sendProfileDataO
             </div>
             <div>
                 <b>Contacts:</b> {Object.keys(currentProfile.contacts).map(key => {
-                return <Contact key={key} socialMedia={key} /*contactValue={currentProfile.contacts[key]}*//>
+                //todo: change key as any
+                return <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key as any]}/>
             })}
             </div>
             <div>
@@ -61,13 +63,13 @@ const ProfileDataInput: React.FC<PropsType> = ({currentProfile, sendProfileDataO
     }
 
 
-    const ProfileDataInputFormRedux = reduxForm(
+    const ProfileDataInputFormRedux =  reduxForm<CurrentProfileType,PropsFormDataType >(
         {
             form: 'ProfileInfo',
             enableReinitialize: true,
             destroyOnUnmount: false
         }
-    )(ProfileDataInputForm as any)
+    )(ProfileDataInputForm)
 
     return <ProfileDataInputFormRedux initialValues={currentProfile} onSubmit={sendData}/>
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentType, LazyExoticComponent } from "react";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {Route, BrowserRouter, Routes} from "react-router-dom";
@@ -11,12 +11,20 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "./redux/appReducer";
+// @ts-ignore
 import Preloader from "./common/Preloader/Preloader";
 import {WithLazyLoading} from "./components/HOC/withLazyLoading";
-let DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
-DialogsContainer = WithLazyLoading(DialogsContainer)
+import {AppStateType} from "./redux/reduxStore";
 
-class App extends React.Component {
+let LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+let DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
+
+
+type StatePropsAppType = ReturnType<typeof mapStateToProps>
+type DispatchPropsAppType = {
+    setInitializeThunkCreator: () => any
+}
+class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
     catchAllErrors = () => {
         alert("Something go wrong, try again")
     }
@@ -56,7 +64,7 @@ class App extends React.Component {
         );
     }
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized
 })
 

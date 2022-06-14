@@ -4,6 +4,7 @@ import userDefaultPhoto from '../../../assets/images/personal-user.png'
 import ProfileData from "./ProfileData";
 import ProfileDataInput from "./ProfileDataInput";
 import {CurrentProfileType} from "../../../typings/types";
+import { ThunkType } from "../../../redux/profileReducer";
 
 
 type PropsType = {
@@ -11,7 +12,7 @@ type PropsType = {
     status:string
     updateMyStatus:() => void
     isShowMyProfile: boolean
-    handlePhotoChange: (image: File) => any
+    handlePhotoChange: (image: File) => ThunkType
     sendProfileDataOnServ:(newData:CurrentProfileType) => void
 
 }

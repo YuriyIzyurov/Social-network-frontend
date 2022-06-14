@@ -6,7 +6,7 @@ import {
     handlingUsers,
     handlingUsersOnPage
 } from "../../redux/usersReducer";
-import React from "react";
+import React, {ComponentType} from "react";
 // @ts-ignore
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
@@ -78,7 +78,7 @@ const mapStateToProps = (state: AppStateType):StatePropsType => {
         followInProcess: getFollowInProcess(state)
     }
 }
-export default compose(
+export default compose<ComponentType>(
     withRedirectIfNoAuth,
     connect<StatePropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {handlingUsers, handlingUsersOnPage, handlingFollowAction, handlingUnfollowAction})
 )(UsersContainer)

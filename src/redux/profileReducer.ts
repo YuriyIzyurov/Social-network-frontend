@@ -5,8 +5,8 @@ import {BaseThunkType, InferActionsTypes} from "./reduxStore";
 import {profileAPI} from "../api/profileAPI";
 
 export type InitialStateType = typeof initialState
-type ActionType = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionType>
+export type ActionType = InferActionsTypes<typeof actions>
+export type ThunkType = BaseThunkType<ActionType>
 
 
 let initialState = {

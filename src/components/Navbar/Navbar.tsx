@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import SidebarContainer from "../Sidebar/SidebarContainer";
 
 
-const Navbar = (props) => {
+const Navbar = () => {
     return (
         <div className={s.nav}>
             <nav>

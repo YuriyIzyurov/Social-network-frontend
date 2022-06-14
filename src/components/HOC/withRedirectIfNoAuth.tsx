@@ -3,26 +3,28 @@ import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 
-type PropsType = {
+
+type MapPropsType = {
     isAuth: boolean
 }
-let mapStateToPropsForRedirect = (state: AppStateType): PropsType => {
+type DispatchPropsType = {}
+let mapStateToPropsForRedirect = (state: AppStateType): MapPropsType => {
     return {
         isAuth: state.auth.isAuth
     }
 }
 
-export const withRedirectIfNoAuth =  <P extends object>(Component: React.ComponentType<P>) => {
+export function withRedirectIfNoAuth<P>(Component: React.ComponentType<P>) {
 
-        class RedirectComponent extends React.Component<P & PropsType> {
-            render() {
-                if (!this.props.isAuth) {
-                    return <Navigate to='/login' />
-                }
-                return <Component {...this.props as P} />;
-            }
+    const RedirectComponent: React.FC<MapPropsType & DispatchPropsType> = (props) =>{
+        let {isAuth, ...restProps} = props
+        if (!isAuth) {
+            return <Navigate to='/login'/>
         }
-    return  connect(mapStateToPropsForRedirect)(RedirectComponent as any)
+        return <Component {...restProps as P} />;
+    }
+
+    return  connect<MapPropsType, DispatchPropsType, P, AppStateType>(mapStateToPropsForRedirect, {})(RedirectComponent)
 }
 
 

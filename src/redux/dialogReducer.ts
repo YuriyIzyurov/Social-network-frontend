@@ -1,15 +1,8 @@
+import {DialogDataType, PrivateMessageDataType } from "../typings/types";
 import {InferActionsTypes} from "./reduxStore";
 
 
-type PrivateMessageDataType = {
-    message: string
-    id: number
-}
-type DialogDataType = {
-    name: string
-    id: number
-    src: string
-}
+
 export type InitialStateType = typeof initialState
 type ActionType = InferActionsTypes<typeof actions>
 

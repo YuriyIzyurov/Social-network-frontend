@@ -2,21 +2,32 @@ import React from "react"
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
+import {DialogDataType, PrivateMessageDataType} from "../../typings/types";
 
 
-const Dialogs = ({DialogData, privateMessageData, sendNewMessage }) => {
+type PropsMessagesType = {
+    DialogData: Array<DialogDataType>
+    privateMessageData: Array<PrivateMessageDataType>
+    sendNewMessage: (formData:string) => void
+}
+type FormDataMessageType = {
+    message: string
+}
+type PropsType = {}
+
+const Dialogs: React.FC<PropsMessagesType> = ({DialogData, privateMessageData, sendNewMessage }) => {
 
     let dialog = DialogData.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.src}/>)
     let message = privateMessageData.map(m=><Message message={m.message} key={m.message} />)
 
-    const onSubmit = (formData) => {
-        sendNewMessage(formData.message) // Не понимаю, почему не принимает undefined, хотя пустые посты постились при тех же условиях
+    const onSubmit = (formData: FormDataMessageType) => {
+        sendNewMessage(formData.message)
     }
 
-    const DialogForm = ({handleSubmit}) => {
+    const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
         return <form onSubmit={handleSubmit}>
             <div className={s.sendMessage}>
                 <div>
@@ -29,7 +40,7 @@ const Dialogs = ({DialogData, privateMessageData, sendNewMessage }) => {
         </form>
     }
 
-    let DialogFormRedux = reduxForm({
+    let DialogFormRedux = reduxForm<FormDataMessageType, PropsType>({
         form: 'dialog'
     })(DialogForm)
 
