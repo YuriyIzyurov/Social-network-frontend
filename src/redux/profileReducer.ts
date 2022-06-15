@@ -53,6 +53,7 @@ const profileReducer = (state = initialState, action: ActionType):InitialStateTy
 }
 
 export const setProfileOnPage = (id:number):ThunkType => {
+
     return async (dispatch) => {
         const response = await profileAPI.getProfile(id)
             dispatch(actions.setCurrentProfile(response))

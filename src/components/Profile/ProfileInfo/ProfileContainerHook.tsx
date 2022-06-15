@@ -3,8 +3,7 @@ import Profile from "../Profile";
 import {connect} from "react-redux";
 import {
     actions,
-    getUserStatusInProfile, handlePhotoChange, sendProfileDataOnServ,
-    setProfileOnPage, ThunkType, updateMyStatus,
+    getUserStatusInProfile, handlePhotoChange, sendProfileDataOnServ, setProfileOnPage, ThunkType, updateMyStatus,
 } from "../../../redux/profileReducer";
 import {compose} from "redux";
 import {withRouter} from "../../HOC/withRouter";
@@ -35,12 +34,16 @@ type OwnStateType = {
 }
 type PropsType = StatePropsProfileType & DispatchPropsProfileType & OwnPropsType
 
-const ProfileContainer: React.FC<PropsType> = ({isAuth, router, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
+const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, router, loggedUser, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
 
     let [isShowMyProfile, setMyProfile ] = useState(false)
+
     useEffect(() => {
-        setMyProfile(true)
-    }, [isShowMyProfile])
+        let idFromURL = router.params.id
+        if(idFromURL){
+          setProfileOnPage(idFromURL)
+        }
+    }, [])
 
 
     if (!isAuth && !router.params.id) return <Navigate to={'/login'} />
@@ -68,7 +71,7 @@ let getProfileID = actions.getProfileID
 export default compose<ComponentType>(
     connect<StatePropsProfileType, {}, OwnPropsType, AppStateType>(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
     withRouter
-)(ProfileContainer)
+)(ProfileContainerHook)
 
 
 
