@@ -11,7 +11,6 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "./redux/appReducer";
-// @ts-ignore
 import Preloader from "./common/Preloader/Preloader";
 import {WithLazyLoading} from "./components/HOC/withLazyLoading";
 import {AppStateType} from "./redux/reduxStore";

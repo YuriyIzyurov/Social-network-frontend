@@ -7,7 +7,6 @@ import {
     handlingUsersOnPage
 } from "../../redux/usersReducer";
 import React, {ComponentType} from "react";
-// @ts-ignore
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
@@ -36,6 +35,7 @@ type DispatchPropsType = {
     handlingUsers: (activePage: number,usersOnPage: number) => void
     handlingUsersOnPage: (n: number, activePage: number,usersOnPage: number) => any
 }
+
 class UsersContainer extends React.Component<StatePropsType & DispatchPropsType> {
 
     componentDidMount() {

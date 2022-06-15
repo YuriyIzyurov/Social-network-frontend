@@ -30,12 +30,12 @@ const ProfileInfo: React.FC<PropsType> = ({currentProfile, status, updateMyStatu
                 <img src={currentProfile.photos.large || userDefaultPhoto}/>
             </div>
             <div>
-                {!isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}
+                {isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}
             </div>
                 <ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>
             {!editMode && <ProfileData currentProfile={currentProfile}/>}
             {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}
-            {!isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}
+            {isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}
         </div>
     )
 

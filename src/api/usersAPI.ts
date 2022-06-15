@@ -15,5 +15,8 @@ export const usersAPI = {
     },
     unFollowUser(id: number) {
         return instance.delete<ResponseAPIType>(`follow/${id}`).then(response => response.data)
+    },
+    getFriends(usersOnPage: number) {
+        return instance.get<GetItemsType<UserType>>(`users?count=${usersOnPage}&friend=${true}`).then(response => response.data)
     }
 }

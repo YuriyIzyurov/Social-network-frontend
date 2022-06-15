@@ -1,14 +1,40 @@
 import {connect} from "react-redux";
 import Sidebar from "./Sidebar";
 import {AppStateType} from "../../redux/reduxStore";
-import {ArrayOfUsersType, DialogDataType} from "../../typings/types";
+import {UserType} from "../../typings/types";
+import {getFriendsOnSidebar, ThunkType} from "../../redux/sidebarReducer";
+import Preloader from "../../common/Preloader/Preloader";
+import Users from "../Users/Users";
+import React, {ComponentType} from "react";
+import {compose} from "redux";
 
-
-const mapStateToProps = (state:AppStateType):ArrayOfUsersType => {
-    return {
-        nameList: state.sidebar.nameList
-    }
+type MapStateType = {
+    friendList: Array<UserType>
+    totalFriends: number
+    usersOnPage: number
+}
+type DispatchPropsType = {
+    getFriendsOnSidebar: (usersOnPage:number) => ThunkType
 }
 
-const SidebarContainer = connect<ArrayOfUsersType, {}, {}, AppStateType>(mapStateToProps)(Sidebar)
-export default SidebarContainer
+class SidebarContainer extends React.Component<MapStateType & DispatchPropsType> {
+
+    componentDidMount() {
+        this.props.getFriendsOnSidebar(this.props.usersOnPage)
+    }
+
+    render(){
+        return <div>
+            <Sidebar friendList = {this.props.friendList}/>
+        </div>
+    }
+
+}
+    const mapStateToProps = (state: AppStateType): MapStateType => {
+        return {
+            friendList: state.sidebar.friendList,
+            totalFriends: state.sidebar.totalFriends,
+            usersOnPage: state.sidebar.usersOnPage
+        }
+    }
+export default compose<ComponentType>(connect<MapStateType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {getFriendsOnSidebar}))(SidebarContainer)

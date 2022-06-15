@@ -30,5 +30,5 @@ const mapStateToProps = (state: AppStateType) : StatePropsHeaderType =>{
 }
 
 
-export default connect(mapStateToProps, {handlingAuthData, logoutFromServer})(HeaderContainer)
+export default connect<StatePropsHeaderType,DispatchPropsHeaderType,{},AppStateType >(mapStateToProps, {handlingAuthData, logoutFromServer})(HeaderContainer)
 

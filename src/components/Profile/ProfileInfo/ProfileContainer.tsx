@@ -1,13 +1,12 @@
-import React, { ComponentType } from "react";
+import React, {ComponentType, useEffect, useState} from "react";
 import Profile from "../Profile";
 import {connect} from "react-redux";
 import {
-    actions, ActionType,
+    actions,
     getUserStatusInProfile, handlePhotoChange, sendProfileDataOnServ,
     setProfileOnPage, ThunkType, updateMyStatus,
 } from "../../../redux/profileReducer";
 import {compose} from "redux";
-// @ts-ignore
 import {withRouter} from "../../HOC/withRouter";
 import {getCurrentProfile, getId, getStatus} from "../../../redux/profile-selectors";
 import {getAuth} from "../../../redux/auth-selectors";
@@ -17,19 +16,15 @@ import {AppStateType} from "../../../redux/reduxStore";
 
 
 
-type StatePropsProfileType = {
-    currentProfile: CurrentProfileType
-    loggedUser: number
-    isAuth: boolean
-    status:string
-}
+type StatePropsProfileType = ReturnType<typeof mapStateToProps>
+//todo:почему диспатч не передается в коннект 2ым параметром?
 type DispatchPropsProfileType = {
-    getProfileID: (id: number) => (ActionType)
-    setProfileOnPage: (idFromURL: number) => void
-    getUserStatusInProfile: (idFromURL: number) => void
-    updateMyStatus: () => void
+    getProfileID: typeof getProfileID
+    setProfileOnPage: (idFromURL: number) => ThunkType
+    getUserStatusInProfile: (idFromURL: number) => ThunkType
+    updateMyStatus: () => ThunkType
     handlePhotoChange: (image: File) => ThunkType
-    sendProfileDataOnServ:(newData:CurrentProfileType) => void
+    sendProfileDataOnServ:(newData:CurrentProfileType) => any
 }
 //todo: change type
 type OwnPropsType = {
@@ -40,54 +35,24 @@ type OwnStateType = {
 }
 type PropsType = StatePropsProfileType & DispatchPropsProfileType & OwnPropsType
 
-class ProfileContainer extends React.Component<StatePropsProfileType & DispatchPropsProfileType & OwnPropsType, OwnStateType> {
-    constructor(props: (StatePropsProfileType & DispatchPropsProfileType & OwnPropsType)) {
-        super( props );
-        this.state = {
-            isShowMyProfile: true
-        }
-    }
-    componentDidMount() {
+const ProfileContainer: React.FC<PropsType> = ({isAuth, router, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
 
-        let idFromURL = this.props.router.params.id
-        let loggedUser = this.props.loggedUser
-        if(idFromURL){
-            this.props.setProfileOnPage(idFromURL)
-            this.props.getUserStatusInProfile(idFromURL)
-            } else {
-                if(this.props.isAuth) {
-                    this.props.setProfileOnPage(loggedUser)
-                    this.props.getUserStatusInProfile(loggedUser)
-                }
-         }
-        }
-    componentDidUpdate(prevProps:PropsType, prevState:OwnStateType) {
-
-        let idFromURL = this.props.router.params.id;
-        let loggedUser = this.props.loggedUser;
-        let isShowMyProfile = this.state.isShowMyProfile;
-        if (isShowMyProfile) {
-            if (idFromURL === loggedUser) {
-                this.setState( {isShowMyProfile: false} )
-            }
-            if (!idFromURL && this.props.isAuth) {
-                this.props.setProfileOnPage( loggedUser );
-                this.props.getUserStatusInProfile( loggedUser );
-                this.setState( {isShowMyProfile: false} )
-            }
-        }
-    }
+    let [isShowMyProfile, setMyProfile ] = useState(false)
+    useEffect(() => {
+        setMyProfile(true)
+    }, [isShowMyProfile])
 
 
-    render() {
-        if (!this.props.isAuth && !this.props.router.params.id) {
-            return <Navigate to={'/login'} />
-        }
-        return <Profile {...this.props} isShowMyProfile={this.state.isShowMyProfile}
-                                        updateMyStatus={this.props.updateMyStatus}
-                                        handlePhotoChange={this.props.handlePhotoChange}
-                                        sendProfileDataOnServ={this.props.sendProfileDataOnServ}/>
-    }
+    if (!isAuth && !router.params.id) return <Navigate to={'/login'} />
+
+    return <Profile isShowMyProfile={isShowMyProfile}
+                    updateMyStatus={updateMyStatus}
+                    handlePhotoChange={handlePhotoChange}
+                    sendProfileDataOnServ={sendProfileDataOnServ}
+                    currentProfile={currentProfile}
+                    status={status}/>
+
+
 }
 
 let mapStateToProps = (state: AppStateType)  => {
@@ -101,7 +66,7 @@ let mapStateToProps = (state: AppStateType)  => {
 
 let getProfileID = actions.getProfileID
 export default compose<ComponentType>(
-    connect(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
+    connect<StatePropsProfileType, {}, OwnPropsType, AppStateType>(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
     withRouter
 )(ProfileContainer)
 

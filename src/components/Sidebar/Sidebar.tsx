@@ -2,19 +2,22 @@ import React from "react"
 import s from './Sidebar.module.css'
 
 import SidebarItem from "./SidebarItem";
-import {ArrayOfUsersType} from "../../typings/types";
+import {UserType} from "../../typings/types";
 
 
-const Sidebar: React.FC<ArrayOfUsersType> = ({nameList}) => {
+type PropsType = {
+    friendList: Array<UserType>
+}
+const Sidebar: React.FC<PropsType> = ({friendList}) => {
 
-    let userOnline = nameList.map(n=><SidebarItem name={n.name} id={n.id} key={n.name} src={n.src}/>)
+    let friendsOnSidebar = friendList.map(n=><SidebarItem  name={n.name} id={n.id} key={n.name} photos={n.photos}/>)
     return (
         <div>
             <div className={s.item}>
                 Friends
             </div>
             <div className={s.user}>
-                {userOnline}
+                {friendsOnSidebar}
             </div>
         </div>
     )

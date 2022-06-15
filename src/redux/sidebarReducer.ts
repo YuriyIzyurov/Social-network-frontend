@@ -1,10 +1,46 @@
-let initialState = {nameList: [
-        {name: "Sebastian", id: 6, src:'https://vsekidki.ru/uploads/posts/2016-08/1470735121_lecdaa3axdc.jpg'},
-        {name: "Venedict", id: 7, src:'https://semantica.in/wp-content/uploads/2018/08/av-427845-1.png'},
-        {name: "Ameliya", id: 8, src:'https://trikky.ru/wp-content/blogs.dir/1/files/2017/04/2a57bfab998b8c853269f4e700e30f5b.jpg'}]}
+import {usersAPI} from "../api/usersAPI";
+import {AppStateType, InferActionsTypes} from "./reduxStore";
+import {ThunkAction} from "redux-thunk/es/types";
+import {UserType} from "../typings/types";
 
-const sidebarReducer = (state = initialState,action:any) => {
+type ActionType = InferActionsTypes<typeof actions>
+export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export type InitialStateType = typeof initialState
 
-    return state
+let initialState = {
+    friendList: [] as Array<UserType>,
+    totalFriends: 0,
+    usersOnPage: 6,
 }
+
+const sidebarReducer = (state = initialState,action:ActionType):InitialStateType => {
+    switch(action.type){
+
+        case "SET_FRIENDS":
+            return {
+                ...state,
+                friendList: action.friends
+            }
+        case "SET_TOTAL_FRIENDS":
+            return {
+                ...state,
+                totalFriends: action.totalFriends
+            }
+        default: return state
+    }
+}
+
+export const getFriendsOnSidebar =  (usersOnPage:number): ThunkType => {
+    return async (dispatch) => {
+        let response = await usersAPI.getFriends(usersOnPage)
+        dispatch(actions.setFriends(response.items))
+        dispatch(actions.setTotalFriends(response.totalCount))
+    }
+}
+export const actions = {
+    setFriends: (friends: Array<UserType>) => ({type: "SET_FRIENDS", friends} as const),
+    setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS", totalFriends} as const),
+
+}
+
 export default sidebarReducer

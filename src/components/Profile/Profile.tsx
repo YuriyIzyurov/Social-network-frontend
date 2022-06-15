@@ -1,13 +1,12 @@
 import React from "react"
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-// @ts-ignore
 import Preloader from "../../common/Preloader/Preloader";
 import {CurrentProfileType} from "../../typings/types";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 import {ThunkType} from "../../redux/profileReducer";
 
 type PropsType = {
-    currentProfile: CurrentProfileType
+    currentProfile: CurrentProfileType | null
     status:string
     updateMyStatus:() => void
     isShowMyProfile: boolean

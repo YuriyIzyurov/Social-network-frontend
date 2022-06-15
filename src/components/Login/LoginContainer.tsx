@@ -22,5 +22,5 @@ let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
     }
 }
 
-export default compose<ComponentType>(connect<StatePropsLoginType, {}, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha}))(Login)
+export default compose<ComponentType>(connect<StatePropsLoginType, DispatchPropsLoginType, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha}))(Login)
 

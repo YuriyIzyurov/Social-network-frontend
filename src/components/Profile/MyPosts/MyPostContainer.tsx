@@ -9,8 +9,14 @@ import {MessagesDataType} from "../../../typings/types";
 import { actions } from "../../../redux/profileReducer";
 import {ComponentType} from "react";
 
-
-let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array<MessagesDataType> } => {
+type MapStateType = {
+    textArea:string
+    messagesData:Array<MessagesDataType>
+}
+type DispatchPropsType = {
+    addNewPost: typeof addNewPost
+}
+let mapStateToProps = (state: AppStateType):MapStateType => {
     return {
         textArea: getTextArea(state),
         messagesData: getMessagesData(state)
@@ -18,7 +24,7 @@ let mapStateToProps = (state: AppStateType):{textArea:string, messagesData:Array
 }
 let addNewPost = actions.addNewPost
 export default compose<ComponentType>(
-    connect(mapStateToProps, {addNewPost}),
+    connect<MapStateType, DispatchPropsType, {}, AppStateType >(mapStateToProps, {addNewPost}),
     withRedirectIfNoAuth
 )(MyPosts)
 

@@ -70,6 +70,7 @@ export const handlingUsers =  (activePage:number,usersOnPage:number): ThunkType 
 
     }
 }
+
 export  const handlingUsersOnPage = (n:number, activePage:number, usersOnPage:number):ThunkType => {
 
     return async (dispatch) => {
