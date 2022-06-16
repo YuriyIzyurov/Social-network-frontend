@@ -44,7 +44,7 @@ class ProfileContainerClass extends React.Component<StatePropsProfileType & Disp
     constructor(props: (StatePropsProfileType & DispatchPropsProfileType & OwnPropsType)) {
         super( props );
         this.state = {
-            isShowMyProfile: true
+            isShowMyProfile: false
         }
     }
     componentDidMount() {
@@ -64,14 +64,15 @@ class ProfileContainerClass extends React.Component<StatePropsProfileType & Disp
         let idFromURL = this.props.router.params.id;
         let loggedUser = this.props.loggedUser;
         let isShowMyProfile = this.state.isShowMyProfile;
-        if (isShowMyProfile) {
-            if (idFromURL === loggedUser) {
-                this.setState( {isShowMyProfile: false} )
+        if (!isShowMyProfile) {
+
+            if (+idFromURL === loggedUser) {
+                this.setState( {isShowMyProfile: true} )
             }
             if (!idFromURL && this.props.isAuth) {
                 this.props.setProfileOnPage( loggedUser );
                 this.props.getUserStatusInProfile( loggedUser );
-                this.setState( {isShowMyProfile: false} )
+                this.setState( {isShowMyProfile: true} )
             }
         }
     }

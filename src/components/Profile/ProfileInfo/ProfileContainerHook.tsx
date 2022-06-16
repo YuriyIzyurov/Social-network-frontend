@@ -34,17 +34,33 @@ type OwnStateType = {
 }
 type PropsType = StatePropsProfileType & DispatchPropsProfileType & OwnPropsType
 
-const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, router, loggedUser, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
+const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, getUserStatusInProfile, router, loggedUser, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
 
     let [isShowMyProfile, setMyProfile ] = useState(false)
 
     useEffect(() => {
+        console.log('render')
         let idFromURL = router.params.id
         if(idFromURL){
           setProfileOnPage(idFromURL)
+          getUserStatusInProfile(idFromURL)
+        } else {
+            if(loggedUser) {
+                setProfileOnPage(loggedUser)
+                getUserStatusInProfile(loggedUser)
+            }
         }
-    }, [])
-
+        if (!isShowMyProfile) {
+            if (+idFromURL === loggedUser) {
+                setMyProfile(true)
+            }
+            if (!idFromURL && loggedUser) {
+                setProfileOnPage( loggedUser )
+                getUserStatusInProfile( loggedUser )
+                setMyProfile(true)
+            }
+        }
+    }, [router.params.id])
 
     if (!isAuth && !router.params.id) return <Navigate to={'/login'} />
 
