@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
+    FilterType,
     handlingFollowAction,
     handlingUnfollowAction,
     handlingUsers,
-    handlingUsersOnPage
 } from "../../redux/usersReducer";
 import React, {ComponentType} from "react";
 import Preloader from "../../common/Preloader/Preloader";
@@ -12,13 +12,14 @@ import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {
     getActivePage, getFollowInProcess,
-    getIsFetching,
+    getIsFetching, getSearchFilter,
     getTotalUsers,
     getUsers,
     getUsersOnPage
 } from "../../redux/user-selectors";
 import {UserType} from "../../typings/types";
 import {AppStateType} from "../../redux/reduxStore";
+
 
 type StatePropsType = {
     users: Array<UserType>
@@ -27,26 +28,29 @@ type StatePropsType = {
     activePage: number
     isFetching: boolean
     followInProcess: Array<number>
+    searchFilter: FilterType
 
 }
 type DispatchPropsType = {
     handlingFollowAction: (user: number) => void
     handlingUnfollowAction: (user: number) => void
-    handlingUsers: (activePage: number,usersOnPage: number) => void
-    handlingUsersOnPage: (n: number, activePage: number,usersOnPage: number) => any
+    handlingUsers: (activePage: number,usersOnPage: number, filter: FilterType) => void
 }
 
 class UsersContainer extends React.Component<StatePropsType & DispatchPropsType> {
 
     componentDidMount() {
-
-        const {activePage, usersOnPage } = this.props
-        this.props.handlingUsers(activePage,usersOnPage)
+        const {activePage, usersOnPage,searchFilter} = this.props
+        this.props.handlingUsers(activePage,usersOnPage, searchFilter)
     }
 
     getUsersOnPage = (n: number) => {
-        const {activePage, usersOnPage } = this.props
-        this.props.handlingUsersOnPage(n, activePage, usersOnPage)
+        const {usersOnPage, searchFilter} = this.props
+        this.props.handlingUsers(n,usersOnPage, searchFilter)
+    }
+    handlingFilteredUsers = (filter:FilterType) => {
+        const {usersOnPage} = this.props
+        this.props.handlingUsers(1,usersOnPage, filter)
     }
 
     render() {
@@ -60,6 +64,7 @@ class UsersContainer extends React.Component<StatePropsType & DispatchPropsType>
                                                                 getUsersOnPage={this.getUsersOnPage}
                                                                 handlingFollowAction={this.props.handlingFollowAction}
                                                                 handlingUnfollowAction={this.props.handlingUnfollowAction}
+                                                                handlingFilteredUsers={this.handlingFilteredUsers}
 
 
                 />}
@@ -75,11 +80,12 @@ const mapStateToProps = (state: AppStateType):StatePropsType => {
         usersOnPage: getUsersOnPage(state),
         activePage: getActivePage(state),
         isFetching: getIsFetching(state),
-        followInProcess: getFollowInProcess(state)
+        followInProcess: getFollowInProcess(state),
+        searchFilter: getSearchFilter(state)
     }
 }
 export default compose<ComponentType>(
     withRedirectIfNoAuth,
-    connect<StatePropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {handlingUsers, handlingUsersOnPage, handlingFollowAction, handlingUnfollowAction})
+    connect<StatePropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {handlingUsers, handlingFollowAction, handlingUnfollowAction})
 )(UsersContainer)
 

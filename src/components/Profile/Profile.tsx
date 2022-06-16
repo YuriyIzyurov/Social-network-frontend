@@ -1,7 +1,7 @@
 import React from "react"
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Preloader from "../../common/Preloader/Preloader";
-import {CurrentProfileType} from "../../typings/types";
+import {CurrentProfileType, UserType} from "../../typings/types";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 import {ThunkType} from "../../redux/profileReducer";
 
@@ -24,7 +24,8 @@ const Profile: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, i
                          updateMyStatus={updateMyStatus}
                          isShowMyProfile={isShowMyProfile}
                          handlePhotoChange={handlePhotoChange}
-                         sendProfileDataOnServ={sendProfileDataOnServ}/>
+                         sendProfileDataOnServ={sendProfileDataOnServ}
+                         />
             <MyPostContainer/>
         </div>
     )

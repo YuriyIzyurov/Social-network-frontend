@@ -3,7 +3,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userDefaultPhoto from '../../../assets/images/personal-user.png'
 import ProfileData from "./ProfileData";
 import ProfileDataInput from "./ProfileDataInput";
-import {CurrentProfileType} from "../../../typings/types";
+import {CurrentProfileType, UserType} from "../../../typings/types";
 import { ThunkType } from "../../../redux/profileReducer";
 
 

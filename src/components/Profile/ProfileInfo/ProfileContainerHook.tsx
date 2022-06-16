@@ -12,6 +12,7 @@ import {getAuth} from "../../../redux/auth-selectors";
 import {Navigate} from "react-router";
 import {CurrentProfileType} from "../../../typings/types";
 import {AppStateType} from "../../../redux/reduxStore";
+import {getUsers} from "../../../redux/user-selectors";
 
 
 
@@ -69,7 +70,8 @@ const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, ge
                     handlePhotoChange={handlePhotoChange}
                     sendProfileDataOnServ={sendProfileDataOnServ}
                     currentProfile={currentProfile}
-                    status={status}/>
+                    status={status}
+                   />
 
 
 }
@@ -79,7 +81,8 @@ let mapStateToProps = (state: AppStateType)  => {
         currentProfile: getCurrentProfile(state),
         status: getStatus(state),
         loggedUser: getId(state),
-        isAuth: getAuth(state)
+        isAuth: getAuth(state),
+        users: getUsers(state)
     }
 }
 

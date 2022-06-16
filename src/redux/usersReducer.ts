@@ -3,17 +3,22 @@ import {AppStateType, InferActionsTypes} from "./reduxStore";
 import { ThunkAction } from "redux-thunk/es/types";
 import {usersAPI} from "../api/usersAPI";
 
+
 type ActionType = InferActionsTypes<typeof actions>
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export type InitialStateType = typeof initialState
-
+export type FilterType = typeof initialState.searchFilter
 
 let initialState = {users: [] as Array<UserType>,
                     totalUsers: 0,
                     usersOnPage: 10,
                     activePage: 1,
                     isFetching: false,
-                    followInProcess: [] as Array<number> //array of users ID is now following in process
+                    followInProcess: [] as Array<number>, //array of users ID is now following in process
+                    searchFilter:{
+                        term:'',
+                        friend: null as null | boolean
+                    }
 
 }
 
@@ -47,12 +52,16 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
                 isFetching: action.isFetching
             }
         case "FOLLOW_IN_PROCESS":
-
             return {
                 ...state,
                 followInProcess: action.isFetching
                     ? [...state.followInProcess, action.userID]
                     : state.followInProcess.filter(id => id !== action.userID)
+            }
+        case "FILTERED_USERS":
+            return {
+                ...state,
+                searchFilter:action.payload
             }
         default:
             return state
@@ -60,25 +69,15 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
 
 }
 
-export const handlingUsers =  (activePage:number,usersOnPage:number): ThunkType => {
+export const handlingUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkType => {
     return async (dispatch, getState) => {
         dispatch(actions.dataIsFetching(true))
-        let response = await usersAPI.getUsers(activePage, usersOnPage)
+            dispatch(actions.setActivePage(activePage))
+            dispatch(actions.filterSettings(filter))
+        let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
             dispatch(actions.dataIsFetching(false))
             dispatch(actions.setUsers(response.items))
             dispatch(actions.setTotalUsers(response.totalCount))
-
-    }
-}
-
-export  const handlingUsersOnPage = (n:number, activePage:number, usersOnPage:number):ThunkType => {
-
-    return async (dispatch) => {
-        dispatch(actions.setActivePage(n))
-        dispatch(actions.dataIsFetching(true))
-        let response = await usersAPI.getUsers(activePage, usersOnPage)
-            dispatch(actions.dataIsFetching(false))
-            dispatch(actions.setUsers(response.items))
 
     }
 }
@@ -110,7 +109,8 @@ export const actions = {
     setActivePage: (activePage:number) => ({type: "SET_ACTIVE_PAGE", activePage} as const),
     setTotalUsers: (totalUsers:number)=> ({type: "SET_TOTAL_USERS", totalUsers} as const),
     dataIsFetching: (isFetching:boolean) => ({type: "FETCHING", isFetching} as const),
-    followActionInProcess: (isFetching:boolean, userID:number)=>({type:"FOLLOW_IN_PROCESS", isFetching, userID} as const)
+    followActionInProcess: (isFetching:boolean, userID:number)=>({type:"FOLLOW_IN_PROCESS", isFetching, userID} as const),
+    filterSettings: (searchFilter: FilterType)=>({type:"FILTERED_USERS", payload:searchFilter} as const)
 }
 
 
