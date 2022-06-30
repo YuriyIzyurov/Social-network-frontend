@@ -5,6 +5,7 @@ import Paginator from "./Paginator";
 import {UserType} from "../../typings/types";
 import UserSearchForm from "./UserSearchform";
 import {FilterType} from "../../redux/usersReducer";
+import {useNavigate} from "react-router";
 
 type PropsType = {
     totalUsers: number
@@ -12,25 +13,26 @@ type PropsType = {
     activePage: number
     getUsersOnPage: (n:number) => void
     users: Array<UserType>
-    handlingFollowAction: (user: number) => void
-    handlingUnfollowAction: (user: number) => void
+    handlingFollow: (user: number) => void
+    handlingUnfollow: (user: number) => void
     followInProcess: Array<number>
     handlingFilteredUsers: (filter:FilterType) => void
 }
 
-const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users, handlingFollowAction, handlingUnfollowAction, followInProcess }) => {
+const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users, handlingFollow, handlingUnfollow, followInProcess }) => {
+
     return (
         <div>
-            <UserSearchForm handlingFilteredUsers={handlingFilteredUsers}/>
+            <UserSearchForm handlingFilteredUsers={handlingFilteredUsers} />
             <Paginator totalUsers={totalUsers}
                        usersOnPage={usersOnPage}
                        activePage={activePage}
-                       getUsersOnPage={getUsersOnPage}/>
+                       setUsersOnPage={getUsersOnPage}/>
             <div className={s.user}>
                 {users.map(u => <UserItem user={u}
                                           key={u.id}
-                                          handlingFollowAction={handlingFollowAction}
-                                          handlingUnfollowAction={handlingUnfollowAction}
+                                          handlingFollow={handlingFollow}
+                                          handlingUnfollow={handlingUnfollow}
                                           followInProcess={followInProcess}
                 />)}
             </div>

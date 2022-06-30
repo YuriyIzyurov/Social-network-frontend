@@ -3,7 +3,7 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {handlingAuthData, logoutFromServer} from "../../redux/authReducer";
 import {AppStateType} from "../../redux/reduxStore";
-
+//классовая компонента с коннектом для примера
 
 
 

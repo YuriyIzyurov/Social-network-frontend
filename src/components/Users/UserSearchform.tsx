@@ -1,6 +1,8 @@
 import {ErrorMessage, Field, Form, Formik, FormikHelpers} from "formik";
 import React from "react";
 import {FilterType} from "../../redux/usersReducer";
+import {useSelector} from "react-redux";
+import {getSearchFilter} from "../../redux/user-selectors";
 
 type PropsType = {
     handlingFilteredUsers: (filter:FilterType) => void
@@ -9,7 +11,7 @@ type FormType = {
     term: string
     friend: "null" | "true" | "false"
 }
-const UserSearchForm: React.FC<PropsType> = ({handlingFilteredUsers}) => {
+const UserSearchForm: React.FC<PropsType> = React.memo(({handlingFilteredUsers}) => {
 
     const validator = (values:FormType) =>{
         const errors = {};
@@ -24,10 +26,12 @@ const UserSearchForm: React.FC<PropsType> = ({handlingFilteredUsers}) => {
         handlingFilteredUsers(filter)
         setSubmitting(false)
     }
+    const filter = useSelector(getSearchFilter)
 
     return <div>
         <Formik
-            initialValues={{term: '', friend: "null"}}
+            //todo посмотреть, что с типизацией
+            initialValues={{term: filter.term, friend: filter.friend} as any}
             validate={validator}
             onSubmit={searchUsers}
         >
@@ -46,5 +50,5 @@ const UserSearchForm: React.FC<PropsType> = ({handlingFilteredUsers}) => {
             )}
         </Formik>
     </div>
-}
+})
 export default UserSearchForm

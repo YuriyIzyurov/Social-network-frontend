@@ -8,10 +8,10 @@ import {UserType} from "../../typings/types";
 type PropsType = {
     user: UserType
     followInProcess: Array<number>
-    handlingFollowAction: (user: number) => void
-    handlingUnfollowAction: (user: number) => void
+    handlingFollow: (user: number) => void
+    handlingUnfollow: (user: number) => void
 }
-const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollowAction, handlingUnfollowAction}) => {
+const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollow, handlingUnfollow}) => {
 
     return <div>
         <NavLink to={"/profile/" + user.id} className={navData => navData.isActive ? s.active : s.dialog}>
@@ -20,11 +20,11 @@ const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollowAct
         </NavLink>
             {!user.followed
                 ? <button disabled={followInProcess.some(item => item === user.id)} onClick={()=>{
-                    handlingFollowAction(user.id)
+                    handlingFollow(user.id)
 
                     }}>FOLLOW</button>
                 : <button disabled={followInProcess.some(item => item === user.id)} onClick={()=>{
-                    handlingUnfollowAction(user.id)
+                    handlingUnfollow(user.id)
                 }}>UNFOLLOW</button>}
            <div>{user.status}</div>
 

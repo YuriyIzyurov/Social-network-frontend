@@ -1,24 +1,22 @@
 import {connect} from "react-redux";
 import Users from "./Users";
-import {
-    FilterType,
-    handlingFollowAction,
-    handlingUnfollowAction,
-    handlingUsers,
-} from "../../redux/usersReducer";
-import React, {ComponentType} from "react";
+import {FilterType, handlingFollowAction, handlingUnfollowAction, handlingUsers,} from "../../redux/usersReducer";
+import React, {ComponentType, useEffect} from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {
-    getActivePage, getFollowInProcess,
-    getIsFetching, getSearchFilter,
+    getActivePage,
+    getFollowInProcess,
+    getIsFetching,
+    getSearchFilter,
     getTotalUsers,
     getUsers,
     getUsersOnPage
 } from "../../redux/user-selectors";
 import {UserType} from "../../typings/types";
 import {AppStateType} from "../../redux/reduxStore";
+import {useLocation, useNavigate} from "react-router";
 
 
 type StatePropsType = {
@@ -37,42 +35,62 @@ type DispatchPropsType = {
     handlingUsers: (activePage: number,usersOnPage: number, filter: FilterType) => void
 }
 
-class UsersContainer extends React.Component<StatePropsType & DispatchPropsType> {
+function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
-    componentDidMount() {
-        const {activePage, usersOnPage,searchFilter} = this.props
-        this.props.handlingUsers(activePage,usersOnPage, searchFilter)
+    const history = useNavigate()
+    const location = useLocation()
+    const search = location.search
+
+    useEffect(() => {
+        const {activePage, usersOnPage,searchFilter} = props
+        const params = new URLSearchParams(search)
+        const parsedTerm = params.get("term")
+        const parsedFriend = params.get("friend")
+        const parsedPage = params.get("page")
+
+        let actualPage = activePage
+        let actualFilter = searchFilter
+
+        if(parsedPage) actualPage = +parsedPage
+        if(parsedTerm) actualFilter = {...actualFilter, term: parsedTerm}
+        if(parsedFriend) actualFilter = {...actualFilter, friend: parsedFriend === "null" ? null : parsedFriend === "true"}
+        props.handlingUsers(actualPage,usersOnPage, actualFilter)
+    },[])
+
+    useEffect(() => {
+        const {searchFilter, activePage} = props
+        history(`/users?term=${searchFilter.term}&friend=${searchFilter.friend}&page=${activePage}`)
+    },[props.searchFilter, props.activePage])
+
+
+    const getUsersOnPage = (n: number) => {
+        const {usersOnPage, searchFilter} = props
+        props.handlingUsers(n,usersOnPage, searchFilter)
     }
-
-    getUsersOnPage = (n: number) => {
-        const {usersOnPage, searchFilter} = this.props
-        this.props.handlingUsers(n,usersOnPage, searchFilter)
+    const handlingFilteredUsers = (filter:FilterType) => {
+        const {usersOnPage} = props
+        props.handlingUsers(1,usersOnPage, filter)
     }
-    handlingFilteredUsers = (filter:FilterType) => {
-        const {usersOnPage} = this.props
-        this.props.handlingUsers(1,usersOnPage, filter)
-    }
-
-    render() {
-        return (
-            <div>
-                {this.props.isFetching ? <Preloader /> : <Users totalUsers={this.props.totalUsers}
-                                                                usersOnPage={this.props.usersOnPage}
-                                                                activePage={this.props.activePage}
-                                                                users={this.props.users}
-                                                                followInProcess={this.props.followInProcess}
-                                                                getUsersOnPage={this.getUsersOnPage}
-                                                                handlingFollowAction={this.props.handlingFollowAction}
-                                                                handlingUnfollowAction={this.props.handlingUnfollowAction}
-                                                                handlingFilteredUsers={this.handlingFilteredUsers}
+    return (
+        <div>
+            {props.isFetching ? <Preloader/> : <Users totalUsers={props.totalUsers}
+                                                      usersOnPage={props.usersOnPage}
+                                                      activePage={props.activePage}
+                                                      users={props.users}
+                                                      followInProcess={props.followInProcess}
+                                                      getUsersOnPage={getUsersOnPage}
+                                                      handlingFollow={props.handlingFollowAction}
+                                                      handlingUnfollow={props.handlingUnfollowAction}
+                                                      handlingFilteredUsers={handlingFilteredUsers}
 
 
-                />}
 
-            </div>
-        )
-    }
+            />}
+
+        </div>
+    )
 }
+
 const mapStateToProps = (state: AppStateType):StatePropsType => {
     return {
         users: getUsers(state),

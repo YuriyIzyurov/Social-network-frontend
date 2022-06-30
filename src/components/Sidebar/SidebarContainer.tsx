@@ -4,7 +4,6 @@ import {AppStateType} from "../../redux/reduxStore";
 import {UserType} from "../../typings/types";
 import {getFriendsOnSidebar, ThunkType} from "../../redux/sidebarReducer";
 import Preloader from "../../common/Preloader/Preloader";
-import Users from "../Users/Users";
 import React, {ComponentType} from "react";
 import {compose} from "redux";
 

@@ -1,6 +1,6 @@
 import React, {ComponentType, useEffect, useState} from "react";
 import Profile from "../Profile";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {
     actions,
     getUserStatusInProfile, handlePhotoChange, sendProfileDataOnServ, setProfileOnPage, ThunkType, updateMyStatus,
@@ -35,14 +35,14 @@ type OwnStateType = {
 }
 type PropsType = StatePropsProfileType & DispatchPropsProfileType & OwnPropsType
 
-const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, getUserStatusInProfile, router, loggedUser, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
+const ProfileContainerHook: React.FC<PropsType> = ({ setProfileOnPage, isAuth, getUserStatusInProfile, router, loggedUser, updateMyStatus, handlePhotoChange, sendProfileDataOnServ, status, currentProfile}) => {
 
     let [isShowMyProfile, setMyProfile ] = useState(false)
 
     useEffect(() => {
-        console.log('render')
         let idFromURL = router.params.id
         if(idFromURL){
+            setMyProfile(false)
           setProfileOnPage(idFromURL)
           getUserStatusInProfile(idFromURL)
         } else {
@@ -52,16 +52,16 @@ const ProfileContainerHook: React.FC<PropsType> = ({isAuth, setProfileOnPage, ge
             }
         }
         if (!isShowMyProfile) {
-            if (+idFromURL === loggedUser) {
+            if (isAuth && +idFromURL === loggedUser) {
                 setMyProfile(true)
             }
-            if (!idFromURL && loggedUser) {
-                setProfileOnPage( loggedUser )
-                getUserStatusInProfile( loggedUser )
+            if (isAuth && !idFromURL && loggedUser) {
                 setMyProfile(true)
             }
         }
     }, [router.params.id])
+
+
 
     if (!isAuth && !router.params.id) return <Navigate to={'/login'} />
 
@@ -81,8 +81,8 @@ let mapStateToProps = (state: AppStateType)  => {
         currentProfile: getCurrentProfile(state),
         status: getStatus(state),
         loggedUser: getId(state),
-        isAuth: getAuth(state),
-        users: getUsers(state)
+        users: getUsers(state),
+        isAuth: getAuth(state)
     }
 }
 

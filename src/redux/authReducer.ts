@@ -28,7 +28,8 @@ const authReducer = (state = initialState,action:ActionType):initialStateType =>
         case "LOGOUT_USER":
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                id: null
             }
         case "SET_CAPTCHA":
             return {

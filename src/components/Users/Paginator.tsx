@@ -5,10 +5,10 @@ type PropsType = {
     totalUsers: number
     usersOnPage: number
     activePage: number
-    getUsersOnPage: (n:number) => void
+    setUsersOnPage: (n:number) => void
 }
 
-const Paginator: React.FC<PropsType> = ({totalUsers, usersOnPage, activePage, getUsersOnPage  }) => {
+const Paginator: React.FC<PropsType> = ({totalUsers, usersOnPage, activePage, setUsersOnPage  }) => {
 
     let pagesCount: number = Math.ceil(totalUsers / usersOnPage)
     let pages: Array<number> = []
@@ -24,7 +24,7 @@ const Paginator: React.FC<PropsType> = ({totalUsers, usersOnPage, activePage, ge
         <div>
             <div>
                 {slicedPages.map(n => <span onClick={() => {
-                    getUsersOnPage(n)}}
+                    setUsersOnPage(n)}}
                                             className={activePage === n && s.active}>{n}</span>)}
             </div>
         </div>
