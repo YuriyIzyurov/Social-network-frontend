@@ -1,10 +1,10 @@
 .header{
     grid-area:h;
-    background-color: aquamarine;
 }
 .header img {
     width: 100px;
 }
 .loginBlock{
-    float:right
+    float:right;
+    color: white
 }

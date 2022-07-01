@@ -1,7 +1,7 @@
 import React, { ComponentType, LazyExoticComponent } from "react";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {Route, BrowserRouter, Routes} from "react-router-dom";
+import {Route, BrowserRouter, Routes, NavLink} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -14,9 +14,15 @@ import {setInitializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
 import {WithLazyLoading} from "./components/HOC/withLazyLoading";
 import {AppStateType} from "./redux/reduxStore";
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Breadcrumb, Layout, Menu } from 'antd';
+import s from "./components/Navbar/Navbar.module.css";
 
-let LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
-let DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
+
+const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
+const { Header, Content, Footer, Sider } = Layout
 
 
 type StatePropsAppType = ReturnType<typeof mapStateToProps>
@@ -35,32 +41,92 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
         window.removeEventListener("unhandledrejection",this.catchAllErrors)
     }
 
+
     render() {
+        /*const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
+            key,
+            label: `nav ${key}`,
+        }));*/
+
+        const items2: MenuProps['items'] = [{
+            key: `sub1`,
+            icon: React.createElement(UserOutlined),
+            label: <NavLink to="/profile">Profile</NavLink>,
+            children: [{
+                key: 1,
+                label: <NavLink to="/dialogs">Messages</NavLink>,
+            }, {
+                key: 2,
+                label: <NavLink to="/music">My music</NavLink>,
+            }, {
+                key: 3,
+                label: <NavLink to="/settings">Settings</NavLink>,
+            } ]
+        }, {
+            key: `sub2`,
+            icon: React.createElement(LaptopOutlined),
+            label: `Friends`,
+            children: [{
+                key: 1,
+                label: <NavLink to="/users">Find friends</NavLink>,
+            }, {
+                key: 2,
+                label: <NavLink to="/news">News</NavLink>,
+            }]
+        }]
+
         if(!this.props.initialized) {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
+            <Layout>
+                <BrowserRouter>
+                    <Header className="header">
+                        <div className="logo" />
+                        <HeaderContainer/>
+                       {/*<Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />*/}
+                    </Header>
+                    <Content style={{ padding: '0 50px' }}>
+                        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+                            <Sider className="site-layout-background" width={200}>
+                                <Menu
+                                    mode="inline"
+                                    //defaultSelectedKeys={['1']}
+                                    defaultOpenKeys={['sub1']}
+                                    style={{ height: '100%' }}
+                                    items={items2}
+                                />
+                            </Sider>
+                            <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                                <Routes>
+                                    <Route path="/" element={<ProfileContainer/>}/>
+                                    {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
+                                    <Route path="/dialogs" element={<DialogsContainer/>}/>
+                                    <Route path="/profile/:id" element={<ProfileContainer/>}/>
+                                    <Route path="/profile/" element={<ProfileContainer/>}/>
+                                    <Route path="/news" element={<News/>}/>
+                                    <Route path="/music" element={<Music/>}/>
+                                    <Route path="/settings" element={<Settings/>}/>
+                                    <Route path="/users" element={<UsersContainer/>}/>
+                                    <Route path="/login" element={<LoginContainer/>}/>
+                                    <Route path="*" element={<div> 404 NOT FOUND</div>}/>
+                                </Routes>
+                            </Content>
+                        </Layout>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                </BrowserRouter>
+            </Layout>
+            /*
                 <div className='app-wrapper'>
                     <HeaderContainer/>
-                    <Navbar/>
+
                     <div className='app-wrapper-content'>
-                        <Routes>
-                            <Route path="/" element={<ProfileContainer/>}/>
-                            <Route path="/dialogs/*" element={<DialogsContainer/>}/>
-                            <Route path="/profile/:id" element={<ProfileContainer/>}/>
-                            <Route path="/profile/" element={<ProfileContainer/>}/>
-                            <Route path="/news" element={<News/>}/>
-                            <Route path="/music" element={<Music/>}/>
-                            <Route path="/settings" element={<Settings/>}/>
-                            <Route path="/users" element={<UsersContainer/>}/>
-                            <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="*" element={<div> 404 NOT FOUND</div>}/>
-                        </Routes>
+
                     </div>
                 </div>
-            </BrowserRouter>
-        );
+            */
+        )
     }
 }
 const mapStateToProps = (state: AppStateType) => ({

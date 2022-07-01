@@ -3,6 +3,7 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {handlingAuthData, logoutFromServer} from "../../redux/authReducer";
 import {AppStateType} from "../../redux/reduxStore";
+import {PhotosType} from "../../typings/types";
 //классовая компонента с коннектом для примера
 
 
@@ -10,6 +11,7 @@ import {AppStateType} from "../../redux/reduxStore";
 type StatePropsHeaderType = {
     isAuth: boolean
     login: string | null
+    photos: PhotosType | undefined
 }
 type DispatchPropsHeaderType = {
     handlingAuthData: () => void
@@ -25,7 +27,8 @@ const mapStateToProps = (state: AppStateType) : StatePropsHeaderType =>{
 
     return {
         isAuth: state.auth.isAuth,
-        login: state.auth.login
+        login: state.auth.login,
+        photos: state.profile.currentProfile?.photos
     }
 }
 
