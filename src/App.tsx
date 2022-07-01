@@ -21,9 +21,11 @@ import s from "./components/Navbar/Navbar.module.css";
 
 
 const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const LazyChatContainer = React.lazy(() => import("./pages/Chat/ChatPage"))
 const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
-const { Header, Content, Footer, Sider } = Layout
+const ChatPage =  WithLazyLoading(LazyChatContainer)
 
+const { Header, Content, Footer, Sider } = Layout
 
 type StatePropsAppType = ReturnType<typeof mapStateToProps>
 type DispatchPropsAppType = {
@@ -67,12 +69,15 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
             icon: React.createElement(LaptopOutlined),
             label: `Friends`,
             children: [{
-                key: 1,
+                key: 4,
                 label: <NavLink to="/users">Find friends</NavLink>,
             }, {
-                key: 2,
+                key: 5,
                 label: <NavLink to="/news">News</NavLink>,
-            }]
+            }, {
+                key: 6,
+                label: <NavLink to="/chat">Chat</NavLink>,
+                }]
         }]
 
         if(!this.props.initialized) {
@@ -109,6 +114,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                                     <Route path="/settings" element={<Settings/>}/>
                                     <Route path="/users" element={<UsersContainer/>}/>
                                     <Route path="/login" element={<LoginContainer/>}/>
+                                    <Route path="/chat" element={<ChatPage />}/>
                                     <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                                 </Routes>
                             </Content>

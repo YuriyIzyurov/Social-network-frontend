@@ -13,7 +13,7 @@ type PropsLoginType = {
     photos?: PhotosType
 }
 const Header: React.FC<PropsLoginType> = ({isAuth, login, photos, logoutFromServer }) =>{
-debugger
+
     return <header className={s.header}>
         <img src='https://i.pinimg.com/originals/aa/25/53/aa2553cff08a5d436961d343b832007d.jpg'/>
         <div className={s.loginBlock}>
