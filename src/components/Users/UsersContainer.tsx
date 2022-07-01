@@ -17,6 +17,7 @@ import {
 import {UserType} from "../../typings/types";
 import {AppStateType} from "../../redux/reduxStore";
 import {useLocation, useNavigate} from "react-router";
+import {useSearchParams} from "react-router-dom";
 
 
 type StatePropsType = {
@@ -37,16 +38,14 @@ type DispatchPropsType = {
 
 function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
-    const history = useNavigate()
-    const location = useLocation()
-    const search = location.search
+
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         const {activePage, usersOnPage,searchFilter} = props
-        const params = new URLSearchParams(search)
-        const parsedTerm = params.get("term")
-        const parsedFriend = params.get("friend")
-        const parsedPage = params.get("page")
+        const parsedTerm = searchParams.get("term")
+        const parsedFriend = searchParams.get("friend")
+        const parsedPage = searchParams.get("page")
 
         let actualPage = activePage
         let actualFilter = searchFilter
@@ -59,7 +58,14 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
     useEffect(() => {
         const {searchFilter, activePage} = props
-        history(`/users?term=${searchFilter.term}&friend=${searchFilter.friend}&page=${activePage}`)
+        const query:{term?: string, friend?: string, page?: string} = {}
+
+        if(searchFilter.term) query.term = searchFilter.term
+        if(searchFilter.friend !== null) query.friend = String(searchFilter.friend)
+        if(activePage !== 1) query.page = String(activePage)
+
+        setSearchParams(query)
+
     },[props.searchFilter, props.activePage])
 
 
