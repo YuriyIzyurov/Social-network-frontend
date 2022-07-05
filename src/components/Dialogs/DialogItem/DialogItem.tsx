@@ -4,8 +4,12 @@ import {NavLink} from "react-router-dom";
 import Avatar from "./Avatar";
 import {DialogDataType} from "../../../typings/types";
 
-
-const DialogItem: React.FC<DialogDataType>= ({id, src, name}) => {
+type PropsType = {
+    id: number
+    src: string | null
+    name: string
+}
+const DialogItem: React.FC<PropsType>= ({id, src, name}) => {
 
     return <div>
         <NavLink to={"/dialogs/" + id} className={navData => navData.isActive ? s.active : s.dialog}><Avatar src={src}/>{name}</NavLink>

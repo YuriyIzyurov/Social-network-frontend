@@ -1,10 +1,23 @@
-import {DialogDataType, PrivateMessageDataType } from "../typings/types";
-import {InferActionsTypes} from "./reduxStore";
+import {DialogDataType, PrivateMessageDataType, UserType} from "../typings/types";
+import {AppStateType, InferActionsTypes} from "./reduxStore";
+import {usersAPI} from "../api/usersAPI";
+import {ThunkType as SidebarThunkType} from "./sidebarReducer";
+import {actions as actionsUser} from "../redux/usersReducer"
+import {actions as actionsSidebar} from "../redux/sidebarReducer"
+import {ActionType as UserActionType} from "../redux/usersReducer"
+import {ActionType as SidebarActionType} from "../redux/sidebarReducer"
+import {ThunkAction} from "redux-thunk/es/types";
+import {dialogsAPI} from "../api/dialogsAPI";
 
 
 
 export type InitialStateType = typeof initialState
 type ActionType = InferActionsTypes<typeof actions>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export type FriendFilterType = {
+    term: string
+    friend: boolean
+}
 
 let initialState = {
     privateMessageData : [
@@ -12,15 +25,17 @@ let initialState = {
         {message: "Whats is going on?", id: 2},
         {message: "Nice 2 meet u", id: 3}] as Array<PrivateMessageDataType>,
     textAreaMess : '',
-    DialogData : [
-        {name: "Anton", id: 1, src:'https://shapka-youtube.ru/wp-content/uploads/2021/02/prikolnaya-avatarka-dlya-patsanov.jpg'},
-        {name: "Vasya", id: 2, src:'https://cspromogame.ru//storage/upload_images/avatars/1299.jpg'},
-        {name: "Egor", id: 3, src:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpyQ3Ez7fGNDmuULcJxaGc3CxZ5ohwAoFeGQ&usqp=CAU'},
-        {name: "Anna", id: 4, src:'https://klike.net/uploads/posts/2019-03/1551511784_4.jpg'},
-        {name: "Dmitriy", id: 5, src:'http://pm1.narvii.com/6889/74979d4d2744ec6e27995b6e866f091d04c0b40cr1-515-414v2_uhq.jpg'}] as Array<DialogDataType>
+    friends: [] as Array<UserType>,
+    activePage: 1,
+    isFetching: false,
+    followInProcess: [] as Array<number>, //array of users ID is now following in process
+    friendList: [] as Array<UserType>,
+    totalFriends: 0,
+    friendsOnPage: 6,
+
 }
 
-const dialogReducer = (state = initialState,action:ActionType):InitialStateType => {
+const dialogReducer = (state = initialState,action:ActionType | UserActionType | SidebarActionType):InitialStateType => {
 
     switch (action.type) {
         case "SEND_MESSAGE":
@@ -29,12 +44,59 @@ const dialogReducer = (state = initialState,action:ActionType):InitialStateType 
                 privateMessageData : [...state.privateMessageData, {message: action.messageText, id: 5}],
                 textAreaMess : ''
             }
+
+        case "SET_FRIENDS_DIALOG":
+            return {
+                ...state,
+                friends: action.friends
+            }
+        case "SET_TOTAL_FRIENDS_DIALOG":
+            return {
+                ...state,
+                totalFriends: action.totalFriends
+            }
+        case "SET_ACTIVE_FRIEND_PAGE":
+            return {
+                ...state,
+                activePage: action.activePage
+            }
+
+        case  "IS_FETCHING":
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+
         default:
             return state
     }
 }
+export const handlingFriends =  (activePage:number,usersOnPage:number, filter:FriendFilterType): ThunkType => {
+    return async (dispatch, getState) => {
+        dispatch(actions.friendListIsFetching(true))
+        dispatch(actions.setActiveFriendPage(activePage))
+        let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
+        dispatch(actions.friendListIsFetching(false))
+        dispatch(actions.setFriendsDialog(response.items))
+        dispatch(actions.setTotalFriends(response.totalCount))
+
+    }
+}
+
+export const handlingMessages =  (id: number, body: string): ThunkType => {
+    return async (dispatch, getState) => {
+        let response = await dialogsAPI.sendMessageToFriend(id, body)
+        console.log(response)
+    }
+}
+
+
 export const actions = {
-    sendNewMessage: (text:string) => ({type : "SEND_MESSAGE", messageText : text} as const)
+    sendNewMessage: (text:string) => ({type : "SEND_MESSAGE", messageText : text} as const),
+    setFriendsDialog: (friends: Array<UserType>) => ({type: "SET_FRIENDS_DIALOG", friends} as const),
+    setActiveFriendPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
+    setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS_DIALOG", totalFriends} as const),
+    friendListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
 }
 
 export default dialogReducer

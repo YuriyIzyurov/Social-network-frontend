@@ -4,8 +4,8 @@ import { ThunkAction } from "redux-thunk/es/types";
 import {usersAPI} from "../api/usersAPI";
 
 
-type ActionType = InferActionsTypes<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export type ActionType = InferActionsTypes<typeof actions>
+export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export type InitialStateType = typeof initialState
 export type FilterType = typeof initialState.searchFilter
 
@@ -15,11 +15,10 @@ let initialState = {users: [] as Array<UserType>,
                     activePage: 1,
                     isFetching: false,
                     followInProcess: [] as Array<number>, //array of users ID is now following in process
-                    searchFilter:{
-                        term:'',
+                    searchFilter: {
+                        term: '',
                         friend: null as null | boolean
                     }
-
 }
 
 const usersReducer = (state = initialState, action:ActionType):InitialStateType => {

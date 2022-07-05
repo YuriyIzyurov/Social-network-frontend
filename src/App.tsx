@@ -106,6 +106,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                                 <Routes>
                                     <Route path="/" element={<ProfileContainer/>}/>
                                     {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
+                                    <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
                                     <Route path="/dialogs" element={<DialogsContainer/>}/>
                                     <Route path="/profile/:id" element={<ProfileContainer/>}/>
                                     <Route path="/profile/" element={<ProfileContainer/>}/>

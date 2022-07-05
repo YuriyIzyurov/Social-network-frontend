@@ -3,7 +3,7 @@ import {AppStateType, InferActionsTypes} from "./reduxStore";
 import {ThunkAction} from "redux-thunk/es/types";
 import {UserType} from "../typings/types";
 
-type ActionType = InferActionsTypes<typeof actions>
+export type ActionType = InferActionsTypes<typeof actions>
 export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export type InitialStateType = typeof initialState
 
@@ -16,12 +16,12 @@ let initialState = {
 const sidebarReducer = (state = initialState,action:ActionType):InitialStateType => {
     switch(action.type){
 
-        case "SET_FRIENDS":
+        case "SET_FRIENDS_SIDEBAR":
             return {
                 ...state,
                 friendList: action.friends
             }
-        case "SET_TOTAL_FRIENDS":
+        case "SET_TOTAL_FRIENDS_SIDEBAR":
             return {
                 ...state,
                 totalFriends: action.totalFriends
@@ -38,8 +38,8 @@ export const getFriendsOnSidebar =  (usersOnPage:number): ThunkType => {
     }
 }
 export const actions = {
-    setFriends: (friends: Array<UserType>) => ({type: "SET_FRIENDS", friends} as const),
-    setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS", totalFriends} as const),
+    setFriends: (friends: Array<UserType>) => ({type: "SET_FRIENDS_SIDEBAR", friends} as const),
+    setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS_SIDEBAR", totalFriends} as const),
 
 }
 
