@@ -13,7 +13,7 @@ import {dialogsAPI} from "../api/dialogsAPI";
 
 export type InitialStateType = typeof initialState
 type ActionType = InferActionsTypes<typeof actions>
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 export type FriendFilterType = {
     term: string
     friend: boolean
@@ -48,7 +48,12 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
         case "SET_FRIENDS_DIALOG":
             return {
                 ...state,
-                friends: action.friends
+                friends: [...state.friends, ...action.friends]
+            }
+        case "CLEAR_FRIEND_LIST":
+            return {
+                ...state,
+                friends: []
             }
         case "SET_TOTAL_FRIENDS_DIALOG":
             return {
@@ -83,10 +88,9 @@ export const handlingFriends =  (activePage:number,usersOnPage:number, filter:Fr
     }
 }
 
-export const handlingMessages =  (id: number, body: string): ThunkType => {
+export const handlingMessage =  (id: number, body: string): ThunkType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
-        console.log(response)
     }
 }
 
@@ -97,6 +101,7 @@ export const actions = {
     setActiveFriendPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
     setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS_DIALOG", totalFriends} as const),
     friendListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
+    clearFriendList: () => ({type: "CLEAR_FRIEND_LIST"} as const),
 }
 
 export default dialogReducer

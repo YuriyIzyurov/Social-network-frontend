@@ -19,7 +19,6 @@ import {getUsers} from "../../../redux/user-selectors";
 type StatePropsProfileType = ReturnType<typeof mapStateToProps>
 //todo:почему диспатч не передается в коннект 2ым параметром?
 type DispatchPropsProfileType = {
-    getProfileID: typeof getProfileID
     setProfileOnPage: (idFromURL: number) => ThunkType
     getUserStatusInProfile: (idFromURL: number) => ThunkType
     updateMyStatus: () => ThunkType
@@ -86,9 +85,9 @@ let mapStateToProps = (state: AppStateType)  => {
     }
 }
 
-let getProfileID = actions.getProfileID
+
 export default compose<ComponentType>(
-    connect<StatePropsProfileType, {}, OwnPropsType, AppStateType>(mapStateToProps, {getProfileID, setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
+    connect<StatePropsProfileType, {}, OwnPropsType, AppStateType>(mapStateToProps, { setProfileOnPage,getUserStatusInProfile,updateMyStatus, handlePhotoChange, sendProfileDataOnServ}),
     withRouter
 )(ProfileContainerHook)
 

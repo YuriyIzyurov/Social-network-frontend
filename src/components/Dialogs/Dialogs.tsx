@@ -6,12 +6,14 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
 import {DialogDataType, PrivateMessageDataType, UserType} from "../../typings/types";
-import {FriendFilterType, handlingFriends} from "../../redux/dialogReducer";
+import {FriendFilterType, ThunkType} from "../../redux/dialogReducer";
 import {FilterType, ThunkType as UsersThunkType} from "../../redux/usersReducer";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 import {getActivePage, getUsersOnPage} from "../../redux/user-selectors";
 import {getActiveFriendsPage, getFriendsOnPage} from "../../redux/dialog-selectors";
+import UserListDialog from "./UserListDialog";
+import { Col, Row } from 'antd'
 
 
 type PropsMessagesType = {
@@ -19,26 +21,29 @@ type PropsMessagesType = {
     privateMessageData: Array<PrivateMessageDataType>
     sendNewMessage: (formData:string) => void
     handlingFriends: (activePage:number,usersOnPage:number, filter: FriendFilterType) => UsersThunkType
+    handlingMessage: (id: number, body: string) => ThunkType
+    userID: string
 }
 type FormDataMessageType = {
     message: string
 }
 type PropsType = {}
 
-const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends }) => {
-    const activePage = useSelector(getActiveFriendsPage)
+const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends,handlingMessage, userID}) => {
+    /*const activePage = useSelector(getActiveFriendsPage)
     const usersOnPage = useSelector(getFriendsOnPage)
     const filter: FriendFilterType = {term: '', friend: true}
 
     useEffect(() => {
         handlingFriends(activePage, usersOnPage,filter)
-    }, [])
+    }, [])*/
 
     let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
     let message = privateMessageData.map(m=><Message message={m.message} key={m.message} />)
 
     const onSubmit = (formData: FormDataMessageType) => {
-        sendNewMessage(formData.message)
+        let id = +userID
+        handlingMessage(id, formData.message)
     }
 
     const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
@@ -58,14 +63,16 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
         form: 'dialog'
     })(DialogForm)
 
-    return <div className={s.dialogs}>
-        <div className={s.dialogItems}>
-            {dialog}
-        </div>
-        <div className={s.messages}>
-            {message}
-            <DialogFormRedux onSubmit={onSubmit}/>
-        </div>
+    return <div>
+        <Row>
+            <Col span={8}>
+                <UserListDialog/>
+            </Col>
+            <Col span={16}>
+                {message}
+                <DialogFormRedux onSubmit={onSubmit}/>
+            </Col>
+        </Row>
     </div>
 
 }
