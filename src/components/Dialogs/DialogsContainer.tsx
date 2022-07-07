@@ -32,7 +32,8 @@ const DialogsContainer: React.FC<PropsType> = ({friends, privateMessageData, sen
                     sendNewMessage={sendNewMessage}
                     handlingFriends={handlingFriends}
                     handlingMessage={handlingMessage}
-                    userID={router.params.id}/>
+                    userID={router.params.id}
+     />
 }
 
 

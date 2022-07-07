@@ -18,6 +18,8 @@ import { DownloadOutlined } from '@ant-design/icons';
 
 
 
+
+
 type PropsMessagesType = {
     friends: Array<UserType>
     privateMessageData: Array<PrivateMessageDataType>
@@ -33,12 +35,15 @@ type PropsType = {}
 
 const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends,handlingMessage, userID}) => {
 
-    let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
+    //let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
+    const date = new Date()
+
     let message = privateMessageData.map(m=><Message key={m.message}
                                                      message={m.message}
                                                      avatar="https://sun1-92.userapi.com/s/v1/ig2/Ldi-fgaFFOfbbtuQ31u10X8SDOW-fMkrQq-C44I579B4HQ28Yy8MtYysuZEnRokyf8XnqwNKSQ7bsvDmP3yFnWmD.jpg?size=50x50&quality=95&crop=8,512,1391,1391&ava=1"
-                                                     date="Jul 07 2022 13:07:27"
+                                                     date={date}
                                                      userName={"Юрий"}
+                                                     isMe={true}
     />)
 
     const onSubmit = (formData: FormDataMessageType) => {
@@ -73,6 +78,12 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
                 <UserListDialog/>
             </Col>
             <Col span={16}>
+                <Message key={1}
+                         message={"Привет, это сообщение от собеседника"}
+                         avatar="https://sun1-57.userapi.com/s/v1/ig1/JYi_Ms2lLHXkb3MXHqwOV5u26RdJ1gwEfPChmxt7fBL73LUTB_xVhkbnXwfQjGfjZ4MpJdIi.jpg?size=100x100&quality=96&crop=661,238,1224,1224&ava=1"
+                         date={date}
+                         userName={"Денис"}
+                         isMe={false}/>
                 {message}
                 <DialogFormRedux onSubmit={onSubmit}/>
             </Col>

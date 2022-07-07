@@ -2,15 +2,29 @@
 
 .message{
     display: flex;
-    flex-direction: column;
+    max-width: 440px;
+    margin-bottom: 15px;
 }
-.messageAvatar img{
+.isMe{
+flex-direction: row-reverse;
+    margin-left: auto;
+}
+.isMe img {
+    margin-left: 3px;
+}
+.messageAvatar {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.messageAvatar img {
     border-radius: 50px;
     width: 33px;
-    height:33px;
-    margin-right: 13px;
-    margin-bottom: 18px;
+    height: 33px;
+    margin-right: 3px;
+    margin-bottom: 22px;
 }
+
+
 .messageContent{
 
 }
@@ -18,10 +32,14 @@
     background: #3674ff;
     box-shadow: 0px 5px 5px rgba(54, 116, 255, 0.196733);
     border-radius: 12px 12px 12px 0px;
+    padding: 15px;
+    margin-bottom: 8px;
 }
 .messageText{
 color: #fff;
+    line-height: 20px;
 }
 .messageDate{
-
+    font-size: 12px;
+    opacity: 0.5;
 }
