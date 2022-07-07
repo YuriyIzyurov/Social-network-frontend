@@ -74,7 +74,7 @@ const AddChatMessageForm: React.FC<{}> = ({}) => {
 
     const sendMessageHandler = () => {
         if(!message) return
-        dispatch(sendMessage(message)).then(() => console.log('3'))
+        dispatch(sendMessage(message))
         setMessage('')
     }
     return <div>

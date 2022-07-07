@@ -1,0 +1,27 @@
+
+
+.message{
+    display: flex;
+    flex-direction: column;
+}
+.messageAvatar img{
+    border-radius: 50px;
+    width: 33px;
+    height:33px;
+    margin-right: 13px;
+    margin-bottom: 18px;
+}
+.messageContent{
+
+}
+.messageBubble{
+    background: #3674ff;
+    box-shadow: 0px 5px 5px rgba(54, 116, 255, 0.196733);
+    border-radius: 12px 12px 12px 0px;
+}
+.messageText{
+color: #fff;
+}
+.messageDate{
+
+}

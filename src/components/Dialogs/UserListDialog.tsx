@@ -81,7 +81,7 @@ const UserListDialog: React.FC = React.memo(() => {
                         <List.Item.Meta
                             avatar={<Avatar src={item.photos.large} />}
                             title={<a href="https://ant.design">{item.name}</a>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            description={item.status}
                         />
                         <div>content</div>
                     </Skeleton>

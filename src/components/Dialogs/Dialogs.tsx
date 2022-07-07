@@ -13,7 +13,9 @@ import {AppStateType} from "../../redux/reduxStore";
 import {getActivePage, getUsersOnPage} from "../../redux/user-selectors";
 import {getActiveFriendsPage, getFriendsOnPage} from "../../redux/dialog-selectors";
 import UserListDialog from "./UserListDialog";
-import { Col, Row } from 'antd'
+import { Col, Row, Button } from 'antd'
+import { DownloadOutlined } from '@ant-design/icons';
+
 
 
 type PropsMessagesType = {
@@ -30,20 +32,19 @@ type FormDataMessageType = {
 type PropsType = {}
 
 const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends,handlingMessage, userID}) => {
-    /*const activePage = useSelector(getActiveFriendsPage)
-    const usersOnPage = useSelector(getFriendsOnPage)
-    const filter: FriendFilterType = {term: '', friend: true}
-
-    useEffect(() => {
-        handlingFriends(activePage, usersOnPage,filter)
-    }, [])*/
 
     let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
-    let message = privateMessageData.map(m=><Message message={m.message} key={m.message} />)
+    let message = privateMessageData.map(m=><Message key={m.message}
+                                                     message={m.message}
+                                                     avatar="https://sun1-92.userapi.com/s/v1/ig2/Ldi-fgaFFOfbbtuQ31u10X8SDOW-fMkrQq-C44I579B4HQ28Yy8MtYysuZEnRokyf8XnqwNKSQ7bsvDmP3yFnWmD.jpg?size=50x50&quality=95&crop=8,512,1391,1391&ava=1"
+                                                     date="Jul 07 2022 13:07:27"
+                                                     userName={"Юрий"}
+    />)
 
     const onSubmit = (formData: FormDataMessageType) => {
-        let id = +userID
-        handlingMessage(id, formData.message)
+        /*let id = +userID
+        handlingMessage(id, formData.message)*/
+        sendNewMessage(formData.message)
     }
 
     const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
@@ -53,7 +54,10 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
                     <Field component={Textarea} name={"message"} validate={[maxLength200, minLength2]}/>
                 </div>
                 <div>
-                    <button type="submit">Send message</button>
+                    <Button type="primary" shape="round" icon={<DownloadOutlined />} size={'large'}>Send message</Button>
+                    <button type="submit">
+                        Send message
+                    </button>
                 </div>
             </div>
         </form>
