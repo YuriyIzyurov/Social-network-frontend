@@ -59,6 +59,7 @@
   "devDependencies": {
     "@types/redux-form": "^8.3.5",
     "@types/uuid": "^8.3.4",
-    "eslint-config-react-app": "^7.0.1"
+    "eslint-config-react-app": "^7.0.1",
+    "node-sass": "^7.0.1"
   }
 }

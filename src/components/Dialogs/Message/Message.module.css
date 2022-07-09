@@ -3,7 +3,7 @@
 .message{
     display: flex;
     max-width: 440px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .isMe{
 flex-direction: row-reverse;
@@ -21,7 +21,7 @@ flex-direction: row-reverse;
     width: 33px;
     height: 33px;
     margin-right: 3px;
-    margin-bottom: 22px;
+    margin-bottom: 13px;
 }
 
 
@@ -33,7 +33,6 @@ flex-direction: row-reverse;
     box-shadow: 0px 5px 5px rgba(54, 116, 255, 0.196733);
     border-radius: 12px 12px 12px 0px;
     padding: 15px;
-    margin-bottom: 8px;
 }
 .messageText{
 color: #fff;

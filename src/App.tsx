@@ -1,10 +1,8 @@
-import React, { ComponentType, LazyExoticComponent } from "react";
+import React from "react";
 import './App.css';
-import Navbar from "./components/Navbar/Navbar";
-import {Route, BrowserRouter, Routes, NavLink} from "react-router-dom";
+import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainerHook";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -14,10 +12,10 @@ import {setInitializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
 import {WithLazyLoading} from "./components/HOC/withLazyLoading";
 import {AppStateType} from "./redux/reduxStore";
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu } from 'antd';
-import s from "./components/Navbar/Navbar.module.css";
+import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
+import type {MenuProps} from 'antd';
+import {Layout, Menu} from 'antd';
+import LoginPage from "./components/Login/LoginPage";
 
 
 const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
@@ -112,7 +110,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                                     <Route path="/profile/" element={<ProfileContainer/>}/>
                                     <Route path="/news" element={<News/>}/>
                                     <Route path="/music" element={<Music/>}/>
-                                    <Route path="/settings" element={<Settings/>}/>
+                                    <Route path="/settings" element={<LoginPage/>}/>
                                     <Route path="/users" element={<UsersContainer/>}/>
                                     <Route path="/login" element={<LoginContainer/>}/>
                                     <Route path="/chat" element={<ChatPage />}/>
