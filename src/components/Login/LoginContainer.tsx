@@ -5,6 +5,8 @@ import {ActionType, askForCaptcha, sendAuthDataOnServ} from "../../redux/authRed
 import {AppStateType, BaseThunkType} from "../../redux/reduxStore";
 import { compose } from "redux";
 import { ComponentType } from "react";
+import LoginPage from "./LoginPage";
+
 
 export type StatePropsLoginType ={
     isAuth: boolean
@@ -22,5 +24,5 @@ let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
     }
 }
 
-export default compose<ComponentType>(connect<StatePropsLoginType, DispatchPropsLoginType, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha}))(Login)
+export default compose<ComponentType>(connect<StatePropsLoginType, DispatchPropsLoginType, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha}))(LoginPage)
 

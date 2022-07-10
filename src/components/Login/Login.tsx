@@ -21,7 +21,7 @@ type OwnPropsTypeForm = {
     captcha : string | null | undefined
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
 }
-type ThunkType = BaseThunkType<ActionType>
+export type ThunkType = BaseThunkType<ActionType>
 
 const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
     const onSubmit = (formData: FormDataType) => {

@@ -16,6 +16,7 @@ import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Layout, Menu} from 'antd';
 import LoginPage from "./components/Login/LoginPage";
+import Settings from "./components/Settings/Settings";
 
 
 const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
@@ -110,7 +111,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                                     <Route path="/profile/" element={<ProfileContainer/>}/>
                                     <Route path="/news" element={<News/>}/>
                                     <Route path="/music" element={<Music/>}/>
-                                    <Route path="/settings" element={<LoginPage/>}/>
+                                    <Route path="/settings" element={<Settings/>}/>
                                     <Route path="/users" element={<UsersContainer/>}/>
                                     <Route path="/login" element={<LoginContainer/>}/>
                                     <Route path="/chat" element={<ChatPage />}/>
