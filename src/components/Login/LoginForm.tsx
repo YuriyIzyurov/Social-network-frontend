@@ -1,12 +1,13 @@
 import { LockOutlined, UserOutlined, ReloadOutlined  } from '@ant-design/icons';
 import {Button, Form, Input} from 'antd';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {withFormik, FormikProps, Formik} from "formik";
 import { Button as CustomButton} from "./Button/Button";
 import {Checkbox } from 'formik-antd'
 import './Login.scss'
-import { ThunkType } from '../../redux/authReducer';
+import {actions, ThunkType } from '../../redux/authReducer';
 import { openNotification } from '../../utils/notifications/notificationTop';
+import {useDispatch} from "react-redux";
 
 
 interface FormValues {
@@ -32,9 +33,13 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
         handleSubmit,
         isSubmitting
     } = props
+    let dispatch = useDispatch()
 
     useEffect(() => {
-        if(props.error) openNotification('top', props.error)
+        if(props.error) {
+            openNotification("error","top", props.error)
+            dispatch(actions.deleteIncorrectData())
+        }
     }, [props.error])
 
     return (
@@ -122,10 +127,8 @@ export const LoginFormWithFormik = withFormik<OtherProps, FormValues>({
     handleSubmit: (values, { setSubmitting, props }) => {
 
         props.sendAuthDataOnServ(values.email, values.password, values.remember,values.captcha)
-        if(props.error) openNotification('top', props.error)
         setTimeout(() => {
             setSubmitting(false);
         }, 1000);
-    },
-    displayName: 'RegisterForm',
+    }
 })(LoginForm);

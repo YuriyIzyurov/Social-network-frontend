@@ -70,7 +70,7 @@ export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boo
     return async (dispatch) => {
         let response = await authAPI.submitAuth(email, password, rememberMe, captcha)
             if(response.resultCode === ResultCode.Success){
-                dispatch(actions.correctData())
+                dispatch(actions.deleteIncorrectData())
                 dispatch(handlingAuthData())
                 dispatch(actions.deleteCaptcha())
             } else {
@@ -104,7 +104,7 @@ export const actions = {
     setCaptchaImage: (imageURL:string) => ({type : "SET_CAPTCHA", imageURL} as const),
     deleteCaptcha: () => ({type : "DEL_CAPTCHA"} as const),
     incorrectData: (message: string) => ({type : "ERROR_MESSAGE", message} as const),
-    correctData: () => ({type : "DEL_ERROR"} as const)
+    deleteIncorrectData: () => ({type : "DEL_ERROR"} as const)
 }
 
 

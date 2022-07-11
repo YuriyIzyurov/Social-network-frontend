@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Login.scss"
 import LoginWhiteBlock from "./LoginWhiteBlock/LoginWhiteblock";
 import {LoginFormWithFormik} from "./LoginForm";
@@ -7,6 +7,7 @@ import {Navigate} from "react-router";
 
 
 const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error}) => {
+
 
     if(isAuth) {
         return <Navigate to={"/profile"}/>
@@ -21,7 +22,8 @@ const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({send
                <LoginFormWithFormik sendAuthDataOnServ={sendAuthDataOnServ}
                                     captcha={captcha}
                                     askForCaptcha={askForCaptcha}
-                                    error={error}/>
+                                    error={error}
+                                    />
             </LoginWhiteBlock>
         </div>
         </section>
