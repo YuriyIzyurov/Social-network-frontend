@@ -1,12 +1,13 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, ReloadOutlined  } from '@ant-design/icons';
 import {Button, Form, Input} from 'antd';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {withFormik, FormikProps, Formik} from "formik";
 import { Button as CustomButton} from "./Button/Button";
 import {Checkbox } from 'formik-antd'
-import { ThunkType } from './LoginPage';
-import store, {useAppDispatch} from "../../redux/reduxStore";
-import {sendAuthDataOnServ} from "../../redux/authReducer";
+import './Login.scss'
+import { ThunkType } from '../../redux/authReducer';
+import { openNotification } from '../../utils/notifications/notificationTop';
+
 
 interface FormValues {
     email: string;
@@ -17,6 +18,7 @@ interface FormValues {
 
 interface OtherProps {
     captcha: string | null
+    error: string | null
     askForCaptcha: () => ThunkType
     sendAuthDataOnServ: (email:string, password:string, remember:boolean, captcha:string) => ThunkType
 }
@@ -30,6 +32,10 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
         handleSubmit,
         isSubmitting
     } = props
+
+    useEffect(() => {
+        if(props.error) openNotification('top', props.error)
+    }, [props.error])
 
     return (
             <Form onFinish={handleSubmit}>
@@ -67,16 +73,21 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
                 <Form.Item
                     validateStatus={!touched.captcha ? "" : errors.captcha ? "error" : "success"}
                     help={!touched.captcha ? "" : errors.captcha}
+
                 >
-                    <Input
-                        style={{ width: '30%' }}
-                        size="large"
-                        name="captcha"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder="captcha"
-                        value={values.captcha}
-                    />
+                    {props.captcha && <div className="captchaBlock">
+                        <Input
+                            style={{width: '45%'}}
+                            size="large"
+                            name="captcha"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            placeholder="captcha"
+                            value={values.captcha}
+                        />
+                        <Button onClick={props.askForCaptcha} className="captchaBlock__button" shape="circle" icon={<ReloadOutlined />} />
+                        <img src={props.captcha}/>
+                    </div>}
                 </Form.Item>
                 <Form.Item valuePropName="checked" noStyle>
                     <Checkbox name="remember">Remember me</Checkbox>
@@ -90,7 +101,7 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
 };
 export const LoginFormWithFormik = withFormik<OtherProps, FormValues>({
 
-    validate: values => {
+    validate: (values, props) => {
         const errors:{email?: string, password?: string, captcha?: string} = {};
         if (!values.email) {
             errors.email = 'Required';
@@ -102,14 +113,19 @@ export const LoginFormWithFormik = withFormik<OtherProps, FormValues>({
         if (!values.password) {
             errors.password = 'Required'
         }
-        if(!values.captcha) {
+        if(props.captcha && !values.captcha) {
             errors.captcha = 'Required'
         }
         return errors;
     },
 
     handleSubmit: (values, { setSubmitting, props }) => {
-       props.sendAuthDataOnServ(values.email, values.password, values.remember,values.captcha)
+
+        props.sendAuthDataOnServ(values.email, values.password, values.remember,values.captcha)
+        if(props.error) openNotification('top', props.error)
+        setTimeout(() => {
+            setSubmitting(false);
+        }, 1000);
     },
     displayName: 'RegisterForm',
 })(LoginForm);

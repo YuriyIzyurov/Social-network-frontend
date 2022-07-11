@@ -7,14 +7,15 @@ import {Action} from "redux";
 
 export type initialStateType = typeof initialState
 export type ActionType = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionType>
+export type ThunkType = BaseThunkType<ActionType>
 
 let initialState = {
     email: null as string | null,
     id: null as number | null,
     login: null as string | null,
     isAuth: false as boolean | false,
-    captcha: null as string | null
+    captcha: null as string | null,
+    error: null as string | null
 }
 
 const authReducer = (state = initialState,action:ActionType):initialStateType => {
@@ -41,6 +42,16 @@ const authReducer = (state = initialState,action:ActionType):initialStateType =>
                 ...state,
                 captcha: null
             }
+        case "ERROR_MESSAGE":
+            return {
+                ...state,
+                error: action.message
+            }
+        case "DEL_ERROR":
+            return {
+                ...state,
+                error: null
+            }
         default:
             return state
     }
@@ -59,13 +70,15 @@ export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boo
     return async (dispatch) => {
         let response = await authAPI.submitAuth(email, password, rememberMe, captcha)
             if(response.resultCode === ResultCode.Success){
+                dispatch(actions.correctData())
                 dispatch(handlingAuthData())
                 dispatch(actions.deleteCaptcha())
             } else {
                 if(response.resultCode === ResultCodeForCaptcha.NeedCaptcha) {
                     dispatch(askForCaptcha())
                 }
-                dispatch(stopSubmit("login", {_error: response.messages[0]}))
+                dispatch(actions.incorrectData(response.messages[0]))
+                
             }
     }
 }
@@ -89,7 +102,9 @@ export const actions = {
     setUserAuth: (email:string,id:number,login:string) => ({type : "SET_USER_AUTH", data : {email,id,login}} as const),
     logoutUser: () => ({type : "LOGOUT_USER"} as const),
     setCaptchaImage: (imageURL:string) => ({type : "SET_CAPTCHA", imageURL} as const),
-    deleteCaptcha: () => ({type : "DEL_CAPTCHA"} as const)
+    deleteCaptcha: () => ({type : "DEL_CAPTCHA"} as const),
+    incorrectData: (message: string) => ({type : "ERROR_MESSAGE", message} as const),
+    correctData: () => ({type : "DEL_ERROR"} as const)
 }
 
 

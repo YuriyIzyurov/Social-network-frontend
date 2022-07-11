@@ -29,6 +29,15 @@
     width: 430px;
   }
 }
+.captchaBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__button {
+    max-width: 32px;
+    margin-left: 10px
+  }
+}
 
 
 

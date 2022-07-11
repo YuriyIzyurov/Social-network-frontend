@@ -11,6 +11,7 @@ import LoginPage from "./LoginPage";
 export type StatePropsLoginType ={
     isAuth: boolean
     captcha: string | null
+    error: string | null
 }
 export type DispatchPropsLoginType = {
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
@@ -20,7 +21,8 @@ type ThunkType = BaseThunkType<ActionType>
 let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
     return {
         isAuth: state.auth.isAuth,
-        captcha: state.auth.captcha
+        captcha: state.auth.captcha,
+        error: state.auth.error
     }
 }
 
