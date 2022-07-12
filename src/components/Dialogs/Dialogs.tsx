@@ -1,22 +1,17 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
-import {DialogDataType, PrivateMessageDataType, UserType} from "../../typings/types";
+import {PrivateMessageDataType, UserType} from "../../typings/types";
 import {FriendFilterType, ThunkType} from "../../redux/dialogReducer";
-import {FilterType, ThunkType as UsersThunkType} from "../../redux/usersReducer";
+import {ThunkType as UsersThunkType} from "../../redux/usersReducer";
+import {Button, Col, Row} from 'antd'
+import {DownloadOutlined} from '@ant-design/icons';
+import './Dialogs.scss'
 import {useSelector} from "react-redux";
-import {AppStateType} from "../../redux/reduxStore";
-import {getActivePage, getUsersOnPage} from "../../redux/user-selectors";
-import {getActiveFriendsPage, getFriendsOnPage} from "../../redux/dialog-selectors";
-import UserListDialog from "./UserListDialog";
-import { Col, Row, Button } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons';
-
-
-
+import { getActiveFriendsPage, getFriendsOnPage } from "../../redux/dialog-selectors";
 
 
 type PropsMessagesType = {
@@ -33,8 +28,15 @@ type FormDataMessageType = {
 type PropsType = {}
 
 const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends,handlingMessage, userID}) => {
+    const activePage = useSelector(getActiveFriendsPage)
+    const usersOnPage = useSelector(getFriendsOnPage)
+    const filter: FriendFilterType = {term: '', friend: true}
 
-    //let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
+    useEffect(() => {
+        handlingFriends(activePage, usersOnPage,filter)
+    }, [])
+
+    let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
     const date = new Date()
     let isRead = true
 
@@ -48,9 +50,9 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
     />)
 
     const onSubmit = (formData: FormDataMessageType) => {
-        /*let id = +userID
-        handlingMessage(id, formData.message)*/
-        sendNewMessage(formData.message)
+        let id = +userID
+        handlingMessage(id, formData.message)
+        /*sendNewMessage(formData.message)*/
     }
 
     const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
@@ -76,7 +78,9 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
     return <div>
         <Row>
             <Col span={8}>
-                <UserListDialog/>
+                <div className="dialog">
+                    {dialog}
+                </div>
             </Col>
             <Col span={16}>
                 <Message key={1}
