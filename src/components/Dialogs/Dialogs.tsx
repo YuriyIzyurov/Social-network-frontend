@@ -1,5 +1,4 @@
 import React, {useEffect} from "react"
-import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
@@ -37,6 +36,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
 
     //let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
     const date = new Date()
+    let isRead = true
 
     let message = privateMessageData.map(m=><Message key={m.message}
                                                      message={m.message}
@@ -44,6 +44,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
                                                      date={date}
                                                      userName={"Юрий"}
                                                      isMe={true}
+                                                     isRead={isRead}
     />)
 
     const onSubmit = (formData: FormDataMessageType) => {
@@ -54,7 +55,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
 
     const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
         return <form onSubmit={handleSubmit}>
-            <div className={s.sendMessage}>
+            <div>
                 <div>
                     <Field component={Textarea} name={"message"} validate={[maxLength200, minLength2]}/>
                 </div>
@@ -83,7 +84,8 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
                          avatar="https://sun1-57.userapi.com/s/v1/ig1/JYi_Ms2lLHXkb3MXHqwOV5u26RdJ1gwEfPChmxt7fBL73LUTB_xVhkbnXwfQjGfjZ4MpJdIi.jpg?size=100x100&quality=96&crop=661,238,1224,1224&ava=1"
                          date={date}
                          userName={"Денис"}
-                         isMe={false}/>
+                         isMe={false}
+                         isRead={false}/>
                 {message}
                 <DialogFormRedux onSubmit={onSubmit}/>
             </Col>

@@ -7,6 +7,9 @@
     max-width: 440px;
     margin-bottom: 5px;
   }
+  &__info {
+    margin-right: 5px;
+  }
 
   &__avatar {
     display: flex;
@@ -51,6 +54,9 @@
     #{$self}__content {
       margin-bottom: 15px;
       flex-direction: row-reverse;
+    }
+    #{$self}__info {
+        margin-left: 5px;
     }
     #{$self}__text {
       color: #202020

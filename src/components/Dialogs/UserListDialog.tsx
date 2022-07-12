@@ -6,6 +6,7 @@ import {getActiveFriendsPage, getFriends, getFriendsOnPage} from "../../redux/di
 import {actions, FriendFilterType, handlingFriends} from "../../redux/dialogReducer";
 import {UserType} from "../../typings/types";
 import {stopChatListening} from "../../redux/chatReducer";
+import "./Dialogs.scss"
 
 
 type DialogDataType = UserType & {loading: boolean}
@@ -68,17 +69,18 @@ const UserListDialog: React.FC = React.memo(() => {
     return (
 
         <List
-            className="demo-loadmore-list"
             loading={initLoading}
             itemLayout="horizontal"
             loadMore={loadMore}
             dataSource={list}
             renderItem={item => (
                 <List.Item
+
                     actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
                 >
                     <Skeleton avatar title={false} loading={item.loading} active>
                         <List.Item.Meta
+                            className="user-list"
                             avatar={<Avatar src={item.photos.large} />}
                             title={<a href="https://ant.design">{item.name}</a>}
                             description={item.status}
