@@ -11,7 +11,7 @@ import {PhotosType} from "../../typings/types";
 type StatePropsHeaderType = {
     isAuth: boolean
     login: string | null
-    photos: PhotosType | undefined
+    photo: string | null | undefined
 }
 type DispatchPropsHeaderType = {
     handlingAuthData: () => void
@@ -28,7 +28,7 @@ const mapStateToProps = (state: AppStateType) : StatePropsHeaderType =>{
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
-        photos: state.profile.currentProfile?.photos
+        photo: state.auth.photos?.small
     }
 }
 

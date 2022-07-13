@@ -1,4 +1,4 @@
-import {DialogDataType, PrivateMessageDataType, UserType} from "../typings/types";
+import {DialogDataType, PhotosType, PrivateMessageDataType, PrivateMessageType, UserType} from "../typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
 import {usersAPI} from "../api/usersAPI";
 import {ThunkType as SidebarThunkType} from "./sidebarReducer";
@@ -8,6 +8,8 @@ import {ActionType as UserActionType} from "../redux/usersReducer"
 import {ActionType as SidebarActionType} from "../redux/sidebarReducer"
 import {ThunkAction} from "redux-thunk/es/types";
 import {dialogsAPI} from "../api/dialogsAPI";
+import {ResultCode} from "../api/api";
+import {profileAPI} from "../api/profileAPI";
 
 
 
@@ -20,10 +22,7 @@ export type FriendFilterType = {
 }
 
 let initialState = {
-    privateMessageData : [
-        {message: "Hi are you?", id: 1},
-        {message: "Whats is going on?", id: 2},
-        {message: "Nice 2 meet u", id: 3}] as Array<PrivateMessageDataType>,
+    privateMessageData : [] as Array<PrivateMessageType>,
     textAreaMess : '',
     friends: [] as Array<UserType>,
     activePage: 1,
@@ -41,7 +40,7 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
         case "SEND_MESSAGE":
             return {
                 ...state,
-                privateMessageData : [...state.privateMessageData, {message: action.messageText, id: 5}],
+                privateMessageData : [...state.privateMessageData, action.payload],
                 textAreaMess : ''
             }
 
@@ -89,14 +88,21 @@ export const handlingFriends =  (activePage:number,usersOnPage:number, filter:Fr
 }
 
 export const handlingMessage =  (id: number, body: string): ThunkType => {
+    debugger
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
+        if(response.resultCode === ResultCode.Success){
+            let response2 = await profileAPI.getProfile(response.data.message.senderId)
+            let {photos} = response2
+            let message = {...response.data.message, photos}
+            dispatch(actions.sendNewMessage(message))
+        }
     }
 }
 
 
 export const actions = {
-    sendNewMessage: (text:string) => ({type : "SEND_MESSAGE", messageText : text} as const),
+    sendNewMessage: (messageData: PrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
     setFriendsDialog: (friends: Array<UserType>) => ({type: "SET_FRIENDS_DIALOG", friends} as const),
     setActiveFriendPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
     setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS_DIALOG", totalFriends} as const),

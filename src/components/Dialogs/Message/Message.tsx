@@ -13,7 +13,7 @@ import MessageNoReadImage from "../../../assets/images/noreaded.svg"
 
 type PropsType = {
     message: string
-    avatar: string
+    avatar: string | undefined
     date: Date
     userName: string
     isMe: boolean

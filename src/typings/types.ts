@@ -26,7 +26,7 @@ export type CurrentProfileType = {
     aboutMe: string
 }
 export type PhotosType = {
-    small: string | null
+    small: string | undefined
     large: string | null
 }
 
@@ -38,9 +38,24 @@ export type UserType = {
     photos:PhotosType
 }
 
-export type PrivateMessageDataType = {
-    message: string
-    id: number
+export type PrivateMessageDataType ={
+    message: PrivateMessageType
+}
+export type PrivateMessageType = {
+    addedAt: string
+    body: string
+    deletedByRecipient: boolean
+    deletedBySender: boolean
+    distributionId: string | null
+    id: string
+    isSpam: boolean
+    recipientId: number
+    recipientName: string
+    senderId: number
+    senderName: string
+    translatedBody: string | null
+    viewed: boolean
+    photos: PhotosType
 }
 export type DialogDataType = {
     name: string

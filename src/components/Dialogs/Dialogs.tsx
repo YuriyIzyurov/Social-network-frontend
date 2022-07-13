@@ -4,7 +4,7 @@ import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
-import {PrivateMessageDataType, UserType} from "../../typings/types";
+import {PrivateMessageDataType, PrivateMessageType, UserType} from "../../typings/types";
 import {FriendFilterType, ThunkType} from "../../redux/dialogReducer";
 import {ThunkType as UsersThunkType} from "../../redux/usersReducer";
 import {Button, Col, Row} from 'antd'
@@ -12,12 +12,12 @@ import {DownloadOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
 import {useSelector} from "react-redux";
 import { getActiveFriendsPage, getFriendsOnPage } from "../../redux/dialog-selectors";
+import {getAuthID} from "../../redux/auth-selectors";
 
 
 type PropsMessagesType = {
     friends: Array<UserType>
-    privateMessageData: Array<PrivateMessageDataType>
-    sendNewMessage: (formData:string) => void
+    privateMessageData: Array<PrivateMessageType>
     handlingFriends: (activePage:number,usersOnPage:number, filter: FriendFilterType) => UsersThunkType
     handlingMessage: (id: number, body: string) => ThunkType
     userID: string
@@ -27,9 +27,11 @@ type FormDataMessageType = {
 }
 type PropsType = {}
 
-const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, sendNewMessage, handlingFriends,handlingMessage, userID}) => {
+const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData,  handlingFriends,handlingMessage, userID}) => {
     const activePage = useSelector(getActiveFriendsPage)
     const usersOnPage = useSelector(getFriendsOnPage)
+    const isMe = useSelector(getAuthID)
+
     const filter: FriendFilterType = {term: '', friend: true}
 
     useEffect(() => {
@@ -40,9 +42,9 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
     const date = new Date()
     let isRead = true
 
-    let message = privateMessageData.map(m=><Message key={m.message}
-                                                     message={m.message}
-                                                     avatar="https://sun1-92.userapi.com/s/v1/ig2/Ldi-fgaFFOfbbtuQ31u10X8SDOW-fMkrQq-C44I579B4HQ28Yy8MtYysuZEnRokyf8XnqwNKSQ7bsvDmP3yFnWmD.jpg?size=50x50&quality=95&crop=8,512,1391,1391&ava=1"
+    let message = privateMessageData.map(m=><Message key={m.id}
+                                                     message={m.body}
+                                                     avatar={m.photos.small}
                                                      date={date}
                                                      userName={"Юрий"}
                                                      isMe={true}
@@ -52,7 +54,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData, send
     const onSubmit = (formData: FormDataMessageType) => {
         let id = +userID
         handlingMessage(id, formData.message)
-        /*sendNewMessage(formData.message)*/
+
     }
 
     const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {

@@ -1,5 +1,5 @@
 import {instance, ResponseAPIType } from "./api"
-import {UserType} from "../typings/types";
+import {PrivateMessageDataType, UserType} from "../typings/types";
 import {FilterType} from "../redux/usersReducer";
 
 type GetItemsType<T> = {
@@ -18,7 +18,7 @@ export const dialogsAPI = {
         return instance.get<any>(`dialogs/${id}/messages?page=${activePage}&count=${usersOnPage}`).then(response => response.data)
     },
     sendMessageToFriend(id: number, body: string) {
-        return instance.post<ResponseAPIType>(`dialogs/${id}/messages`, {body}).then(response => response.data)
+        return instance.post<ResponseAPIType<PrivateMessageDataType>>(`dialogs/${id}/messages`, {body}).then(response => response.data)
     },
 
 }

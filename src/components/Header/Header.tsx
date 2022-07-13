@@ -10,9 +10,9 @@ type PropsLoginType = {
     isAuth: boolean
     login: string | null
     logoutFromServer: () => void
-    photos?: PhotosType
+    photo: string | null | undefined
 }
-const Header: React.FC<PropsLoginType> = ({isAuth, login, photos, logoutFromServer }) =>{
+const Header: React.FC<PropsLoginType> = ({isAuth, login, photo, logoutFromServer }) =>{
 
     return <header className={s.header}>
         <img src='https://i.pinimg.com/originals/aa/25/53/aa2553cff08a5d436961d343b832007d.jpg'/>
@@ -20,7 +20,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, photos, logoutFromServ
             {!isAuth ? <NavLink to={'/login'}>Login</NavLink>
                 : <div>
                     <div>
-                        <Avatar src={photos?.small} />
+                        <Avatar src={photo} />
                         {login}
                         <Button onClick={()=>{logoutFromServer()}}>Logout</Button>
                     </div>

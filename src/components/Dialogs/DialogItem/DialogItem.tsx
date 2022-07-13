@@ -7,7 +7,7 @@ import isToday from 'date-fns/isToday';
 import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
 
-const getCustomAvatar = (avatar: string | null) => {
+const getCustomAvatar = (avatar: string | undefined) => {
     if(avatar) {
         return <img
             src={avatar}
@@ -27,7 +27,7 @@ const getMessageTime = (created_at: any) => {
 type PropsType = {
     name: string
     id: number
-    src: string | null
+    src: string | undefined
 }
 const DialogItem: React.FC<PropsType> = ({name, id, src}) => {
     return (

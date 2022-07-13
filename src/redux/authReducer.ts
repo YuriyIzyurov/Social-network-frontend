@@ -3,6 +3,8 @@ import {stopSubmit} from "redux-form";
 import {InferActionsTypes, BaseThunkType} from "./reduxStore";
 import {authAPI} from "../api/authAPI";
 import {Action} from "redux";
+import {profileAPI} from "../api/profileAPI";
+import {PhotosType} from "../typings/types";
 
 
 export type initialStateType = typeof initialState
@@ -15,7 +17,8 @@ let initialState = {
     login: null as string | null,
     isAuth: false as boolean | false,
     captcha: null as string | null,
-    error: null as string | null
+    error: null as string | null,
+    photos: null as PhotosType | null
 }
 
 const authReducer = (state = initialState,action:ActionType):initialStateType => {
@@ -62,8 +65,10 @@ export const handlingAuthData = ():ThunkType => {
     return async (dispatch) => {
        let response = await authAPI.getAuth()
             if(response.resultCode === ResultCode.Success){
+                let response2 = await profileAPI.getProfile(response.data.id)
+                let {photos} = response2
                 let {email, id, login} = response.data
-                dispatch(actions.setUserAuth(email, id, login))}
+                dispatch(actions.setUserAuth(email, id, login, photos))}
     }
 }
 export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean, captcha:string):ThunkType => {
@@ -99,7 +104,7 @@ export const logoutFromServer = ():ThunkType => async (dispatch) => {
             }
 
 export const actions = {
-    setUserAuth: (email:string,id:number,login:string) => ({type : "SET_USER_AUTH", data : {email,id,login}} as const),
+    setUserAuth: (email:string,id:number,login:string, photos: PhotosType) => ({type : "SET_USER_AUTH", data : {email,id,login, photos}} as const),
     logoutUser: () => ({type : "LOGOUT_USER"} as const),
     setCaptchaImage: (imageURL:string) => ({type : "SET_CAPTCHA", imageURL} as const),
     deleteCaptcha: () => ({type : "DEL_CAPTCHA"} as const),
