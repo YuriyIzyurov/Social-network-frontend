@@ -2,7 +2,7 @@ import React from 'react';
 import '../Dialogs.scss'
 // @ts-ignore
 import UnreadMessage from '../../../assets/images/noreaded.svg'
-import CustomTime from "../../../utils/Time/CustomTime";
+import  {GetMessageTime} from "../../../utils/Time/CustomTime";
 import isToday from 'date-fns/isToday';
 import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
@@ -16,14 +16,8 @@ const getCustomAvatar = (avatar: string | undefined) => {
         //create custom avatar
     }
 }
-let date = new Date()//"Tue Jul 12 2022 19:04:52"
-const getMessageTime = (created_at: any) => {
-    if(isToday(created_at)) {
-        return format(created_at, "HH:mm")
-    } else {
-        return format(created_at, "DD.MM.YYYY")
-    }
-}
+let creationDate = "Tue Jul 13 2022 19:04:52"
+
 type PropsType = {
     name: string
     id: number
@@ -39,7 +33,7 @@ const DialogItem: React.FC<PropsType> = ({name, id, src}) => {
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">
                             <b>{name}</b>
-                            <span>{getMessageTime(date)}</span>
+                            <span><GetMessageTime date={creationDate}/></span>
                             {/*<span>
                         <CustomTime date={new Date()}/>
                     </span>*/}

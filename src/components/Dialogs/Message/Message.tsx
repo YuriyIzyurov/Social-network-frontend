@@ -4,7 +4,7 @@ import  './Message.scss'
 import { format } from 'date-fns'
 
 import classNames from "classnames";
-import CustomTime from "../../../utils/Time/CustomTime";
+import {CustomTimeDistanceToNow, GetMessageTime} from "../../../utils/Time/CustomTime";
 // @ts-ignore
 import MessageReadImage from "../../../assets/images/readed.svg"
 // @ts-ignore
@@ -14,7 +14,7 @@ import MessageNoReadImage from "../../../assets/images/noreaded.svg"
 type PropsType = {
     message: string
     avatar: string | undefined
-    date: Date
+    date: string
     userName: string
     isMe: boolean
     isRead: boolean
@@ -30,7 +30,7 @@ const Message: React.FC<PropsType> = ({message, avatar, date, userName, isMe,isR
                     <p className="message__text">{message}</p>
                 </div>
                 <span className="message__date">
-                    <CustomTime date={date} />
+                    <GetMessageTime date={date} />
                 </span>
             </div>
             {isMe && isRead && <img src={MessageReadImage} alt=""/>}

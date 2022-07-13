@@ -39,13 +39,12 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData,  han
     }, [])
 
     let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
-    const date = new Date()
     let isRead = true
 
     let message = privateMessageData.map(m=><Message key={m.id}
                                                      message={m.body}
                                                      avatar={m.photos.small}
-                                                     date={date}
+                                                     date={m.addedAt}
                                                      userName={"Юрий"}
                                                      isMe={true}
                                                      isRead={isRead}
@@ -85,13 +84,13 @@ const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData,  han
                 </div>
             </Col>
             <Col span={16}>
-                <Message key={1}
+                {/*<Message key={1}
                          message={"Привет, это сообщение от собеседника"}
                          avatar="https://sun1-57.userapi.com/s/v1/ig1/JYi_Ms2lLHXkb3MXHqwOV5u26RdJ1gwEfPChmxt7fBL73LUTB_xVhkbnXwfQjGfjZ4MpJdIi.jpg?size=100x100&quality=96&crop=661,238,1224,1224&ava=1"
                          date={date}
                          userName={"Денис"}
                          isMe={false}
-                         isRead={false}/>
+                         isRead={false}/>*/}
                 {message}
                 <DialogFormRedux onSubmit={onSubmit}/>
             </Col>
