@@ -1,4 +1,12 @@
-import {DialogDataType, PhotosType, PrivateMessageDataType, PrivateMessageType, UserType} from "../typings/types";
+import {
+    AllMessageType,
+    DialogDataType,
+    DialogType,
+    PhotosType,
+    PrivateMessageDataType,
+    SelfPrivateMessageType,
+    UserType
+} from "../typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
 import {usersAPI} from "../api/usersAPI";
 import {ThunkType as SidebarThunkType} from "./sidebarReducer";
@@ -22,16 +30,16 @@ export type FriendFilterType = {
 }
 
 let initialState = {
-    privateMessageData : [] as Array<PrivateMessageType>,
+    privateMessageData : [] as Array<SelfPrivateMessageType>,
+    messagesList: [] as Array<AllMessageType>,
+    lastMessage: [] as Array<string>,
     textAreaMess : '',
-    friends: [] as Array<UserType>,
+    dialogs: [] as Array<DialogType>,
     activePage: 1,
+    messagesOnPage: 15,
     isFetching: false,
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,
-    totalFriends: 0,
-    friendsOnPage: 6,
-
 }
 
 const dialogReducer = (state = initialState,action:ActionType | UserActionType | SidebarActionType):InitialStateType => {
@@ -43,21 +51,31 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
                 privateMessageData : [...state.privateMessageData, action.payload],
                 textAreaMess : ''
             }
+       case "SET_MESSAGES":
+            return {
+                ...state,
+                messagesList : [...action.messages]
+            }
+       case "LAST_MESSAGE":
+            return {
+                ...state,
+                lastMessage : [...state.lastMessage, action.lastMessage]
+            }
+       case "CLEAR_MESSAGES":
+            return {
+                ...state,
+                messagesList : []
+            }
 
-        case "SET_FRIENDS_DIALOG":
+        case "SET_DIALOGS":
             return {
                 ...state,
-                friends: [...state.friends, ...action.friends]
+                dialogs: [...state.dialogs, ...action.dialogs]
             }
-        case "CLEAR_FRIEND_LIST":
+        case "CLEAR_DIALOG_LIST":
             return {
                 ...state,
-                friends: []
-            }
-        case "SET_TOTAL_FRIENDS_DIALOG":
-            return {
-                ...state,
-                totalFriends: action.totalFriends
+                dialogs: []
             }
         case "SET_ACTIVE_FRIEND_PAGE":
             return {
@@ -75,20 +93,17 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
             return state
     }
 }
-export const handlingFriends =  (activePage:number,usersOnPage:number, filter:FriendFilterType): ThunkType => {
+export const handlingDialogs =  (): ThunkType => {
     return async (dispatch, getState) => {
-        dispatch(actions.friendListIsFetching(true))
-        dispatch(actions.setActiveFriendPage(activePage))
-        let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
-        dispatch(actions.friendListIsFetching(false))
-        dispatch(actions.setFriendsDialog(response.items))
-        dispatch(actions.setTotalFriends(response.totalCount))
+        dispatch(actions.dialogListIsFetching(true))
+        let response = await dialogsAPI.getAllDialogs()
+        dispatch(actions.dialogListIsFetching(false))
+        dispatch(actions.setDialogs(response))
 
     }
 }
 
 export const handlingMessage =  (id: number, body: string): ThunkType => {
-    debugger
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
         if(response.resultCode === ResultCode.Success){
@@ -100,14 +115,39 @@ export const handlingMessage =  (id: number, body: string): ThunkType => {
     }
 }
 
+export const startDialogWithFriend = (id: number):ThunkType => {
+    return async (dispatch) => {
+        let response = await dialogsAPI.startChatting(id)
+    }
+}
+export const handlingMessageList =  (id: number, activePage: number, messagesOnPage: number): ThunkType => {
+    return async (dispatch, getState) => {
+        dispatch(actions.dialogListIsFetching(true))
+        let response = await dialogsAPI.getFriendMessagesList(id, activePage, messagesOnPage)
+        dispatch(actions.dialogListIsFetching(false))
+        dispatch(actions.setMessages(response.items))
+
+    }
+}
+export const getLastMessage =  (id: number, activePage: number, messagesOnPage: number): ThunkType => {
+    return async (dispatch, getState) => {
+        let response = await dialogsAPI.getFriendMessagesList(id, activePage, messagesOnPage)
+        let lastMessage = response.items[messagesOnPage]
+        dispatch(actions.setLastMessage(lastMessage))
+    }
+}
+
+
 
 export const actions = {
-    sendNewMessage: (messageData: PrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
-    setFriendsDialog: (friends: Array<UserType>) => ({type: "SET_FRIENDS_DIALOG", friends} as const),
-    setActiveFriendPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
-    setTotalFriends: (totalFriends:number)=> ({type: "SET_TOTAL_FRIENDS_DIALOG", totalFriends} as const),
-    friendListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
-    clearFriendList: () => ({type: "CLEAR_FRIEND_LIST"} as const),
+    sendNewMessage: (messageData: SelfPrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
+    setDialogs: (dialogs: Array<DialogType>) => ({type: "SET_DIALOGS", dialogs} as const),
+    setMessages: (messages: Array<AllMessageType>) => ({type: "SET_MESSAGES", messages} as const),
+    setLastMessage: (lastMessage: string) => ({type: "LAST_MESSAGE", lastMessage} as const),
+    clearMessageList: () => ({type: "CLEAR_MESSAGES"} as const),
+    setActiveDialogPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
+    dialogListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
+    clearDialogList: () => ({type: "CLEAR_DIALOG_LIST"} as const),
 }
 
 export default dialogReducer

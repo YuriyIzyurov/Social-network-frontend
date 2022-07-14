@@ -15,11 +15,11 @@ type PropsType = {
     message: string
     avatar: string | undefined
     date: string
-    userName: string
     isMe: boolean
-    isRead: boolean
+    viewed: boolean
 }
-const Message: React.FC<PropsType> = ({message, avatar, date, userName, isMe,isRead}) => {
+const Message: React.FC<PropsType> = ({message, avatar, date, isMe,viewed}) => {
+
     return <div className={classNames("message", {"message--isMe": isMe})}>
         <div className="message__content">
             <div className="message__avatar">
@@ -33,8 +33,8 @@ const Message: React.FC<PropsType> = ({message, avatar, date, userName, isMe,isR
                     <GetMessageTime date={date} />
                 </span>
             </div>
-            {isMe && isRead && <img src={MessageReadImage} alt=""/>}
-            {!isRead && <img src={MessageNoReadImage} alt=""/>}
+            {viewed && <img src={MessageReadImage} alt=""/>}
+            {!viewed && <img src={MessageNoReadImage} alt=""/>}
         </div>
     </div>
 }

@@ -20,7 +20,7 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
     const onSubmit = (formData: FormDataPostType) => {
         if(formData.text) addNewPost(formData.text)
     }
-    const post = [...messagesData].reverse().map(m=><Post message={m.post} likesCount={m.likesCount}  />)
+    const post = [...messagesData].reverse().map(m=><Post key={Math.random()} message={m.post} likesCount={m.likesCount}  />)
 
     const PostForm: React.FC<InjectedFormProps<FormDataPostType, PropsType> & PropsType> = ({handleSubmit}) => {
         return <form onSubmit={handleSubmit}>

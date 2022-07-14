@@ -7,21 +7,20 @@ export const getTextAreaMess = (state:AppStateType) => {
 export const getPrivateMessageData = (state:AppStateType) => {
     return state.dialog.privateMessageData
 }
+export const getMessageList = (state:AppStateType) => {
+    return state.dialog.messagesList
+}
 
-export const getFriends = (state:AppStateType) => {
-    return state.dialog.friends
+export const getDialogs = (state:AppStateType) => {
+    return state.dialog.dialogs
 }
 //export const getUsersSuperSelector = createSelector
 
-export const getTotalFriends = (state:AppStateType) => {
-    return state.dialog.totalFriends
-}
-
-export const getFriendsOnPage = (state:AppStateType) => {
-    return state.dialog.friendsOnPage
-}
-export const getActiveFriendsPage = (state:AppStateType) => {
+export const getActiveMessagePage = (state:AppStateType) => {
     return state.dialog.activePage
+}
+export const getMessagesOnPage = (state:AppStateType) => {
+    return state.dialog.messagesOnPage
 }
 
 export const getFriendsIsFetching = (state:AppStateType) => {

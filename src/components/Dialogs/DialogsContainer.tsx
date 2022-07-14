@@ -1,12 +1,12 @@
 import Dialogs from "./Dialogs";
-import {actions, FriendFilterType, handlingFriends, handlingMessage, ThunkType} from "../../redux/dialogReducer";
+import {actions, FriendFilterType, handlingMessage, ThunkType} from "../../redux/dialogReducer";
 import {connect} from "react-redux";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {
-    getFriends, getFriendsIsFetching,
+    getDialogs,
+  getFriendsIsFetching,
     getPrivateMessageData,
-    getTotalFriends
 } from "../../redux/dialog-selectors";
 import {AppStateType} from "../../redux/reduxStore";
 import React, { ComponentType } from "react";
@@ -24,12 +24,11 @@ type DispatchPropsDialogType = {
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
-const DialogsContainer: React.FC<PropsType> = ({friends, privateMessageData, sendNewMessage, handlingFriends, handlingMessage, router}) => {
+const DialogsContainer: React.FC<PropsType> = ({ privateMessageData, sendNewMessage, dialogs, handlingMessage, router}) => {
 
 
-    return <Dialogs friends={friends}
+    return <Dialogs dialogs={dialogs}
                     privateMessageData={privateMessageData}
-                    handlingFriends={handlingFriends}
                     handlingMessage={handlingMessage}
                     userID={router.params.id}
      />
@@ -39,15 +38,14 @@ const DialogsContainer: React.FC<PropsType> = ({friends, privateMessageData, sen
 let mapStateToProps = (state: AppStateType) => {
     return {
         privateMessageData: getPrivateMessageData(state),
-        friends: getFriends(state),
-        totalFriends: getTotalFriends(state),
+        dialogs: getDialogs(state),
         isFetching: getFriendsIsFetching(state),
     }
 }
 
 const sendNewMessage = actions.sendNewMessage
 export default compose<ComponentType>(
-    connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingFriends, handlingMessage}),
+    connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingMessage}),
     withRedirectIfNoAuth,
     withRouter
 )(DialogsContainer)

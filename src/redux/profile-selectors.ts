@@ -11,3 +11,6 @@ export const getStatus = (state:AppStateType) => {
 export const getId = (state:AppStateType) => {
     return state.auth.id
 }
+export const getAuthAvatar = (state:AppStateType) => {
+    return state.auth.photos?.small
+}

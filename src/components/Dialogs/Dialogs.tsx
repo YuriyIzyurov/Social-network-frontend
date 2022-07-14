@@ -4,21 +4,22 @@ import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
-import {PrivateMessageDataType, PrivateMessageType, UserType} from "../../typings/types";
-import {FriendFilterType, ThunkType} from "../../redux/dialogReducer";
+import {DialogType, PrivateMessageDataType, SelfPrivateMessageType, UserType} from "../../typings/types";
+import {actions, FriendFilterType, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
 import {ThunkType as UsersThunkType} from "../../redux/usersReducer";
 import {Button, Col, Row} from 'antd'
 import {DownloadOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
-import {useSelector} from "react-redux";
-import { getActiveFriendsPage, getFriendsOnPage } from "../../redux/dialog-selectors";
+import {useDispatch, useSelector} from "react-redux";
 import {getAuthID} from "../../redux/auth-selectors";
+import {useAppDispatch} from "../../redux/reduxStore";
+import {getActiveMessagePage, getMessageList, getMessagesOnPage} from "../../redux/dialog-selectors";
+import {getAuthAvatar, getCurrentProfile} from "../../redux/profile-selectors";
 
 
 type PropsMessagesType = {
-    friends: Array<UserType>
-    privateMessageData: Array<PrivateMessageType>
-    handlingFriends: (activePage:number,usersOnPage:number, filter: FriendFilterType) => UsersThunkType
+    dialogs: Array<DialogType>
+    privateMessageData: Array<SelfPrivateMessageType>
     handlingMessage: (id: number, body: string) => ThunkType
     userID: string
 }
@@ -27,31 +28,46 @@ type FormDataMessageType = {
 }
 type PropsType = {}
 
-const Dialogs: React.FC<PropsMessagesType> = ({friends, privateMessageData,  handlingFriends,handlingMessage, userID}) => {
-    const activePage = useSelector(getActiveFriendsPage)
-    const usersOnPage = useSelector(getFriendsOnPage)
+const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  handlingMessage, userID}) => {
+    let id = +userID
     const isMe = useSelector(getAuthID)
+    const authAvatar = useSelector(getAuthAvatar)
+    const messageList = useSelector(getMessageList)
+    let activePage = useSelector(getActiveMessagePage)
+    let messagesOnPage = useSelector(getMessagesOnPage)
 
-    const filter: FriendFilterType = {term: '', friend: true}
+    const dispatch = useDispatch()
+    const thunkDispatch = useAppDispatch()
 
     useEffect(() => {
-        handlingFriends(activePage, usersOnPage,filter)
+        thunkDispatch(handlingDialogs())
+        return () => {
+            dispatch(actions.clearDialogList())
+        }
     }, [])
+    useEffect(() => {
+        if(id) thunkDispatch(handlingMessageList(id, activePage,messagesOnPage))
+    }, [privateMessageData])
 
-    let dialog = friends.map(n=><DialogItem name={n.name} key={n.name} id={n.id} src={n.photos.small}/>)
-    let isRead = true
+    let recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
 
-    let message = privateMessageData.map(m=><Message key={m.id}
+    let dialog = dialogs.map(n=><DialogItem name={n.userName}
+                                            key={n.id}
+                                            id={n.id}
+                                            src={n.photos.small}
+                                            hasNewMessages={n.hasNewMessages}
+                                            newMessagesCount={n.newMessagesCount}/>)
+
+
+    let message = messageList.map( (m )=><Message key={m.id}
                                                      message={m.body}
-                                                     avatar={m.photos.small}
+                                                     avatar={m.senderId === isMe ? authAvatar : recipientAvatar}
                                                      date={m.addedAt}
-                                                     userName={"Юрий"}
-                                                     isMe={true}
-                                                     isRead={isRead}
+                                                     isMe={m.senderId === isMe}
+                                                     viewed={m.viewed}
     />)
 
     const onSubmit = (formData: FormDataMessageType) => {
-        let id = +userID
         handlingMessage(id, formData.message)
 
     }

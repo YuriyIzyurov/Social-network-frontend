@@ -17,7 +17,6 @@ export const CustomTimeDistanceToNow: React.FC<{date:string}> = ({date}) => {
 };
 export const GetMessageTime:React.FC<{date:string}> = ({date}) => {
     let parsedDate = Date.parse(date) + 1.08e+7
-    console.log(parsedDate)
     if(isToday(parsedDate)) {
         return <Fragment>{format(parsedDate, "HH:mm")}</Fragment>
     } else {

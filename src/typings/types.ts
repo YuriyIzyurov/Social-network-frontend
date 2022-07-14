@@ -37,11 +37,20 @@ export type UserType = {
     followed: boolean
     photos:PhotosType
 }
+export type DialogType = {
+    hasNewMessages: boolean
+    id: number
+    lastDialogActivityDate: string
+    lastUserActivityDate: string
+    newMessagesCount: number
+    photos: PhotosType
+    userName: string
+}
 
 export type PrivateMessageDataType ={
-    message: PrivateMessageType
+    message: SelfPrivateMessageType
 }
-export type PrivateMessageType = {
+export type SelfPrivateMessageType = {
     addedAt: string
     body: string
     deletedByRecipient: boolean
@@ -56,6 +65,16 @@ export type PrivateMessageType = {
     translatedBody: string | null
     viewed: boolean
     photos: PhotosType
+}
+export type AllMessageType = {
+    addedAt: string
+    body: string
+    id: string
+    recipientId: number
+    senderId: number
+    senderName: string
+    translatedBody: string | null
+    viewed: boolean
 }
 export type DialogDataType = {
     name: string

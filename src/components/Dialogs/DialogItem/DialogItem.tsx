@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../Dialogs.scss'
 // @ts-ignore
 import UnreadMessage from '../../../assets/images/noreaded.svg'
@@ -6,6 +6,15 @@ import  {GetMessageTime} from "../../../utils/Time/CustomTime";
 import isToday from 'date-fns/isToday';
 import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
+import {useAppDispatch} from "../../../redux/reduxStore";
+import {
+    getLastMessage,
+    handlingMessage,
+    handlingMessageList,
+    startDialogWithFriend
+} from "../../../redux/dialogReducer";
+import {useSelector} from "react-redux";
+import {getActiveMessagePage, getMessagesOnPage} from "../../../redux/dialog-selectors";
 
 const getCustomAvatar = (avatar: string | undefined) => {
     if(avatar) {
@@ -22,10 +31,25 @@ type PropsType = {
     name: string
     id: number
     src: string | undefined
+    hasNewMessages: boolean
+    newMessagesCount: number
 }
-const DialogItem: React.FC<PropsType> = ({name, id, src}) => {
+
+const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount}) => {
+
+    const dispatch = useAppDispatch()
+    let activePage = useSelector(getActiveMessagePage)
+    let messagesOnPage = useSelector(getMessagesOnPage)
+    useEffect(() => {
+        getLastMessage(id, activePage, 1)
+    }, [])
+
+    const getMessageList = () => {
+       dispatch(handlingMessageList(id, activePage, messagesOnPage))
+    }
+
     return (
-            <Link to={"/dialogs/" + id} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+            <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
                 <div className="dialog__item">
                     <div className="dialog__item-avatar">
                         {getCustomAvatar(src)}
@@ -34,15 +58,12 @@ const DialogItem: React.FC<PropsType> = ({name, id, src}) => {
                         <div className="dialog__item-info-top">
                             <b>{name}</b>
                             <span><GetMessageTime date={creationDate}/></span>
-                            {/*<span>
-                        <CustomTime date={new Date()}/>
-                    </span>*/}
                         </div>
                         <div className="dialog__item-info-bottom">
                             <p>Написание текстов для главных страниц сайта – дело непростое. Проблема в том, что существует
                                 сразу несколько подходов к подготовке таких материалов</p>
                             <img className="dialog__item-info-bottom-png" src={UnreadMessage} alt=""/>
-                            {/*<div className="dialog__item-info-bottom-count">5</div>*/}
+                            {hasNewMessages && <div className="dialog__item-info-bottom-count">{newMessagesCount}</div>}
                         </div>
                     </div>
                 </div>
