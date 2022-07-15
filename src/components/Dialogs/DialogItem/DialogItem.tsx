@@ -52,7 +52,7 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
     }
     let dateDifference = Date.now() - (Date.parse(activityDate) + 1.08e+7)
     const onlineToggle = 1200000
-    console.log(dateDifference)
+
     return (
             <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
                 <div className={classnames("dialog__item",{"dialog__item--online": dateDifference < onlineToggle})}>

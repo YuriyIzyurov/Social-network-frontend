@@ -65,7 +65,8 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                                             hasNewMessages={n.hasNewMessages}
                                             newMessagesCount={n.newMessagesCount}
                                             date={n.lastDialogActivityDate}
-                                            activityDate={n.lastUserActivityDate}/>)
+                                            activityDate={n.lastUserActivityDate}
+    />)
 
 
     let message = messageList.map( (m )=><Message key={m.id}

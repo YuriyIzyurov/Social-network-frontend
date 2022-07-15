@@ -16,7 +16,7 @@ const SidebarItem: React.FC<PropsType> = ({name, id, photos}) => {
 
     return <div>
         <NavLink to={"/profile/" + id} className={navData => navData.isActive ? s.active : s.dialog}>
-            <Avatar src={photos.large !== null ? photos.large : userDefaultPhoto }/>
+           {/* <Avatar src={photos.large !== null ? photos.large : userDefaultPhoto }/>*/}
             <div>{name}</div>
         </NavLink>
     </div>

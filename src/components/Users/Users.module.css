@@ -14,3 +14,13 @@
 .active {
     color: gold;
 }
+.avatar {
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    line-height: 65px;
+    font-size: 24px;
+}
