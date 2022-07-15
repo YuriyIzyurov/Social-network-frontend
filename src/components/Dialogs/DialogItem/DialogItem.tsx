@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import '../Dialogs.scss'
 // @ts-ignore
 import UnreadMessage from '../../../assets/images/noreaded.svg'
-import  {GetMessageTime} from "../../../utils/Time/CustomTime";
+import {CustomTimeDistanceToNow, GetMessageTime} from "../../../utils/Time/CustomTime";
 import isToday from 'date-fns/isToday';
 import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
@@ -15,6 +15,7 @@ import {
 } from "../../../redux/dialogReducer";
 import {useSelector} from "react-redux";
 import {getActiveMessagePage, getMessagesOnPage} from "../../../redux/dialog-selectors";
+import classnames from 'classnames';
 
 const getCustomAvatar = (avatar: string | undefined) => {
     if(avatar) {
@@ -33,9 +34,11 @@ type PropsType = {
     src: string | undefined
     hasNewMessages: boolean
     newMessagesCount: number
+    date: string
+    activityDate: string
 }
 
-const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount}) => {
+const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount, date, activityDate}) => {
 
     const dispatch = useAppDispatch()
     let activePage = useSelector(getActiveMessagePage)
@@ -47,21 +50,23 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
     const getMessageList = () => {
        dispatch(handlingMessageList(id, activePage, messagesOnPage))
     }
-
+    let dateDifference = Date.now() - (Date.parse(activityDate) + 1.08e+7)
+    const onlineToggle = 1200000
+    console.log(dateDifference)
     return (
             <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <div className="dialog__item">
+                <div className={classnames("dialog__item",{"dialog__item--online": dateDifference < onlineToggle})}>
                     <div className="dialog__item-avatar">
                         {getCustomAvatar(src)}
                     </div>
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">
                             <b>{name}</b>
-                            <span><GetMessageTime date={creationDate}/></span>
+                            <span><GetMessageTime date={date}/></span>
                         </div>
                         <div className="dialog__item-info-bottom">
-                            <p>Написание текстов для главных страниц сайта – дело непростое. Проблема в том, что существует
-                                сразу несколько подходов к подготовке таких материалов</p>
+                            {dateDifference > onlineToggle && <p><CustomTimeDistanceToNow date={activityDate}/></p>}
+                            {dateDifference < onlineToggle && <p>Здесь мы находим панель отображения css-свойств, и нажимаем на значок одного из</p>}
                             <img className="dialog__item-info-bottom-png" src={UnreadMessage} alt=""/>
                             {hasNewMessages && <div className="dialog__item-info-bottom-count">{newMessagesCount}</div>}
                         </div>

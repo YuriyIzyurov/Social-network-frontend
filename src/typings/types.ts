@@ -64,7 +64,6 @@ export type SelfPrivateMessageType = {
     senderName: string
     translatedBody: string | null
     viewed: boolean
-    photos: PhotosType
 }
 export type AllMessageType = {
     addedAt: string

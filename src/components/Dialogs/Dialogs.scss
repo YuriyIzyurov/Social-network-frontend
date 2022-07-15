@@ -3,7 +3,12 @@
   &__item {
     display: flex;
     margin-bottom: 10px;
+    $item: &;
+
     &-avatar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: end;
       flex: 0 0 40px;
       width: 40px;
       height: 40px;
@@ -12,6 +17,20 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
+      }
+    }
+    &--online {
+      #{$item}-avatar {
+        &::before {
+          display: block;
+          position: absolute;
+          content:'';
+          background-color: #00c980;
+          border-radius: 25px;
+          width: 12px;
+          height: 12px;
+          border: 2px solid #f0f2f5;
+        }
       }
     }
     &-info {

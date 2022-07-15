@@ -5,7 +5,14 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
 import {DialogType, PrivateMessageDataType, SelfPrivateMessageType, UserType} from "../../typings/types";
-import {actions, FriendFilterType, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
+import {
+    actions,
+    FriendFilterType,
+    handlingDialogs,
+    handlingMessageList,
+    startDialogWithFriend,
+    ThunkType
+} from "../../redux/dialogReducer";
 import {ThunkType as UsersThunkType} from "../../redux/usersReducer";
 import {Button, Col, Row} from 'antd'
 import {DownloadOutlined} from '@ant-design/icons';
@@ -56,7 +63,9 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                                             id={n.id}
                                             src={n.photos.small}
                                             hasNewMessages={n.hasNewMessages}
-                                            newMessagesCount={n.newMessagesCount}/>)
+                                            newMessagesCount={n.newMessagesCount}
+                                            date={n.lastDialogActivityDate}
+                                            activityDate={n.lastUserActivityDate}/>)
 
 
     let message = messageList.map( (m )=><Message key={m.id}

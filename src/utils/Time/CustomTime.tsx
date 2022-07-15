@@ -9,7 +9,7 @@ const locales = {enGB, eo, ru}
 export const CustomTimeDistanceToNow: React.FC<{date:string}> = ({date}) => {
     let parsedDate = Date.parse(date) + + 1.08e+7
     return <Fragment>
-        {formatDistanceToNow(parsedDate, {
+        Онлайн {formatDistanceToNow(parsedDate, {
             addSuffix: true,
             locale: locales.ru
         })}

@@ -106,12 +106,9 @@ export const handlingDialogs =  (): ThunkType => {
 export const handlingMessage =  (id: number, body: string): ThunkType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
-        if(response.resultCode === ResultCode.Success){
-            let response2 = await profileAPI.getProfile(response.data.message.senderId)
-            let {photos} = response2
-            let message = {...response.data.message, photos}
-            dispatch(actions.sendNewMessage(message))
-        }
+        dispatch(actions.sendNewMessage(response.data.message))
+        let date = new Date();
+        console.log(date.toISOString().slice(0,23))
     }
 }
 
