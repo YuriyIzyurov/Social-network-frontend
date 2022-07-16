@@ -7,7 +7,7 @@ import {maxLength200, minLength2} from "../../utils/validators/validators";
 import {DialogType, SelfPrivateMessageType} from "../../typings/types";
 import {actions, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
 import {Button} from 'antd'
-import {DownloadOutlined, FormOutlined, TeamOutlined} from '@ant-design/icons';
+import {DownloadOutlined, FormOutlined, TeamOutlined, EllipsisOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {getAuthID} from "../../redux/auth-selectors";
@@ -113,12 +113,14 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
             </div>
             <div className="chat__dialog">
                 <div className="chat__dialog-header">
+                    <div></div>
                     <div className="chat__dialog-header-center">
-                        <b className="chat__dialog-name">Yuriy Izyurov</b>
-                        <div className="chat__dialog-status">
-                            <div className="status status--online">Online</div>s
+                        <b className="chat__dialog-header-name">Yuriy Izyurov</b>
+                        <div className="chat__dialog-header-status">
+                            <span className="status status--online">Online</span>
                         </div>
                     </div>
+                    <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
                     {message}

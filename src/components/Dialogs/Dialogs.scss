@@ -5,6 +5,9 @@
     display: flex;
     margin-bottom: 10px;
     &-avatar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: end;
       position: relative;
       flex: 0 0 40px;
       width: 40px;
@@ -26,7 +29,7 @@
           border-radius: 25px;
           width: 12px;
           height: 12px;
-          border: 2px solid #f0f2f5;
+          border: 2px solid #fff;
         }
       }
     }
@@ -54,7 +57,7 @@
           opacity: 0.5;
           text-overflow: ellipsis;
           overflow: hidden;
-          width: 240px;
+          width: 195px;
           height: 1.2em;
           white-space: nowrap;
         }
