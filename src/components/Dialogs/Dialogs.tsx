@@ -1,28 +1,21 @@
-import React, { useEffect } from "react"
+import React, {useEffect} from "react"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
-import {DialogType, PrivateMessageDataType, SelfPrivateMessageType, UserType} from "../../typings/types";
-import {
-    actions,
-    FriendFilterType,
-    handlingDialogs,
-    handlingMessageList,
-    startDialogWithFriend,
-    ThunkType
-} from "../../redux/dialogReducer";
-import {ThunkType as UsersThunkType} from "../../redux/usersReducer";
-import {Button, Col, Row} from 'antd'
-import {DownloadOutlined} from '@ant-design/icons';
+import {DialogType, SelfPrivateMessageType} from "../../typings/types";
+import {actions, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
+import {Button} from 'antd'
+import {DownloadOutlined, FormOutlined, TeamOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {getAuthID} from "../../redux/auth-selectors";
 import {useAppDispatch} from "../../redux/reduxStore";
 import {getActiveMessagePage, getMessageList, getMessagesOnPage} from "../../redux/dialog-selectors";
-import {getAuthAvatar, getCurrentProfile} from "../../redux/profile-selectors";
-
+import {getAuthAvatar} from "../../redux/profile-selectors";
+import Search from "antd/lib/input/Search";
+import "./PrivateChat.scss"
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -89,7 +82,6 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <Field component={Textarea} name={"message"} validate={[maxLength200, minLength2]}/>
                 </div>
                 <div>
-                    <Button type="primary" shape="round" icon={<DownloadOutlined />} size={'large'}>Send message</Button>
                     <button type="submit">
                         Send message
                     </button>
@@ -102,7 +94,42 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
         form: 'dialog'
     })(DialogForm)
 
-    return <div>
+    return <section className="home">
+        <div className="chat">
+            <div className="chat__sidebar">
+                <div className="chat__sidebar-header">
+                    <div>
+                        <TeamOutlined />
+                        <span>Список диалогов</span>
+                    </div>
+                    <FormOutlined />
+                </div>
+                <div className="chat__sidebar-search">
+                    <Search  placeholder="Поиск среди контактов" allowClear onSearch={() => console.log("search")} />
+                </div>
+                <div className="chat__sidebar-list">
+                    {dialog}
+                </div>
+            </div>
+            <div className="chat__dialog">
+                <div className="chat__dialog-header">
+                    <div className="chat__dialog-header-center">
+                        <b className="chat__dialog-name">Yuriy Izyurov</b>
+                        <div className="chat__dialog-status">
+                            <div className="status status--online">Online</div>s
+                        </div>
+                    </div>
+                </div>
+                <div className="chat__dialog-messages">
+                    {message}
+                </div>
+                <div className="chat__dialog-input">
+                    <DialogFormRedux onSubmit={onSubmit}/>
+                </div>
+            </div>
+        </div>
+    </section>
+    /*return <div>
         <Row>
             <Col span={8}>
                 <div className="dialog">
@@ -110,18 +137,11 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                 </div>
             </Col>
             <Col span={16}>
-                {/*<Message key={1}
-                         message={"Привет, это сообщение от собеседника"}
-                         avatar="https://sun1-57.userapi.com/s/v1/ig1/JYi_Ms2lLHXkb3MXHqwOV5u26RdJ1gwEfPChmxt7fBL73LUTB_xVhkbnXwfQjGfjZ4MpJdIi.jpg?size=100x100&quality=96&crop=661,238,1224,1224&ava=1"
-                         date={date}
-                         userName={"Денис"}
-                         isMe={false}
-                         isRead={false}/>*/}
                 {message}
                 <DialogFormRedux onSubmit={onSubmit}/>
             </Col>
         </Row>
-    </div>
+    </div>*/
 
 }
 

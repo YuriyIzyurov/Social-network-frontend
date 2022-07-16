@@ -36,7 +36,7 @@ let initialState = {
     textAreaMess : '',
     dialogs: [] as Array<DialogType>,
     activePage: 1,
-    messagesOnPage: 15,
+    messagesOnPage: 13,
     isFetching: false,
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,

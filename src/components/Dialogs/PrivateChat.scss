@@ -1,0 +1,46 @@
+.chat {
+  display: flex;
+  height: 100%;
+  background-color: #fff;
+  width: 1140px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 25px rgba(0,0,0,0.04204);
+  &__sidebar {
+    width: 320px;
+    border-right: 1px solid #f7f7f7;
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      & > div {
+        span {
+          margin-left: 6px;
+        }
+      }
+    }
+    &-search {
+      padding: 0 20px 20px 20px;
+      input {
+        background-color: #f7f8f9;
+      }
+      span :nth-child(1) {
+        background-color: #f7f8f9;
+      }
+    }
+    &-list {
+        padding: 0 20px;
+      .dialog__item {
+        padding: 7px 2px;
+        margin-bottom: 0;
+        cursor: pointer;
+        &.active,
+        &:hover {
+          background-color: #F3F7FF;
+        }
+      }
+    }
+  }
+  &__dialog {
+    flex: 1;
+  }
+}
