@@ -84,7 +84,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
             return <Preloader/>
         }
         return (
-            <Layout>
+            <Layout style={{ height: "100vh" }}>
                 <BrowserRouter>
                     <Header className="header">
                         <div className="logo" />
@@ -121,7 +121,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             </Content>
                         </Layout>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    {/*<Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>*/}
                 </BrowserRouter>
             </Layout>
             /*

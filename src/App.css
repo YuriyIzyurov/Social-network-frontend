@@ -15,3 +15,8 @@
   grid-area: c;
   background-color: bisque;
 }
+
+.site-layout-background aside {
+  height: 100%;
+  max-height: 240px;
+}

@@ -1,0 +1,24 @@
+.message__form {
+  width: 460px;
+  display: flex;
+  &--full {
+    width: 460px;
+    display: flex;
+  }
+  &-icon {
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5px;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+      color: #03325e;
+      cursor: pointer;
+    }
+  }
+}
+.message__form--empty{
+  width: 430px
+}

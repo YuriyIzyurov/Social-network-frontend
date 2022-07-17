@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
@@ -16,6 +16,7 @@ import {getActiveMessagePage, getMessageList, getMessagesOnPage} from "../../red
 import {getAuthAvatar} from "../../redux/profile-selectors";
 import Search from "antd/lib/input/Search";
 import "./PrivateChat.scss"
+import { SendMessageForm } from "../FormikForms/SendMessageForm";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -70,29 +71,19 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                                                      viewed={m.viewed}
     />)
 
-    const onSubmit = (formData: FormDataMessageType) => {
-        handlingMessage(id, formData.message)
 
+        //todo: выделить в отдельный компонент
+
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
+    const [isActiveAutoScroll, setActiveAutoScroll] = useState(false)
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const element = e.currentTarget
+        if(Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 100) {
+            !isActiveAutoScroll && setActiveAutoScroll(true)
+        } else {
+            isActiveAutoScroll && setActiveAutoScroll(false)
+        }
     }
-
-    const DialogForm: React.FC<InjectedFormProps<FormDataMessageType, PropsType> & PropsType> = ({handleSubmit}) => {
-        return <form onSubmit={handleSubmit}>
-            <div>
-                <div>
-                    <Field component={Textarea} name={"message"} validate={[maxLength200, minLength2]}/>
-                </div>
-                <div>
-                    <button type="submit">
-                        Send message
-                    </button>
-                </div>
-            </div>
-        </form>
-    }
-
-    let DialogFormRedux = reduxForm<FormDataMessageType, PropsType>({
-        form: 'dialog'
-    })(DialogForm)
 
     return <section className="home">
         <div className="chat">
@@ -108,7 +99,10 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <Search  placeholder="Поиск среди контактов" allowClear onSearch={() => console.log("search")} />
                 </div>
                 <div className="chat__sidebar-list">
-                    {dialog}
+                    <div className="chat__sidebar-list-scroll"  onScroll={scrollHandler}>
+                        {dialog}
+                        <div ref={messagesAnchorRef}></div>
+                    </div>
                 </div>
             </div>
             <div className="chat__dialog">
@@ -126,25 +120,11 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     {message}
                 </div>
                 <div className="chat__dialog-input">
-                    <DialogFormRedux onSubmit={onSubmit}/>
+                    <SendMessageForm id={id} handlingMessage={handlingMessage}/>
                 </div>
             </div>
         </div>
     </section>
-    /*return <div>
-        <Row>
-            <Col span={8}>
-                <div className="dialog">
-                    {dialog}
-                </div>
-            </Col>
-            <Col span={16}>
-                {message}
-                <DialogFormRedux onSubmit={onSubmit}/>
-            </Col>
-        </Row>
-    </div>*/
-
 }
 
 export default Dialogs
