@@ -22,6 +22,8 @@ export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage}) => {
         <div className="message__form">
             <div className={classnames("message__form--full",{"message__form--empty": !value})} >
                 <TextArea
+                    className="message__form-textarea"
+                    size="small"
                     placeholder="Введите текст сообщения..."
                     autoSize={{ minRows: 2, maxRows: 6 }}
                     value={value}

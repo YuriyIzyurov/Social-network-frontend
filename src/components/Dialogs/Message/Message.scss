@@ -52,7 +52,7 @@
     }
 
     #{$self}__content {
-      margin-bottom: 15px;
+      margin-bottom: 3px;
       flex-direction: row-reverse;
     }
     #{$self}__info {
@@ -65,7 +65,6 @@
     #{$self}__avatar {
       img {
         margin-right: 0;
-        margin-left: 13px;
         margin-left: 3px;
       }
     }

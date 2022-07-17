@@ -29,6 +29,11 @@
     }
     &-list {
         padding: 0 20px;
+        overflow: auto;
+        height: calc(100% - 125px);
+        &::-webkit-scrollbar {
+          display: none;
+        }
         .dialog__item {
         padding: 7px 2px;
         margin-bottom: 0;
@@ -38,13 +43,6 @@
           background-color: #F3F7FF;
         }
       }
-        &-scroll {
-          height: 630px;
-          overflow: auto;
-          &::-webkit-scrollbar {
-            display: none;
-          }
-        }
     }
   }
   &__dialog {
@@ -90,9 +88,9 @@
       }
     }
     &-messages{
-      padding: 20px;
+      padding: 0 20px;
       overflow: auto;
-      height: calc(100% - 186px);
+      height: calc(100% - 160px);
       &::-webkit-scrollbar {
         display: none;
       }
@@ -100,6 +98,7 @@
     &-input {
       display: flex;
       justify-content: center;
+      padding-top: 20px;
     }
   }
 }

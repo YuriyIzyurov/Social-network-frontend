@@ -99,7 +99,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <Search  placeholder="Поиск среди контактов" allowClear onSearch={() => console.log("search")} />
                 </div>
                 <div className="chat__sidebar-list">
-                    <div className="chat__sidebar-list-scroll"  onScroll={scrollHandler}>
+                    <div onScroll={scrollHandler}>
                         {dialog}
                         <div ref={messagesAnchorRef}></div>
                     </div>
