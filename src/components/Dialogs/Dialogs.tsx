@@ -18,6 +18,7 @@ import Search from "antd/lib/input/Search";
 import "./PrivateChat.scss"
 import { SendMessageForm } from "../FormikForms/SendMessageForm";
 import { DialogList } from "./DialogList";
+import { MessageList } from "./MessageList";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -31,10 +32,8 @@ type FormDataMessageType = {
 type PropsType = {}
 
 const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  handlingMessage, userID}) => {
+
     let id = +userID
-    const isMe = useSelector(getAuthID)
-    const authAvatar = useSelector(getAuthAvatar)
-    const messageList = useSelector(getMessageList)
     let activePage = useSelector(getActiveMessagePage)
     let messagesOnPage = useSelector(getMessagesOnPage)
 
@@ -51,15 +50,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
         if(id) thunkDispatch(handlingMessageList(id, activePage,messagesOnPage))
     }, [privateMessageData])
 
-    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
 
-    let message = messageList.map( (m )=><Message key={m.id}
-                                                     message={m.body}
-                                                     avatar={m.senderId === isMe ? authAvatar : recipientAvatar}
-                                                     date={m.addedAt}
-                                                     isMe={m.senderId === isMe}
-                                                     viewed={m.viewed}
-    />)
 
 
         //todo: выделить в отдельный компонент
@@ -110,7 +101,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
-                    {message}
+                    <MessageList dialogs={dialogs} id={id}/>
                 </div>
                 <div className="chat__dialog-input">
                     <SendMessageForm id={id} handlingMessage={handlingMessage}/>

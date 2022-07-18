@@ -15,7 +15,7 @@ let initialState = {
     messages: [] as ChatMessageType[],
     status: 'pending' as StatusType
 }
-v1()
+
 const chatReducer = (state = initialState,action:ActionType):initialStateType => {
     switch (action.type) {
         case "SET_NEW_MESSAGES":
