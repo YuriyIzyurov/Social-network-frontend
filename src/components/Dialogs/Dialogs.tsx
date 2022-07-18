@@ -17,6 +17,7 @@ import {getAuthAvatar} from "../../redux/profile-selectors";
 import Search from "antd/lib/input/Search";
 import "./PrivateChat.scss"
 import { SendMessageForm } from "../FormikForms/SendMessageForm";
+import { DialogList } from "./DialogList";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -50,18 +51,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
         if(id) thunkDispatch(handlingMessageList(id, activePage,messagesOnPage))
     }, [privateMessageData])
 
-    let recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
-
-    let dialog = dialogs.map(n=><DialogItem name={n.userName}
-                                            key={n.id}
-                                            id={n.id}
-                                            src={n.photos.small}
-                                            hasNewMessages={n.hasNewMessages}
-                                            newMessagesCount={n.newMessagesCount}
-                                            date={n.lastDialogActivityDate}
-                                            activityDate={n.lastUserActivityDate}
-    />)
-
+    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
 
     let message = messageList.map( (m )=><Message key={m.id}
                                                      message={m.body}
@@ -85,6 +75,9 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
         }
     }
 
+    const [filter, setFilter] = useState('')
+
+
     return <section className="home">
         <div className="chat">
             <div className="chat__sidebar">
@@ -96,11 +89,11 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <FormOutlined />
                 </div>
                 <div className="chat__sidebar-search">
-                    <Search  placeholder="Поиск среди контактов" allowClear onSearch={() => console.log("search")} />
+                    <Search  placeholder="Поиск среди контактов" allowClear onChange={e => setFilter(e.target.value)} />
                 </div>
                 <div className="chat__sidebar-list">
                     <div onScroll={scrollHandler}>
-                        {dialog}
+                        <DialogList dialogs={dialogs} filter={filter}/>
                         <div ref={messagesAnchorRef}></div>
                     </div>
                 </div>
