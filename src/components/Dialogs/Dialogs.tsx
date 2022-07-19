@@ -19,6 +19,7 @@ import "./PrivateChat.scss"
 import { SendMessageForm } from "../FormikForms/SendMessageForm";
 import { DialogList } from "./DialogList";
 import { MessageList } from "./MessageList";
+import { DialogHeader } from "./DialogHeader";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -74,13 +75,8 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
             </div>
             <div className="chat__dialog">
                 <div className="chat__dialog-header">
-                    <div></div>
-                    <div className="chat__dialog-header-center">
-                        <b className="chat__dialog-header-name">Yuriy Izyurov</b>
-                        <div className="chat__dialog-header-status">
-                            <span className="status status--online">Online</span>
-                        </div>
-                    </div>
+                    <div></div> {/*специальный див для justify-content: space-between*/}
+                    <DialogHeader dialogs={dialogs} id={id}/>
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">

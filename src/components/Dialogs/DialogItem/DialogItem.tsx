@@ -16,6 +16,7 @@ import {
 import {useSelector} from "react-redux";
 import {getActiveMessagePage, getMessagesOnPage} from "../../../redux/dialog-selectors";
 import classnames from 'classnames';
+import { isUserOnline } from '../../../utils/Time/isUserOnline';
 
 const getCustomAvatar = (avatar: string | undefined) => {
     if(avatar) {
@@ -50,12 +51,10 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
     const getMessageList = () => {
        dispatch(handlingMessageList(id, activePage, messagesOnPage))
     }
-    let dateDifference = Date.now() - (Date.parse(activityDate) + 1.08e+7)
-    const onlineToggle = 1200000
 
     return (
             <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <div className={classnames("dialog__item",{"dialog__item--online": dateDifference < onlineToggle})}>
+                <div className={classnames("dialog__item",{"dialog__item--online": isUserOnline(activityDate)})}>
                     <div className="dialog__item-avatar">
                         {getCustomAvatar(src)}
                     </div>
@@ -65,8 +64,8 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
                             <span><GetMessageTime date={date}/></span>
                         </div>
                         <div className="dialog__item-info-bottom">
-                            {dateDifference > onlineToggle && <p><CustomTimeDistanceToNow date={activityDate}/></p>}
-                            {dateDifference < onlineToggle && <p>Здесь мы находим панель отображения css-свойств, и нажимаем на значок одного из</p>}
+                            {!isUserOnline(activityDate) && <p><CustomTimeDistanceToNow date={activityDate}/></p>}
+                            {isUserOnline(activityDate) && <p>Здесь мы находим панель отображения css-свойств, и нажимаем на значок одного из</p>}
                             <img className="dialog__item-info-bottom-png" src={UnreadMessage} alt=""/>
                             {hasNewMessages && <div className="dialog__item-info-bottom-count">{newMessagesCount}</div>}
                         </div>

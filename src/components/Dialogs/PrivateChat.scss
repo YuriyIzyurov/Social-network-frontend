@@ -63,11 +63,6 @@
           display: inline-block;
           color: #bfbfbf;
           position: relative;
-          &--online {
-            &::before {
-              background-color: #00c980;
-            }
-          }
           &::before {
             display: block;
             position: absolute;
@@ -78,6 +73,11 @@
             height: 6px;
             border-radius: 30px;
             background-color: #D3D3D3;
+          }
+          &--online {
+            &::before {
+              background-color: #00c980;
+            }
           }
         }
       }
@@ -92,9 +92,9 @@
       padding: 0 20px;
       overflow: auto;
       height: calc(100% - 160px);
-      /*&::-webkit-scrollbar {
+      &::-webkit-scrollbar {
         display: none;
-      }*/
+      }
       &-empty {
         position: relative;
         top: 30%;
