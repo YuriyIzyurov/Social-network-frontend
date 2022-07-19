@@ -1,4 +1,4 @@
-import React, {MouseEventHandler, useState} from 'react';
+import React, {Dispatch, MouseEventHandler, SetStateAction, useState} from 'react';
 import { Input } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import './SendMessageForm.scss'
@@ -10,11 +10,13 @@ const { TextArea } = Input;
 type PropsType = {
     id: number
     handlingMessage: (id: number, body: string) => ThunkType
+    setMessageSending: Dispatch<SetStateAction<boolean>>
 }
-export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage}) => {
+export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage, setMessageSending}) => {
     const [value, setValue] = useState('');
 
     const sendMessage:MouseEventHandler<HTMLSpanElement> = () => {
+        setMessageSending(true)
         handlingMessage(id, value)
         setValue('')
     }

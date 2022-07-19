@@ -107,8 +107,8 @@ export const handlingMessage =  (id: number, body: string): ThunkType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
         dispatch(actions.sendNewMessage(response.data.message))
-        let date = new Date();
-        console.log(date.toISOString().slice(0,23))
+        /*let date = new Date();
+        console.log(date.toISOString().slice(0,23))*/
     }
 }
 

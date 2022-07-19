@@ -6,7 +6,7 @@ import {Textarea} from "../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../utils/validators/validators";
 import {DialogType, SelfPrivateMessageType} from "../../typings/types";
 import {actions, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
-import {Button} from 'antd'
+import {Button, Empty} from 'antd'
 import {DownloadOutlined, FormOutlined, TeamOutlined, EllipsisOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
 import {useDispatch, useSelector} from "react-redux";
@@ -40,6 +40,8 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
     const dispatch = useDispatch()
     const thunkDispatch = useAppDispatch()
 
+    const [isMessageSending, setMessageSending] = useState(false)
+
     useEffect(() => {
         thunkDispatch(handlingDialogs())
         return () => {
@@ -51,23 +53,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
     }, [privateMessageData])
 
 
-
-
-        //todo: выделить в отдельный компонент
-
-    const messagesAnchorRef = useRef<HTMLDivElement>(null)
-    const [isActiveAutoScroll, setActiveAutoScroll] = useState(false)
-    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        const element = e.currentTarget
-        if(Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 100) {
-            !isActiveAutoScroll && setActiveAutoScroll(true)
-        } else {
-            isActiveAutoScroll && setActiveAutoScroll(false)
-        }
-    }
-
     const [filter, setFilter] = useState('')
-
 
     return <section className="home">
         <div className="chat">
@@ -83,10 +69,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <Search  placeholder="Поиск среди контактов" allowClear onChange={e => setFilter(e.target.value)} />
                 </div>
                 <div className="chat__sidebar-list">
-                    <div onScroll={scrollHandler}>
-                        <DialogList dialogs={dialogs} filter={filter}/>
-                        <div ref={messagesAnchorRef}></div>
-                    </div>
+                    <DialogList dialogs={dialogs} filter={filter}/>
                 </div>
             </div>
             <div className="chat__dialog">
@@ -101,10 +84,11 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
-                    <MessageList dialogs={dialogs} id={id}/>
+                    {!isNaN(id) && <MessageList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
+                    {!id && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
                 </div>
                 <div className="chat__dialog-input">
-                    <SendMessageForm id={id} handlingMessage={handlingMessage}/>
+                    <SendMessageForm id={id} handlingMessage={handlingMessage} setMessageSending={setMessageSending}/>
                 </div>
             </div>
         </div>

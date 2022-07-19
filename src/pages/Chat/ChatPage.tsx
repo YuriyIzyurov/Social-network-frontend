@@ -19,6 +19,7 @@ const Chat: React.FC = React.memo(() => {
     const status = useSelector((state: AppStateType) => state.chat.status)
 
     useEffect(() => {
+
             dispatch(startChatListening()).then(() => null)
         return () => {
             dispatch(stopChatListening()).then(() => null)
@@ -36,6 +37,7 @@ const Chat: React.FC = React.memo(() => {
 const Messages: React.FC = React.memo(() => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useSelector((state: AppStateType) => state.chat.messages)
+
     const [isActiveAutoScroll, setActiveAutoScroll] = useState(false)
     const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const element = e.currentTarget
@@ -45,10 +47,12 @@ const Messages: React.FC = React.memo(() => {
             isActiveAutoScroll && setActiveAutoScroll(false)
         }
     }
-
+      useEffect(() => {
+          messagesAnchorRef.current?.scrollIntoView()
+      }, [messagesAnchorRef.current])
     useEffect(() => {
         if(isActiveAutoScroll) {
-            messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"})
+            messagesAnchorRef.current?.scrollIntoView({behavior: "smooth", block: 'end'})
         }
     },[messages])
 
