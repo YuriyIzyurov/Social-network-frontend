@@ -1,5 +1,5 @@
 import React from "react"
-import s from './Users.module.css'
+import './Users.scss'
 import {NavLink} from "react-router-dom";
 import Avatar from "../Dialogs/DialogItem/Avatar";
 import userDefaultPhoto from '../../assets/images/personal-user.png'
@@ -16,7 +16,7 @@ type PropsType = {
 const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollow, handlingUnfollow}) => {
 
     return <div>
-        <NavLink to={"/profile/" + user.id} className={navData => navData.isActive ? s.active : s.dialog}>
+        <NavLink to={"/profile/" + user.id} className=''>
             <Avatar user={user}/>
             <div>{user.name}</div>
         </NavLink>

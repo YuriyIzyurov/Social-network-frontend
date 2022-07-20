@@ -1,6 +1,6 @@
 import React from "react"
 import UserItem from "./UserItem";
-import s from './Users.module.css'
+import  './Users.scss'
 import Paginator from "./Paginator";
 import {UserType} from "../../typings/types";
 import UserSearchForm from "./UserSearchform";
@@ -22,13 +22,13 @@ type PropsType = {
 const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users, handlingFollow, handlingUnfollow, followInProcess }) => {
 
     return (
-        <div>
+        <div className="users">
             <UserSearchForm handlingFilteredUsers={handlingFilteredUsers} />
             <Paginator totalUsers={totalUsers}
                        usersOnPage={usersOnPage}
                        activePage={activePage}
                        setUsersOnPage={getUsersOnPage}/>
-            <div className={s.user}>
+            <div>
                 {users.map(u => <UserItem user={u}
                                           key={u.id}
                                           handlingFollow={handlingFollow}
@@ -40,3 +40,4 @@ const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnP
     )
 }
 export default Users
+

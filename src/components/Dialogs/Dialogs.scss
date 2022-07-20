@@ -33,6 +33,13 @@
         }
       }
     }
+    &:hover {
+    background-color: #F3F7FF;
+    }
+    &--selected,
+    &--selected:hover {
+      background-color: #89c5ff;
+    }
     &-info {
       width: 220px;
       display: flex;

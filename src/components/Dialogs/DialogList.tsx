@@ -6,8 +6,9 @@ import { Empty } from 'antd';
 type PropsType = {
     dialogs: DialogType[]
     filter: string
+    selectedId: number
 }
-export const DialogList: React.FC<PropsType> = ({dialogs, filter}) => {
+export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) => {
 
     const filteredDialogs = dialogs.filter(dialog => dialog.userName.toLowerCase().indexOf(filter) !== -1)
     if (filteredDialogs.length === 0) {
@@ -23,6 +24,8 @@ export const DialogList: React.FC<PropsType> = ({dialogs, filter}) => {
                                           newMessagesCount={n.newMessagesCount}
                                           date={n.lastDialogActivityDate}
                                           activityDate={n.lastUserActivityDate}
+                                          selectedId={selectedId}
+
             />)}
 
         </>

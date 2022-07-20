@@ -1,25 +1,18 @@
-import React, {useEffect, useRef, useState} from "react"
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Textarea} from "../../common/FormsControl/Textarea";
-import {maxLength200, minLength2} from "../../utils/validators/validators";
+import React, {useEffect, useState} from "react"
 import {DialogType, SelfPrivateMessageType} from "../../typings/types";
 import {actions, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
-import {Button, Empty} from 'antd'
-import {DownloadOutlined, FormOutlined, TeamOutlined, EllipsisOutlined} from '@ant-design/icons';
+import {Empty} from 'antd'
+import {EllipsisOutlined, FormOutlined, TeamOutlined} from '@ant-design/icons';
 import './Dialogs.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {getAuthID} from "../../redux/auth-selectors";
 import {useAppDispatch} from "../../redux/reduxStore";
-import {getActiveMessagePage, getMessageList, getMessagesOnPage} from "../../redux/dialog-selectors";
-import {getAuthAvatar} from "../../redux/profile-selectors";
+import {getActiveMessagePage, getMessagesOnPage} from "../../redux/dialog-selectors";
 import Search from "antd/lib/input/Search";
 import "./PrivateChat.scss"
-import { SendMessageForm } from "../FormikForms/SendMessageForm";
-import { DialogList } from "./DialogList";
-import { MessageList } from "./MessageList";
-import { DialogHeader } from "./DialogHeader";
+import {SendMessageForm} from "../FormikForms/SendMessageForm";
+import {DialogList} from "./DialogList";
+import {MessageList} from "./MessageList";
+import {DialogHeader} from "./DialogHeader";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -70,7 +63,7 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <Search  placeholder="Поиск среди контактов" allowClear onChange={e => setFilter(e.target.value)} />
                 </div>
                 <div className="chat__sidebar-list">
-                    <DialogList dialogs={dialogs} filter={filter}/>
+                    <DialogList selectedId={id} dialogs={dialogs} filter={filter}/>
                 </div>
             </div>
             <div className="chat__dialog">
@@ -80,11 +73,11 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
-                    {!isNaN(id) && <MessageList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
-                    {!id && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
+                    {userID && <MessageList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
+                    {!userID && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
                 </div>
                 <div className="chat__dialog-input">
-                    <SendMessageForm id={id} handlingMessage={handlingMessage} setMessageSending={setMessageSending}/>
+                    {userID && <SendMessageForm id={id} handlingMessage={handlingMessage} setMessageSending={setMessageSending}/>}
                 </div>
             </div>
         </div>

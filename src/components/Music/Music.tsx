@@ -44,7 +44,7 @@ const Music: React.FC = () => {
         setList(
             data.concat([...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} }))),
         );
-        debugger
+
         fetch(fakeDataUrl)
             .then(res => res.json())
             .then(res => {

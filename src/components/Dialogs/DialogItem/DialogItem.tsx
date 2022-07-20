@@ -37,9 +37,10 @@ type PropsType = {
     newMessagesCount: number
     date: string
     activityDate: string
+    selectedId: number
 }
 
-const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount, date, activityDate}) => {
+const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
 
     const dispatch = useAppDispatch()
     let activePage = useSelector(getActiveMessagePage)
@@ -54,7 +55,11 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
 
     return (
             <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <div className={classnames("dialog__item",{"dialog__item--online": isUserOnline(activityDate)})}>
+                <div className={classnames("dialog__item",
+                    {
+                        "dialog__item--online": isUserOnline(activityDate),
+                        "dialog__item--selected": id === selectedId
+                    })}>
                     <div className="dialog__item-avatar">
                         {getCustomAvatar(src)}
                     </div>

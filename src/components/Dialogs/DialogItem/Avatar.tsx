@@ -1,7 +1,7 @@
 import React from "react"
 import {UserType} from "../../../typings/types";
 import {customAvatar} from "../../../utils/Avatar/AvatarGenerator";
-import s from './../../Users/Users.module.css'
+import  '../../Users/Users.scss'
 
 const Avatar = ({user}:{user:UserType}) => {
     if(user.photos.small) {
@@ -9,7 +9,7 @@ const Avatar = ({user}:{user:UserType}) => {
     } else {
         const {mainColor, lightColor} = customAvatar(user.name)
         const firstChar = user.name[0].toUpperCase()
-        return <div className={s.avatar} style={{background:`linear-gradient(135deg, ${mainColor} 0%, ${lightColor} 96.52%)`}}>{firstChar}</div>
+        return <div className="avatar" style={{background:`linear-gradient(135deg, ${mainColor} 0%, ${lightColor} 96.52%)`}}>{firstChar}</div>
     }
 
 }

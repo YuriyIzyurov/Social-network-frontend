@@ -39,10 +39,6 @@
         padding: 7px 2px;
         margin-bottom: 0;
         cursor: pointer;
-        &.active,
-        &:hover {
-          background-color: #F3F7FF;
-        }
       }
     }
   }
@@ -66,11 +62,11 @@
           &::before {
             display: block;
             position: absolute;
-            top: 5px;
+            top: 4px;
             left: -11px;
             content: '';
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 30px;
             background-color: #D3D3D3;
           }

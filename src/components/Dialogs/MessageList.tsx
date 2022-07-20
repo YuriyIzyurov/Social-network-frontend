@@ -32,7 +32,6 @@ export const MessageList: React.FC<PropsType> = ({dialogs, id, setMessageSending
     })
 
     useEffect(() => {
-            console.log("message sending false")
             setMessageSending(false)
     },[id])
 

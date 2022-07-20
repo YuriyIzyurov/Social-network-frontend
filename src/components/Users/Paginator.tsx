@@ -1,5 +1,5 @@
 import React from "react"
-import s from './Users.module.css'
+import './Users.scss'
 
 type PropsType = {
     totalUsers: number
@@ -25,7 +25,7 @@ const Paginator: React.FC<PropsType> = ({totalUsers, usersOnPage, activePage, se
             <div>
                 {slicedPages.map(n => <span onClick={() => {
                     setUsersOnPage(n)}}
-                                            className={activePage === n && s.active}>{n}</span>)}
+                                            className="">{n}</span>)}
             </div>
         </div>
     )
