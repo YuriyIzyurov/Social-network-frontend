@@ -35,6 +35,11 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
                  ...state,
                 users: action.users
             }
+        case "ADD_USERS":
+            return {
+                 ...state,
+                users: [...state.users, ...action.users]
+            }
         case "SET_ACTIVE_PAGE":
             return {
                 ...state,
@@ -81,6 +86,17 @@ export const handlingUsers =  (activePage:number,usersOnPage:number,filter: Filt
     }
 }
 
+export const handlingAddUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkType => {
+    return async (dispatch, getState) => {
+            dispatch(actions.setActivePage(activePage))
+            dispatch(actions.filterSettings(filter))
+        let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
+            dispatch(actions.addUsers(response.items))
+            dispatch(actions.setTotalUsers(response.totalCount))
+
+    }
+}
+
 export const handlingFollowAction = (id:number):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.followActionInProcess(true, id))
@@ -105,6 +121,7 @@ export const handlingUnfollowAction = (id:number):ThunkType => {
 export const actions = {
     followToggle: (userID:number) => ({type : "FOLLOW", userID} as const),
     setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
+    addUsers: (users: Array<UserType>) => ({type: "ADD_USERS", users} as const),
     setActivePage: (activePage:number) => ({type: "SET_ACTIVE_PAGE", activePage} as const),
     setTotalUsers: (totalUsers:number)=> ({type: "SET_TOTAL_USERS", totalUsers} as const),
     dataIsFetching: (isFetching:boolean) => ({type: "FETCHING", isFetching} as const),

@@ -1,7 +1,14 @@
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import Users from "./Users";
-import {FilterType, handlingFollowAction, handlingUnfollowAction, handlingUsers,} from "../../redux/usersReducer";
-import React, {ComponentType, useEffect} from "react";
+import {
+    actions,
+    FilterType,
+    handlingAddUsers,
+    handlingFollowAction,
+    handlingUnfollowAction,
+    handlingUsers,
+} from "../../redux/usersReducer";
+import React, {ComponentType, useEffect, useState} from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
@@ -33,13 +40,15 @@ type StatePropsType = {
 type DispatchPropsType = {
     handlingFollowAction: (user: number) => void
     handlingUnfollowAction: (user: number) => void
-    handlingUsers: (activePage: number,usersOnPage: number, filter: FilterType) => void
+    handlingUsers: (activePage: number, usersOnPage: number, filter: FilterType) => void
+    handlingAddUsers: (activePage: number, usersOnPage: number, filter: FilterType) => void
 }
 
 function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
 
     const [searchParams, setSearchParams] = useSearchParams()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const {activePage, usersOnPage,searchFilter} = props
@@ -54,6 +63,9 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
         if(parsedTerm) actualFilter = {...actualFilter, term: parsedTerm}
         if(parsedFriend) actualFilter = {...actualFilter, friend: parsedFriend === "null" ? null : parsedFriend === "true"}
         props.handlingUsers(actualPage,usersOnPage, actualFilter)
+        return () => {
+            dispatch(actions.setActivePage(1))
+        }
     },[])
 
     useEffect(() => {
@@ -69,8 +81,8 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
     },[props.searchFilter, props.activePage])
 
 
-    const getUsersOnPage = (n: number) => {
-        const {usersOnPage, searchFilter} = props
+    const getUsersOnPage = (n: number, usersOnPage: number ) => {
+        const {searchFilter} = props
         props.handlingUsers(n,usersOnPage, searchFilter)
     }
     const handlingFilteredUsers = (filter:FilterType) => {
@@ -88,6 +100,8 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
                                                       handlingFollow={props.handlingFollowAction}
                                                       handlingUnfollow={props.handlingUnfollowAction}
                                                       handlingFilteredUsers={handlingFilteredUsers}
+                                                      searchFilter={props.searchFilter}
+
 
 
 
@@ -110,6 +124,6 @@ const mapStateToProps = (state: AppStateType):StatePropsType => {
 }
 export default compose<ComponentType>(
     withRedirectIfNoAuth,
-    connect<StatePropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {handlingUsers, handlingFollowAction, handlingUnfollowAction})
+    connect<StatePropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {handlingUsers, handlingAddUsers , handlingFollowAction, handlingUnfollowAction})
 )(UsersContainer)
 

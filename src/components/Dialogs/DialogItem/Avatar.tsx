@@ -5,7 +5,7 @@ import  '../../Users/Users.scss'
 
 const Avatar = ({user}:{user:UserType}) => {
     if(user.photos.small) {
-        return <img src={user.photos.small} width='65px' height='65px'/>
+        return <img src={user.photos.small} width='50px' height='50px'/>
     } else {
         const {mainColor, lightColor} = customAvatar(user.name)
         const firstChar = user.name[0].toUpperCase()
