@@ -1,8 +1,15 @@
 import {ErrorMessage, Field, Form, Formik, FormikHelpers} from "formik";
-import React from "react";
-import {FilterType} from "../../redux/usersReducer";
-import {useSelector} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {actions, FilterType} from "../../redux/usersReducer";
+import {useDispatch, useSelector} from "react-redux";
 import {getSearchFilter} from "../../redux/user-selectors";
+import Search from "antd/lib/input/Search";
+import {Button, Dropdown, Menu} from "antd";
+import { Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
+const { Option } = Select;
+
 
 type PropsType = {
     handlingFilteredUsers: (filter:FilterType) => void
@@ -13,42 +20,50 @@ type FormType = {
 }
 const UserSearchForm: React.FC<PropsType> = React.memo(({handlingFilteredUsers}) => {
 
-    const validator = (values:FormType) =>{
-        const errors = {};
-        return errors;
-    }
-    const searchUsers = (values:FormType, {setSubmitting}: FormikHelpers<FormType>) => {
-        const filter: FilterType = {
-            term: values.term,
-            friend: values.friend === "null" ? null : values.friend === "true" ? true: false
-        }
-
-        handlingFilteredUsers(filter)
-        setSubmitting(false)
-    }
     const filter = useSelector(getSearchFilter)
+    const initialFriend = filter.friend === null ? "null" : "true"
 
-    return <div>
-        <Formik
-            //todo посмотреть, что с типизацией
-            initialValues={{term: filter.term, friend: filter.friend} as any}
-            validate={validator}
-            onSubmit={searchUsers}
-        >
-            {({ isSubmitting }) => (
-                <Form>
-                    <Field type="text" name="term" />
-                    <Field name="friend" as="select">
-                        <option value="null">Поиск по всем</option>
-                        <option value="true">Поиск только по друзьям</option>
-                        <option value="false">Поиск по всем, кроме друзей</option>
-                    </Field>
-                    <button type="submit" disabled={isSubmitting}>
-                        Submit
-                    </button>
-                </Form>
-            )}
-        </Formik>
-    </div>
+    const [inputValue, setInputValue] = useState(filter.term)
+    const [selectValue, setSelectValue] = useState(initialFriend)
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        dispatch(actions.filterSettings({term: '', friend: null}))
+    },[])
+
+    const searchUsers = () => {
+
+        const filter: FilterType = {
+            term: inputValue,
+            friend: selectValue === "null" ? null : selectValue === "true"
+        }
+        handlingFilteredUsers(filter)
+    }
+
+
+    const handleChange = (value: string) => {
+        setSelectValue(value)
+    };
+
+    return (
+        <div className="users__find-search">
+            <div className="users__find-search-input">
+                <Search defaultValue={filter.term} onSearch={searchUsers} onChange={e => setInputValue(e.target.value)} placeholder="Поиск среди контактов" />
+            </div>
+            <div></div>
+            {/*for justify-content: space-between*/}
+            <div className="users__find-search-select">
+                <Select defaultValue={initialFriend} style={{width: 170}} onChange={handleChange}>
+                    <Option value="null">Поиск по всем</Option>
+                    <Option value="true">Поиск по друзьям</Option>
+                    <Option value="false">Все, кроме друзей</Option>
+                </Select>
+            </div>
+        </div>
+    )
 })
 export default UserSearchForm
+
+
+

@@ -24,13 +24,13 @@
             display: flex;
             justify-content: space-between;
             &-input {
-                width: 76%;
+                width: 65%;
                 padding: 20px;
                 span :nth-child(1) {
                     background-color: #f7f8f9;
                 }
             }
-            &-dropdown {
+            &-select {
                 padding: 20px;
             }
         }
