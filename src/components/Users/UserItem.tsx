@@ -16,7 +16,7 @@ type PropsType = {
 const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollow, handlingUnfollow}) => {
 
     return <div>
-        <NavLink to={"/profile/" + user.id} className=''>
+        <NavLink to={"/profile/" + user.id} >
             <Avatar user={user}/>
             <div>{user.name}</div>
         </NavLink>

@@ -31,7 +31,7 @@ export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage, setMe
                     value={value}
                     onChange={e => setValue(e.target.value)}
                 />
-                {value && <SendOutlined onClick={sendMessage} className="message__form-icon"/>}
+                {value && <SendOutlined onClick={sendMessage} disabled={true} className="message__form-icon"/>}
             </div>
         </div>
 

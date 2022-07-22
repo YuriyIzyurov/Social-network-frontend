@@ -8,6 +8,11 @@ import Search from "antd/lib/input/Search";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {useAppDispatch} from "../../redux/reduxStore";
 import UserSearchform from "./UserSearchform";
+import { NavLink } from "react-router-dom";
+import { Button as AntButton, Tooltip } from 'antd';
+import { UserAddOutlined, UserDeleteOutlined, CommentOutlined } from '@ant-design/icons'
+import {startDialogWithFriend} from "../../redux/dialogReducer";
+import {useNavigate} from "react-router";
 
 type PropsType = {
     totalUsers: number
@@ -26,13 +31,18 @@ type PropsType = {
 const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users,searchFilter, handlingFollow, handlingUnfollow, followInProcess }) => {
 
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const nextPage = activePage + 1
     const isPagesLast = Math.abs(totalUsers/usersOnPage - activePage) < 2
 
     const loadMoreData = () => {
-
         dispatch(handlingAddUsers(nextPage, usersOnPage, searchFilter))
-    };
+    }
+    const openDialog = (id: number) =>{
+        dispatch(startDialogWithFriend(id))
+        let path = `/dialogs/${id}`
+        navigate(path)
+    }
 
     return (
         <div className="users">
@@ -45,7 +55,7 @@ const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnP
                     <InfiniteScroll
                         dataLength={users.length}
                         next={loadMoreData}
-                        hasMore={users.length < 200}
+                        hasMore={users.length < 1000}
                         loader={isPagesLast ? <Divider plain>It is all, nothing more 🤐</Divider> : <Skeleton avatar paragraph={{rows: 1}} active/>}
                         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                         scrollableTarget="scrollableDiv"
@@ -55,11 +65,24 @@ const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnP
                             renderItem={item => (
                                 <List.Item key={item.id}>
                                     <List.Item.Meta
-                                        avatar={<Avatar user={item}/>}
-                                        title={<a href="https://ant.design">{item.name}</a>}
+                                        avatar={<a href={"/profile/" + item.id}><Avatar user={item}/></a>}
+                                        title={<a href={"/profile/" + item.id}>{item.name}</a>}
                                         description={item.status}
                                     />
-                                    <div>Content</div>
+                                    <Tooltip title="Открыть диалог">
+                                        <CommentOutlined className="icon" onClick={e => openDialog(item.id)} />
+                                    </Tooltip>
+                                    {!item.followed
+                                        ? <Tooltip title="Добавить в друзья">
+                                            <AntButton className="users__find-button" shape="circle" icon={<UserAddOutlined className="icon"/>} size="large" disabled={followInProcess.some(el => el === item.id)} onClick={()=>{
+                                                handlingFollow(item.id)
+                                            }}  />
+                                        </Tooltip>
+                                        : <Tooltip title="Удалить из друзей">
+                                            <AntButton className="users__find-button" shape="circle" icon={<UserDeleteOutlined className="icon"/>} size="large" disabled={followInProcess.some(el => el === item.id)} onClick={()=>{
+                                                handlingUnfollow(item.id)
+                                            }}  />
+                                        </Tooltip>}
                                 </List.Item>
                             )}
                         />

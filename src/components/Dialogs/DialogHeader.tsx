@@ -25,6 +25,8 @@ export const DialogHeader: React.FC<PropsType> = ({dialogs, id}) => {
             </div>
         </div>
     );
-    } else return <div></div>
+    } else {
+        return <div></div>
+    }
 };
 

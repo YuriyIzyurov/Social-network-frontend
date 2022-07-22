@@ -17,17 +17,20 @@ import {useSelector} from "react-redux";
 import {getActiveMessagePage, getMessagesOnPage} from "../../../redux/dialog-selectors";
 import classnames from 'classnames';
 import { isUserOnline } from '../../../utils/Time/isUserOnline';
+import { customAvatar } from '../../../utils/Avatar/AvatarGenerator';
 
-const getCustomAvatar = (avatar: string | undefined) => {
+const getCustomAvatar = (avatar: string | undefined, name: string) => {
     if(avatar) {
         return <img
             src={avatar}
             alt="User"/>
     } else {
-        //create custom avatar
+        const {mainColor, lightColor} = customAvatar(name)
+        const firstChar = name[0].toUpperCase()
+        return <div className="dialog__item-avatar-custom" style={{background:`linear-gradient(135deg, ${mainColor} 0%, ${lightColor} 96.52%)`}}>{firstChar}</div>
     }
 }
-let creationDate = "Tue Jul 13 2022 19:04:52"
+
 
 type PropsType = {
     name: string
@@ -61,7 +64,7 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
                         "dialog__item--selected": id === selectedId
                     })}>
                     <div className="dialog__item-avatar">
-                        {getCustomAvatar(src)}
+                        {getCustomAvatar(src, name)}
                     </div>
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">
