@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from 'react';
 import Message from "./Message/Message";
 import {useSelector} from "react-redux";
 import {getAuthID} from "../../redux/auth-selectors";
@@ -13,12 +13,12 @@ type PropsType = {
     setMessageSending: Dispatch<SetStateAction<boolean>>
     isMessageSending: boolean
 }
-export const MessageList: React.FC<PropsType> = ({dialogs, id, setMessageSending, isMessageSending}) => {
+export const MessageList: React.FC<PropsType> = React.memo(({dialogs, id, setMessageSending, isMessageSending}) => {
 
     const isMe = useSelector(getAuthID)
     const authAvatar = useSelector(getAuthAvatar)
     const messageList = useSelector(getMessageList)
-    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
+    const recipientAvatar = useMemo(() => dialogs.find(elem => elem.id === id)?.photos.small, [dialogs])
     const messagesRef = useRef<HTMLDivElement>(null)
 
 
@@ -50,5 +50,5 @@ export const MessageList: React.FC<PropsType> = ({dialogs, id, setMessageSending
             <div ref={messagesRef}></div>
         </>
     );
-};
+})
 

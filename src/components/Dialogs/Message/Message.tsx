@@ -18,7 +18,7 @@ type PropsType = {
     isMe: boolean
     viewed: boolean
 }
-const Message: React.FC<PropsType> = ({message, avatar, date, isMe,viewed}) => {
+const Message: React.FC<PropsType> = React.memo(({message, avatar, date, isMe,viewed}) => {
 
     return <div className={classNames("message", {"message--isMe": isMe})}>
         <div className="message__content">
@@ -37,6 +37,6 @@ const Message: React.FC<PropsType> = ({message, avatar, date, isMe,viewed}) => {
             {!viewed && <img src={MessageNoReadImage} alt=""/>}
         </div>
     </div>
-}
+})
 
 export default Message

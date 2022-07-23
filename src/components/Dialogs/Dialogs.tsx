@@ -25,7 +25,7 @@ type FormDataMessageType = {
 }
 type PropsType = {}
 
-const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  handlingMessage, userID}) => {
+const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
 
     let id = +userID
     let activePage = useSelector(getActiveMessagePage)
@@ -82,6 +82,6 @@ const Dialogs: React.FC<PropsMessagesType> = ({dialogs, privateMessageData,  han
             </div>
         </div>
     </section>
-}
+})
 
 export default Dialogs

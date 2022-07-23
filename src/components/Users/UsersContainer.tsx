@@ -8,7 +8,7 @@ import {
     handlingUnfollowAction,
     handlingUsers,
 } from "../../redux/usersReducer";
-import React, {ComponentType, useEffect, useState} from "react";
+import React, {ComponentType, LegacyRef, useEffect, useRef, useState} from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
@@ -49,6 +49,8 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const dispatch = useDispatch()
+    const usersRef = useRef<HTMLDivElement>(null)
+
 
     useEffect(() => {
         const {activePage, usersOnPage,searchFilter} = props
@@ -83,6 +85,7 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
     const getUsersOnPage = (n: number, usersOnPage: number ) => {
         const {searchFilter} = props
+        usersRef.current?.scrollTo(0, 0)
         props.handlingUsers(n,usersOnPage, searchFilter)
     }
     const handlingFilteredUsers = (filter:FilterType) => {
@@ -91,22 +94,19 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
     }
     return (
         <div>
-            {props.isFetching ? <Preloader/> : <Users totalUsers={props.totalUsers}
-                                                      usersOnPage={props.usersOnPage}
-                                                      activePage={props.activePage}
-                                                      users={props.users}
-                                                      followInProcess={props.followInProcess}
-                                                      getUsersOnPage={getUsersOnPage}
-                                                      handlingFollow={props.handlingFollowAction}
-                                                      handlingUnfollow={props.handlingUnfollowAction}
-                                                      handlingFilteredUsers={handlingFilteredUsers}
-                                                      searchFilter={props.searchFilter}
-
-
-
-
-            />}
-
+            <Users totalUsers={props.totalUsers}
+                    usersOnPage={props.usersOnPage}
+                    activePage={props.activePage}
+                    users={props.users}
+                    followInProcess={props.followInProcess}
+                    getUsersOnPage={getUsersOnPage}
+                    handlingFollow={props.handlingFollowAction}
+                    handlingUnfollow={props.handlingUnfollowAction}
+                    handlingFilteredUsers={handlingFilteredUsers}
+                    searchFilter={props.searchFilter}
+                    isFetching={props.isFetching}
+                   usersRef={usersRef}
+            />
         </div>
     )
 }

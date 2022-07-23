@@ -43,7 +43,7 @@ type PropsType = {
     selectedId: number
 }
 
-const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
+const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
 
     const dispatch = useAppDispatch()
     let activePage = useSelector(getActiveMessagePage)
@@ -81,6 +81,6 @@ const DialogItem: React.FC<PropsType> = ({name, id, src, hasNewMessages, newMess
                 </div>
             </Link>
     );
-};
+})
 
 export default DialogItem;

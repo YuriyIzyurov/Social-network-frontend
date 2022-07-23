@@ -3,7 +3,7 @@ import {UserType} from "../../../typings/types";
 import {customAvatar} from "../../../utils/Avatar/AvatarGenerator";
 import  '../../Users/Users.scss'
 
-const Avatar = ({user}:{user:UserType}) => {
+const Avatar = React.memo(({user}:{user:UserType}) => {
     if(user.photos.small) {
         return <img src={user.photos.small} width='50px' height='50px'/>
     } else {
@@ -12,7 +12,7 @@ const Avatar = ({user}:{user:UserType}) => {
         return <div className="avatar" style={{background:`linear-gradient(135deg, ${mainColor} 0%, ${lightColor} 96.52%)`}}>{firstChar}</div>
     }
 
-}
+})
 
 
 export default Avatar

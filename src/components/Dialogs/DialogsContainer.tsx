@@ -24,7 +24,7 @@ type DispatchPropsDialogType = {
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
-const DialogsContainer: React.FC<PropsType> = ({ privateMessageData, sendNewMessage, dialogs, handlingMessage, router}) => {
+const DialogsContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, router}) => {
 
 
     return <Dialogs dialogs={dialogs}
@@ -32,7 +32,7 @@ const DialogsContainer: React.FC<PropsType> = ({ privateMessageData, sendNewMess
                     handlingMessage={handlingMessage}
                     userID={router.params.id}
      />
-}
+})
 
 
 let mapStateToProps = (state: AppStateType) => {

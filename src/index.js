@@ -1,6 +1,5 @@
 
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 import store from "./redux/reduxStore";
 import React from 'react';
 import App from "./App";
@@ -15,4 +14,4 @@ root.render(
         </Provider>
 );
 
-reportWebVitals();
+

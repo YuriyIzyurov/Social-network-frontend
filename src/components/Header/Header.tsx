@@ -12,7 +12,7 @@ type PropsLoginType = {
     logoutFromServer: () => void
     photo: string | null | undefined
 }
-const Header: React.FC<PropsLoginType> = ({isAuth, login, photo, logoutFromServer }) =>{
+const Header: React.FC<PropsLoginType> = React.memo(({isAuth, login, photo, logoutFromServer }) =>{
 
     return <header className={s.header}>
         <img src='https://i.pinimg.com/originals/aa/25/53/aa2553cff08a5d436961d343b832007d.jpg'/>
@@ -28,6 +28,6 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, photo, logoutFromServe
             }
         </div>
     </header>
-}
+})
 
 export default Header

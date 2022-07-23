@@ -15,7 +15,7 @@ type PropsType = {
 
 }
 
-const Profile: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
+const Profile: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
     if(!currentProfile) return <Preloader/>
     return (
         <div>
@@ -29,6 +29,6 @@ const Profile: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, i
             <MyPostContainer/>
         </div>
     )
-}
+})
 
 export default Profile

@@ -12,7 +12,7 @@ type PropsType = {
     handlingMessage: (id: number, body: string) => ThunkType
     setMessageSending: Dispatch<SetStateAction<boolean>>
 }
-export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage, setMessageSending}) => {
+export const SendMessageForm: React.FC<PropsType> = React.memo(({id, handlingMessage, setMessageSending}) => {
     const [value, setValue] = useState('');
 
     const sendMessage:MouseEventHandler<HTMLSpanElement> = () => {
@@ -36,4 +36,4 @@ export const SendMessageForm: React.FC<PropsType> = ({id, handlingMessage, setMe
         </div>
 
     );
-};
+})

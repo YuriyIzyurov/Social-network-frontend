@@ -9,7 +9,7 @@ type PropsType = {
     id: number
 }
 
-export const DialogHeader: React.FC<PropsType> = ({dialogs, id}) => {
+export const DialogHeader: React.FC<PropsType> = React.memo(({dialogs, id}) => {
 
     if(dialogs.length && id) {
         const userName = dialogs.find(dialog => dialog.id === id)
@@ -28,5 +28,5 @@ export const DialogHeader: React.FC<PropsType> = ({dialogs, id}) => {
     } else {
         return <div></div>
     }
-};
+})
 

@@ -19,7 +19,7 @@ type PropsType = {
     sendProfileDataOnServ:(newData:CurrentProfileType) => void
 
 }
-const ProfileInfo: React.FC<PropsType> = ({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange,sendProfileDataOnServ }) => {
+const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange,sendProfileDataOnServ }) => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -56,7 +56,7 @@ const ProfileInfo: React.FC<PropsType> = ({currentProfile, status, updateMyStatu
     )
 
 
-}
+})
 
 
 export default ProfileInfo

@@ -13,7 +13,7 @@ type PropsType = {
     handlingFollow: (user: number) => void
     handlingUnfollow: (user: number) => void
 }
-const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollow, handlingUnfollow}) => {
+const UserItem: React.FC<PropsType> = React.memo(({user, followInProcess, handlingFollow, handlingUnfollow}) => {
 
     return <div>
         <NavLink to={"/profile/" + user.id} >
@@ -31,6 +31,5 @@ const UserItem: React.FC<PropsType> = ({user, followInProcess, handlingFollow, h
            <div>{user.status}</div>
 
     </div>
-}
-
+})
 export default UserItem

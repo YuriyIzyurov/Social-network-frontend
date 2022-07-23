@@ -23,7 +23,7 @@ type OwnPropsTypeForm = {
 }
 export type ThunkType = BaseThunkType<ActionType>
 
-const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
+const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = React.memo(({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
     const onSubmit = (formData: FormDataType) => {
         sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe,formData.captcha)
     }
@@ -34,9 +34,9 @@ const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuth
         <h1>LOGIN</h1>
         <LoginFormRedux onSubmit={onSubmit} captcha={captcha} sendAuthDataOnServ={sendAuthDataOnServ} askForCaptcha={askForCaptcha}/>
     </div>
-}
+})
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsTypeForm> & OwnPropsTypeForm> = ({handleSubmit, error, askForCaptcha, captcha}) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsTypeForm> & OwnPropsTypeForm> = React.memo(({handleSubmit, error, askForCaptcha, captcha}) => {
 
     const Captcha: React.FC<{captcha: string}> = (captcha) => {
 
@@ -71,7 +71,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsTypeForm> & Ow
             {captcha && <button onClick={askForCaptcha}>Get new captcha</button>}
         </form>
     )
-}
+})
 
 let LoginFormRedux = reduxForm<FormDataType,OwnPropsTypeForm>({
     form: 'login'
