@@ -1,13 +1,18 @@
-import React, {useState} from "react"
+import React, {createRef, useState} from "react"
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userDefaultPhoto from '../../../assets/images/personal-user.png'
 import ProfileData from "./ProfileData";
-import ProfileDataInput from "./ProfileDataInput";
-import {CurrentProfileType, UserType} from "../../../typings/types";
-import { ThunkType } from "../../../redux/profileReducer";
-import {Navigate, useNavigate} from "react-router";
+import {CurrentProfileType} from "../../../typings/types";
+import {ThunkType} from "../../../redux/profileReducer";
+import {useNavigate} from "react-router";
 import {useAppDispatch} from "../../../redux/reduxStore";
 import {startDialogWithFriend} from "../../../redux/dialogReducer";
+// @ts-ignore
+import AvatarBorderFinal from "../../../assets/images/Web App UI Design/AvatarBorderFinal"
+import AvatarEffect from "../../../assets/images/Web App UI Design/AvatarEffect";
+import {svgList} from "../../../common/constants/ListSVG"
+import {ProxyImageUrl} from "../../../utils/ChangeURL/ProxifyURL"
+import {getTwoMainColors} from "../../../utils/Color/MainColorsThief"
 
 
 type PropsType = {
@@ -23,6 +28,7 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const imgRef = createRef<HTMLImageElement>()
 
     const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if(e.target.files) handlePhotoChange(e.target.files[0])
@@ -35,12 +41,37 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
     }
 
     let [editMode, changeEditMode] = useState(false)
+    let [colors, changeAvaBorderColors] = useState(["#A73EE7","#00EBFF"])
+
+
+    const getMainColors = () => {
+        changeAvaBorderColors(getTwoMainColors(imgRef.current))
+    }
 
     return (
-
-        <div>
-            <div>
-                <img src={currentProfile.photos.large || userDefaultPhoto}/>
+        <div style={{width: '300px'}}>
+            <div className="profile__info-main">
+                <div className="ava-border">
+                    <AvatarBorderFinal colors={colors}/>
+                </div>
+                {svgList.map(item => <AvatarEffect key={item} id={item}/>
+                )}
+                <div className="profile__info-main-avatar">
+                    <img
+                        src={currentProfile.photos.large ? ProxyImageUrl(currentProfile.photos.large) : userDefaultPhoto}
+                        ref={imgRef}
+                        onLoad={getMainColors}
+                        crossOrigin="anonymous"
+                        alt="user"/>
+                </div>
+                <div className="profile__info-main-name">
+                    Sophie Fortune
+                </div>
+                <div className="profile__info-main-social">
+                    @batm1x
+                </div>
+                <div style={{width:'100px',height:'100px',background:colors[0]}}></div>
+                <div style={{width:'100px',height:'100px',background:colors[1]}}></div>
             </div>
             <div>
               {!isShowMyProfile && <button onClick={openDialog}>Send message</button>}
@@ -50,7 +81,7 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
             </div>
                 <ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>
             {!editMode && <ProfileData currentProfile={currentProfile}/>}
-            {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}
+           {/* {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}*/}
             {isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}
         </div>
     )

@@ -1,5 +1,5 @@
 import React from "react"
-import s from './Header.module.css'
+
 import {NavLink} from "react-router-dom";
 import Button from "antd/lib/button";
 import Avatar from "antd/lib/avatar/avatar";
@@ -14,9 +14,8 @@ type PropsLoginType = {
 }
 const Header: React.FC<PropsLoginType> = React.memo(({isAuth, login, photo, logoutFromServer }) =>{
 
-    return <header className={s.header}>
-        <img src='https://i.pinimg.com/originals/aa/25/53/aa2553cff08a5d436961d343b832007d.jpg'/>
-        <div className={s.loginBlock}>
+    return <header >
+        <div >
             {!isAuth ? <NavLink to={'/login'}>Login</NavLink>
                 : <div>
                     <div>

@@ -1,5 +1,4 @@
 import {ResultCode} from "../api/api";
-import {stopSubmit} from "redux-form";
 import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
 import {BaseThunkType, InferActionsTypes} from "./reduxStore";
 import {profileAPI} from "../api/profileAPI";
@@ -102,7 +101,7 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
                 // @ts-ignore
                 errorObj.contacts[fieldName] = error
             }
-            dispatch(stopSubmit("ProfileInfo", errorObj))
+            dispatch(/*stopSubmit("ProfileInfo", errorObj)*/)
             throw error
         }
     }

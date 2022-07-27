@@ -4,6 +4,7 @@ import Preloader from "../../common/Preloader/Preloader";
 import {CurrentProfileType, UserType} from "../../typings/types";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 import {ThunkType} from "../../redux/profileReducer";
+import "./Profile.scss"
 
 type PropsType = {
     currentProfile: CurrentProfileType | null
@@ -18,15 +19,19 @@ type PropsType = {
 const Profile: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
     if(!currentProfile) return <Preloader/>
     return (
-        <div>
-            <ProfileInfo currentProfile={currentProfile}
-                         status={status}
-                         updateMyStatus={updateMyStatus}
-                         isShowMyProfile={isShowMyProfile}
-                         handlePhotoChange={handlePhotoChange}
-                         sendProfileDataOnServ={sendProfileDataOnServ}
-                         />
-            <MyPostContainer/>
+        <div className='profile'>
+            <div className='profile__posts'>
+                <MyPostContainer/>
+            </div>
+            <div className='profile__info'>
+                <ProfileInfo currentProfile={currentProfile}
+                             status={status}
+                             updateMyStatus={updateMyStatus}
+                             isShowMyProfile={isShowMyProfile}
+                             handlePhotoChange={handlePhotoChange}
+                             sendProfileDataOnServ={sendProfileDataOnServ}
+                />
+            </div>
         </div>
     )
 })

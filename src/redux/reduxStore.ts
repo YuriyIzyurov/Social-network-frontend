@@ -5,7 +5,6 @@ import sidebarReducer from "./sidebarReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch, ThunkMiddleware} from "redux-thunk";
-import {reducer as formReducer} from "redux-form";
 import appReducer from "./appReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import chatReducer from "./chatReducer";
@@ -16,7 +15,6 @@ let rootReducer = combineReducers({
     sidebar: sidebarReducer,
     userList: usersReducer,
     auth: authReducer,
-    form: formReducer,
     app: appReducer,
     chat: chatReducer
 })

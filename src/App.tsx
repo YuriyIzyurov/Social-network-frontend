@@ -1,5 +1,5 @@
 import React from "react";
-import './App.css';
+import './App.scss';
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -87,13 +87,17 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
             <Layout style={{ height: "100vh" }}>
                 <BrowserRouter>
                     <Header className="header">
-                        <div className="logo" />
-                        <HeaderContainer/>
+                        <div className="header__content">
+                            <HeaderContainer/>
+                        </div>
+                        <div className="header__content-menu">
+                            buttons
+                        </div>
                        {/*<Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />*/}
                     </Header>
-                    <Content style={{ padding: '0 50px' }}>
-                        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-                            <Sider className="site-layout-background" width={200}>
+                    <Content className="site__layout-content" >
+                        <Layout className="site__layout-background" >
+                            <Sider className="site__layout-sider" width={200}>
                                 <Menu
                                     mode="inline"
                                     //defaultSelectedKeys={['1']}
@@ -102,7 +106,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                                     items={items2}
                                 />
                             </Sider>
-                            <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                            <Content>
                                 <Routes>
                                     <Route path="/" element={<ProfileContainer/>}/>
                                     {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
