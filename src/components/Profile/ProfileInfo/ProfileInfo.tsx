@@ -1,6 +1,7 @@
 import React, {createRef, useState} from "react"
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import userDefaultPhoto from '../../../assets/images/personal-user.png'
+// @ts-ignore
+import UserDefaultPhoto from '../../../assets/images/UserDefaultPhoto'
 import ProfileData from "./ProfileData";
 import {CurrentProfileType} from "../../../typings/types";
 import {ThunkType} from "../../../redux/profileReducer";
@@ -54,15 +55,16 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
                 <div className="ava-border">
                     <AvatarBorderFinal colors={colors}/>
                 </div>
-                {svgList.map(item => <AvatarEffect key={item} id={item}/>
+                {svgList.map(item => <AvatarEffect key={item} id={item} colors={colors}/>
                 )}
                 <div className="profile__info-main-avatar">
-                    <img
-                        src={currentProfile.photos.large ? ProxyImageUrl(currentProfile.photos.large) : userDefaultPhoto}
+                    {currentProfile.photos.large ? <img
+                        src={ProxyImageUrl(currentProfile.photos.large)}
                         ref={imgRef}
                         onLoad={getMainColors}
                         crossOrigin="anonymous"
                         alt="user"/>
+                        : <UserDefaultPhoto/>}
                 </div>
                 <div className="profile__info-main-name">
                     Sophie Fortune
