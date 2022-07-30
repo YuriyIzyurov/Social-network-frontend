@@ -18,7 +18,7 @@ export const MessageList: React.FC<PropsType> = React.memo(({dialogs, id, setMes
     const isMe = useSelector(getAuthID)
     const authAvatar = useSelector(getAuthAvatar)
     const messageList = useSelector(getMessageList)
-    const recipientAvatar = useMemo(() => dialogs.find(elem => elem.id === id)?.photos.small, [dialogs])
+    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
     const messagesRef = useRef<HTMLDivElement>(null)
 
 

@@ -8,8 +8,8 @@
     background: #684fb5;
   }
   &__content-menu {
-    width: 304px;
-      border-left: 4px solid #684fb5;
+    min-width: 284px;
+    border-left: 4px solid #684fb5;
   }
 }
 .site__layout {
