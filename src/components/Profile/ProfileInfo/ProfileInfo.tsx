@@ -17,6 +17,8 @@ import {getTwoMainColors} from "../../../utils/Color/MainColorsThief"
 import {ContainerAvatarEffect} from "../../../assets/images/Web App UI Design/ContainerAvatarEffect";
 import useHover from "../../HOOK/useHover";
 import { InstagramOutlined } from '@ant-design/icons';
+import {MiniAvaBorder} from "../../../assets/images/Web App UI Design/MiniAvaBorder";
+import instagram from "../../../assets/images/instagram.png"
 
 
 type PropsType = {
@@ -123,8 +125,8 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
             <div className="profile__info-social">
                 <div className="follow">Follow me</div>
                 <div className="social__media">
-                    <div className="social__media-icon">
-                        <InstagramOutlined />
+                    <div className="social__media-background">
+                        <img src={instagram} alt='insta'/>
                     </div>
                     <div className="social__media-link">
                         @izyurovy
