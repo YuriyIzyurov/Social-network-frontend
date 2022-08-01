@@ -19,10 +19,7 @@ type PropsType = {
 const Profile: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
     if(!currentProfile) return <Preloader/>
     return (
-        <div className='profile'>
-            <div className='profile__posts'>
-                <MyPostContainer/>
-            </div>
+        <>
             <div className='profile__info'>
                 <ProfileInfo currentProfile={currentProfile}
                              status={status}
@@ -32,7 +29,7 @@ const Profile: React.FC<PropsType> = React.memo(({currentProfile, status, update
                              sendProfileDataOnServ={sendProfileDataOnServ}
                 />
             </div>
-        </div>
+        </>
     )
 })
 

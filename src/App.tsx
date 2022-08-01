@@ -12,11 +12,14 @@ import {setInitializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
 import {WithLazyLoading} from "./components/HOC/withLazyLoading";
 import {AppStateType} from "./redux/reduxStore";
-import {LaptopOutlined, UserOutlined} from '@ant-design/icons';
+import {HomeOutlined, MessageOutlined, CustomerServiceOutlined, TeamOutlined } from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Layout, Menu} from 'antd';
 import LoginPage from "./components/Login/LoginPage";
 import Settings from "./components/Settings/Settings";
+import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
+import MyPostContainer from "./components/Profile/MyPosts/MyPostContainer";
+import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
 
 
 
@@ -43,100 +46,48 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
         window.removeEventListener("unhandledrejection",this.catchAllErrors)
     }
 
-
     render() {
-        /*const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-            key,
-            label: `nav ${key}`,
-        }));*/
-
-        const items2: MenuProps['items'] = [{
-            key: `sub1`,
-            icon: React.createElement(UserOutlined),
-            label: <NavLink to="/profile">Profile</NavLink>,
-            children: [{
-                key: 1,
-                label: <NavLink to="/dialogs">Messages</NavLink>,
-            }, {
-                key: 2,
-                label: <NavLink to="/music">My music</NavLink>,
-            }, {
-                key: 3,
-                label: <NavLink to="/settings">Settings</NavLink>,
-            } ]
-        }, {
-            key: `sub2`,
-            icon: React.createElement(LaptopOutlined),
-            label: `Friends`,
-            children: [{
-                key: 4,
-                label: <NavLink to="/users">Find friends</NavLink>,
-            }, {
-                key: 5,
-                label: <NavLink to="/news">News</NavLink>,
-            }, {
-                key: 6,
-                label: <NavLink to="/chat">Chat</NavLink>,
-                }]
-        }]
-
         if(!this.props.initialized) {
             return <Preloader/>
         }
         return (
-            <Layout style={{ height: "100vh" }}>
-                <BrowserRouter>
-                    <Header className="header">
-                        <div className="header__content">
-                            <HeaderContainer/>
-                        </div>
-                        <div className="header__content-menu">
-                            buttons
-                        </div>
-                       {/*<Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />*/}
-                    </Header>
-                    <Content className="site__layout-content" >
-                        <Layout className="site__layout-background" >
-                            <Sider className="site__layout-sider" width={200}>
-                                <Menu
-                                    mode="inline"
-                                    //defaultSelectedKeys={['1']}
-                                    defaultOpenKeys={['sub1']}
-                                    style={{ height: '100%' }}
-                                    items={items2}
-                                />
-                            </Sider>
-                            <Content>
-                                <Routes>
-                                    <Route path="/" element={<ProfileContainer/>}/>
-                                    {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
-                                    <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
-                                    <Route path="/dialogs" element={<DialogsContainer/>}/>
-                                    <Route path="/profile/:id" element={<ProfileContainer/>}/>
-                                    <Route path="/profile/" element={<ProfileContainer/>}/>
-                                    <Route path="/news" element={<News/>}/>
-                                    <Route path="/music" element={<Music/>}/>
-                                    <Route path="/settings" element={<Settings/>}/>
-                                    <Route path="/users" element={<UsersContainer/>}/>
-                                    <Route path="/login" element={<LoginContainer/>}/>
-                                    <Route path="/chat" element={<ChatPage />}/>
-                                    <Route path="*" element={<div> 404 NOT FOUND</div>}/>
-                                </Routes>
-                            </Content>
-                        </Layout>
-                    </Content>
-                    {/*<Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>*/}
-                </BrowserRouter>
-            </Layout>
-            /*
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-
-                    <div className='app-wrapper-content'>
-
+        <Layout className="site__layout">
+            <BrowserRouter>
+                <AnimatedSider />
+            <Layout>
+                <Header className="header">
+                    <div className="header__content">
+                        <HeaderContainer/>
                     </div>
+                    <div className="header__content-menu">
+                        buttons
+                    </div>
+                </Header>
+                <Content className="site__layout-content">
+                        <Routes>
+                            <Route path="/" element={<MyPostContainer/>}/>
+                            {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
+                            <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
+                            <Route path="/dialogs" element={<DialogsContainer/>}/>
+                            <Route path="/profile/:id" element={<MyPostContainer/>}/>
+                            <Route path="/profile/" element={<MyPostContainer/>}/>
+                            <Route path="/news" element={<News/>}/>
+                            <Route path="/music" element={<Music/>}/>
+                            <Route path="/settings" element={<Settings/>}/>
+                            <Route path="/users" element={<UsersContainer/>}/>
+                            <Route path="/login" element={<LoginContainer/>}/>
+                            <Route path="/chat" element={<ChatPage />}/>
+                            <Route path="*" element={<div> 404 NOT FOUND</div>}/>
+                        </Routes>
+                </Content>
+            </Layout>
+            <Sider className="site__layout-right-sider">
+                <div className='profile__info'>
+                    <ProfileContainer/>
                 </div>
-            */
+            </Sider>
+            </BrowserRouter>
+        </Layout>
         )
     }
 }
