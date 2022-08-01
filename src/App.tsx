@@ -53,15 +53,15 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
         return (
         <Layout className="site__layout">
             <BrowserRouter>
+                <HeaderContainer/>
                 <AnimatedSider />
             <Layout>
                 <Header className="header">
-                    <div className="header__content">
-                        <HeaderContainer/>
+                    {/*<div className="header__content">
                     </div>
                     <div className="header__content-menu">
                         buttons
-                    </div>
+                    </div>*/}
                 </Header>
                 <Content className="site__layout-content">
                         <Routes>

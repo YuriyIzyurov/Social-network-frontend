@@ -19,6 +19,8 @@ import useHover from "../../HOOK/useHover";
 import { InstagramOutlined } from '@ant-design/icons';
 import {MiniAvaBorder} from "../../../assets/images/Web App UI Design/MiniAvaBorder";
 import instagram from "../../../assets/images/instagram.png"
+// @ts-ignore
+import {Bell, Chat, Mail,Setting} from "../../../assets/images/TopAction/TopIcons"
 
 
 type PropsType = {
@@ -57,6 +59,12 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
 
     return (
         <>
+            <div className="profile__info-menu">
+                <Bell/>
+                <Chat/>
+                <Mail/>
+                <Setting/>
+            </div>
             <div className="profile__info-main">
                 <div className="ava-border">
                     <AvatarBorderFinal colors={colors} toggle={toggle} setToggle={setToggle}/>

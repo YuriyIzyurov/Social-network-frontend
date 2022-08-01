@@ -14,8 +14,7 @@ type PropsLoginType = {
 }
 const Header: React.FC<PropsLoginType> = React.memo(({isAuth, login, photo, logoutFromServer }) =>{
 
-    return <header >
-        <div >
+    return <div className="login">
             {!isAuth ? <NavLink to={'/login'}>Login</NavLink>
                 : <div>
                     <div>
@@ -26,7 +25,6 @@ const Header: React.FC<PropsLoginType> = React.memo(({isAuth, login, photo, logo
                 </div>
             }
         </div>
-    </header>
 })
 
 export default Header
