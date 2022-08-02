@@ -4,17 +4,39 @@ import {sendMessage, startChatListening, stopChatListening} from "../../redux/ch
 import {AppDispatch, AppStateType, useAppDispatch} from "../../redux/reduxStore";
 import {AnyAction} from "redux";
 import { ChatMessageAPIType } from "../../api/chatAPI";
+import classnames from "classnames";
+import { Input } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
+import {animated, useTransition} from "react-spring";
+const { TextArea } = Input;
 
 
 
+type PropsType = {
+    isActive: boolean
+}
 
-
-const ChatPage: React.FC = React.memo(() => {
-    return <Chat />
+const ChatPage: React.FC<PropsType> = React.memo(({isActive}) => {
+    return <Chat isActive={isActive}/>
 })
 
-const Chat: React.FC = React.memo(() => {
+const Chat: React.FC<PropsType> = React.memo(({isActive}) => {
 
+    const transition = useTransition(isActive, {
+        from:{
+            y: 486,
+            height: 120,
+        },
+        enter:{
+            y: 0,
+            height: 606
+        },
+        leave:{
+            y: 486,
+            height: 120
+        },
+        config:{duration: 90}
+    })
     const dispatch = useAppDispatch()
     const status = useSelector((state: AppStateType) => state.chat.status)
 
@@ -26,18 +48,22 @@ const Chat: React.FC = React.memo(() => {
         }
     },[])
 
-    return <div>
-        {status === 'error' && <div>Error occurred, refresh page</div>}
-        <>
-        <Messages />
-        <AddChatMessageForm />
-        </>
-    </div>
+    return <>
+        {transition((style, item) => item ? <animated.div style={style} className="chat__block">
+            {status === 'error' && <div>Error occurred, refresh page</div>}
+            <>
+                <div className="chat__block-name">
+                    <span>Chat</span>
+                </div>
+                <Messages />
+                <AddChatMessageForm />
+            </>
+        </animated.div> : '')}
+    </>
 })
 const Messages: React.FC = React.memo(() => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useSelector((state: AppStateType) => state.chat.messages)
-
     const [isActiveAutoScroll, setActiveAutoScroll] = useState(false)
     const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const element = e.currentTarget
@@ -56,18 +82,25 @@ const Messages: React.FC = React.memo(() => {
         }
     },[messages])
 
-    return <div style={{height: '400px', overflowY: 'auto'}} onScroll={scrollHandler}>
+    return <div className="chat__block-messages" onScroll={scrollHandler}>
         {messages.map((m,index) => <Message key={m.id} message={m}/>)}
         <div ref={messagesAnchorRef}></div>
     </div>
 })
 const Message: React.FC<{message: ChatMessageAPIType}> = React.memo(({message}) => {
 
-    return <div>
-        <img src={message.photo} style={{width: '40px'}}/> <b>{message.userName}</b>
-        <br/>
-        {message.message}
-        <hr/>
+    return <div className="chat__block-message">
+        <div className="chat__block-avatar">
+            <img src={message.photo} style={{width: '40px'}}/> <b>{message.userName}</b>
+        </div>
+        <div className="chat__block-text">
+            <br/>
+            <span>
+                {message.message}
+            </span>
+            <hr/>
+            <span>2 hours ago</span>
+        </div>
     </div>
 })
 const AddChatMessageForm: React.FC<{}> = ({}) => {
@@ -81,12 +114,17 @@ const AddChatMessageForm: React.FC<{}> = ({}) => {
         dispatch(sendMessage(message))
         setMessage('')
     }
-    return <div>
-        <div>
-            <textarea onChange={(e) => setMessage(e.target.value)} value={message}></textarea>
-        </div>
-        <div>
-            <button disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</button>
+    return <div className="chat__block-textarea">
+        <div className={classnames("input-full",{"input-empty": !message})} >
+            <TextArea
+                className="textarea"
+                size="small"
+                placeholder="Введите текст сообщения..."
+                autoSize={{ minRows: 2, maxRows: 6 }}
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+            />
+            {message && <SendOutlined onClick={sendMessageHandler} disabled={true} className="icon"/>}
         </div>
     </div>
 }

@@ -57,11 +57,6 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 <AnimatedSider />
             <Layout>
                 <Header className="header">
-                    {/*<div className="header__content">
-                    </div>
-                    <div className="header__content-menu">
-                        buttons
-                    </div>*/}
                 </Header>
                 <Content className="site__layout-content">
                         <Routes>
@@ -76,7 +71,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="/chat" element={<ChatPage />}/>
+                           {/* <Route path="/music" element={<ChatPage />}/>*/}
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                 </Content>
