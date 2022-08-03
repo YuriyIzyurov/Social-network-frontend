@@ -20,6 +20,8 @@ import Settings from "./components/Settings/Settings";
 import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
 import MyPostContainer from "./components/Profile/MyPosts/MyPostContainer";
 import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
+import PostPage from "./pages/Post/PostPage";
+
 
 
 
@@ -67,11 +69,11 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/profile/:id" element={<MyPostContainer/>}/>
                             <Route path="/profile/" element={<MyPostContainer/>}/>
                             <Route path="/news" element={<News/>}/>
-                            <Route path="/music" element={<Music/>}/>
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                           {/* <Route path="/music" element={<ChatPage />}/>*/}
+                            <Route path="/music" element={<PostPage />}/>
+                            <Route path="/post/:id" element={<PostPage />}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                 </Content>
