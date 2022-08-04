@@ -1,6 +1,7 @@
 import {ThunkAction} from "redux-thunk/es/types";
 import {AppStateType} from "../redux/reduxStore";
 
+//Profile types
 export type MessagesDataType = {
     post: string
     id: number
@@ -29,7 +30,7 @@ export type PhotosType = {
     small: string | undefined
     large: string | null
 }
-
+//User types
 export type UserType = {
     name: string
     id: number
@@ -46,7 +47,7 @@ export type DialogType = {
     photos: PhotosType
     userName: string
 }
-
+//Dialog types
 export type PrivateMessageDataType ={
     message: SelfPrivateMessageType
 }
@@ -80,4 +81,28 @@ export type DialogDataType = {
     id: number
     src: string
 }
+//Post types
+export type PostUserType = {
+    "_id": string,
+    "fullName": string,
+    "email": string,
+    "passwordHash": string,
+    "createdAt": string,
+    "updatedAt": string,
+    "__v": number
+}
+export type PostType = {
+    "_id": string,
+    "title": string,
+    "text": string,
+    "tags": string[],
+    "viewsCount": number,
+    "user": PostUserType,
+    "imageUrl": string,
+    "createdAt": string,
+    "updatedAt": string,
+    "__v": number
+}
+
+
 

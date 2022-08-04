@@ -1,7 +1,14 @@
-import {instanceSocial, ResponseAPIType } from "./api"
+import {instanceBlog} from "./api"
 import {UserType} from "../typings/types";
-import {FilterType} from "../redux/usersReducer";
+//todo: написать типы респонсов
 
+
+export const postsAPI = {
+    getPosts() {
+        return instanceBlog.get(`posts`).then(response => response.data)
+    }
+}
+/*
 type GetItemsType<T> = {
     items: Array<T>
     totalCount: number
@@ -20,4 +27,4 @@ export const usersAPI = {
     getFriends(usersOnPage: number) {
         return instanceSocial.get<GetItemsType<UserType>>(`users?count=${usersOnPage}&friend=${true}`).then(response => response.data)
     }
-}
+}*/

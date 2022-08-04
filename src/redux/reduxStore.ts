@@ -8,6 +8,7 @@ import thunk, {ThunkAction, ThunkDispatch, ThunkMiddleware} from "redux-thunk";
 import appReducer from "./appReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import chatReducer from "./chatReducer";
+import postsReducer from "./postsReducer";
 
 let rootReducer = combineReducers({
     dialog: dialogReducer,
@@ -16,7 +17,8 @@ let rootReducer = combineReducers({
     userList: usersReducer,
     auth: authReducer,
     app: appReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    blog: postsReducer
 })
 export type AppDispatch = ThunkDispatch<AppStateType, any, AppAction>
 type AppAction = ReturnType<typeof store.dispatch>

@@ -1,4 +1,4 @@
-import {instance, ResponseAPIType } from "./api"
+import {instanceSocial, ResponseAPIType } from "./api"
 import {PrivateMessageDataType, UserType} from "../typings/types";
 import {FilterType} from "../redux/usersReducer";
 
@@ -9,16 +9,16 @@ type GetItemsType<T> = {
 }
 export const dialogsAPI = {
     startChatting(id: number) {
-        return instance.put<ResponseAPIType<null>>(`dialogs/${id}`, {}).then(response => response.data)
+        return instanceSocial.put<ResponseAPIType<null>>(`dialogs/${id}`, {}).then(response => response.data)
     },
     getAllDialogs() {
-        return instance.get<any>(`dialogs`).then(response => response.data)
+        return instanceSocial.get<any>(`dialogs`).then(response => response.data)
     },
     getFriendMessagesList(id: number, activePage: number, messagesOnPage: number) {
-        return instance.get<any>(`dialogs/${id}/messages?page=${activePage}&count=${messagesOnPage}`).then(response => response.data)
+        return instanceSocial.get<any>(`dialogs/${id}/messages?page=${activePage}&count=${messagesOnPage}`).then(response => response.data)
     },
     sendMessageToFriend(id: number, body: string) {
-        return instance.post<ResponseAPIType<PrivateMessageDataType>>(`dialogs/${id}/messages`, {body}).then(response => response.data)
+        return instanceSocial.post<ResponseAPIType<PrivateMessageDataType>>(`dialogs/${id}/messages`, {body}).then(response => response.data)
     },
 
 }

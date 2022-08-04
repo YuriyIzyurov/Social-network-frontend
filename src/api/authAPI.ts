@@ -1,4 +1,4 @@
-import {instance, ResponseAPIType, ResultCode, ResultCodeForCaptcha} from "./api";
+import {instanceSocial, ResponseAPIType, ResultCode, ResultCodeForCaptcha} from "./api";
 
 
 type GetAuthType = {
@@ -14,10 +14,10 @@ type GetLoginType = {
 }
 export const authAPI = {
     getAuth() {
-        return instance.get<ResponseAPIType<GetAuthType>>(`auth/me`).then(response => response.data)
+        return instanceSocial.get<ResponseAPIType<GetAuthType>>(`auth/me`).then(response => response.data)
     },
     submitAuth(email: string, password: string, rememberMe: boolean, captcha: string) {
-        return instance.post<ResponseAPIType<GetLoginType, ResultCode|ResultCodeForCaptcha>>("auth/login", {
+        return instanceSocial.post<ResponseAPIType<GetLoginType, ResultCode|ResultCodeForCaptcha>>("auth/login", {
             email,
             password,
             rememberMe,
@@ -25,9 +25,9 @@ export const authAPI = {
         }).then(response => response.data)
     },
     logout() {
-        return instance.delete("auth/login").then(response => response.data)
+        return instanceSocial.delete("auth/login").then(response => response.data)
     },
     getCaptcha() {
-        return instance.get<GetCaptchaType>("security/get-captcha-url").then(response => response.data)
+        return instanceSocial.get<GetCaptchaType>("security/get-captcha-url").then(response => response.data)
     }
 }

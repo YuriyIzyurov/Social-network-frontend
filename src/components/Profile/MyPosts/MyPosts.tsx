@@ -1,4 +1,4 @@
-import React, {memo, useState} from "react"
+import React, {memo, useEffect, useState} from "react"
 import  './../Profile.scss'
 import Post from "./Post/Post";
 import {Textarea} from "../../../common/FormsControl/Textarea";
@@ -9,6 +9,8 @@ import {Rectangle} from "../../../assets/images/Web App UI Design/Rectangle";
 import { Button, Divider, Input} from "antd";
 import { FormOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
+import {useAppDispatch} from "../../../redux/reduxStore";
+import {getAllPosts} from "../../../redux/postsReducer";
 const {TextArea} = Input
 
 type PropsPostType = {
@@ -23,10 +25,16 @@ type PropsType = {}
 const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
 
     const [isPostAdding, setPostAdding] = useState(false);
-    const onSubmit = (formData: FormDataPostType) => {
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getAllPosts())
+    },[])
+
+  /*  const onSubmit = (formData: FormDataPostType) => {
         if(formData.text) addNewPost(formData.text)
     }
-    const post = [...messagesData].reverse().map(m=><Post key={Math.random()} message={m.post} likesCount={m.likesCount}  />)
+    const post = [...messagesData].reverse().map(m=><Post key={Math.random()} message={m.post} likesCount={m.likesCount}  />)*/
 
     /*const PostForm: React.FC<InjectedFormProps<FormDataPostType, PropsType> & PropsType> = ({handleSubmit}) => {
         return <form onSubmit={handleSubmit}>
