@@ -1,6 +1,7 @@
 import {handlingAuthData} from './authReducer';
 import {ThunkAction} from "redux-thunk/es/types";
 import {AppStateType, BaseThunkType, InferActionsTypes} from "./reduxStore";
+import {handlingAuthDataBlog} from "./authBlogReducer";
 
 
 export type InitialStateType = typeof initialState
@@ -25,7 +26,8 @@ const appReducer = (state = initialState,action:ActionsType): InitialStateType =
 export const setInitializeThunkCreator = () => {
     return (dispatch: any) => {
         let promise1 = dispatch(handlingAuthData())
-        Promise.all([promise1])
+        let promise2 = dispatch(handlingAuthDataBlog())
+        Promise.all([promise1, promise2])
             .then(() => {
                 dispatch(actions.setInitialize())
             })

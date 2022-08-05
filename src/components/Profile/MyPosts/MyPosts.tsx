@@ -25,11 +25,7 @@ type PropsType = {}
 const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
 
     const [isPostAdding, setPostAdding] = useState(false);
-    const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(getAllPosts())
-    },[])
 
   /*  const onSubmit = (formData: FormDataPostType) => {
         if(formData.text) addNewPost(formData.text)

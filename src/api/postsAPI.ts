@@ -8,6 +8,19 @@ export const postsAPI = {
         return instanceBlog.get(`posts`).then(response => response.data)
     }
 }
+export const authBlogAPI = {
+    submitAuth(email: string, password: string) {
+        return instanceBlog.post('login', {email, password}).then(response => response.data)
+    },
+    getMe() {
+      return instanceBlog.get('auth/me').then(response => response.data)
+    },
+    uploadAvatar(file: File) {
+        const formData = new FormData()
+        formData.append("avatar", file)
+        return  instanceBlog.post('user/avatar',formData).then(response => response.data)
+    }
+}
 /*
 type GetItemsType<T> = {
     items: Array<T>

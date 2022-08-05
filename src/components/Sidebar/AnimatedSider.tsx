@@ -40,7 +40,7 @@ export const AnimatedSider = () => {
                             <NavLink to="/dialogs"><MessageOutlined /><span>Messages</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/post/:id"><CustomerServiceOutlined /><span>My post</span></NavLink>
+                            <NavLink to="/posts"><CustomerServiceOutlined /><span>All posts</span></NavLink>
                         </li>
                         <li>
                             <NavLink to="/users"><TeamOutlined /><span>Find friends</span></NavLink>

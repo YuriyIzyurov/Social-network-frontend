@@ -8,6 +8,7 @@ import './Login.scss'
 import {actions, ThunkType } from '../../redux/authReducer';
 import { openNotification } from '../../utils/notifications/notificationTop';
 import {useDispatch} from "react-redux";
+import {ThunkBlogType} from "../../redux/authBlogReducer";
 
 
 interface FormValues {
@@ -22,6 +23,7 @@ interface OtherProps {
     error: string | null
     askForCaptcha: () => ThunkType
     sendAuthDataOnServ: (email:string, password:string, remember:boolean, captcha:string) => ThunkType
+    handlingBlogUserAuth: (email:string, password:string) => ThunkBlogType
 }
 const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
     const {
@@ -127,6 +129,7 @@ export const LoginFormWithFormik = withFormik<OtherProps, FormValues>({
     handleSubmit: (values, { setSubmitting, props }) => {
 
         props.sendAuthDataOnServ(values.email, values.password, values.remember,values.captcha)
+        props.handlingBlogUserAuth(values.email, values.password)
         setTimeout(() => {
             setSubmitting(false);
         }, 1000);

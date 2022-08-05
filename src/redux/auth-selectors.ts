@@ -6,4 +6,7 @@ export const getAuth = (state:AppStateType) => {
 export const getAuthID = (state:AppStateType) => {
     return state.auth.id
 }
+export const getMe = (state:AppStateType) => {
+    return state.blogAuth.isAuth
+}
 

@@ -1,3 +1,4 @@
+/*
 import React, {useState} from "react";
 import {Field, InjectedFormProps, reduxForm, SubmitHandler} from "redux-form";
 import {Input} from "../../common/FormsControl/Textarea";
@@ -6,8 +7,9 @@ import {Navigate} from "react-router";
 import s from "./../../common/FormsControl/Textarea.module.css"
 
 import {DispatchPropsLoginType, StatePropsLoginType} from "./LoginContainer";
-import {BaseThunkType} from "../../redux/reduxStore";
+import {BaseThunkType, useAppDispatch} from "../../redux/reduxStore";
 import {ActionType} from "../../redux/authReducer";
+import {ThunkBlogType} from "../../redux/authBlogReducer";
 
 
 export type FormDataType = {
@@ -20,19 +22,24 @@ type OwnPropsTypeForm = {
     askForCaptcha: () => ThunkType
     captcha : string | null | undefined
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
+    handlingBlogUserAuth: (email:string, password:string) => ThunkBlogType
 }
 export type ThunkType = BaseThunkType<ActionType>
 
-const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = React.memo(({sendAuthDataOnServ, isAuth, askForCaptcha, captcha}) => {
+const Login: React.FC<StatePropsLoginType & DispatchPropsLoginType> = React.memo(({sendAuthDataOnServ, handlingBlogUserAuth, isAuth, askForCaptcha, captcha}) => {
+
+
     const onSubmit = (formData: FormDataType) => {
-        sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe,formData.captcha)
+        console.log('hi')
+        /!*handlingBlogUserAuth(formData.login, formData.password)
+        sendAuthDataOnServ(formData.login, formData.password, formData.rememberMe,formData.captcha)*!/
     }
     if(isAuth) {
         return <Navigate to={"/profile"}/>
     }
     return <div>
         <h1>LOGIN</h1>
-        <LoginFormRedux onSubmit={onSubmit} captcha={captcha} sendAuthDataOnServ={sendAuthDataOnServ} askForCaptcha={askForCaptcha}/>
+        <LoginFormRedux onSubmit={onSubmit} captcha={captcha} sendAuthDataOnServ={sendAuthDataOnServ} askForCaptcha={askForCaptcha} handlingBlogUserAuth={handlingBlogUserAuth}/>
     </div>
 })
 
@@ -77,4 +84,4 @@ let LoginFormRedux = reduxForm<FormDataType,OwnPropsTypeForm>({
     form: 'login'
 })(LoginForm)
 
-export default Login
+export default Login*/

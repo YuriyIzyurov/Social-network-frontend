@@ -11,3 +11,7 @@ export const getTextArea = (state:AppStateType) => {
 export const getMessagesData = (state:AppStateType) => {
     return state.profile.messagesData
 }
+
+export const getPosts = (state: AppStateType) => {
+    return state.blog.posts
+}

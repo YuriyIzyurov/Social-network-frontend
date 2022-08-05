@@ -20,7 +20,8 @@ import Settings from "./components/Settings/Settings";
 import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
 import MyPostContainer from "./components/Profile/MyPosts/MyPostContainer";
 import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
-import PostPage from "./pages/Post/PostPage";
+import Post from "./pages/Post/Post";
+import PostsPage from "./pages/Post/PostsPage";
 
 
 
@@ -72,24 +73,25 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="/music" element={<PostPage />}/>
-                            <Route path="/post/:id" element={<PostPage />}/>
+                            {/*<Route path="/post/:id" element={<Post />}/>*/}
+                            <Route path="/posts" element={<PostsPage />}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                 </Content>
             </Layout>
-            <Sider className="site__layout-right-sider">
-                <div className='profile__info'>
-                    <ProfileContainer/>
-                </div>
-            </Sider>
+                {this.props.isAuth && <Sider className="site__layout-right-sider">
+                    <div className='profile__info'>
+                        <ProfileContainer/>
+                    </div>
+                </Sider>}
             </BrowserRouter>
         </Layout>
         )
     }
 }
 const mapStateToProps = (state: AppStateType) => ({
-    initialized: state.app.initialized
+    initialized: state.app.initialized,
+    isAuth: state.auth.isAuth && state.blogAuth.isAuth
 })
 
 export default connect(mapStateToProps, {setInitializeThunkCreator})(App)

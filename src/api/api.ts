@@ -10,6 +10,12 @@ export const instanceSocial = axios.create({
 export const instanceBlog = axios.create({
     baseURL: "http://localhost:4444/"
 })
+instanceBlog.interceptors.request.use((config) => {
+    if(config.headers) {
+        config.headers.authorization = window.localStorage.getItem('token') as string
+        return config
+    }
+})
 
 export type ResponseAPIType<D = {}, RC = ResultCode> = {
     data: D

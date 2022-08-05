@@ -6,7 +6,7 @@ import {DispatchPropsLoginType, StatePropsLoginType} from "./LoginContainer";
 import {Navigate} from "react-router";
 
 
-const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error}) => {
+const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({handlingBlogUserAuth, sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error}) => {
 
 
     if(isAuth) {
@@ -20,6 +20,7 @@ const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({send
             </div>
             <LoginWhiteBlock>
                <LoginFormWithFormik sendAuthDataOnServ={sendAuthDataOnServ}
+                                    handlingBlogUserAuth={handlingBlogUserAuth}
                                     captcha={captcha}
                                     askForCaptcha={askForCaptcha}
                                     error={error}

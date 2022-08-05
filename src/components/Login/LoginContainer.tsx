@@ -1,11 +1,11 @@
 
 import {connect} from "react-redux";
-import Login from "./Login";
 import {ActionType, askForCaptcha, sendAuthDataOnServ} from "../../redux/authReducer";
 import {AppStateType, BaseThunkType} from "../../redux/reduxStore";
 import { compose } from "redux";
 import { ComponentType } from "react";
 import LoginPage from "./LoginPage";
+import {handlingBlogUserAuth, ThunkBlogType} from "../../redux/authBlogReducer";
 
 
 export type StatePropsLoginType ={
@@ -16,6 +16,7 @@ export type StatePropsLoginType ={
 export type DispatchPropsLoginType = {
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
     askForCaptcha: () => ThunkType
+    handlingBlogUserAuth: (email:string, password:string) => ThunkBlogType
 }
 type ThunkType = BaseThunkType<ActionType>
 let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
@@ -26,5 +27,5 @@ let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
     }
 }
 
-export default compose<ComponentType>(connect<StatePropsLoginType, DispatchPropsLoginType, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha}))(LoginPage)
+export default compose<ComponentType>(connect<StatePropsLoginType, DispatchPropsLoginType, {}, AppStateType>(mapStateToProps, {sendAuthDataOnServ, askForCaptcha, handlingBlogUserAuth}))(LoginPage)
 

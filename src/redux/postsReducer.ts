@@ -4,14 +4,14 @@ import {postsAPI} from "../api/postsAPI";
 
 export type ThunkType = BaseThunkType<ActionType>
 type ActionType = InferActionsTypes<typeof actions>
-
+type initialStateType = typeof initialState
 
 let initialState = {
     posts: [] as Array<PostType>,
     isFetching: false
 }
 
-const postsReducer = (state = initialState, action: any ) => {
+const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
     switch (action.type) {
         case 'SET_ALL_POSTS':
             return {

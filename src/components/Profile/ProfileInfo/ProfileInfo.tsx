@@ -21,6 +21,7 @@ import {MiniAvaBorder} from "../../../assets/images/Web App UI Design/MiniAvaBor
 import instagram from "../../../assets/images/instagram.png"
 // @ts-ignore
 import {Bell, Chat, Mail,Setting} from "../../../assets/images/TopAction/TopIcons"
+import {handlingAuthDataBlog, handlingChangeAvatar} from "../../../redux/authBlogReducer";
 
 
 type PropsType = {
@@ -40,7 +41,11 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
 
 
     const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if(e.target.files) handlePhotoChange(e.target.files[0])
+        if(e.target.files) {
+            handlePhotoChange(e.target.files[0])
+            dispatch(handlingChangeAvatar(e.target.files[0]))
+            dispatch(handlingAuthDataBlog())
+        }
     }
 
     const openDialog = () =>{
@@ -141,7 +146,7 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
                     </div>
                 </div>
             </div>
-            {/*{isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}*/}
+            {isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}
             {/*{!isShowMyProfile && <button onClick={openDialog}>Send message</button>}*/}
                 {/*<ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>*/}
             {/*{!editMode && <ProfileData currentProfile={currentProfile}/>}*/}
