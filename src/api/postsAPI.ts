@@ -1,11 +1,22 @@
 import {instanceBlog} from "./api"
-import {UserType} from "../typings/types";
+import {AddPostType, UserType} from "../typings/types";
 //todo: написать типы респонсов
 
 
 export const postsAPI = {
     getPosts() {
         return instanceBlog.get(`posts`).then(response => response.data)
+    },
+    writePost(post: AddPostType) {
+      return instanceBlog.post(`posts`, post).then(response => response.data)
+    },
+    uploadPreview(file: File) {
+        const formData = new FormData()
+        formData.append("preview", file)
+      return instanceBlog.post(`upload`, formData).then(response => response.data)
+    },
+    getPostById(id:string | undefined) {
+        return instanceBlog.get(`posts/${id}`).then(response => response.data)
     }
 }
 export const authBlogAPI = {

@@ -4,9 +4,11 @@ export const instanceSocial = axios.create({
     withCredentials: true,
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     headers: {
-        "API-KEY": "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
+        "API-KEY": "54324abc-85b8-4e66-9338-c1af345ca7dc"
     }
 })
+//Yourets "API-KEY": "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
+//Petr_Filyak "API-KEY": "54324abc-85b8-4e66-9338-c1af345ca7dc"
 export const instanceBlog = axios.create({
     baseURL: "http://localhost:4444/"
 })

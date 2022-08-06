@@ -39,7 +39,19 @@ const ProfileContainerHook: React.FC<PropsType> = ({ setProfileOnPage, isAuth, g
     let [isShowMyProfile, setMyProfile ] = useState(false)
 
     useEffect(() => {
-        let idFromURL = router.params.id
+
+        if(router.location.pathname === '/') {
+            if(loggedUser) {
+                setProfileOnPage(loggedUser)
+                getUserStatusInProfile(loggedUser)
+                return
+            }
+        }
+        const letters = router.location.pathname.match(/[a-z]/g).join('')
+        if(letters !== 'profile') {
+            return
+        }
+        let idFromURL = router.location.pathname.replace(/\D/g,'')
         if(idFromURL){
             setMyProfile(false)
           setProfileOnPage(idFromURL)
@@ -58,11 +70,11 @@ const ProfileContainerHook: React.FC<PropsType> = ({ setProfileOnPage, isAuth, g
                 setMyProfile(true)
             }
         }
-    }, [router.params.id])
+    }, [router.location.pathname])
 
 
 
-    if (!isAuth && !router.params.id) return <Navigate to={'/login'} />
+    if (!isAuth && !router.location.pathname) return <Navigate to={'/login'} />
 
     return <Profile isShowMyProfile={isShowMyProfile}
                     updateMyStatus={updateMyStatus}

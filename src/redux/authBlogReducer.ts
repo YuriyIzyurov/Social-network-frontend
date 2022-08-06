@@ -60,9 +60,14 @@ export const handlingBlogUserAuth = (email: string, password: string): ThunkBlog
 }
 export const handlingAuthDataBlog = ():ThunkBlogType => {
     return async (dispatch) => {
+
         let response = await authBlogAPI.getMe()
-        const {_id, fullName, email, avatarUrl} = response
-        dispatch(actions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
+        if(response.resultCode === 0) {
+            const {_id, fullName, email, avatarUrl} = response.data
+            dispatch(actions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
+        } else if(response.resultCode === 1) {
+            alert(response.message)
+        }
     }
 }
 export const handlingBlogUserLogout = ():ThunkBlogType => {
@@ -74,7 +79,6 @@ export const handlingBlogUserLogout = ():ThunkBlogType => {
 export const handlingChangeAvatar = (file: File):ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.uploadAvatar(file)
-        console.log(response)
         if(response.resultCode === 0) {
             dispatch(actions.setAvatar(response.avatarUrl))
         }

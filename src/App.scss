@@ -482,14 +482,16 @@
             border-radius: 9px;
             width: 140px;
             height: 140px;
-            clip-path: polygon(50% -4%, 93% 21%, 97% 29%, 96% 69%, 93% 79%, 50% 104%, 4% 77%, 2% 73%, 1% 31%, 5% 23%);
+            clip-path: polygon(50% -4%, 92% 21%, 97% 29%, 96% 69%, 93% 79%, 50% 104%, 4% 77%, 2% 73%, 1% 31%, 5% 23%);
           }
 
           svg {
             overflow: visible;
-            left: -4px;
-            width: 100%;
-            clip-path: polygon(50% -3%, 89% 20%, 93% 29%, 94% 69%, 88% 80%, 51% 105%, 24% 87%, 11% 75%, 10% 29%, 18% 18%);
+            width: 140px;
+            height: 140px;
+            top:-25px;
+            left:-5px;
+            clip-path: polygon(50% -3%, 93% 19%, 101% 29%, 104% 68%, 94% 79%, 51% 104%, 14% 82%, 7% 75%, 4% 34%, 9% 21%);
 
             #SunAndMoon {
               animation: day 15s ease;

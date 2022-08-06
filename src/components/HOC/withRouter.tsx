@@ -1,4 +1,4 @@
-import {useLocation, useNavigate, useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import React from "react";
 
 export function withRouter<P>(Container: React.ComponentType<P>){

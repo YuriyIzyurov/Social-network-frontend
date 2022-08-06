@@ -3,15 +3,17 @@ import  './../Profile.scss'
 import Post from "./Post/Post";
 import {Textarea} from "../../../common/FormsControl/Textarea";
 import {maxLength200, minLength2} from "../../../utils/validators/validators";
-import {MessagesDataType} from "../../../typings/types";
+import {AddPostType, MessagesDataType} from "../../../typings/types";
 import banner from "../../../assets/images/Banner.png"
 import {Rectangle} from "../../../assets/images/Web App UI Design/Rectangle";
 import { Button, Divider, Input} from "antd";
 import { FormOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import {useAppDispatch} from "../../../redux/reduxStore";
-import {getAllPosts} from "../../../redux/postsReducer";
-const {TextArea} = Input
+import {getAllPosts, publicPost} from "../../../redux/postsReducer";
+import {useSelector} from "react-redux";
+import AddPost from "./AddPost";
+
 
 type PropsPostType = {
     addNewPost: (text: string) => void
@@ -26,7 +28,9 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
 
     const [isPostAdding, setPostAdding] = useState(false);
 
-
+    useEffect(() => {
+        console.log('render')
+    },[])
   /*  const onSubmit = (formData: FormDataPostType) => {
         if(formData.text) addNewPost(formData.text)
     }
@@ -132,31 +136,7 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
                     </Link>
                 </div>
             </div>
-            {isPostAdding && <div className="profile__posts-adding">
-                <div className="profile__posts-adding-preview">
-                    <Button size="large">Загрузить превью</Button>
-                </div>
-                <div className="profile__posts-adding-inputs">
-                    <Divider orientation="left" orientationMargin={0} plain>
-                        Заголовок
-                    </Divider>
-                    <Input placeholder="Введите заголовок статьи"/>
-                    <Divider orientation="left" orientationMargin={0} plain>
-                        Тэги
-                    </Divider>
-                    <Input placeholder="Введите тэги через запятую"/>
-                    <Divider orientation="left" orientationMargin={0} plain>
-                        Пост
-                    </Divider>
-                    <TextArea rows={20} placeholder="maxLength is 6" maxLength={30}/>
-                </div>
-                <div className="profile__posts-adding-buttons">
-                    <Button type="primary" size="large">
-                        Опубликовать
-                    </Button>
-                    <Button onClick={postHandler} size="large">Отмена</Button>
-                </div>
-            </div>}
+            {isPostAdding && <AddPost  postHandler={postHandler}/>}
         </div>
     )
 

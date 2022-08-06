@@ -1,4 +1,4 @@
-import {PostType} from "../typings/types";
+import {AddPostType, PostType} from "../typings/types";
 import {BaseThunkType, InferActionsTypes} from "./reduxStore";
 import {postsAPI} from "../api/postsAPI";
 
@@ -33,6 +33,14 @@ export const getAllPosts = ():ThunkType => {
         const response = await postsAPI.getPosts()
         dispatch(actions.setFetching(false))
         dispatch(actions.setAllPosts(response))
+    }
+}
+export const publicPost = (post: AddPostType):ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setFetching(true))
+        const response = await postsAPI.writePost(post)
+        dispatch(actions.setFetching(false))
+        console.log(response)
     }
 }
 

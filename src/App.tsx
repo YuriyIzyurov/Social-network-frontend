@@ -1,6 +1,6 @@
 import React from "react";
 import './App.scss';
-import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import UsersContainer from "./components/Users/UsersContainer";
@@ -20,8 +20,9 @@ import Settings from "./components/Settings/Settings";
 import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
 import MyPostContainer from "./components/Profile/MyPosts/MyPostContainer";
 import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
-import Post from "./pages/Post/Post";
+import PostShorten from "./pages/Post/PostShorten";
 import PostsPage from "./pages/Post/PostsPage";
+import PostFull from "./pages/Post/PostFull";
 
 
 
@@ -63,7 +64,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 </Header>
                 <Content className="site__layout-content">
                         <Routes>
-                            <Route path="/" element={<MyPostContainer/>}/>
+
                             {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
                             <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
                             <Route path="/dialogs" element={<DialogsContainer/>}/>
@@ -73,8 +74,9 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            {/*<Route path="/post/:id" element={<Post />}/>*/}
+                            <Route path="/posts/:id" element={<PostFull/>}/>
                             <Route path="/posts" element={<PostsPage />}/>
+                            <Route path="/" element={<MyPostContainer/>}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                 </Content>

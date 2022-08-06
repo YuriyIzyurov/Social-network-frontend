@@ -89,7 +89,8 @@ export type PostUserType = {
     "passwordHash": string,
     "createdAt": string,
     "updatedAt": string,
-    "__v": number
+    "__v": number,
+    "avatarUrl": string
 }
 export type PostType = {
     "_id": string,
@@ -102,6 +103,12 @@ export type PostType = {
     "createdAt": string,
     "updatedAt": string,
     "__v": number
+}
+export type AddPostType = {
+    title: string
+    text: string
+    tags: string[] | []
+    imageUrl: string | null
 }
 
 

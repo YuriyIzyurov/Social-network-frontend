@@ -3,59 +3,77 @@ import "./PostPage.scss"
 import { Button} from 'antd';
 import { DownloadOutlined, CommentOutlined, EyeOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
+import {Link} from "react-router-dom";
+import {useParams} from "react-router";
+import {postsAPI} from "../../api/postsAPI";
+import {PostType} from "../../typings/types";
+import Preloader from "../../common/Preloader/Preloader";
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
 
-type PropsType = {
-    imageUrl: string,
-    title: string,
-    tags: string[],
-    text: string,
-    viewsCount: number,
-    user: any
-}
-const Post: React.FC<PropsType> = ({user, imageUrl, title, tags, text, viewsCount }) => {
+
+const PostFull = () => {
 
     const [value, setValue] = useState('');
+    const [post, setPost] = useState<PostType | undefined>(undefined);
+    const params = useParams()
+
+    useEffect(() => {
+        (async () => {
+            const response = await postsAPI.getPostById(params.id)
+            setPost(response)
+            console.log(response)
+        })()
+
+    }, [])
+
+    if(!post) {
+        return <Preloader/>
+    }
 
     return (
         <div className="post">
             <div className="post__main">
-                <div className="post__main-headerImg">
-                    <img src={imageUrl} alt='les' />
-                </div>
-                <div className="post__main-info">
-                    <div className="post__main-info-author">
-                        <div className="post-avatar">
-                            <img src={user.avatarUrl} alt="ava"/>
+                    <div className="post__main-headerImg">
+                        <img src={post.imageUrl} alt='image'/>
+                    </div>
+                    <div className="post__main-info">
+                        <div className="post__main-info-author">
+                            <div className="post-avatar">
+                                <img src={post.user.avatarUrl} alt="User"/>
+                            </div>
+                            <div className="name">
+                                {post.user.fullName}
+                            </div>
+                            <div className="post-date">
+                                {post.createdAt}
+                            </div>
                         </div>
-                        <div className="name">
-                            {user.fullName}
+                        <div className="post__main-info-title">
+                            <h1>{post.title}</h1>
+                        </div>
+                        <div className="post__main-info-tags">
+                            <span>#raz</span>
+                            <span>#dva</span>
+                            <span>#tri</span>
+                        </div>
+                        <div className="post__main-info-text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis commodi, cum dolor
+                                eligendi excepturi molestias repudiandae vel? Cumque delectus dolore est inventore odio?
+                                Ad dicta dignissimos enim porro quaerat, repellat?</p>
+                        </div>
+                        <div className="post__main-info-views">
+                            <div className="views">
+                                <span><EyeOutlined /></span>
+                                <span>11</span>
+                            </div>
+                            <div className="comments">
+                                <span><CommentOutlined /></span>
+                                <span>3</span>
+                            </div>
                         </div>
                     </div>
-                    <div className="post__main-info-title">
-                        <h1>{title}</h1>
-                    </div>
-                    <div className="post__main-info-tags">
-                        <span>#{tags[0]}</span>
-                        <span>#{tags[1]}</span>
-                        <span>#{tags[2]}</span>
-                    </div>
-                    <div className="post__main-info-text">
-                        <p>{text}</p>
-                    </div>
-                    <div className="post__main-info-views">
-                        <div className="views">
-                            <span><EyeOutlined /></span>
-                            <span>{viewsCount}</span>
-                        </div>
-                        <div className="comments">
-                            <span><CommentOutlined /></span>
-                            <span>3</span>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div className="post__comments">
                 <div className="post__comments-explanation">Комментарии</div>
@@ -157,4 +175,4 @@ const Post: React.FC<PropsType> = ({user, imageUrl, title, tags, text, viewsCoun
     );
 };
 
-export default Post;
+export default PostFull;
