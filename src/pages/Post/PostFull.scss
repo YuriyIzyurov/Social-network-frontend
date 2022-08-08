@@ -1,0 +1,119 @@
+.post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+
+  &__main{
+    margin-bottom: 10px;
+    background: white;
+    &-headerImg{
+      img{
+        width: 100%;
+        height: auto;
+      }
+    }
+    &-info{
+      display: flex;
+      flex-direction: column;
+      &-author{
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        .post-avatar{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .name{}
+        .post-date{
+          opacity: 0.6;
+          font-size: 13px;
+        }
+      }
+      &-title{
+        h1{
+          font-size: 35px;
+          font-weight: 600;
+          text-align: center;
+        }
+      }
+      &-tags{
+        padding: 20px;
+        span {
+          padding-right: 15px;
+          font-weight: 600;
+          opacity: 0.4;
+        }
+      }
+      &-text{
+        max-height: 250px;
+        overflow: auto;
+        p{
+          font-size: 17px;
+          line-height: 1.2;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      &-views{
+        opacity: 0.6;
+        padding: 20px;
+        display: flex;
+        .views{
+          padding-right: 20px;
+        }
+        .comments{}
+      }
+    }
+  }
+  &__comments{
+    width: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    &-explanation{
+      padding: 20px;
+    }
+    &-comment{
+      display: flex;
+      align-items: center;
+      padding-right: 20px;
+      padding-left: 20px;
+      margin-bottom: 10px;
+
+      .nameAndText{
+        display: flex;
+        flex-direction: column;
+        span:first-child{
+          font-weight: 600;
+          margin-bottom: 3px;
+        }
+      }
+    }
+    &-textarea{
+      display: flex;
+      padding-right: 20px;
+      padding-left: 20px;
+      .input{
+        width: 100%;
+      }
+    }
+    .sendButton{
+      display: flex;
+      padding: 20px 0 20px 20px;
+      justify-content: flex-start;
+    }
+  }
+}
+.post-avatar img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.post-avatar {
+  display: contents;
+}

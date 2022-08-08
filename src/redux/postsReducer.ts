@@ -8,7 +8,8 @@ type initialStateType = typeof initialState
 
 let initialState = {
     posts: [] as Array<PostType>,
-    isFetching: false
+    isFetching: false,
+    id: null as string | null
 }
 
 const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
@@ -22,6 +23,16 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        case 'SET_POST_ID':
+            return {
+                ...state,
+                id: action.id
+            }
+        case 'DELETE_POST_ID':
+            return {
+                ...state,
+                id: null
             }
         default:
             return state
@@ -41,12 +52,17 @@ export const publicPost = (post: AddPostType):ThunkType => {
         const response = await postsAPI.writePost(post)
         dispatch(actions.setFetching(false))
         console.log(response)
+        if(response.resultCode === 0) {
+            dispatch(actions.setCreatedPostId(response.data._id))
+        }
     }
 }
 
 export const actions = {
     setAllPosts: (posts: PostType[]) => ({type: 'SET_ALL_POSTS', payload: posts} as const),
-    setFetching: (isFetching: boolean) => ({type: 'POSTS_FETCHING', isFetching} as const)
+    setFetching: (isFetching: boolean) => ({type: 'POSTS_FETCHING', isFetching} as const),
+    setCreatedPostId: (id: string) => ({type: 'SET_POST_ID', id} as const),
+    deleteCreatedPostId: () => ({type: 'DELETE_POST_ID'} as const)
 }
 
 

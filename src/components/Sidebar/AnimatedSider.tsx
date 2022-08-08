@@ -45,6 +45,9 @@ export const AnimatedSider = () => {
                         <li>
                             <NavLink to="/users"><TeamOutlined /><span>Find friends</span></NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/test"><TeamOutlined /><span>Test</span></NavLink>
+                        </li>
                     </ul>
 
                     <div className="friends-block">

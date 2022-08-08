@@ -23,6 +23,7 @@ import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
 import PostShorten from "./pages/Post/PostShorten";
 import PostsPage from "./pages/Post/PostsPage";
 import PostFull from "./pages/Post/PostFull";
+import SimpleMDERedactor from "./SimpleMDERedactor";
 
 
 
@@ -77,6 +78,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/posts/:id" element={<PostFull/>}/>
                             <Route path="/posts" element={<PostsPage />}/>
                             <Route path="/" element={<MyPostContainer/>}/>
+                            {/*<Route path="/test" element={<Test/>}/>*/}
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
                 </Content>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import "./PostPage.scss"
+import "./PostFull.scss"
 import { Button} from 'antd';
 import { DownloadOutlined, CommentOutlined, EyeOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
@@ -54,19 +54,15 @@ const PostFull = () => {
                             <h1>{post.title}</h1>
                         </div>
                         <div className="post__main-info-tags">
-                            <span>#raz</span>
-                            <span>#dva</span>
-                            <span>#tri</span>
+                            {post.tags.map((item) => <span>#{item}</span> )}
                         </div>
                         <div className="post__main-info-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis commodi, cum dolor
-                                eligendi excepturi molestias repudiandae vel? Cumque delectus dolore est inventore odio?
-                                Ad dicta dignissimos enim porro quaerat, repellat?</p>
+                            <p>{post.text}</p>
                         </div>
                         <div className="post__main-info-views">
                             <div className="views">
                                 <span><EyeOutlined /></span>
-                                <span>11</span>
+                                <span>{post.viewsCount}</span>
                             </div>
                             <div className="comments">
                                 <span><CommentOutlined /></span>

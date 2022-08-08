@@ -121,6 +121,9 @@
         display: flex;
         flex-direction: column;
         height: 60%;
+        .textarea-MDE {
+          color:black;
+        }
       }
       &-buttons{
         height: 80px;

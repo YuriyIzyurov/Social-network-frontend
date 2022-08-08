@@ -15,3 +15,6 @@ export const getMessagesData = (state:AppStateType) => {
 export const getPosts = (state: AppStateType) => {
     return state.blog.posts
 }
+export const getPostID = (state: AppStateType) => {
+    return state.blog.id
+}
