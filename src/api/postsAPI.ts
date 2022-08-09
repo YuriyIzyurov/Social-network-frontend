@@ -1,5 +1,6 @@
 import {instanceBlog} from "./api"
 import {AddPostType, UserType} from "../typings/types";
+
 //todo: написать типы респонсов
 
 
@@ -17,6 +18,9 @@ export const postsAPI = {
     },
     getPostById(id:string | undefined) {
         return instanceBlog.get(`posts/${id}`).then(response => response.data)
+    },
+    updatePost(post: AddPostType, id:string) {
+        return instanceBlog.patch(`posts/${id}`, post).then(response => response.data)
     }
 }
 export const authBlogAPI = {

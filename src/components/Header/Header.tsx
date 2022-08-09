@@ -5,7 +5,7 @@ import Button from "antd/lib/button";
 import Avatar from "antd/lib/avatar/avatar";
 import {PhotosType} from "../../typings/types";
 import {useSelector} from "react-redux";
-import {getAuthAvatar, getCurrentProfile} from "../../redux/profile-selectors";
+import {getAuthAvatar, getCurrentProfile, getLoggedUserPhoto} from "../../redux/profile-selectors";
 
 
 type PropsLoginType = {
@@ -16,7 +16,7 @@ type PropsLoginType = {
 }
 const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handlingBlogUserLogout }) =>{
 
-    const currentProfile = useSelector(getCurrentProfile)
+    const loggedUserPhoto = useSelector(getLoggedUserPhoto)
 
     const Logout = () => {
         logoutFromServer()
@@ -27,7 +27,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handl
             {!isAuth ? <NavLink to={'/login'}>Login</NavLink>
                 : <div>
                     <div>
-                        <Avatar src={currentProfile ? currentProfile.photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUWgApzeLkRHZjMcLb9wzsJuNzjqTRxzRBqs99_I&s"} />
+                        <Avatar src={loggedUserPhoto ? loggedUserPhoto.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUWgApzeLkRHZjMcLb9wzsJuNzjqTRxzRBqs99_I&s"} />
                         {login}
                         <Button onClick={Logout}>Logout</Button>
                     </div>

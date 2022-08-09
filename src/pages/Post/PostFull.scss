@@ -27,10 +27,13 @@
           align-items: center;
           justify-content: center;
         }
-        .name{}
-        .post-date{
-          opacity: 0.6;
-          font-size: 13px;
+        .name{
+          display: flex;
+          flex-direction: column;
+          span {
+            opacity: 0.6;
+            font-size: 22px;
+          }
         }
       }
       &-title{

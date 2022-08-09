@@ -31,25 +31,7 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
     useEffect(() => {
         console.log('render')
     },[])
-  /*  const onSubmit = (formData: FormDataPostType) => {
-        if(formData.text) addNewPost(formData.text)
-    }
-    const post = [...messagesData].reverse().map(m=><Post key={Math.random()} message={m.post} likesCount={m.likesCount}  />)*/
 
-    /*const PostForm: React.FC<InjectedFormProps<FormDataPostType, PropsType> & PropsType> = ({handleSubmit}) => {
-        return <form onSubmit={handleSubmit}>
-            <div>
-                {/!*<Field component={Textarea} name={"text"} validate={[maxLength200, minLength2]}/>*!/}
-            </div>
-            <div>
-                <button type={"submit"}>Add post</button>
-            </div>
-        </form>
-    }*/
-
-    /*let PostFormRedux = reduxForm<FormDataPostType, PropsType>({
-        form: 'post'
-    })(PostForm)*/
     const postHandler = () => {
         setPostAdding(!isPostAdding)
     }
@@ -136,7 +118,7 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
                     </Link>
                 </div>
             </div>
-            {isPostAdding && <AddPost  postHandler={postHandler}/>}
+            {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null}/>}
         </div>
     )
 

@@ -46,15 +46,23 @@ export const getAllPosts = ():ThunkType => {
         dispatch(actions.setAllPosts(response))
     }
 }
-export const publicPost = (post: AddPostType):ThunkType => {
+export const publicPost = (post: AddPostType, id: string | null = null):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setFetching(true))
-        const response = await postsAPI.writePost(post)
-        dispatch(actions.setFetching(false))
-        console.log(response)
-        if(response.resultCode === 0) {
-            dispatch(actions.setCreatedPostId(response.data._id))
+        if(id) {
+            const response = await postsAPI.updatePost(post, id)
+            if(response.resultCode === 0) {
+                console.log(response)
+                dispatch(actions.setCreatedPostId(response._id))
+            }
+        } else {
+            const response = await postsAPI.writePost(post)
+            if(response.resultCode === 0) {
+                dispatch(actions.setCreatedPostId(response.data._id))
+            }
         }
+        dispatch(actions.setFetching(false))
+
     }
 }
 

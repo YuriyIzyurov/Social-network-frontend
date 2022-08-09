@@ -42,6 +42,7 @@ const ProfileContainerHook: React.FC<PropsType> = ({ setProfileOnPage, isAuth, g
 
         if(router.location.pathname === '/') {
             if(loggedUser) {
+                setMyProfile(true)
                 setProfileOnPage(loggedUser)
                 getUserStatusInProfile(loggedUser)
                 return
@@ -49,7 +50,12 @@ const ProfileContainerHook: React.FC<PropsType> = ({ setProfileOnPage, isAuth, g
         }
         const letters = router.location.pathname.match(/[a-z]/g).join('')
         if(letters !== 'profile') {
-            return
+            if(loggedUser) {
+                setMyProfile(true)
+                setProfileOnPage(loggedUser)
+                getUserStatusInProfile(loggedUser)
+                return
+            }
         }
         let idFromURL = router.location.pathname.replace(/\D/g,'')
         if(idFromURL){

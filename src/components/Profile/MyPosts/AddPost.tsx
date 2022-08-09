@@ -1,9 +1,10 @@
-import React, {ChangeEvent, useCallback, useRef, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from 'react';
 import {Button, Divider, Input} from "antd";
 import {publicPost} from "../../../redux/postsReducer";
 import {postsAPI} from "../../../api/postsAPI";
 import {useAppDispatch} from "../../../redux/reduxStore";
 import SimpleMDERedactor from '../../../SimpleMDERedactor';
+import {AddPostType} from "../../../typings/types";
 
 const {TextArea} = Input
 
@@ -11,10 +12,12 @@ const {TextArea} = Input
 
 type PropsType = {
     postHandler: () => void
+    currentPost: null | AddPostType
+    id: null | string
 }
 
 
-const AddPost: React.FC<PropsType> = ({postHandler}) => {
+const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id}) => {
 
     const [imageUrl, setImageUrl] = useState(``)
     const [title, setTitle] = useState(``)
@@ -24,8 +27,23 @@ const AddPost: React.FC<PropsType> = ({postHandler}) => {
     const inputImgRef = useRef<HTMLInputElement>(null)
     const dispatch = useAppDispatch()
 
+
+    useEffect(() => {
+        if(currentPost) {
+            const {imageUrl, title, tags, text} = currentPost
+            setImageUrl(imageUrl as string)
+            setTitle(title)
+            setTags(tags)
+            setText(text)
+        }
+    },[])
+
     const sendNewPost = () => {
-        dispatch(publicPost({title, tags, text, imageUrl}))
+        if(currentPost) {
+            dispatch(publicPost({title, tags, text, imageUrl}, id))
+        } else {
+            dispatch(publicPost({title, tags, text, imageUrl}))
+        }
     }
     const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files) {
@@ -44,7 +62,7 @@ const AddPost: React.FC<PropsType> = ({postHandler}) => {
     }, [])
 
     return (
-        <div className="profile__posts-adding">
+        <div style={{position: currentPost ? "unset" : "absolute"}} className="profile__posts-adding">
             <div className="profile__posts-adding-preview">
                 <Button size="large" onClick={() => inputImgRef.current?.click()}>Загрузить превью</Button>
                     <input name='image'
@@ -76,7 +94,6 @@ const AddPost: React.FC<PropsType> = ({postHandler}) => {
                     Пост
                 </Divider>
                 <SimpleMDERedactor handleSetText={handleSetText} text={text}/>
-
             </div>
             <div className="profile__posts-adding-buttons">
                     <Button onClick={sendNewPost} type="primary" size="large">

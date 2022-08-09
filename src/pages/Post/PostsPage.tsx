@@ -12,7 +12,7 @@ const PostsPage = () => {
 
     const dispatch = useAppDispatch()
     const posts = useSelector(getPosts)
-    const isAuth = useSelector(getMe)
+    const [isAuth, id] = useSelector(getMe)
 
     useEffect(() => {
         dispatch(handlingAuthDataBlog())
@@ -33,7 +33,10 @@ const PostsPage = () => {
                 tags={item.tags}
                 text={item.text}
                 user={item.user}
-                viewsCount={item.viewsCount}/>)}
+                createdAt={item.createdAt}
+                viewsCount={item.viewsCount}
+                isEditable={item.user._id === id}
+            />)}
         </div>
     );
 };

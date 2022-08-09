@@ -8,6 +8,7 @@ import {useParams} from "react-router";
 import {postsAPI} from "../../api/postsAPI";
 import {PostType} from "../../typings/types";
 import Preloader from "../../common/Preloader/Preloader";
+import ReactMarkdown from 'react-markdown';
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -57,7 +58,7 @@ const PostFull = () => {
                             {post.tags.map((item) => <span>#{item}</span> )}
                         </div>
                         <div className="post__main-info-text">
-                            <p>{post.text}</p>
+                            <ReactMarkdown children={post.text} />
                         </div>
                         <div className="post__main-info-views">
                             <div className="views">
