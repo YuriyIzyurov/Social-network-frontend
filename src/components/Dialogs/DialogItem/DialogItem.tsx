@@ -69,7 +69,7 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">
                             <b>{name}</b>
-                            <span><GetMessageTime date={date}/></span>
+                            <span><GetMessageTime date={date} showFullDate={false}/></span>
                         </div>
                         <div className="dialog__item-info-bottom">
                             {!isUserOnline(activityDate) && <p><CustomTimeDistanceToNow date={activityDate}/></p>}

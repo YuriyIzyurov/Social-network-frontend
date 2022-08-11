@@ -15,10 +15,16 @@ export const CustomTimeDistanceToNow: React.FC<{date:string}> = ({date}) => {
         })}
     </Fragment>
 };
-export const GetMessageTime:React.FC<{date:string}> = ({date}) => {
-    let parsedDate = Date.parse(date) + 1.08e+7
+export const GetMessageTime:React.FC<{date:string, showFullDate:boolean }> = ({date, showFullDate = false}) => {
+    let parsedDate
+    if(showFullDate) {
+        parsedDate = Date.parse(date)
+    } else  parsedDate = Date.parse(date) + 1.08e+7
+
     if(isToday(parsedDate)) {
-        return <Fragment>{format(parsedDate, "HH:mm")}</Fragment>
+        return <Fragment>{format(parsedDate, "Сегодня в HH:mm")}</Fragment>
+    } else if(showFullDate){
+        return <Fragment>{format(parsedDate, "d.MM.yyyy в HH:mm")}</Fragment>
     } else {
         return <Fragment>{format(parsedDate, "d.MM.yyyy")}</Fragment>
     }

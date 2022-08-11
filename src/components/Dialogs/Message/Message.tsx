@@ -30,7 +30,7 @@ const Message: React.FC<PropsType> = React.memo(({message, avatar, date, isMe,vi
                     <p className="message__text">{message}</p>
                 </div>
                 <span className="message__date">
-                    <GetMessageTime date={date} />
+                    <GetMessageTime date={date} showFullDate={false}/>
                 </span>
             </div>
             {viewed && <img src={MessageReadImage} alt=""/>}

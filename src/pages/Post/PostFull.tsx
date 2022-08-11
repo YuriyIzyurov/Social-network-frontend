@@ -13,6 +13,7 @@ import {useSelector} from "react-redux";
 import {getBloggerID, getMe} from "../../redux/auth-selectors";
 import EditSettings from "../../utils/EditSettings/EditSettings";
 import AddPost from "../../components/Profile/MyPosts/AddPost";
+import Comment from "./Comment";
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -109,18 +110,12 @@ const PostFull = () => {
             </div>
 
             <div className="post__comments">
-                <div className="post__comments-explanation">Комментарии</div>
-                {comments?.map((item) => {
-                    return <div className="post__comments-comment">
-                        <div className="post-avatar">
-                            <img src={item.user.avatarUrl} alt='ava'/>
-                        </div>
-                        <div className="nameAndText">
-                            <span>{item.user.fullName}</span>
-                            <span>{item.text}</span>
-                        </div>
-                    </div>
-                })}
+                <div className="post__comments-explanation">
+                    <span>
+                       Комментарии
+                    </span>
+                </div>
+                {comments?.map((item) => <Comment item={item}/>)}
                 <div className="post__comments-textarea">
                     <div className="post-avatar">
                         <img src="https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg" alt="ava"/>
@@ -129,7 +124,7 @@ const PostFull = () => {
                         <TextArea
                             className="message__form-textarea"
                             size="small"
-                            placeholder="Введите текст сообщения..."
+                            placeholder="Введите текст комментария..."
                             autoSize={{ minRows: 2, maxRows: 6 }}
                             value={value}
                             onChange={e => setValue(e.target.value)}
@@ -137,8 +132,8 @@ const PostFull = () => {
                     </div>
                 </div>
                 <div className="sendButton">
-                    <Button onClick={sendComment} type="primary" shape="round" icon={<DownloadOutlined />} size='large'>
-                        Написать комментарий
+                    <Button onClick={sendComment} type="primary"  size='large'>
+                        Отправить комментарий
                     </Button>
                 </div>
             </div>
