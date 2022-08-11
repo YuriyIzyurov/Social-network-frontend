@@ -98,6 +98,7 @@ export type PostType = {
     "text": string,
     "tags": string[],
     "viewsCount": number,
+    "commentsCount": number,
     "user": PostUserType,
     "imageUrl": string,
     "createdAt": string,
@@ -109,6 +110,16 @@ export type AddPostType = {
     text: string
     tags: string[] | []
     imageUrl: string | null
+}
+export type CommentsType = {
+    "_id": string,
+    "text": string,
+    "likesCount": number,
+    "user": PostUserType,
+    "post": string,
+    "createdAt": string,
+    "updatedAt": string,
+    "__v": number
 }
 
 

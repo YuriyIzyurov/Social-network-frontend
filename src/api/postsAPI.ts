@@ -26,6 +26,14 @@ export const postsAPI = {
         return instanceBlog.delete(`posts/${id}`).then(response => response.data)
     }
 }
+export  const commentsAPI = {
+    writeComment(id:string, text:string){
+        return instanceBlog.post(`comments/${id}`, {text}).then(response => response.data)
+    },
+    getAllCommentsOfPost(id:string | undefined){
+        return instanceBlog.get(`comments/${id}`).then(response => response.data)
+    }
+}
 export const authBlogAPI = {
     submitAuth(email: string, password: string) {
         return instanceBlog.post('login', {email, password}).then(response => response.data)

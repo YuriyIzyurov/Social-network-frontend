@@ -5,8 +5,8 @@ import { DownloadOutlined, CommentOutlined, EyeOutlined } from '@ant-design/icon
 import { Input } from 'antd';
 import {Link} from "react-router-dom";
 import {useParams} from "react-router";
-import {postsAPI} from "../../api/postsAPI";
-import {PostType} from "../../typings/types";
+import {commentsAPI, postsAPI} from "../../api/postsAPI";
+import {CommentsType, PostType} from "../../typings/types";
 import Preloader from "../../common/Preloader/Preloader";
 import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
@@ -24,16 +24,22 @@ const PostFull = () => {
     const [edit, setEdit] = useState(false)
     const [isTooltipVisible, setTooltipVisible] = useState(false)
     const [post, setPost] = useState<PostType | undefined>(undefined);
+    const [comments, setComments] = useState<CommentsType[] | undefined>(undefined);
     const id = useSelector(getBloggerID)
     const params = useParams()
 
     const getPostById = async () => {
         const response = await postsAPI.getPostById(params.id)
         setPost(response)
+        console.log(response)
+    }
+    const getCommentsOfPost = async () => {
+            const response = await commentsAPI.getAllCommentsOfPost(params.id)
+            setComments(response)
     }
     useEffect(() => {
         getPostById().then(() =>{
-            console.log("success")
+            getCommentsOfPost()
         })
     }, [])
 
@@ -42,6 +48,15 @@ const PostFull = () => {
     }
     const handleTooltipVisibility = (boolean: boolean) => {
         setTooltipVisible(boolean)
+    }
+    const sendComment = async () => {
+
+        if(post){
+            const response = await commentsAPI.writeComment(post._id, value)
+            if(response.resultCode === 0) {
+                getCommentsOfPost().then(() => setValue(''))
+            }
+        }
     }
 
     if(!post) {
@@ -87,85 +102,25 @@ const PostFull = () => {
                             </div>
                             <div className="comments">
                                 <span><CommentOutlined /></span>
-                                <span>3</span>
+                                <span>{post.commentsCount}</span>
                             </div>
                         </div>
                     </div>
             </div>
+
             <div className="post__comments">
                 <div className="post__comments-explanation">Комментарии</div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
+                {comments?.map((item) => {
+                    return <div className="post__comments-comment">
+                        <div className="post-avatar">
+                            <img src={item.user.avatarUrl} alt='ava'/>
+                        </div>
+                        <div className="nameAndText">
+                            <span>{item.user.fullName}</span>
+                            <span>{item.text}</span>
+                        </div>
                     </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
-                <div className="post__comments-comment">
-                    <div className="post-avatar">
-                        <img src="https://klike.net/uploads/posts/2019-03/1551511801_1.jpg" alt='ava'/>
-                    </div>
-                    <div className="nameAndText">
-                        <span>Дмитрий Иванов</span>
-                        <span>Да вообще ни о о чем этот текст. Не понравилось, давай другое</span>
-                    </div>
-                </div>
+                })}
                 <div className="post__comments-textarea">
                     <div className="post-avatar">
                         <img src="https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg" alt="ava"/>
@@ -182,8 +137,8 @@ const PostFull = () => {
                     </div>
                 </div>
                 <div className="sendButton">
-                    <Button type="primary" shape="round" icon={<DownloadOutlined />} size='large'>
-                        Download
+                    <Button onClick={sendComment} type="primary" shape="round" icon={<DownloadOutlined />} size='large'>
+                        Написать комментарий
                     </Button>
                 </div>
             </div>

@@ -36,6 +36,7 @@ const PostsPage = () => {
                 user={item.user}
                 createdAt={item.createdAt}
                 viewsCount={item.viewsCount}
+                commentsCount={item.commentsCount}
                 isEditable={item.user._id === id}
             />)}
         </div>

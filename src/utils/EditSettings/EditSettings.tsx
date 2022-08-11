@@ -37,6 +37,7 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
         if(!visible) setVisibleDeleteTooltip(newVisible)
     }
     const sendDeleteDataOnServ = () => {
+        console.log('delete post')
         dispatch(deletePublication(id))
     }
 

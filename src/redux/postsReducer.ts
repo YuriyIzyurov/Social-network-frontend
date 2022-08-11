@@ -57,9 +57,8 @@ export const publicPost = (post: AddPostType, id: string | null = null):ThunkTyp
         if(id) {
             const response = await postsAPI.updatePost(post, id)
             if(response.resultCode === 0) {
-                console.log(response)
                 dispatch(actions.setCreatedPostId(response._id))
-            }
+            } else console.log(response)
         } else {
             const response = await postsAPI.writePost(post)
             if(response.resultCode === 0) {

@@ -22,11 +22,12 @@ type PropsType = {
     tags: string[],
     text: string,
     viewsCount: number,
+    commentsCount: number,
     user: any,
     createdAt: string,
     isEditable: boolean
 }
-const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text, viewsCount, createdAt,isEditable }) => {
+const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text, viewsCount, commentsCount, createdAt,isEditable }) => {
 
     const [edit, setEdit] = useState(false)
     const [isTooltipVisible, setTooltipVisible] = useState(false)
@@ -77,7 +78,7 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                                 </div>
                                 <div className="comments">
                                     <span><CommentOutlined /></span>
-                                    <span>3</span>
+                                    <span>{commentsCount}</span>
                                 </div>
                             </div>
                             {isEditable ? <EditSettings editPost={editPost} id={id} handleTooltipVisibility={handleTooltipVisibility}/> : <div></div>}
