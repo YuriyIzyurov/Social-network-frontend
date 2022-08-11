@@ -21,6 +21,9 @@ export const postsAPI = {
     },
     updatePost(post: AddPostType, id:string) {
         return instanceBlog.patch(`posts/${id}`, post).then(response => response.data)
+    },
+    deletePost(id:string) {
+        return instanceBlog.delete(`posts/${id}`).then(response => response.data)
     }
 }
 export const authBlogAPI = {

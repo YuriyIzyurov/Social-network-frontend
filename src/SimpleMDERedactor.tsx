@@ -14,17 +14,6 @@ type PropsType = {
 }
 const SimpleMDERedactor: React.FC<PropsType> = ({handleSetText, text}) => {
 
-    const postId = useSelector(getPostID)
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        if(postId) {
-            navigate(`/posts/${postId}`)
-            dispatch(actions.deleteCreatedPostId())
-        }
-    },[postId])
-
     const options = React.useMemo(
         () => ({
             spellChecker: false,

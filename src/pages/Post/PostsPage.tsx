@@ -17,6 +17,7 @@ const PostsPage = () => {
     useEffect(() => {
         dispatch(handlingAuthDataBlog())
         dispatch(getAllPosts())
+        console.log('use effect post page')
     },[])
 
     if (!isAuth) {

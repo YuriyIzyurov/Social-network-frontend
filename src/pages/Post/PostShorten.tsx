@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
 import "./PostPage.scss"
 import {Tooltip, Input, Popover} from 'antd';
-import {CommentOutlined, FormOutlined, EyeOutlined, DeleteOutlined} from '@ant-design/icons';
+import {CommentOutlined, FormOutlined, EyeOutlined, DeleteOutlined, CheckOutlined,CloseOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import AddPost from "../../components/Profile/MyPosts/AddPost";
 import classnames from 'classnames';
+import {deletePublication} from "../../redux/postsReducer";
+import {useAppDispatch} from "../../redux/reduxStore";
+import EditSettings from "../../utils/EditSettings/EditSettings";
+import {postsAPI} from "../../api/postsAPI";
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -25,34 +29,20 @@ type PropsType = {
 const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text, viewsCount, createdAt,isEditable }) => {
 
     const [edit, setEdit] = useState(false)
-    const [visible, setVisible] = useState(false)
-    const [visibleEditTooltip, setVisibleEditTooltip] = useState(false)
-    const [visibleDeleteTooltip, setVisibleDeleteTooltip] = useState(false)
-
+    const [isTooltipVisible, setTooltipVisible] = useState(false)
 
     const editPost = () => {
         setEdit(!edit)
     }
-    const handleVisibleChange = (newVisible: boolean) => {
-        setVisibleDeleteTooltip(false)
-        setVisible(newVisible)
+    const handleTooltipVisibility = (boolean: boolean) => {
+        setTooltipVisible(boolean)
     }
-    const hide = () => {
-        setVisible(false)
-    }
-    const showEditTooltip = (newVisible: boolean) => {
-        if(!visible) setVisibleEditTooltip(newVisible)
-    }
-    const showDeleteTooltip = (newVisible: boolean) => {
-        if(!visible) setVisibleDeleteTooltip(newVisible)
-    }
-
 
     return (
         <>
-            {edit ? <AddPost  postHandler={editPost} currentPost={{title, text, tags, imageUrl}} id={id}/>
+            {edit ? <AddPost  postHandler={editPost} currentPost={{title, text, tags, imageUrl}} id={id} getPostById={null}/>
                 : <div className="postPreview">
-                <div className={classnames("postPreview__main", {"postPreview__main-tooltip": visible || visibleEditTooltip || visibleDeleteTooltip})}>
+                <div className={classnames("postPreview__main", {"postPreview__main-tooltip": isTooltipVisible})}>
                     <Link to={`/posts/${id}`}>
                         <div className="postPreview__main-headerImg">
                             <img src={imageUrl} alt='les' />
@@ -90,33 +80,7 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                                     <span>3</span>
                                 </div>
                             </div>
-                            {isEditable ? <div className="edit">
-                                <Tooltip mouseLeaveDelay={0.05}
-                                         mouseEnterDelay={0.3}
-                                         visible={visibleEditTooltip}
-                                         onVisibleChange={showEditTooltip}
-                                         title="Редактировать пост"
-                                >
-                                    <FormOutlined onClick={editPost}/>
-                                </Tooltip>
-                                <Tooltip mouseLeaveDelay={0.05}
-                                         mouseEnterDelay={0.3}
-                                         visible={visibleDeleteTooltip}
-                                         onVisibleChange={showDeleteTooltip}
-                                         title="Удалить пост">
-                                    <Popover
-                                        content={<a onClick={hide}>Close</a>}
-                                        title="Вы действительно хотите удалить пост?"
-                                        trigger="click"
-                                        visible={visible}
-                                        onVisibleChange={handleVisibleChange}
-                                        color={"#2c2f48"}
-                                        overlayClassName="custom-popover"
-                                    >
-                                        <DeleteOutlined  style={{color: 'red'}}/>
-                                    </Popover>
-                                </Tooltip>
-                            </div> : <div></div>}
+                            {isEditable ? <EditSettings editPost={editPost} id={id} handleTooltipVisibility={handleTooltipVisibility}/> : <div></div>}
                         </div>
                     </div>
                 </div>

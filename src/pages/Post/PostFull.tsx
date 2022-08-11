@@ -9,6 +9,10 @@ import {postsAPI} from "../../api/postsAPI";
 import {PostType} from "../../typings/types";
 import Preloader from "../../common/Preloader/Preloader";
 import ReactMarkdown from 'react-markdown';
+import {useSelector} from "react-redux";
+import {getBloggerID, getMe} from "../../redux/auth-selectors";
+import EditSettings from "../../utils/EditSettings/EditSettings";
+import AddPost from "../../components/Profile/MyPosts/AddPost";
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -17,22 +21,36 @@ const { TextArea } = Input;
 const PostFull = () => {
 
     const [value, setValue] = useState('');
+    const [edit, setEdit] = useState(false)
+    const [isTooltipVisible, setTooltipVisible] = useState(false)
     const [post, setPost] = useState<PostType | undefined>(undefined);
+    const id = useSelector(getBloggerID)
     const params = useParams()
 
+    const getPostById = async () => {
+        const response = await postsAPI.getPostById(params.id)
+        setPost(response)
+    }
     useEffect(() => {
-        (async () => {
-            const response = await postsAPI.getPostById(params.id)
-            setPost(response)
-            console.log(response)
-        })()
-
+        getPostById().then(() =>{
+            console.log("success")
+        })
     }, [])
+
+    const editPost = () => {
+        setEdit(!edit)
+    }
+    const handleTooltipVisibility = (boolean: boolean) => {
+        setTooltipVisible(boolean)
+    }
 
     if(!post) {
         return <Preloader/>
     }
-
+    if(edit) {
+        const {title, text, tags, imageUrl} = post
+        return  <AddPost  postHandler={editPost} currentPost={{title, text, tags, imageUrl}} id={post._id} getPostById={getPostById} />
+    }
     return (
         <div className="post">
             <div className="post__main">
@@ -41,15 +59,17 @@ const PostFull = () => {
                     </div>
                     <div className="post__main-info">
                         <div className="post__main-info-author">
-                            <div className="post-avatar">
-                                <img src={post.user.avatarUrl} alt="User"/>
+                            <div style={{display: "flex"}}>
+                                <div className="post-avatar">
+                                    <img src={post.user.avatarUrl} alt="User"/>
+                                </div>
+                                <div className="name">
+                                    <span>{post.user.fullName}</span>
+                                    <span>{post.createdAt}</span>
+                                </div>
                             </div>
-                            <div className="name">
-                                {post.user.fullName}
-                            </div>
-                            <div className="post-date">
-                                {post.createdAt}
-                            </div>
+                            {id === post.user._id && <EditSettings editPost={editPost} id={post._id}
+                                           handleTooltipVisibility={handleTooltipVisibility}/>}
                         </div>
                         <div className="post__main-info-title">
                             <h1>{post.title}</h1>
@@ -167,7 +187,6 @@ const PostFull = () => {
                     </Button>
                 </div>
             </div>
-
         </div>
     );
 };

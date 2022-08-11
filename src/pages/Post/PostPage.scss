@@ -90,17 +90,11 @@
           padding: 20px;
           display: flex;
           justify-content: space-between;
+
           .views{
             padding-right: 20px;
           }
           .comments{
-          }
-          .edit{
-            font-size: 22px;
-            span:first-child{
-              margin-right: 8px;
-            }
-
           }
         }
       }
@@ -127,8 +121,18 @@
     display: contents;
   }
 }
+
+/*
 .custom-popover{
+
   .ant-popover-title {
     color: white;
   }
+  .ant-popover-content{
+    .ant-popover-inner {
+      border-radius: 20px;
+
+    }
+  }
 }
+*/

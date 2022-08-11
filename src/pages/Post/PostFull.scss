@@ -1,18 +1,22 @@
 .post {
-  width: 100%;
+  width: 98.5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: black;
-
+  overflow: auto;
   &__main{
     margin-bottom: 10px;
     background: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     &-headerImg{
       img{
         width: 100%;
         height: auto;
+        object-fit: cover;
+        object-position: 0 0;
       }
     }
     &-info{
@@ -21,22 +25,37 @@
       &-author{
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding-left: 15px;
+        padding-top: 20px;
         .post-avatar{
           display: flex;
           align-items: center;
           justify-content: center;
         }
+        .post-avatar img {
+          object-fit: cover;
+          object-position: 0 0;
+        }
         .name{
           display: flex;
           flex-direction: column;
-          span {
+          span:first-child{
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 22px;
+          }
+          span:nth-child(2) {
             opacity: 0.6;
-            font-size: 22px;
+            font-size: 13px;
           }
         }
       }
+      .edit{
+        padding-right: 20px;
+      }
       &-title{
+        padding-top: 10px;
         h1{
           font-size: 35px;
           font-weight: 600;
@@ -52,8 +71,6 @@
         }
       }
       &-text{
-        max-height: 250px;
-        overflow: auto;
         p{
           font-size: 17px;
           line-height: 1.2;
@@ -77,6 +94,7 @@
     background: white;
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
     &-explanation{
       padding: 20px;
     }

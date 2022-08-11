@@ -21,6 +21,9 @@
   font-size: 15px;
   height: 100vh;
   background: radial-gradient(73.23% 106% at 34.94% 108.33%, #F7CBFD 0%, #7758D1 100%);
+  &-content{
+    overflow: auto;
+  }
   .ant-layout-sider {
     background: transparent;
   }

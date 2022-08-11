@@ -118,7 +118,7 @@ const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
                     </Link>
                 </div>
             </div>
-            {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null}/>}
+            {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null} getPostById={null}/>}
         </div>
     )
 

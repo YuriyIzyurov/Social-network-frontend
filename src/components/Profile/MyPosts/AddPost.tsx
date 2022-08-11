@@ -1,10 +1,13 @@
 import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from 'react';
 import {Button, Divider, Input} from "antd";
-import {publicPost} from "../../../redux/postsReducer";
+import {actions, publicPost} from "../../../redux/postsReducer";
 import {postsAPI} from "../../../api/postsAPI";
 import {useAppDispatch} from "../../../redux/reduxStore";
 import SimpleMDERedactor from '../../../SimpleMDERedactor';
 import {AddPostType} from "../../../typings/types";
+import {useDispatch, useSelector} from "react-redux";
+import {getPostID} from "../../../redux/post-selectors";
+import {useNavigate, useParams} from "react-router";
 
 const {TextArea} = Input
 
@@ -14,10 +17,11 @@ type PropsType = {
     postHandler: () => void
     currentPost: null | AddPostType
     id: null | string
+    getPostById:  (() => void) | null
 }
 
 
-const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id}) => {
+const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
 
     const [imageUrl, setImageUrl] = useState(``)
     const [title, setTitle] = useState(``)
@@ -27,6 +31,21 @@ const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id}) => {
     const inputImgRef = useRef<HTMLInputElement>(null)
     const dispatch = useAppDispatch()
 
+    const postId = useSelector(getPostID)
+    const navigate = useNavigate()
+    const params = useParams()
+
+    useEffect(() => {
+        if(params.id && postId && getPostById) {
+            getPostById()
+            dispatch(actions.deleteCreatedPostId())
+            postHandler()
+        }
+         if(postId) {
+            navigate(`/posts/${postId}`)
+            dispatch(actions.deleteCreatedPostId())
+        }
+    },[postId])
 
     useEffect(() => {
         if(currentPost) {

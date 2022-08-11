@@ -34,6 +34,11 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 ...state,
                 id: null
             }
+        case 'SORT_POSTS':
+            return {
+                ...state,
+                posts: [...state.posts.filter(item => item._id !== action.id)]
+            }
         default:
             return state
     }
@@ -65,12 +70,25 @@ export const publicPost = (post: AddPostType, id: string | null = null):ThunkTyp
 
     }
 }
+export const deletePublication = (id:string):ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setFetching(true))
+        const response = await postsAPI.deletePost(id)
+        dispatch(actions.setFetching(false))
+        if(response.resultCode === 0) {
+            dispatch(actions.deletePostFromState(id))
+        } else if(response.resultCode === 1) {
+                alert("Статья не найдена")
+            } else console.log("Проверь респонс, допиши бэк")
+    }
+}
 
 export const actions = {
     setAllPosts: (posts: PostType[]) => ({type: 'SET_ALL_POSTS', payload: posts} as const),
     setFetching: (isFetching: boolean) => ({type: 'POSTS_FETCHING', isFetching} as const),
     setCreatedPostId: (id: string) => ({type: 'SET_POST_ID', id} as const),
-    deleteCreatedPostId: () => ({type: 'DELETE_POST_ID'} as const)
+    deleteCreatedPostId: () => ({type: 'DELETE_POST_ID'} as const),
+    deletePostFromState: (id: string) => ({type: 'SORT_POSTS', id} as const)
 }
 
 
