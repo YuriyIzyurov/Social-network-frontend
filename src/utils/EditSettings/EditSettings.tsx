@@ -4,6 +4,7 @@ import {Popover, Tooltip} from "antd";
 import {CheckOutlined, CloseOutlined, DeleteOutlined, FormOutlined} from "@ant-design/icons";
 import {deletePublication} from "../../redux/postsReducer";
 import {useAppDispatch} from "../../redux/reduxStore";
+import {useNavigate} from "react-router";
 
 type PropsType = {
     editPost: () => void
@@ -16,6 +17,7 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
     const [visibleEditTooltip, setVisibleEditTooltip] = useState(false)
     const [visibleDeleteTooltip, setVisibleDeleteTooltip] = useState(false)
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if(visible || visibleEditTooltip || visibleDeleteTooltip) {
@@ -37,8 +39,9 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
         if(!visible) setVisibleDeleteTooltip(newVisible)
     }
     const sendDeleteDataOnServ = () => {
-        console.log('delete post')
-        dispatch(deletePublication(id))
+        dispatch(deletePublication(id)).then(() => {
+            navigate('/posts')
+        })
     }
 
     return (

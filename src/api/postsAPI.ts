@@ -32,6 +32,12 @@ export  const commentsAPI = {
     },
     getAllCommentsOfPost(id:string | undefined){
         return instanceBlog.get(`comments/${id}`).then(response => response.data)
+    },
+    deleteComment(id:string) {
+        return instanceBlog.delete(`comments/${id}`).then(response => response.data)
+    },
+    updateComment(text: string, id:string) {
+        return instanceBlog.patch(`comments/${id}`, {text}).then(response => response.data)
     }
 }
 export const authBlogAPI = {

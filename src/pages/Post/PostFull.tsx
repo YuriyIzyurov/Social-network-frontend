@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {MouseEventHandler, useEffect, useState} from 'react';
 import "./PostFull.scss"
 import { Button} from 'antd';
 import { DownloadOutlined, CommentOutlined, EyeOutlined } from '@ant-design/icons';
@@ -50,8 +50,8 @@ const PostFull = () => {
     const handleTooltipVisibility = (boolean: boolean) => {
         setTooltipVisible(boolean)
     }
-    const sendComment = async () => {
 
+    const sendComment = async () => {
         if(post){
             const response = await commentsAPI.writeComment(post._id, value)
             if(response.resultCode === 0) {
@@ -115,7 +115,11 @@ const PostFull = () => {
                        Комментарии
                     </span>
                 </div>
-                {comments?.map((item) => <Comment item={item}/>)}
+                {comments?.map((item) => <Comment item={item}
+                                                  bloggerId={id}
+                                                  getCommentsOfPost={getCommentsOfPost}
+
+                />)}
                 <div className="post__comments-textarea">
                     <div className="post-avatar">
                         <img src="https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg" alt="ava"/>
