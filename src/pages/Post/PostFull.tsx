@@ -14,6 +14,11 @@ import {getBloggerID, getMe} from "../../redux/auth-selectors";
 import EditSettings from "../../utils/EditSettings/EditSettings";
 import AddPost from "../../components/Profile/MyPosts/AddPost";
 import Comment from "./Comment";
+// @ts-ignore
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+//выбрать nightOwl,
+// @ts-ignore
+import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -94,7 +99,28 @@ const PostFull = () => {
                             {post.tags.map((item) => <span>#{item}</span> )}
                         </div>
                         <div className="post__main-info-text">
-                            <ReactMarkdown children={post.text} />
+                            <ReactMarkdown children={post.text}
+                                           className="markdown"
+                                           components={{
+                                               code({node, inline, className, children, ...props}) {
+                                                   const match = /language-(\w+)/.exec(className || '')
+                                                   return !inline && match ? (
+                                                       <SyntaxHighlighter
+                                                           children={String(children).replace(/\n$/, '')}
+                                                           style={nightOwl}
+                                                           customStyle={{backgroundColor:"#2c2f48", borderRadius:"15px"}}
+                                                           language={match[1]}
+                                                           PreTag="div"
+                                                           {...props}
+                                                       />
+                                                   ) : (
+                                                       <code className={className} {...props}>
+                                                           {children}
+                                                       </code>
+                                                   )
+                                               }
+                                           }}
+                            />
                         </div>
                         <div className="post__main-info-views">
                             <div className="views">

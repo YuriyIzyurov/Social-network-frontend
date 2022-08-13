@@ -5,6 +5,7 @@ import {CommentsType} from "../../typings/types";
 import './Comment.scss'
 import {GetMessageTime} from "../../utils/Time/CustomTime";
 import {commentsAPI} from "../../api/postsAPI";
+import {isCommentEditable} from "../../utils/Time/isCommentEditable";
 
 const { TextArea} = Input
 
@@ -38,6 +39,7 @@ const Comment:React.FC<PropsType> = ({item, bloggerId, getCommentsOfPost}) => {
             editComment(!isEditableComment)
         } else console.log('Что-то пошло не так')
     }
+    const editConditions = bloggerId === item.user._id && !isEditableComment && isCommentEditable(item.createdAt)
 
     return (
         <div className="post__comments-commentWrapper">
@@ -48,7 +50,7 @@ const Comment:React.FC<PropsType> = ({item, bloggerId, getCommentsOfPost}) => {
                 <div className="nameAndText">
                     <div className="headerOf-comment">
                         {item.user.fullName}
-                        {bloggerId === item.user._id && !isEditableComment && <div>
+                        {editConditions && <div>
                             <EditOutlined onClick={handleEditComment}/>
                             <CloseOutlined onClick={handleDeleteComment}/>
                         </div>}
