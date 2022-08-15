@@ -6,10 +6,12 @@ export function withRouter<P>(Container: React.ComponentType<P>){
         let location = useLocation()
         let navigate = useNavigate()
         let params = useParams()
+
+        const router = {location, navigate, params}
         return (
             <Container
                 {...props}
-                router={{location, navigate, params}} />
+                router={router} />
         )
     }
     return ComponentWithRouterProp

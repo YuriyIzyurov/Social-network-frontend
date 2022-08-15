@@ -6,7 +6,7 @@ import { Empty } from 'antd';
 type PropsType = {
     dialogs: DialogType[]
     filter: string
-    selectedId: number
+    selectedId: number | null
 }
 export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) => {
 

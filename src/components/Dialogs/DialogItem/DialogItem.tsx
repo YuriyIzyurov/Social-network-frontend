@@ -8,6 +8,7 @@ import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
 import {useAppDispatch} from "../../../redux/reduxStore";
 import {
+    actions,
     getLastMessage,
     handlingMessage,
     handlingMessageList,
@@ -40,7 +41,7 @@ type PropsType = {
     newMessagesCount: number
     date: string
     activityDate: string
-    selectedId: number
+    selectedId: number | null
 }
 
 const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
@@ -54,11 +55,11 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
 
     const getMessageList = () => {
        dispatch(handlingMessageList(id, activePage, messagesOnPage))
+        dispatch(actions.setDialogID(id))
     }
 
     return (
-            <Link to={"/dialogs/" + id} onClick={getMessageList} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                <div className={classnames("dialog__item",
+                <div onClick={getMessageList} className={classnames("dialog__item",
                     {
                         "dialog__item--online": isUserOnline(activityDate),
                         "dialog__item--selected": id === selectedId
@@ -79,7 +80,6 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
                         </div>
                     </div>
                 </div>
-            </Link>
     );
 })
 

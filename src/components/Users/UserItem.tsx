@@ -1,6 +1,7 @@
+/*
 import React from "react"
 import './Users.scss'
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import Avatar from "../Dialogs/DialogItem/Avatar";
 import userDefaultPhoto from '../../assets/images/personal-user.png'
 import {UserType} from "../../typings/types";
@@ -16,10 +17,10 @@ type PropsType = {
 const UserItem: React.FC<PropsType> = React.memo(({user, followInProcess, handlingFollow, handlingUnfollow}) => {
 
     return <div>
-        <NavLink to={"/profile/" + user.id} >
+        <Link to={`/profile/${user.id}`} >
             <Avatar user={user}/>
             <div>{user.name}</div>
-        </NavLink>
+        </Link>
             {!user.followed
                 ? <button disabled={followInProcess.some(item => item === user.id)} onClick={()=>{
                     handlingFollow(user.id)
@@ -32,4 +33,4 @@ const UserItem: React.FC<PropsType> = React.memo(({user, followInProcess, handli
 
     </div>
 })
-export default UserItem
+export default UserItem*/

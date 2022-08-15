@@ -4,7 +4,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import UserDefaultPhoto from '../../../assets/images/UserDefaultPhoto'
 import ProfileData from "./ProfileData";
 import {CurrentProfileType} from "../../../typings/types";
-import {ThunkType} from "../../../redux/profileReducer";
+import {handlePhotoChange, ThunkType} from "../../../redux/profileReducer";
 import {useNavigate} from "react-router";
 import {useAppDispatch} from "../../../redux/reduxStore";
 import {startDialogWithFriend} from "../../../redux/dialogReducer";
@@ -22,27 +22,23 @@ import instagram from "../../../assets/images/instagram.png"
 // @ts-ignore
 import {Bell, Chat, Mail,Setting} from "../../../assets/images/TopAction/TopIcons"
 import {handlingAuthDataBlog, handlingChangeAvatar} from "../../../redux/authBlogReducer";
+import {useSelector} from "react-redux";
+import {getAuthID} from "../../../redux/auth-selectors";
 
 
 type PropsType = {
     currentProfile: CurrentProfileType
-    status:string
-    updateMyStatus:() => void
-    isShowMyProfile: boolean
-    handlePhotoChange: (image: File) => ThunkType
-    sendProfileDataOnServ:(newData:CurrentProfileType) => void
-
 }
-const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange,sendProfileDataOnServ }) => {
+const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile}) => {
 
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+   // const navigate = useNavigate()
     const imgRef = createRef<HTMLImageElement>()
-
+    const authID = useSelector(getAuthID)
 
     const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if(e.target.files) {
-            handlePhotoChange(e.target.files[0])
+            dispatch(handlePhotoChange(e.target.files[0]))
             dispatch(handlingChangeAvatar(e.target.files[0]))
             dispatch(handlingAuthDataBlog())
         }
@@ -50,8 +46,8 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
 
     const openDialog = () =>{
         dispatch(startDialogWithFriend(currentProfile.userId))
-        let path = `/dialogs/${currentProfile.userId}`
-        navigate(path)
+        /*let path = `/dialogs/${currentProfile.userId}`
+        navigate(path)*/
     }
 
     let [editMode, changeEditMode] = useState(false)
@@ -146,7 +142,7 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile, status, up
                     </div>
                 </div>
             </div>
-            {isShowMyProfile && <input type={"file"} onChange={OnPhotoSelected}/>}
+            {authID === currentProfile.userId && <input type={"file"} onChange={OnPhotoSelected}/>}
             {/*{!isShowMyProfile && <button onClick={openDialog}>Send message</button>}*/}
                 {/*<ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>*/}
             {/*{!editMode && <ProfileData currentProfile={currentProfile}/>}*/}

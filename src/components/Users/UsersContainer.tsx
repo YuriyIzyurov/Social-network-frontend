@@ -25,7 +25,7 @@ import {UserType} from "../../typings/types";
 import {AppStateType} from "../../redux/reduxStore";
 import {useLocation, useNavigate} from "react-router";
 import {useSearchParams} from "react-router-dom";
-
+//todo перерисовка всей страницы из-за изменения роута
 
 type StatePropsType = {
     users: Array<UserType>

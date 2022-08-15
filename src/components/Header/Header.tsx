@@ -1,11 +1,12 @@
 import React, {useEffect} from "react"
 
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import Button from "antd/lib/button";
 import Avatar from "antd/lib/avatar/avatar";
 import {PhotosType} from "../../typings/types";
 import {useSelector} from "react-redux";
 import {getAuthAvatar, getCurrentProfile, getLoggedUserPhoto} from "../../redux/profile-selectors";
+import {Navigate} from "react-router";
 
 
 type PropsLoginType = {

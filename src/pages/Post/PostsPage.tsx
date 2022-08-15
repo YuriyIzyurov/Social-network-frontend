@@ -6,13 +6,14 @@ import {getPosts} from "../../redux/post-selectors";
 import PostShorten from './PostShorten';
 import {handlingAuthDataBlog} from "../../redux/authBlogReducer";
 import {getMe} from "../../redux/auth-selectors";
-import {Navigate} from "react-router";
+import {Navigate, useParams} from "react-router";
 
 const PostsPage = () => {
 
     const dispatch = useAppDispatch()
     const posts = useSelector(getPosts)
     const [isAuth, id] = useSelector(getMe)
+
 
     useEffect(() => {
         dispatch(handlingAuthDataBlog())

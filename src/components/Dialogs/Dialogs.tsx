@@ -13,12 +13,13 @@ import {SendMessageForm} from "../FormikForms/SendMessageForm";
 import {DialogList} from "./DialogList";
 import {MessageList} from "./MessageList";
 import {DialogHeader} from "./DialogHeader";
+import {Link} from "react-router-dom";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
     privateMessageData: Array<SelfPrivateMessageType>
     handlingMessage: (id: number, body: string) => ThunkType
-    userID: string
+    userID: number | null
 }
 type FormDataMessageType = {
     message: string
@@ -27,7 +28,7 @@ type PropsType = {}
 
 const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
 
-    let id = +userID
+    let id = userID
     let activePage = useSelector(getActiveMessagePage)
     let messagesOnPage = useSelector(getMessagesOnPage)
 
@@ -53,10 +54,12 @@ const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessag
         <div className="chat">
             <div className="chat__sidebar">
                 <div className="chat__sidebar-header">
+                    <Link to={`/posts/62edf411f4bd0d10e74f4e9b`}>
                     <div>
                         <TeamOutlined />
                         <span>Список диалогов</span>
                     </div>
+                    </Link>
                     <FormOutlined />
                 </div>
                 <div className="chat__sidebar-search">

@@ -17,7 +17,7 @@ export const dialogsAPI = {
     getFriendMessagesList(id: number, activePage: number, messagesOnPage: number) {
         return instanceSocial.get<any>(`dialogs/${id}/messages?page=${activePage}&count=${messagesOnPage}`).then(response => response.data)
     },
-    sendMessageToFriend(id: number, body: string) {
+    sendMessageToFriend(id: number|null, body: string) {
         return instanceSocial.post<ResponseAPIType<PrivateMessageDataType>>(`dialogs/${id}/messages`, {body}).then(response => response.data)
     },
 

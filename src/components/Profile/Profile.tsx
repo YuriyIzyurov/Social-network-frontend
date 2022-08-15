@@ -5,29 +5,20 @@ import {CurrentProfileType, UserType} from "../../typings/types";
 import MyPostContainer from "./MyPosts/MyPostContainer";
 import {ThunkType} from "../../redux/profileReducer";
 import "./Profile.scss"
+import {useSelector} from "react-redux";
+import {getCurrentProfile, getStatus} from "../../redux/profile-selectors";
+import {useAppDispatch} from "../../redux/reduxStore";
 
-type PropsType = {
-    currentProfile: CurrentProfileType | null
-    status:string
-    updateMyStatus:() => void
-    isShowMyProfile: boolean
-    handlePhotoChange: (image: File) => ThunkType
-    sendProfileDataOnServ:(newData:CurrentProfileType) => void
 
-}
+const Profile = React.memo(() => {
 
-const Profile: React.FC<PropsType> = React.memo(({currentProfile, status, updateMyStatus, isShowMyProfile, handlePhotoChange, sendProfileDataOnServ}) => {
+    const currentProfile = useSelector(getCurrentProfile)
+
     if(!currentProfile) return <Preloader/>
     return (
         <>
             <div className='profile__info'>
-                <ProfileInfo currentProfile={currentProfile}
-                             status={status}
-                             updateMyStatus={updateMyStatus}
-                             isShowMyProfile={isShowMyProfile}
-                             handlePhotoChange={handlePhotoChange}
-                             sendProfileDataOnServ={sendProfileDataOnServ}
-                />
+                <ProfileInfo currentProfile={currentProfile}/>
             </div>
         </>
     )

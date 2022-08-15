@@ -25,6 +25,8 @@ import PostsPage from "./pages/Post/PostsPage";
 import PostFull from "./pages/Post/PostFull";
 import SimpleMDERedactor from "./SimpleMDERedactor";
 import Test from "./components/Test";
+import HeaderRouter from "./components/Header/HeaderRouter";
+import Profile from "./components/Profile/Profile";
 
 
 
@@ -63,10 +65,10 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 <AnimatedSider />
             <Layout>
                 <Header className="header">
+                    <HeaderRouter/>
                 </Header>
                 <Content className="site__layout-content">
                         <Routes>
-
                             {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
                             <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
                             <Route path="/dialogs" element={<DialogsContainer/>}/>
@@ -84,12 +86,12 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                         </Routes>
                 </Content>
             </Layout>
+            </BrowserRouter>
                 {this.props.isAuth && <Sider className="site__layout-right-sider">
                     <div className='profile__info'>
-                        <ProfileContainer/>
+                        <Profile/>
                     </div>
                 </Sider>}
-            </BrowserRouter>
         </Layout>
         )
     }

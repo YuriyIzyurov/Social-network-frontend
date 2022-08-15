@@ -19,6 +19,7 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 //выбрать nightOwl,
 // @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import SendComment from './SendComment';
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -26,7 +27,6 @@ const { TextArea } = Input;
 
 const PostFull = () => {
 
-    const [value, setValue] = useState('');
     const [edit, setEdit] = useState(false)
     const [isTooltipVisible, setTooltipVisible] = useState(false)
     const [post, setPost] = useState<PostType | undefined>(undefined);
@@ -37,7 +37,6 @@ const PostFull = () => {
     const getPostById = async () => {
         const response = await postsAPI.getPostById(params.id)
         setPost(response)
-        console.log(response)
     }
     const getCommentsOfPost = async () => {
             const response = await commentsAPI.getAllCommentsOfPost(params.id)
@@ -55,12 +54,11 @@ const PostFull = () => {
     const handleTooltipVisibility = (boolean: boolean) => {
         setTooltipVisible(boolean)
     }
-
-    const sendComment = async () => {
+    const sendComment = async (value: string) => {
         if(post){
             const response = await commentsAPI.writeComment(post._id, value)
             if(response.resultCode === 0) {
-                getCommentsOfPost().then(() => setValue(''))
+                getCommentsOfPost()
             }
         }
     }
@@ -135,36 +133,19 @@ const PostFull = () => {
                     </div>
             </div>
 
-            <div className="post__comments">
-                <div className="post__comments-explanation">
+            <div className="comments-background">
+                <div className="post__comments">
+                    <div className="post__comments-explanation">
                     <span>
                        Комментарии
                     </span>
-                </div>
-                {comments?.map((item) => <Comment item={item}
-                                                  bloggerId={id}
-                                                  getCommentsOfPost={getCommentsOfPost}
+                    </div>
+                    {comments?.map((item) => <Comment item={item}
+                                                      bloggerId={id}
+                                                      getCommentsOfPost={getCommentsOfPost}
 
-                />)}
-                <div className="post__comments-textarea">
-                    <div className="post-avatar">
-                        <img src="https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg" alt="ava"/>
-                    </div>
-                    <div className="input">
-                        <TextArea
-                            className="message__form-textarea"
-                            size="small"
-                            placeholder="Введите текст комментария..."
-                            autoSize={{ minRows: 2, maxRows: 6 }}
-                            value={value}
-                            onChange={e => setValue(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="sendButton">
-                    <Button onClick={sendComment} type="primary"  size='large'>
-                        Отправить комментарий
-                    </Button>
+                    />)}
+                    <SendComment sendComment={sendComment}/>
                 </div>
             </div>
         </div>

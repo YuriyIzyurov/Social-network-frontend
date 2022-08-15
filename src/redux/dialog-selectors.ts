@@ -26,3 +26,6 @@ export const getMessagesOnPage = (state:AppStateType) => {
 export const getFriendsIsFetching = (state:AppStateType) => {
     return state.dialog.isFetching
 }
+export const getCurrentDialogID = (state:AppStateType) => {
+    return state.dialog.dialogID
+}

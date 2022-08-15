@@ -40,6 +40,7 @@ let initialState = {
     isFetching: false,
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,
+    dialogID: null as number | null
 }
 
 const dialogReducer = (state = initialState,action:ActionType | UserActionType | SidebarActionType):InitialStateType => {
@@ -87,6 +88,11 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        case "SET_DIALOG_ID":
+            return {
+                ...state,
+                dialogID: action.id
             }
 
         default:
@@ -145,6 +151,7 @@ export const actions = {
     setActiveDialogPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
     dialogListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
     clearDialogList: () => ({type: "CLEAR_DIALOG_LIST"} as const),
+    setDialogID: (id:number) => ({type: "SET_DIALOG_ID", id} as const)
 }
 
 export default dialogReducer

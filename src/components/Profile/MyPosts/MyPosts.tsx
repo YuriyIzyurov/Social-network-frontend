@@ -13,6 +13,7 @@ import {useAppDispatch} from "../../../redux/reduxStore";
 import {getAllPosts, publicPost} from "../../../redux/postsReducer";
 import {useSelector} from "react-redux";
 import AddPost from "./AddPost";
+import {useParams} from "react-router";
 
 
 type PropsPostType = {
@@ -27,9 +28,9 @@ type PropsType = {}
 const MyPosts: React.FC<PropsPostType> = ({addNewPost, messagesData }) => {
 
     const [isPostAdding, setPostAdding] = useState(false);
-
+    const params = useParams()
     useEffect(() => {
-        console.log('render')
+        console.log('posts mount')
     },[])
 
     const postHandler = () => {

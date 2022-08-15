@@ -1,4 +1,4 @@
-import React, {Dispatch, LegacyRef, SetStateAction, useEffect, useState} from "react"
+import React, {Dispatch, LegacyRef, memo, SetStateAction, useEffect, useState} from "react"
 import './Users.scss'
 import {UserType} from "../../typings/types";
 import {FilterType, handlingAddUsers} from "../../redux/usersReducer";
@@ -32,7 +32,7 @@ type PropsType = {
 }
 
 
-const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users,searchFilter, handlingFollow, handlingUnfollow, followInProcess, isFetching, usersRef }) => {
+const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users,searchFilter, handlingFollow, handlingUnfollow, followInProcess, isFetching, usersRef }) => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -74,6 +74,6 @@ const Users: React.FC<PropsType> = ({totalUsers, handlingFilteredUsers, usersOnP
             </div>
         </div>
     );
-}
+})
 export default Users
 

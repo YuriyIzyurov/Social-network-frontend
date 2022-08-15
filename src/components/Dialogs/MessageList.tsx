@@ -9,7 +9,7 @@ import { Empty } from 'antd';
 
 type PropsType = {
     dialogs: DialogType[]
-    id: number
+    id: number | null
     setMessageSending: Dispatch<SetStateAction<boolean>>
     isMessageSending: boolean
 }

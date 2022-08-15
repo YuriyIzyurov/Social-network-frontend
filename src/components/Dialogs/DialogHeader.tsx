@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 type PropsType = {
     dialogs: DialogType[]
-    id: number
+    id: number | null
 }
 
 export const DialogHeader: React.FC<PropsType> = React.memo(({dialogs, id}) => {

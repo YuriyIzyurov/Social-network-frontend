@@ -8,7 +8,7 @@ import classnames from "classnames";
 const { TextArea } = Input;
 
 type PropsType = {
-    id: number
+    id: number | null
     handlingMessage: (id: number, body: string) => ThunkType
     setMessageSending: Dispatch<SetStateAction<boolean>>
 }
@@ -17,7 +17,7 @@ export const SendMessageForm: React.FC<PropsType> = React.memo(({id, handlingMes
 
     const sendMessage:MouseEventHandler<HTMLSpanElement> = () => {
         setMessageSending(true)
-        handlingMessage(id, value)
+        handlingMessage(id as number, value)
         setValue('')
     }
     return (

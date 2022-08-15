@@ -4,8 +4,9 @@ import {connect} from "react-redux";
 import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {
+    getCurrentDialogID,
     getDialogs,
-  getFriendsIsFetching,
+    getFriendsIsFetching,
     getPrivateMessageData,
 } from "../../redux/dialog-selectors";
 import {AppStateType} from "../../redux/reduxStore";
@@ -24,13 +25,13 @@ type DispatchPropsDialogType = {
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
-const DialogsContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, router}) => {
+const DialogsContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, dialogID}) => {
 
 
     return <Dialogs dialogs={dialogs}
                     privateMessageData={privateMessageData}
                     handlingMessage={handlingMessage}
-                    userID={router.params.id}
+                    userID={dialogID}
      />
 })
 
@@ -40,6 +41,7 @@ let mapStateToProps = (state: AppStateType) => {
         privateMessageData: getPrivateMessageData(state),
         dialogs: getDialogs(state),
         isFetching: getFriendsIsFetching(state),
+        dialogID: getCurrentDialogID(state)
     }
 }
 
@@ -47,6 +49,5 @@ const sendNewMessage = actions.sendNewMessage
 export default compose<ComponentType>(
     connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingMessage}),
     withRedirectIfNoAuth,
-    withRouter
 )(DialogsContainer)
 

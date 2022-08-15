@@ -5,6 +5,7 @@ import Avatar from "../Dialogs/DialogItem/Avatar";
 import {CommentOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
 import {UserType} from "../../typings/types";
 import {FilterType} from "../../redux/usersReducer";
+import { Link } from 'react-router-dom';
 
 type PropsType = {
     users: Array<UserType>
@@ -26,8 +27,8 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
     const ItemList = ({item}: {item: UserType}) => {
         return <>
             <List.Item.Meta
-                avatar={<a href={"/profile/" + item.id}><Avatar user={item}/></a>}
-                title={<a href={"/profile/" + item.id}>{item.name}</a>}
+                avatar={<Link to={"/profile/" + item.id}><Avatar user={item}/></Link>}
+                title={<Link to={"/profile/" + item.id}>{item.name}</Link>}
                 description={item.status}
             />
             <Tooltip title="Открыть диалог">
