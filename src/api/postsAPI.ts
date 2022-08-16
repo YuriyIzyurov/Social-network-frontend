@@ -1,12 +1,12 @@
 import {instanceBlog} from "./api"
-import {AddPostType, UserType} from "../typings/types";
+import {AddPostType, UserType} from "typings/types";
 
 //todo: написать типы респонсов
 
 
 export const postsAPI = {
-    getPosts() {
-        return instanceBlog.get(`posts`).then(response => response.data)
+    getPosts(page:number = 1, limit:number = 3) {
+        return instanceBlog.get(`posts?page=${page}&limit=${limit}`).then(response => response.data)
     },
     writePost(post: AddPostType) {
       return instanceBlog.post(`posts`, post).then(response => response.data)

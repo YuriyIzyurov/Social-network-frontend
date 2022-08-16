@@ -1,7 +1,12 @@
+
 import React from "react"
-import {UserType} from "../../../typings/types";
-import {customAvatar} from "../../../utils/Avatar/AvatarGenerator";
-import  '../../Users/Users.scss'
+import {UserType} from "typings/types";
+import {customAvatar} from "utils/Avatar/AvatarGenerator";
+import  '../../../pages/Users/Users.scss'
+import ChatPage from "components/Chat/ChatPage";
+
+
+
 
 const Avatar = React.memo(({user}:{user:UserType}) => {
     if(user.photos.small) {

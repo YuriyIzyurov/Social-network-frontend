@@ -1,6 +1,6 @@
-import {AddPostType, PostType} from "../typings/types";
+import {AddPostType, PostType} from "typings/types";
 import {BaseThunkType, InferActionsTypes} from "./reduxStore";
-import {postsAPI} from "../api/postsAPI";
+import {postsAPI} from "api/postsAPI";
 
 export type ThunkType = BaseThunkType<ActionType>
 type ActionType = InferActionsTypes<typeof actions>
@@ -8,8 +8,11 @@ type initialStateType = typeof initialState
 
 let initialState = {
     posts: [] as Array<PostType>,
-    isFetching: false,
-    id: null as string | null
+    isFetching: false as boolean | false,
+    id: null as string | null,
+    totalCount: null as number | null,
+    activePage: 1,
+    postsOnPage: 3
 }
 
 const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
@@ -18,6 +21,11 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
             return {
                 ...state,
                 posts: action.payload
+            }
+        case 'ADD_POSTS':
+            return {
+                ...state,
+                posts:[...state.posts, ...action.payload]
             }
         case 'POSTS_FETCHING':
             return {
@@ -39,16 +47,43 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 ...state,
                 posts: [...state.posts.filter(item => item._id !== action.id)]
             }
+        case 'SET_POSTS_COUNT':
+            return {
+                ...state,
+                totalCount: action.count
+            }
+        case 'SET_ACTIVE_POST_PAGE':
+            return {
+                ...state,
+                activePage: action.page
+            }
         default:
             return state
     }
 }
 export const getAllPosts = ():ThunkType => {
     return async (dispatch) => {
+        dispatch(actions.setActivePostPage(1))
         dispatch(actions.setFetching(true))
         const response = await postsAPI.getPosts()
         dispatch(actions.setFetching(false))
-        dispatch(actions.setAllPosts(response))
+        if(response.resultCode === 0) {
+            dispatch(actions.setAllPosts(response.posts))
+            dispatch(actions.setTotalPosts(response.totalCount))
+        } else {
+            console.log('Smthng go wrong')
+        }
+    }
+}
+export const handlingAddPosts = (page:number, limit:number):ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setActivePostPage(page))
+        const response = await postsAPI.getPosts(page,limit)
+        if(response.resultCode === 0) {
+            dispatch(actions.addPosts(response.posts))
+        } else {
+            console.log('Smthng go wrong')
+        }
     }
 }
 export const publicPost = (post: AddPostType, id: string | null = null):ThunkType => {
@@ -87,7 +122,10 @@ export const actions = {
     setFetching: (isFetching: boolean) => ({type: 'POSTS_FETCHING', isFetching} as const),
     setCreatedPostId: (id: string) => ({type: 'SET_POST_ID', id} as const),
     deleteCreatedPostId: () => ({type: 'DELETE_POST_ID'} as const),
-    deletePostFromState: (id: string) => ({type: 'SORT_POSTS', id} as const)
+    deletePostFromState: (id: string) => ({type: 'SORT_POSTS', id} as const),
+    setTotalPosts: (count: number) => ({type: 'SET_POSTS_COUNT', count} as const),
+    setActivePostPage: (page: number) => ({type: 'SET_ACTIVE_POST_PAGE', page} as const),
+    addPosts: (posts: PostType[]) => ({type: 'ADD_POSTS', payload:posts} as const)
 }
 
 

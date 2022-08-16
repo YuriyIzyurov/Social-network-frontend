@@ -1,6 +1,6 @@
 import { Avatar, Button, List, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ChatPage from "../../pages/Chat/ChatPage";
+import ChatPage from "../Chat/ChatPage";
 
 
 const Music: React.FC = () => {

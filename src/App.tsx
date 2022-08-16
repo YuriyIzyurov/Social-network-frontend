@@ -3,10 +3,10 @@ import './App.scss';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersContainer from "./pages/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainerHook";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginContainer from "./components/Login/LoginContainer";
+import LoginContainer from "pages/Login/LoginPage/LoginPageContainer";
 import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
@@ -15,24 +15,24 @@ import {AppStateType} from "./redux/reduxStore";
 import {HomeOutlined, MessageOutlined, CustomerServiceOutlined, TeamOutlined } from '@ant-design/icons';
 import type {MenuProps} from 'antd';
 import {Layout, Menu} from 'antd';
-import LoginPage from "./components/Login/LoginPage";
+import LoginPage from "pages/Login/LoginPage/LoginPage";
 import Settings from "./components/Settings/Settings";
 import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
-import MyPostContainer from "./components/Profile/MyPosts/MyPostContainer";
 import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
-import PostShorten from "./pages/Post/PostShorten";
-import PostsPage from "./pages/Post/PostsPage";
-import PostFull from "./pages/Post/PostFull";
+import PostShorten from "pages/Posts/Post/PostShorten/PostShorten";
+import PostsPage from "pages/Posts/PostsPage/PostsPage";
+import PostFull from "pages/Posts/Post/PostFull/PostFull";
 import SimpleMDERedactor from "./SimpleMDERedactor";
 import Test from "./components/Test";
 import HeaderRouter from "./components/Header/HeaderRouter";
 import Profile from "./components/Profile/Profile";
+import ProfilePosts from "pages/Posts/ProfilePage/ProfilePosts";
 
 
 
 
 const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
-const LazyChatContainer = React.lazy(() => import("./pages/Chat/ChatPage"))
+const LazyChatContainer = React.lazy(() => import("./components/Chat/ChatPage"))
 const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
 const ChatPage =  WithLazyLoading(LazyChatContainer)
 
@@ -72,15 +72,15 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
                             <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
                             <Route path="/dialogs" element={<DialogsContainer/>}/>
-                            <Route path="/profile/:id" element={<MyPostContainer/>}/>
-                            <Route path="/profile/" element={<MyPostContainer/>}/>
+                            <Route path="/profile/:id" element={<ProfilePosts/>}/>
+                            <Route path="/profile/" element={<ProfilePosts/>}/>
                             <Route path="/news" element={<News/>}/>
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
                             <Route path="/posts/:id" element={<PostFull/>}/>
                             <Route path="/posts" element={<PostsPage />}/>
-                            <Route path="/" element={<MyPostContainer/>}/>
+                            <Route path="/" element={<ProfilePosts/>}/>
                             <Route path="/test" element={<Test/>}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>

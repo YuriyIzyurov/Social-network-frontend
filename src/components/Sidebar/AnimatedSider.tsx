@@ -6,7 +6,7 @@ import classnames from "classnames";
 import {useSelector} from "react-redux";
 import {getCurrentProfile} from "../../redux/profile-selectors";
 import {useTransition, animated} from "react-spring";
-import ChatPage from "../../pages/Chat/ChatPage";
+import ChatPage from "../Chat/ChatPage";
 
 const {Sider} = Layout
 

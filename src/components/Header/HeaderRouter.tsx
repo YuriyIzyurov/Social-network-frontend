@@ -58,8 +58,8 @@ const HeaderRouter = () => {
     if (!isAuth && !location.pathname) return <Navigate to={'/login'} />
 
     return (
-        <div style={{width:"100px", height:"100px", backgroundColor:"red"}}>
-            HELLO
+        <div>
+
         </div>
     );
 };

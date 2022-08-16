@@ -81,7 +81,7 @@ export type DialogDataType = {
     id: number
     src: string
 }
-//Post types
+//Posts types
 export type PostUserType = {
     "_id": string,
     "fullName": string,

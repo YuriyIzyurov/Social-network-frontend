@@ -15,6 +15,18 @@ export const getMessagesData = (state:AppStateType) => {
 export const getPosts = (state: AppStateType) => {
     return state.blog.posts
 }
+export const getTotalCount = (state: AppStateType) => {
+    return state.blog.totalCount
+}
+export const getPostsOnPage = (state: AppStateType) => {
+    return state.blog.postsOnPage
+}
+export const getActivePostPage = (state: AppStateType) => {
+    return state.blog.activePage
+}
 export const getPostID = (state: AppStateType) => {
     return state.blog.id
+}
+export const getFetching = (state: AppStateType) => {
+    return state.blog.isFetching
 }
