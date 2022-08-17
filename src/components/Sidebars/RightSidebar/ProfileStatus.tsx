@@ -4,7 +4,7 @@ type PropsType = {
     status: string
     updateMyStatus:(localStatus:string) => void
 }
-const ProfileStatusWithHooks:React.FC<PropsType> = ({status, updateMyStatus}) => {
+const ProfileStatus:React.FC<PropsType> = ({status, updateMyStatus}) => {
     let [editMode, setState ] = useState(false)
     let [localStatus, setLocalStatus ] = useState(status)
 
@@ -30,4 +30,4 @@ const ProfileStatusWithHooks:React.FC<PropsType> = ({status, updateMyStatus}) =>
     </div>
 }
 
-export default ProfileStatusWithHooks
+export default ProfileStatus

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react"
-import 'components/Profile/Profile.scss'
+import 'pages/Posts/ProfilePage/ProfilePosts.scss'
 import {MessagesDataType} from "typings/types";
 import banner from "assets/images/Banner.png"
 import {FormOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
-import AddPost from "components/Profile/MyPosts/AddPost";
+import AddPost from "components/Forms/AddPost";
 import {useParams} from "react-router";
 
 

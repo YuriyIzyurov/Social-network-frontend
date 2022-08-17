@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from 'react';
-import Message from "./Message/Message";
+import Message from "pages/Dialogs/Message/Message";
 import {useSelector} from "react-redux";
-import {getAuthID} from "../../redux/auth-selectors";
-import {getAuthAvatar} from "../../redux/profile-selectors";
-import {getMessageList} from "../../redux/dialog-selectors";
-import {DialogType} from "../../typings/types";
+import {getAuthID} from "redux/auth-selectors";
+import {getAuthAvatar} from "redux/profile-selectors";
+import {getMessageList} from "redux/dialog-selectors";
+import {DialogType} from "typings/types";
 import { Empty } from 'antd';
 
 type PropsType = {
@@ -13,7 +13,7 @@ type PropsType = {
     setMessageSending: Dispatch<SetStateAction<boolean>>
     isMessageSending: boolean
 }
-export const MessageList: React.FC<PropsType> = React.memo(({dialogs, id, setMessageSending, isMessageSending}) => {
+export const MessagesList: React.FC<PropsType> = React.memo(({dialogs, id, setMessageSending, isMessageSending}) => {
 
     const isMe = useSelector(getAuthID)
     const authAvatar = useSelector(getAuthAvatar)

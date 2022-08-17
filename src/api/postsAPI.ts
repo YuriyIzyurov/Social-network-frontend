@@ -5,8 +5,8 @@ import {AddPostType, UserType} from "typings/types";
 
 
 export const postsAPI = {
-    getPosts(page:number = 1, limit:number = 3) {
-        return instanceBlog.get(`posts?page=${page}&limit=${limit}`).then(response => response.data)
+    getPosts(searchFilter:string | null = null, page:number = 1, limit:number = 5) {
+        return instanceBlog.get(`posts?page=${page}&limit=${limit}` + (searchFilter === null ? '':`&searchFilter=${searchFilter}`)).then(response => response.data)
     },
     writePost(post: AddPostType) {
       return instanceBlog.post(`posts`, post).then(response => response.data)
@@ -24,6 +24,9 @@ export const postsAPI = {
     },
     deletePost(id:string) {
         return instanceBlog.delete(`posts/${id}`).then(response => response.data)
+    },
+    getTags() {
+        return instanceBlog.get(`tags`).then(response => response.data)
     }
 }
 export  const commentsAPI = {

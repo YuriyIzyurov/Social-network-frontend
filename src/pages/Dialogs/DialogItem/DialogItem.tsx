@@ -1,24 +1,24 @@
 import React, {useEffect} from 'react';
-import '../Dialogs.scss'
+import 'pages/Dialogs/DialogItem/DialogItem.scss'
 // @ts-ignore
-import UnreadMessage from '../../../assets/images/noreaded.svg'
-import {CustomTimeDistanceToNow, GetMessageTime} from "../../../utils/Time/CustomTime";
+import UnreadMessage from 'assets/images/noreaded.svg'
+import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
 import isToday from 'date-fns/isToday';
 import {format} from "date-fns";
 import {Link, NavLink} from "react-router-dom";
-import {useAppDispatch} from "../../../redux/reduxStore";
+import {useAppDispatch} from "redux/reduxStore";
 import {
     actions,
     getLastMessage,
     handlingMessage,
     handlingMessageList,
     startDialogWithFriend
-} from "../../../redux/dialogReducer";
+} from "redux/dialogReducer";
 import {useSelector} from "react-redux";
-import {getActiveMessagePage, getMessagesOnPage} from "../../../redux/dialog-selectors";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
 import classnames from 'classnames';
-import { isUserOnline } from '../../../utils/Time/isUserOnline';
-import { customAvatar } from '../../../utils/Avatar/AvatarGenerator';
+import { isUserOnline } from 'utils/Time/isUserOnline';
+import { customAvatar } from 'utils/Avatar/AvatarGenerator';
 
 const getCustomAvatar = (avatar: string | undefined, name: string) => {
     if(avatar) {

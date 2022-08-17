@@ -30,3 +30,6 @@ export const getPostID = (state: AppStateType) => {
 export const getFetching = (state: AppStateType) => {
     return state.blog.isFetching
 }
+export const getCurrentFilter = (state: AppStateType) => {
+    return state.blog.searchFilter
+}

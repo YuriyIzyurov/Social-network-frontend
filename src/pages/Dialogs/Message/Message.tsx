@@ -1,14 +1,14 @@
 
 import React from "react"
-import  './Message.scss'
+import  'pages/Dialogs/Message/Message.scss'
 import { format } from 'date-fns'
 
 import classNames from "classnames";
-import {CustomTimeDistanceToNow, GetMessageTime} from "../../../utils/Time/CustomTime";
+import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
 // @ts-ignore
-import MessageReadImage from "../../../assets/images/readed.svg"
+import MessageReadImage from "assets/images/readed.svg"
 // @ts-ignore
-import MessageNoReadImage from "../../../assets/images/noreaded.svg"
+import MessageNoReadImage from "assets/images/noreaded.svg"
 
 
 type PropsType = {

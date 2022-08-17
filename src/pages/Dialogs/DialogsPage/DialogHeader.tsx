@@ -1,7 +1,7 @@
 import React from 'react';
-import './PrivateChat.scss'
-import {DialogType} from "../../typings/types";
-import {isUserOnline} from "../../utils/Time/isUserOnline";
+import 'pages/Dialogs/DialogsPage/DialogsPage.scss'
+import {DialogType} from "typings/types";
+import {isUserOnline} from "utils/Time/isUserOnline";
 import classnames from 'classnames';
 
 type PropsType = {

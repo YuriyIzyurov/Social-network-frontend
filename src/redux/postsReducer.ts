@@ -12,7 +12,8 @@ let initialState = {
     id: null as string | null,
     totalCount: null as number | null,
     activePage: 1,
-    postsOnPage: 3
+    postsOnPage: 5,
+    searchFilter: null as string | null,
 }
 
 const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
@@ -57,15 +58,20 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 ...state,
                 activePage: action.page
             }
+        case 'ADD_POST_SEARCH_FILTER':
+            return {
+                ...state,
+                searchFilter:action.filter
+            }
         default:
             return state
     }
 }
-export const getAllPosts = ():ThunkType => {
+export const getAllPosts = (searchFilter:string|null = null):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setActivePostPage(1))
         dispatch(actions.setFetching(true))
-        const response = await postsAPI.getPosts()
+        const response = await postsAPI.getPosts(searchFilter)
         dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
             dispatch(actions.setAllPosts(response.posts))
@@ -75,10 +81,12 @@ export const getAllPosts = ():ThunkType => {
         }
     }
 }
-export const handlingAddPosts = (page:number, limit:number):ThunkType => {
+export const handlingAddPosts = (page:number, limit:number, searchFilter:string|null = null):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setActivePostPage(page))
-        const response = await postsAPI.getPosts(page,limit)
+        dispatch(actions.setFetching(true))
+        const response = await postsAPI.getPosts(searchFilter, page, limit)
+        dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
             dispatch(actions.addPosts(response.posts))
         } else {
@@ -125,7 +133,8 @@ export const actions = {
     deletePostFromState: (id: string) => ({type: 'SORT_POSTS', id} as const),
     setTotalPosts: (count: number) => ({type: 'SET_POSTS_COUNT', count} as const),
     setActivePostPage: (page: number) => ({type: 'SET_ACTIVE_POST_PAGE', page} as const),
-    addPosts: (posts: PostType[]) => ({type: 'ADD_POSTS', payload:posts} as const)
+    addPosts: (posts: PostType[]) => ({type: 'ADD_POSTS', payload:posts} as const),
+    addSearchFilter: (filter: string | null) => ({type: 'ADD_POST_SEARCH_FILTER', filter} as const),
 }
 
 

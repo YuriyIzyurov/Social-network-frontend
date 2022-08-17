@@ -1,37 +1,25 @@
 import React from "react";
 import './App.scss';
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import News from "./components/News/News";
-import Music from "./components/Music/Music";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import UsersContainer from "./pages/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileInfo/ProfileContainerHook";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "pages/Login/LoginPage/LoginPageContainer";
 import {connect} from "react-redux";
-import {setInitializeThunkCreator} from "./redux/appReducer";
+import {setInitializeThunkCreator} from "redux/appReducer";
 import Preloader from "./common/Preloader/Preloader";
-import {WithLazyLoading} from "./components/HOC/withLazyLoading";
-import {AppStateType} from "./redux/reduxStore";
-import {HomeOutlined, MessageOutlined, CustomerServiceOutlined, TeamOutlined } from '@ant-design/icons';
-import type {MenuProps} from 'antd';
-import {Layout, Menu} from 'antd';
-import LoginPage from "pages/Login/LoginPage/LoginPage";
-import Settings from "./components/Settings/Settings";
-import ProfileInfo from "./components/Profile/ProfileInfo/ProfileInfo";
-import {AnimatedSider} from "./components/Sidebar/AnimatedSider";
-import PostShorten from "pages/Posts/Post/PostShorten/PostShorten";
+import {WithLazyLoading} from "components/HOC/withLazyLoading";
+import {AppStateType} from "redux/reduxStore";
+import {Layout} from 'antd';
+import {AnimatedSider} from "components/Sidebars/LeftSidebar/AnimatedSider";
 import PostsPage from "pages/Posts/PostsPage/PostsPage";
 import PostFull from "pages/Posts/Post/PostFull/PostFull";
-import SimpleMDERedactor from "./SimpleMDERedactor";
 import Test from "./components/Test";
 import HeaderRouter from "./components/Header/HeaderRouter";
-import Profile from "./components/Profile/Profile";
 import ProfilePosts from "pages/Posts/ProfilePage/ProfilePosts";
+import ProfileInfo from "components/Sidebars/RightSidebar/ProfileInfo";
 
 
-
-
-const LazyDialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
 const LazyChatContainer = React.lazy(() => import("./components/Chat/ChatPage"))
 const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
 const ChatPage =  WithLazyLoading(LazyChatContainer)
@@ -74,8 +62,6 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/dialogs" element={<DialogsContainer/>}/>
                             <Route path="/profile/:id" element={<ProfilePosts/>}/>
                             <Route path="/profile/" element={<ProfilePosts/>}/>
-                            <Route path="/news" element={<News/>}/>
-                            <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersContainer/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
                             <Route path="/posts/:id" element={<PostFull/>}/>
@@ -89,7 +75,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
             </BrowserRouter>
                 {this.props.isAuth && <Sider className="site__layout-right-sider">
                     <div className='profile__info'>
-                        <Profile/>
+                        <ProfileInfo/>
                     </div>
                 </Sider>}
         </Layout>

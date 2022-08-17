@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
 import "pages/Posts/PostsPage/PostPage.scss"
-import {Tooltip, Input, Popover} from 'antd';
-import {CommentOutlined, FormOutlined, EyeOutlined, DeleteOutlined, CheckOutlined,CloseOutlined} from '@ant-design/icons';
+import {Input} from 'antd';
+import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import AddPost from "components/Profile/MyPosts/AddPost";
+import AddPost from "components/Forms/AddPost";
 import classnames from 'classnames';
-import {deletePublication} from "redux/postsReducer";
-import {useAppDispatch} from "redux/reduxStore";
 import EditSettings from "utils/EditSettings/EditSettings";
-import {postsAPI} from "api/postsAPI";
 // @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 // @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import {GetMessageTime} from "utils/Time/CustomTime";
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -60,7 +58,9 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                             </div>
                             <div className="postAuthor-name">
                                 <span>{user.fullName}</span>
-                                <span>{createdAt}</span>
+                                <span>
+                                   <GetMessageTime date={createdAt} showFullDate/>
+                                </span>
                             </div>
                         </div>
                         <Link to={`/posts/${id}`}>

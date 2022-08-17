@@ -1,40 +1,35 @@
-import React, {createRef, useRef, useState} from "react"
-import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import React, {createRef, useState} from "react"
 // @ts-ignore
-import UserDefaultPhoto from '../../../assets/images/UserDefaultPhoto'
-import ProfileData from "./ProfileData";
-import {CurrentProfileType} from "../../../typings/types";
-import {handlePhotoChange, ThunkType} from "../../../redux/profileReducer";
-import {useNavigate} from "react-router";
-import {useAppDispatch} from "../../../redux/reduxStore";
-import {startDialogWithFriend} from "../../../redux/dialogReducer";
+import UserDefaultPhoto from 'assets/images/UserDefaultPhoto'
+import {handlePhotoChange} from "redux/profileReducer";
+import {useAppDispatch} from "redux/reduxStore";
+import {startDialogWithFriend} from "redux/dialogReducer";
 // @ts-ignore
-import AvatarBorderFinal from "../../../assets/images/Web App UI Design/AvatarBorderFinal"
-import AvatarEffect from "../../../assets/images/Web App UI Design/AvatarEffect";
-import {svgList} from "../../../common/constants/ListSVG"
-import {ProxyImageUrl} from "../../../utils/ChangeURL/ProxifyURL"
-import {getTwoMainColors} from "../../../utils/Color/MainColorsThief"
-import {ContainerAvatarEffect} from "../../../assets/images/Web App UI Design/ContainerAvatarEffect";
-import useHover from "../../HOOK/useHover";
-import { InstagramOutlined } from '@ant-design/icons';
-import {MiniAvaBorder} from "../../../assets/images/Web App UI Design/MiniAvaBorder";
-import instagram from "../../../assets/images/instagram.png"
+import AvatarBorderFinal from "assets/images/Web App UI Design/AvatarBorderFinal"
+import {ProxyImageUrl} from "utils/ChangeURL/ProxifyURL"
+import {getTwoMainColors} from "utils/Color/MainColorsThief"
+import {ContainerAvatarEffect} from "assets/images/Web App UI Design/ContainerAvatarEffect";
+import instagram from "assets/images/instagram.png"
 // @ts-ignore
-import {Bell, Chat, Mail,Setting} from "../../../assets/images/TopAction/TopIcons"
-import {handlingAuthDataBlog, handlingChangeAvatar} from "../../../redux/authBlogReducer";
+import {Bell, Chat, Mail, Setting} from "assets/images/TopAction/TopIcons"
+import {handlingAuthDataBlog, handlingChangeAvatar} from "redux/authBlogReducer";
 import {useSelector} from "react-redux";
-import {getAuthID} from "../../../redux/auth-selectors";
+import {getAuthID} from "redux/auth-selectors";
+import {getCurrentProfile} from "redux/profile-selectors";
+import Preloader from "common/Preloader/Preloader";
 
 
-type PropsType = {
-    currentProfile: CurrentProfileType
-}
-const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile}) => {
+const ProfileInfo = React.memo(() => {
 
+    let [editMode, changeEditMode] = useState(false)
+    let [colors, changeAvaBorderColors] = useState(["#A73EE7","#00EBFF"])
+    const [toggle, setToggle] = useState(false)
     const dispatch = useAppDispatch()
    // const navigate = useNavigate()
     const imgRef = createRef<HTMLImageElement>()
     const authID = useSelector(getAuthID)
+    const currentProfile = useSelector(getCurrentProfile)
+
 
     const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if(e.target.files) {
@@ -44,22 +39,21 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile}) => {
         }
     }
 
+    if(!currentProfile) return <Preloader/>
     const openDialog = () =>{
         dispatch(startDialogWithFriend(currentProfile.userId))
         /*let path = `/dialogs/${currentProfile.userId}`
         navigate(path)*/
     }
 
-    let [editMode, changeEditMode] = useState(false)
-    let [colors, changeAvaBorderColors] = useState(["#A73EE7","#00EBFF"])
-    const [toggle, setToggle] = useState(false)
+
 
     const getMainColors = () => {
         changeAvaBorderColors(getTwoMainColors(imgRef.current))
     }
 
     return (
-        <>
+        <div className='profile__info'>
             <div className="profile__info-menu">
                 <Bell/>
                 <Chat/>
@@ -144,11 +138,11 @@ const ProfileInfo: React.FC<PropsType> = React.memo(({currentProfile}) => {
             </div>
             {authID === currentProfile.userId && <input type={"file"} onChange={OnPhotoSelected}/>}
             {/*{!isShowMyProfile && <button onClick={openDialog}>Send message</button>}*/}
-                {/*<ProfileStatusWithHooks status={status} updateMyStatus={updateMyStatus}/>*/}
+                {/*<ProfileStatus status={status} updateMyStatus={updateMyStatus}/>*/}
             {/*{!editMode && <ProfileData currentProfile={currentProfile}/>}*/}
            {/* {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}*/}
             {/*{isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}*/}
-        </>
+        </div>
     )
 
 

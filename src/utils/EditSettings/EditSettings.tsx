@@ -80,7 +80,7 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
                         color={"#2c2f48"}
                         overlayClassName="custom-popover"
                     >
-                        <DeleteOutlined  style={{color: 'red'}}/>
+                        <DeleteOutlined  />
                     </Popover>
                 </Tooltip>
             </div>

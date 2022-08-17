@@ -121,6 +121,65 @@ export type CommentsType = {
     "updatedAt": string,
     "__v": number
 }
+export  type ScrollState = {
+    /**
+     * @description Content's native clientHeight parameter
+     */
+    clientHeight: number;
+    /**
+     * @description Content's native clientWidth parameter
+     */
+    clientWidth: number;
+    /**
+     * @description Content's native scrollHeight parameter
+     */
+    scrollHeight: number;
+    /**
+     * @description Content's native scrollWidth parameter
+     */
+    scrollWidth: number;
+    /**
+     * @description Content's native scrollTop parameter
+     */
+    scrollTop: number;
+    /**
+     * @description Content's native scrollLeft parameter
+     */
+    scrollLeft: number;
+    /**
+     * @description Indicates whether vertical scroll blocked via properties
+     */
+    scrollYBlocked: boolean;
+    /**
+     * @description Indicates whether horizontal scroll blocked via properties
+     */
+    scrollXBlocked: boolean;
+    /**
+     * @description Indicates whether the content overflows vertically and scrolling not blocked
+     */
+    scrollYPossible: boolean;
+    /**
+     * @description Indicates whether the content overflows horizontally and scrolling not blocked
+     */
+    scrollXPossible: boolean;
+    /**
+     * @description Indicates whether vertical track is visible
+     */
+    trackYVisible: boolean;
+    /**
+     * @description Indicates whether horizontal track is visible
+     */
+    trackXVisible: boolean;
+    /**
+     * @description Indicates whether display direction is right-to-left
+     */
+    isRTL?: boolean;
+
+    /**
+     * @description Pages zoom level - it affects scrollbars
+     */
+    zoomLevel: number;
+};
 
 
 

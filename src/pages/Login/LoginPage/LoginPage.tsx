@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "pages/Login/LoginPage/Login.scss"
-import  "pages/Login/LoginPage/LoginWhiteBlock.scss"
 import {LoginFormWithFormik} from "pages/Login/LoginForm/LoginForm";
 import {DispatchPropsLoginType, StatePropsLoginType} from "pages/Login/LoginPage/LoginPageContainer";
 import {Navigate} from "react-router";

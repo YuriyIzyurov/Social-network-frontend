@@ -13,7 +13,7 @@ import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
 import {getBloggerID, getMe} from "redux/auth-selectors";
 import EditSettings from "utils/EditSettings/EditSettings";
-import AddPost from "components/Profile/MyPosts/AddPost";
+import AddPost from "components/Forms/AddPost";
 import Comment from "pages/Posts/Comment/Comment";
 // @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
@@ -42,6 +42,7 @@ const PostFull = () => {
     const getCommentsOfPost = async () => {
             const response = await commentsAPI.getAllCommentsOfPost(params.id)
             setComments(response)
+
     }
     useEffect(() => {
         getPostById().then(() =>{

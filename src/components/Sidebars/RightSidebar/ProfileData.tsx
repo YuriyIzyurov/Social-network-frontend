@@ -1,6 +1,6 @@
 import React from "react"
 import s from './ProfileInfo.module.css'
-import {ContactsType, CurrentProfileType} from "../../../typings/types";
+import {ContactsType, CurrentProfileType} from "typings/types";
 
 
 const ProfileData: React.FC<{currentProfile: CurrentProfileType}> = ({currentProfile}) => {

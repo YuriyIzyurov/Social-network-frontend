@@ -65,6 +65,7 @@ const Messages: React.FC = React.memo(() => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useSelector((state: AppStateType) => state.chat.messages)
     const [isActiveAutoScroll, setActiveAutoScroll] = useState(false)
+
     const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const element = e.currentTarget
         if(Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 100) {

@@ -1,10 +1,10 @@
 import React from "react"
 import s from './ProfileInfo.module.css'
-import style from "./../../../common/FormsControl/Textarea.module.css"
+import style from "common/FormsControl/Textarea.module.css"
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../../../common/FormsControl/Textarea";
-import {maxLength200, maxLength30, required} from "../../../utils/validators/validators";
-import {ContactsType, CurrentProfileType} from "../../../typings/types";
+import {Input} from "common/FormsControl/Textarea";
+import {maxLength200, maxLength30, required} from "utils/validators/validators";
+import {ContactsType, CurrentProfileType} from "typings/types";
 
 type PropsDataType = {
     sendProfileDataOnServ: (formData?: any) => any

@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from "react"
-import {DialogType, SelfPrivateMessageType} from "../../typings/types";
-import {actions, handlingDialogs, handlingMessageList, ThunkType} from "../../redux/dialogReducer";
+import {DialogType, SelfPrivateMessageType} from "typings/types";
+import {actions, handlingDialogs, handlingMessageList, ThunkType} from "redux/dialogReducer";
 import {Empty} from 'antd'
 import {EllipsisOutlined, FormOutlined, TeamOutlined} from '@ant-design/icons';
-import './Dialogs.scss'
+import 'pages/Dialogs/DialogItem/DialogItem.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {useAppDispatch} from "../../redux/reduxStore";
-import {getActiveMessagePage, getMessagesOnPage} from "../../redux/dialog-selectors";
+import {useAppDispatch} from "redux/reduxStore";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
 import Search from "antd/lib/input/Search";
-import "./PrivateChat.scss"
-import {SendMessageForm} from "../FormikForms/SendMessageForm";
-import {DialogList} from "./DialogList";
-import {MessageList} from "./MessageList";
-import {DialogHeader} from "./DialogHeader";
+import "pages/Dialogs/DialogsPage/DialogsPage.scss"
+import {SendMessageForm} from "components/FormikForms/SendMessageForm";
+import {DialogList} from "pages/Dialogs/DialogsPage/DialogList";
+import {MessagesList} from "pages/Dialogs/Message/MessagesList";
+import {DialogHeader} from "pages/Dialogs/DialogsPage/DialogHeader";
 import {Link} from "react-router-dom";
 
 type PropsMessagesType = {
@@ -26,7 +26,7 @@ type FormDataMessageType = {
 }
 type PropsType = {}
 
-const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
+const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
 
     let id = userID
     let activePage = useSelector(getActiveMessagePage)
@@ -76,7 +76,7 @@ const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessag
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
-                    {userID && <MessageList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
+                    {userID && <MessagesList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
                     {!userID && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
                 </div>
                 <div className="chat__dialog-input">
@@ -87,4 +87,4 @@ const Dialogs: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessag
     </section>
 })
 
-export default Dialogs
+export default DialogsPage

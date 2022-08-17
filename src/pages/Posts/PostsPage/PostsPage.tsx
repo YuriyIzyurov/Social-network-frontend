@@ -1,23 +1,22 @@
-import React, {useEffect} from 'react';
-import {AppStateType, useAppDispatch} from "redux/reduxStore";
-import {getAllPosts, handlingAddPosts} from "redux/postsReducer";
+import React, {useEffect, useState} from 'react';
+import {useAppDispatch} from "redux/reduxStore";
+import {actions, getAllPosts, handlingAddPosts} from "redux/postsReducer";
 import {useSelector} from "react-redux";
-import {getActivePostPage, getFetching, getPosts, getPostsOnPage, getTotalCount} from "redux/post-selectors";
-import PostShorten from 'pages/Posts/Post/PostShorten/PostShorten';
+import {
+    getActivePostPage,
+    getCurrentFilter,
+    getFetching,
+    getPosts,
+    getPostsOnPage,
+    getTotalCount
+} from "redux/post-selectors";
 import {handlingAuthDataBlog} from "redux/authBlogReducer";
 import {getMe} from "redux/auth-selectors";
-import {Navigate, useParams} from "react-router";
+import {Navigate} from "react-router";
 import Scrollbar from "react-scrollbars-custom";
-import Search from "antd/lib/input/Search";
 import PostList from 'pages/Posts/PostsPage/PostList';
 import PostsSidebar from 'pages/Posts/PostsSidebar/PostsSidebar';
-import {Divider, Skeleton} from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
-import PostSkeleton from "pages/Posts/PostSkeleton/PostSkeleton";
-import {handlingAddUsers} from "redux/usersReducer";
-
-
-
+import {ScrollState} from 'typings/types';
 
 
 const PostsPage = () => {
@@ -29,21 +28,46 @@ const PostsPage = () => {
     const activePage = useSelector(getActivePostPage)
     const isFetching = useSelector(getFetching)
     const [isAuth, id] = useSelector(getMe)
+    const searchFilter = useSelector(getCurrentFilter)
+    const [isDataLoading, setDataLoading] = useState(false)
 
 
-    const isPagesLast = Math.abs(totalCount!/postsOnPage - activePage) < 1
+
+    const isPagesLast = Math.abs(Math.ceil(totalCount!/postsOnPage) - activePage) < 1
 
     const nextPage = activePage + 1
 
     useEffect(() => {
         dispatch(handlingAuthDataBlog())
         dispatch(getAllPosts())
-        console.log('use effect post page')
+        return () => {
+            dispatch(actions.addSearchFilter(null))
+        }
     },[])
 
-    const loadMoreData = () => {
-        dispatch(handlingAddPosts(nextPage, postsOnPage))
+
+    useEffect(() => {
+
+        if(isDataLoading){
+            dispatch(handlingAddPosts(nextPage, postsOnPage, searchFilter)).then(() => {
+                setDataLoading(false)
+            })
+
+        }
+    },[isDataLoading])
+
+
+    const isScrollState = (eventOrState: React.UIEvent<HTMLDivElement, UIEvent> | ScrollState):eventOrState is ScrollState => {
+        return 'clientHeight' in eventOrState;
     }
+    const scrollHandler = (state: React.UIEvent<HTMLDivElement, UIEvent> | ScrollState) => {
+        if (isScrollState(state)) {
+            if(state.scrollHeight - (state.scrollTop + state.clientHeight) < 120
+                && !isPagesLast)
+                setDataLoading(true)
+        }
+    }
+
 
     if (!isAuth) {
         return <Navigate to={"/login"}/>
@@ -51,23 +75,13 @@ const PostsPage = () => {
 
     return (
 
-                <div id="scrollableDiv" className="all-posts">
+                <div className="all-posts">
                     <PostsSidebar/>
-
-                    <InfiniteScroll
-                        dataLength={posts.length}
-                        next={loadMoreData}
-                        hasMore={posts.length < 30}
-                        loader={isPagesLast ? <Divider plain>It is all, nothing more 🤐</Divider> :
-                            <PostSkeleton/>}
-                        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                        scrollableTarget="scrollableDiv"
-
-                    >
-                        <PostList posts={posts} id={id} isFetching={isFetching}/>
-                    </InfiniteScroll>
-
+                    <Scrollbar onScroll={scrollHandler}>
+                    <PostList posts={posts} id={id} isFetching={isFetching}/>
+                    </Scrollbar>
                 </div>
+
 
     );
 };

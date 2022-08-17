@@ -4,9 +4,9 @@ import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} fr
 import {Layout} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
-import {getCurrentProfile} from "../../redux/profile-selectors";
+import {getCurrentProfile} from "redux/profile-selectors";
 import {useTransition, animated} from "react-spring";
-import ChatPage from "../Chat/ChatPage";
+import ChatPage from "components/Chat/ChatPage";
 
 const {Sider} = Layout
 

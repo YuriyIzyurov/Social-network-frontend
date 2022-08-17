@@ -1,17 +1,17 @@
-import Dialogs from "./Dialogs";
-import {actions, FriendFilterType, handlingMessage, ThunkType} from "../../redux/dialogReducer";
+import DialogsPage from "pages/Dialogs/DialogsPage/DialogsPage";
+import {actions, FriendFilterType, handlingMessage, ThunkType} from "redux/dialogReducer";
 import {connect} from "react-redux";
-import {withRedirectIfNoAuth} from "../HOC/withRedirectIfNoAuth";
+import {withRedirectIfNoAuth} from "components/HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {
     getCurrentDialogID,
     getDialogs,
     getFriendsIsFetching,
     getPrivateMessageData,
-} from "../../redux/dialog-selectors";
-import {AppStateType} from "../../redux/reduxStore";
+} from "redux/dialog-selectors";
+import {AppStateType} from "redux/reduxStore";
 import React, { ComponentType } from "react";
-import {withRouter} from "../HOC/withRouter";
+import {withRouter} from "components/HOC/withRouter";
 
 
 type OwnPropsType = {
@@ -25,13 +25,13 @@ type DispatchPropsDialogType = {
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
-const DialogsContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, dialogID}) => {
+const DialogsPageContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, dialogID}) => {
 
 
-    return <Dialogs dialogs={dialogs}
-                    privateMessageData={privateMessageData}
-                    handlingMessage={handlingMessage}
-                    userID={dialogID}
+    return <DialogsPage dialogs={dialogs}
+                        privateMessageData={privateMessageData}
+                        handlingMessage={handlingMessage}
+                        userID={dialogID}
      />
 })
 
@@ -49,5 +49,5 @@ const sendNewMessage = actions.sendNewMessage
 export default compose<ComponentType>(
     connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingMessage}),
     withRedirectIfNoAuth,
-)(DialogsContainer)
+)(DialogsPageContainer)
 

@@ -2,7 +2,6 @@ import React from 'react';
 import PostShorten from "pages/Posts/Post/PostShorten/PostShorten";
 import {PostType} from "typings/types";
 import PostSkeleton from "pages/Posts/PostSkeleton/PostSkeleton";
-import Scrollbar from "react-scrollbars-custom";
 type PropsType = {
     posts:Array<PostType>
     id:string | boolean | null
@@ -10,7 +9,8 @@ type PropsType = {
 }
 const PostList:React.FC<PropsType> = ({posts,id, isFetching}) => {
 
-    const SkeletonArray = Array.from({length:3}).map(() => <PostSkeleton/>)
+
+    const SkeletonArray = Array.from({length: posts.length}).map(() => <PostSkeleton/>)
 
     return (
     <>
