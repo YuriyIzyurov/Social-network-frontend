@@ -6,7 +6,7 @@ import Avatar from "antd/lib/avatar/avatar";
 import {PhotosType} from "../../typings/types";
 import {useSelector} from "react-redux";
 import {getAuthAvatar, getCurrentProfile, getLoggedUserPhoto} from "../../redux/profile-selectors";
-import {Navigate} from "react-router";
+import {Navigate, useNavigate} from "react-router";
 
 
 type PropsLoginType = {
@@ -18,10 +18,12 @@ type PropsLoginType = {
 const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handlingBlogUserLogout }) =>{
 
     const loggedUserPhoto = useSelector(getLoggedUserPhoto)
+    const navigate = useNavigate()
 
     const Logout = () => {
         logoutFromServer()
         handlingBlogUserLogout()
+        navigate('/login')
     }
 
     return <div className="login">

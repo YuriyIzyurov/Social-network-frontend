@@ -27,9 +27,21 @@ export const postsAPI = {
     },
     getTags() {
         return instanceBlog.get(`tags`).then(response => response.data)
+    },
+    getTopPosts() {
+        return instanceBlog.get(`top`).then(response => response.data)
+    },
+    getMyPosts() {
+        return instanceBlog.get(`publications`).then(response => response.data)
+    },
+    getTagMatch(tag:string) {
+        return instanceBlog.get(`tags/${tag}`).then(response => response.data)
     }
 }
 export  const commentsAPI = {
+    getAll() {
+      return instanceBlog.get(`/comments`).then(response => response.data)
+    },
     writeComment(id:string, text:string){
         return instanceBlog.post(`comments/${id}`, {text}).then(response => response.data)
     },

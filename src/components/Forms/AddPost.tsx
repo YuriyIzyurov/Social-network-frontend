@@ -72,8 +72,7 @@ const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}
         }
     }
     const makeArrayOfTags = (e: ChangeEvent<HTMLInputElement>) => {
-
-        const tags = e.currentTarget.value.split(',')
+        const tags = e.currentTarget.value.replace(/\s/g, '').split(',')
         setTags(tags)
     }
     const handleSetText = useCallback((value: string) => {

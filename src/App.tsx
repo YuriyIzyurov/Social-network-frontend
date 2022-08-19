@@ -31,8 +31,10 @@ type DispatchPropsAppType = {
     setInitializeThunkCreator: () => any
 }
 class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
-    catchAllErrors = () => {
-        alert("Something go wrong, try again")
+    catchAllErrors = (err: any) => {
+        console.log(err)
+        //alert("Something go wrong, try again")
+        //alert(err)
     }
     componentDidMount() {
         this.props.setInitializeThunkCreator()

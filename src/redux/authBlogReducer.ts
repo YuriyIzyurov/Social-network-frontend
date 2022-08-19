@@ -60,7 +60,6 @@ export const handlingBlogUserAuth = (email: string, password: string): ThunkBlog
 }
 export const handlingAuthDataBlog = ():ThunkBlogType => {
     return async (dispatch) => {
-
         let response = await authBlogAPI.getMe()
         if(response.resultCode === 0) {
             const {_id, fullName, email, avatarUrl} = response.data

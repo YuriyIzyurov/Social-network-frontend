@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useAppDispatch} from "redux/reduxStore";
 import {actions, getAllPosts, handlingAddPosts} from "redux/postsReducer";
 import {useSelector} from "react-redux";
 import {
     getActivePostPage,
     getCurrentFilter,
-    getFetching,
+    getFetching, getMyPosts, getMyTabPickStatus, getMyTotalPosts,
     getPosts,
     getPostsOnPage,
     getTotalCount
@@ -23,13 +23,17 @@ const PostsPage = () => {
 
     const dispatch = useAppDispatch()
     const posts = useSelector(getPosts)
+    const myPosts = useSelector(getMyPosts)
+    const myTotalPosts = useSelector(getMyTotalPosts)
     const totalCount = useSelector(getTotalCount)
     const postsOnPage = useSelector(getPostsOnPage)
     const activePage = useSelector(getActivePostPage)
     const isFetching = useSelector(getFetching)
+    const isMyTabPicked = useSelector(getMyTabPickStatus)
     const [isAuth, id] = useSelector(getMe)
     const searchFilter = useSelector(getCurrentFilter)
     const [isDataLoading, setDataLoading] = useState(false)
+    const scrollbarRef = useRef<Scrollbar & HTMLDivElement>(null)
 
 
 
@@ -38,8 +42,13 @@ const PostsPage = () => {
     const nextPage = activePage + 1
 
     useEffect(() => {
-        dispatch(handlingAuthDataBlog())
-        dispatch(getAllPosts())
+        if(isMyTabPicked) {
+            loadMyPosts()
+            dispatch(actions.pickMineTab(false))
+        } else {
+            dispatch(handlingAuthDataBlog())
+            dispatch(getAllPosts())
+        }
         return () => {
             dispatch(actions.addSearchFilter(null))
         }
@@ -47,14 +56,32 @@ const PostsPage = () => {
 
 
     useEffect(() => {
-
         if(isDataLoading){
             dispatch(handlingAddPosts(nextPage, postsOnPage, searchFilter)).then(() => {
                 setDataLoading(false)
             })
-
         }
     },[isDataLoading])
+
+   /* const loadMyPosts = useCallback(() => {
+        dispatch(actions.setAllPosts(myPosts))
+        dispatch(actions.setTotalPosts(myTotalPosts))
+        pixelsFromTop = 0
+    },[myPosts, myTotalPosts])*/
+    const loadMyPosts = () => {
+        dispatch(actions.setAllPosts(myPosts))
+        dispatch(actions.setTotalPosts(myTotalPosts))
+        dispatch(actions.setActivePostPage(1))
+        scrollbarRef?.current?.scrollToTop()
+    }
+    const loadAllPosts = useCallback(() => {
+        dispatch(getAllPosts())
+        scrollbarRef?.current?.scrollToTop()
+    },[myPosts])
+
+    const loadPopularPosts = useCallback(() => {
+
+    },[myPosts])
 
 
     const isScrollState = (eventOrState: React.UIEvent<HTMLDivElement, UIEvent> | ScrollState):eventOrState is ScrollState => {
@@ -69,6 +96,7 @@ const PostsPage = () => {
     }
 
 
+
     if (!isAuth) {
         return <Navigate to={"/login"}/>
     }
@@ -76,8 +104,12 @@ const PostsPage = () => {
     return (
 
                 <div className="all-posts">
-                    <PostsSidebar/>
-                    <Scrollbar onScroll={scrollHandler}>
+                    <PostsSidebar loadMyPosts={loadMyPosts}
+                                  loadAllPosts={loadAllPosts}
+                                  loadPopularPosts={loadPopularPosts}
+                                  isMyTabPicked={isMyTabPicked}
+                    />
+                    <Scrollbar  ref={scrollbarRef} onScroll={scrollHandler} >
                     <PostList posts={posts} id={id} isFetching={isFetching}/>
                     </Scrollbar>
                 </div>

@@ -15,8 +15,14 @@ export const getMessagesData = (state:AppStateType) => {
 export const getPosts = (state: AppStateType) => {
     return state.blog.posts
 }
+export const getMyPosts = (state: AppStateType) => {
+    return state.blog.myPosts
+}
 export const getTotalCount = (state: AppStateType) => {
     return state.blog.totalCount
+}
+export const getMyTotalPosts = (state: AppStateType) => {
+    return state.blog.countOfMyPosts
 }
 export const getPostsOnPage = (state: AppStateType) => {
     return state.blog.postsOnPage
@@ -29,6 +35,9 @@ export const getPostID = (state: AppStateType) => {
 }
 export const getFetching = (state: AppStateType) => {
     return state.blog.isFetching
+}
+export const getMyTabPickStatus = (state: AppStateType) => {
+    return state.blog.isMyTabPicked
 }
 export const getCurrentFilter = (state: AppStateType) => {
     return state.blog.searchFilter

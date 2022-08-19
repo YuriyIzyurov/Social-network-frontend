@@ -14,6 +14,9 @@ let initialState = {
     activePage: 1,
     postsOnPage: 5,
     searchFilter: null as string | null,
+    myPosts: [] as Array<PostType>,
+    countOfMyPosts: null as number | null,
+    isMyTabPicked: false as boolean | false
 }
 
 const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
@@ -27,6 +30,12 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
             return {
                 ...state,
                 posts:[...state.posts, ...action.payload]
+            }
+        case 'LOAD_POSTS':
+            return {
+                ...state,
+                myPosts: action.payload.posts,
+                countOfMyPosts: action.payload.count
             }
         case 'POSTS_FETCHING':
             return {
@@ -63,6 +72,12 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 ...state,
                 searchFilter:action.filter
             }
+        case "PICK_MY_POSTS_TAB":{
+            return {
+                ...state,
+                isMyTabPicked: action.status
+            }
+        }
         default:
             return state
     }
@@ -131,10 +146,12 @@ export const actions = {
     setCreatedPostId: (id: string) => ({type: 'SET_POST_ID', id} as const),
     deleteCreatedPostId: () => ({type: 'DELETE_POST_ID'} as const),
     deletePostFromState: (id: string) => ({type: 'SORT_POSTS', id} as const),
-    setTotalPosts: (count: number) => ({type: 'SET_POSTS_COUNT', count} as const),
+    setTotalPosts: (count: number | null) => ({type: 'SET_POSTS_COUNT', count} as const),
     setActivePostPage: (page: number) => ({type: 'SET_ACTIVE_POST_PAGE', page} as const),
     addPosts: (posts: PostType[]) => ({type: 'ADD_POSTS', payload:posts} as const),
+    loadMyPosts: (posts: PostType[],count: number) => ({type: 'LOAD_POSTS', payload: {posts, count}} as const),
     addSearchFilter: (filter: string | null) => ({type: 'ADD_POST_SEARCH_FILTER', filter} as const),
+    pickMineTab: (status:boolean) => ({type: 'PICK_MY_POSTS_TAB', status} as const),
 }
 
 

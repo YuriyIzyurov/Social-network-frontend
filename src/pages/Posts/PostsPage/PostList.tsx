@@ -1,7 +1,7 @@
 import React from 'react';
 import PostShorten from "pages/Posts/Post/PostShorten/PostShorten";
 import {PostType} from "typings/types";
-import PostSkeleton from "pages/Posts/PostSkeleton/PostSkeleton";
+import PostSkeleton from "components/Skeletons/PostSkeleton";
 type PropsType = {
     posts:Array<PostType>
     id:string | boolean | null

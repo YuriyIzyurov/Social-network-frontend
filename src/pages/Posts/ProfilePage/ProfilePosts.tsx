@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from "react"
 import 'pages/Posts/ProfilePage/ProfilePosts.scss'
-import {MessagesDataType} from "typings/types";
+import {MessagesDataType, PostType} from "typings/types";
 import banner from "assets/images/Banner.png"
 import {FormOutlined} from '@ant-design/icons';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import AddPost from "components/Forms/AddPost";
-import {useParams} from "react-router";
+import {Navigate, useNavigate, useParams} from "react-router";
+import {postsAPI} from "api/postsAPI";
+import {useSelector} from "react-redux";
+import {getMe} from "redux/auth-selectors";
+import PublicationShort from "pages/Posts/ProfilePage/PublicationShort";
+import PostSkeleton from "components/Skeletons/PostSkeleton";
+import PublicationShortSkeleton from "components/Skeletons/PublicationShortSkeleton";
+import {useAppDispatch} from "redux/reduxStore";
+import {actions} from "redux/postsReducer";
+import {getMyPosts} from "redux/post-selectors";
 
 
 
@@ -14,16 +23,42 @@ import {useParams} from "react-router";
 const ProfilePosts = () => {
 
     const [isPostAdding, setPostAdding] = useState(false);
-    const params = useParams()
+    const [isAuth] = useSelector(getMe)
+    const [topPosts, setTopPosts] = useState<PostType[]>([])
+    const [isLoading, setLoading] = useState(false)
+    const dispatch = useAppDispatch()
+    const myPosts = useSelector(getMyPosts)
+    const navigate = useNavigate()
+
+    const loadActualPosts = async () => {
+        setLoading(true)
+        const response = await postsAPI.getTopPosts()
+        setLoading(false)
+        if(response.resultCode === 0) {
+            setTopPosts(response.data.topPosts)
+            dispatch(actions.loadMyPosts(response.data.myPosts, response.data.totalCount))
+           /* setPosts(existingValue => ({
+                ...existingValue,
+                myPosts: response.data.myPosts
+            }))*/
+        }
+    }
     useEffect(() => {
-        console.log('posts mount')
+        if(isAuth){
+            loadActualPosts()
+        }
     },[])
 
     const postHandler = () => {
         setPostAdding(!isPostAdding)
     }
-    let id
+    const setMyPosts = () => {
+        dispatch(actions.pickMineTab(true))
+        navigate("/posts")
+    }
 
+
+    if(!isAuth) return <Navigate to={'/login'} />
     return  (
         <div className="profile__posts">
             <div className="profile__posts-animation">
@@ -32,78 +67,25 @@ const ProfilePosts = () => {
             <div className="profile__posts-recommended">
                 <div className="description">
                     <span>Featured</span>
-                    <span>See all</span>
+                    <NavLink to="/posts"><span>See all</span></NavLink>
                 </div>
             </div>
             <div className="profile__posts-publications">
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://assets.unenvironment.org/decadeonrestoration/2020-03/nature-3294681_1280%20%281%29.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh euismod tincidunt ut lacreet dolore.</p>
-                    </div>
-                    </Link>
-                </div>
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://bipbap.ru/wp-content/uploads/2018/04/00000_3-640x426.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh euismod tincidunt utt.</p>
-                    </div>
-                    </Link>
-                </div>
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://shkolnaiapora.ru/wp-content/uploads/2019/03/%D0%9F%D1%83%D1%81%D1%82%D1%8B%D0%BD%D1%8F-%D0%A1%D0%B0%D1%85%D0%B0%D1%80%D0%B0.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh.</p>
-                    </div>
-                    </Link>
-                </div>
+                {isLoading ? Array.from({length: 3}).map(() => <PublicationShortSkeleton/>)
+                : topPosts.map((item) => <PublicationShort item={item}/>)}
             </div>
             <div className="profile__posts-mine">
                 <div className="description">
                     <span>My posts</span>
-                    <span onClick={postHandler}><FormOutlined /></span>
+                    <div className="description-options">
+                        <span onClick={postHandler}><FormOutlined /></span>
+                        <span onClick={setMyPosts}>See all</span>
+                    </div>
                 </div>
             </div>
             <div className="profile__posts-publications">
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://assets.unenvironment.org/decadeonrestoration/2020-03/nature-3294681_1280%20%281%29.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh euismod tincidunt ut lacreet dolore.</p>
-                    </div>
-                    </Link>
-                </div>
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://bipbap.ru/wp-content/uploads/2018/04/00000_3-640x426.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh euismod tincidunt utt.</p>
-                    </div>
-                    </Link>
-                </div>
-                <div className="publication">
-                    <Link to={`/post/${id}`}>
-                    <img src='https://shkolnaiapora.ru/wp-content/uploads/2019/03/%D0%9F%D1%83%D1%81%D1%82%D1%8B%D0%BD%D1%8F-%D0%A1%D0%B0%D1%85%D0%B0%D1%80%D0%B0.jpg' alt='forest'/>
-                    <div className="publication__glass">
-                        <h2>Lorem ipsum dolor sit amet</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diem
-                            nonummy nibh.</p>
-                    </div>
-                    </Link>
-                </div>
+                {isLoading ? Array.from({length: 3}).map(() => <PublicationShortSkeleton/>)
+                    : myPosts.slice(0,3).map((item) => <PublicationShort item={item}/>)}
             </div>
             {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null} getPostById={null}/>}
         </div>

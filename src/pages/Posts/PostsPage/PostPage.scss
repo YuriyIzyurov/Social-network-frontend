@@ -187,6 +187,46 @@
   border-radius: 15px;
   box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
   color: #FFFFFF;
+  &__navigation{
+    display: flex;
+    justify-content: center;
+    padding:0 0 10px;
+    span{
+      display: flex;
+      flex-direction: column-reverse;
+      width:100px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    span:hover{
+      background: -webkit-linear-gradient(#d5adf1, #7b5cd3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    span:hover:after{
+      content: '';
+      position: absolute;
+      width: 91px;
+      height: 3px;
+      border-radius: 2px;
+      background: #6f53b6;
+    }
+
+    .navigation-active {
+      background: -webkit-linear-gradient(#d5adf1, #7b5cd3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .navigation-active:after{
+      content: '';
+      position: absolute;
+      width: 91px;
+      height: 3px;
+      border-radius: 2px;
+      background: #6f53b6;
+    }
+  }
   &__input{
     margin-bottom: 20px;
   }
@@ -197,9 +237,17 @@
     &-tags{
       display: flex;
       flex-direction: column;
+      height: 160px;
+
       span{
-        opacity: 0.6;
+        opacity: 0.8;
         font-size: 20px;
+        cursor: pointer;
+      }
+      span:hover {
+        opacity: 0.5;
+        font-size: 22px;
+        transition: opacity 1s ease-in-out;
       }
     }
     &-tags li {
@@ -233,11 +281,16 @@
           height: 44px;
           align-items: center;
           clip-path: polygon(37% 5%, 61% 5%, 90% 26%, 94% 36%, 94% 66%, 91% 75%, 60% 97%, 38% 97%, 10% 76%, 5% 68%, 5% 35%, 11% 24%);
+          img{
+            object-fit: cover;
+            object-position: 0 0;
+          }
         }
         &-name{
           display: flex;
           flex-direction: column;
           height: 100%;
+          width: 100%;
           overflow: hidden;
           .headerOf-comment{
             display: flex;
