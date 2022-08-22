@@ -53,6 +53,7 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
 
 
     useEffect(() => {
+
         const {activePage, usersOnPage,searchFilter} = props
         const parsedTerm = searchParams.get("term")
         const parsedFriend = searchParams.get("friend")
@@ -64,13 +65,17 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
         if(parsedPage) actualPage = +parsedPage
         if(parsedTerm) actualFilter = {...actualFilter, term: parsedTerm}
         if(parsedFriend) actualFilter = {...actualFilter, friend: parsedFriend === "null" ? null : parsedFriend === "true"}
+
         props.handlingUsers(actualPage,usersOnPage, actualFilter)
+
         return () => {
             dispatch(actions.setActivePage(1))
+            dispatch(actions.filterSettings({term:'', friend: null}))
         }
     },[])
 
     useEffect(() => {
+
         const {searchFilter, activePage} = props
         const query:{term?: string, friend?: string, page?: string} = {}
 

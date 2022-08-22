@@ -22,19 +22,19 @@ const Message: React.FC<PropsType> = React.memo(({message, avatar, date, isMe,vi
 
     return <div className={classNames("message", {"message--isMe": isMe})}>
         <div className="message__content">
-            <div className="message__avatar">
-                <img src={avatar} alt="User"/>
-            </div>
-            <div className="message__info">
-                <div className="message__bubble">
-                    <p className="message__text">{message}</p>
+            <div className="message__content-info">
+                <div className="message__content-info-avatar">
+                    <img src={avatar} alt="User"/>
                 </div>
-                <span className="message__date">
-                    <GetMessageTime date={date} showFullDate={false}/>
-                </span>
+                <div className="message__content-info-bubble">
+                    <p className="message__content-bubble-text">{message}</p>
+                </div>
+                {viewed && <img src={MessageReadImage} alt=""/>}
+                {!viewed && <img src={MessageNoReadImage} alt=""/>}
             </div>
-            {viewed && <img src={MessageReadImage} alt=""/>}
-            {!viewed && <img src={MessageNoReadImage} alt=""/>}
+            <div className="message__content-date">
+                <GetMessageTime date={date} showFullDate={false}/>
+            </div>
         </div>
     </div>
 })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {svgList} from "../../../common/constants/ListSVG";
 import AvatarEffect from "./AvatarEffect";
 import {animated, easings, useSprings} from 'react-spring'

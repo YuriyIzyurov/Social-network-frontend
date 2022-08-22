@@ -1,7 +1,7 @@
-import React, {createRef, useState} from "react"
+import React, {createRef, useEffect, useState} from "react"
 // @ts-ignore
 import UserDefaultPhoto from 'assets/images/UserDefaultPhoto'
-import {handlePhotoChange} from "redux/profileReducer";
+import {actions, handlePhotoChange} from "redux/profileReducer";
 import {useAppDispatch} from "redux/reduxStore";
 import {startDialogWithFriend} from "redux/dialogReducer";
 // @ts-ignore
@@ -15,18 +15,28 @@ import {Bell, Chat, Mail, Setting} from "assets/images/TopAction/TopIcons"
 import {handlingAuthDataBlog, handlingChangeAvatar} from "redux/authBlogReducer";
 import {useSelector} from "react-redux";
 import {getAuthID} from "redux/auth-selectors";
-import {getCurrentProfile} from "redux/profile-selectors";
+import {getCurrentProfile, getMainColors} from "redux/profile-selectors";
 import Preloader from "common/Preloader/Preloader";
+import HeaderAvatar from "components/HeaderAvatar";
+import MainAvatar from "components/MainAvatar";
+import TopWriter from "components/Sidebars/RightSidebar/TopWriter";
+import {postsAPI} from "api/postsAPI";
 
 
+export type TopUserType = {
+    id: string
+    fullName: string
+    avatarUrl:string
+    viewsCount: number
+}
 const ProfileInfo = React.memo(() => {
 
     let [editMode, changeEditMode] = useState(false)
     let [colors, changeAvaBorderColors] = useState(["#A73EE7","#00EBFF"])
     const [toggle, setToggle] = useState(false)
+    const [topUsers, setTopUsers] = useState<TopUserType[]>([])
     const dispatch = useAppDispatch()
    // const navigate = useNavigate()
-    const imgRef = createRef<HTMLImageElement>()
     const authID = useSelector(getAuthID)
     const currentProfile = useSelector(getCurrentProfile)
 
@@ -38,19 +48,32 @@ const ProfileInfo = React.memo(() => {
             dispatch(handlingAuthDataBlog())
         }
     }
+    const getTopWriters = async () => {
+        const response = await postsAPI.getTopWriters()
+        if(response.resultCode === 0) {
+            setTopUsers(response.data.top)
+        } else {
+            console.log('не удалось загрузить авторов')
+        }
+    }
+    useEffect(() => {
+        getTopWriters()
+    }, [])
+
+    useEffect(() => {
+        if(currentProfile?.userId === authID) {
+            dispatch(actions.setMainColors(colors))
+        }
+    },[colors])
+
+
+  /*  const openDialog = () =>{
+        dispatch(startDialogWithFriend(currentProfile.userId))
+        /!*let path = `/dialogs/${currentProfile.userId}`
+        navigate(path)*!/
+    }*/
 
     if(!currentProfile) return <Preloader/>
-    const openDialog = () =>{
-        dispatch(startDialogWithFriend(currentProfile.userId))
-        /*let path = `/dialogs/${currentProfile.userId}`
-        navigate(path)*/
-    }
-
-
-
-    const getMainColors = () => {
-        changeAvaBorderColors(getTwoMainColors(imgRef.current))
-    }
 
     return (
         <div className='profile__info'>
@@ -65,15 +88,7 @@ const ProfileInfo = React.memo(() => {
                     <AvatarBorderFinal colors={colors} toggle={toggle} setToggle={setToggle}/>
                 </div>
                     <ContainerAvatarEffect colors={colors} toggle={toggle}/>
-                <div className="profile__info-main-avatar" >
-                    {currentProfile.photos.large ? <img
-                        src={ProxyImageUrl(currentProfile.photos.large)}
-                        ref={imgRef}
-                        onLoad={getMainColors}
-                        crossOrigin="anonymous"
-                        alt="user"/>
-                        : <UserDefaultPhoto/>}
-                </div>
+                <MainAvatar photos={currentProfile.photos} changeAvaBorderColors={changeAvaBorderColors}/>
                 <div  className="profile__info-main-name">
                     Sophie Fortune
                 </div>
@@ -87,42 +102,7 @@ const ProfileInfo = React.memo(() => {
                     <span>See all</span>
                 </div>
                 <div className="members__list">
-                    <div className="members__list-item">
-                        <div className="members__list-item-avatar">
-                            <img style={{width:"44px", height:"44px"}} src={currentProfile.photos.small} alt='ava'/>
-                        </div>
-                        <div className="members__list-item-name">
-                            <span>Anne Couture</span>
-                            <span>5 min ago</span>
-                        </div>
-                    </div>
-                    <div className="members__list-item">
-                        <div className="members__list-item-avatar">
-                            <img style={{width:"44px", height:"44px"}} src={currentProfile.photos.small} alt='ava'/>
-                        </div>
-                        <div className="members__list-item-name">
-                            <span>John Paddington</span>
-                            <span>5 hours ago</span>
-                        </div>
-                    </div>
-                    <div className="members__list-item">
-                        <div className="members__list-item-avatar">
-                            <img style={{width:"44px", height:"44px"}} src={currentProfile.photos.small} alt='ava'/>
-                        </div>
-                        <div className="members__list-item-name">
-                            <span>Michael Siguirdney</span>
-                            <span>22 min ago</span>
-                        </div>
-                    </div>
-                    <div className="members__list-item">
-                        <div className="members__list-item-avatar">
-                            <img style={{width:"44px", height:"44px"}} src={currentProfile.photos.small} alt='ava'/>
-                        </div>
-                        <div className="members__list-item-name">
-                            <span>Ivan Nalimov</span>
-                            <span>2 days ago</span>
-                        </div>
-                    </div>
+                    {topUsers?.map((user) => <TopWriter user={user}/>)}
                 </div>
             </div>
             <div className="profile__info-social">

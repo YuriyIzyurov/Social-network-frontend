@@ -42,3 +42,9 @@ export const getMyTabPickStatus = (state: AppStateType) => {
 export const getCurrentFilter = (state: AppStateType) => {
     return state.blog.searchFilter
 }
+export const getCurrentAuthor = (state: AppStateType) => {
+    return state.blog.currentAuthorID
+}
+export const getScrollState = (state: AppStateType) => {
+    return state.blog.isScrollTop
+}

@@ -48,7 +48,7 @@ const PostFull = () => {
         getPostById().then(() =>{
             getCommentsOfPost()
         })
-    }, [])
+    },[])
 
     const editPost = () => {
         setEdit(!edit)

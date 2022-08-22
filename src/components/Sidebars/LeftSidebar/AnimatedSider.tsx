@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
 import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} from "@ant-design/icons";
 import {Layout} from 'antd';
@@ -7,12 +7,24 @@ import {useSelector} from "react-redux";
 import {getCurrentProfile} from "redux/profile-selectors";
 import {useTransition, animated} from "react-spring";
 import ChatPage from "components/Chat/ChatPage";
+import {useAppDispatch} from "redux/reduxStore";
+import {actions, handlingAddUsers, handlingSidebarUsers} from "redux/usersReducer";
+import {getFriends, getTotalFriends, getUsersOnPage} from "redux/user-selectors";
+import FriendItem from "components/Sidebars/LeftSidebar/FriendItem";
+import FriendItemShort from "components/Sidebars/LeftSidebar/FriendItemShort";
+import {useNavigate} from "react-router";
+import {getCurrentAuthor} from "redux/post-selectors";
 
 const {Sider} = Layout
 
 export const AnimatedSider = () => {
 
     const [isActive, setIsActive] = useState(false)
+    const currentProfile = useSelector(getCurrentProfile)
+    const friends = useSelector(getFriends)
+    const currentAuthorID = useSelector(getCurrentAuthor)
+    const usersOnPage = useSelector(getUsersOnPage)
+    const totalFriends = useSelector(getTotalFriends)
     const transitionFriends = useTransition(isActive, {
         from:{y: 228, opacity: 0.8},
         enter:{y: 0, opacity: 1},
@@ -21,10 +33,33 @@ export const AnimatedSider = () => {
             duration: 90,
         }
     })
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        dispatch(handlingSidebarUsers())
+    },[])
+
+    useEffect(() => {
+            console.log(friends,totalFriends)
+    },[friends])
+
+    useEffect(() => {
+        if(currentAuthorID){
+            navigate('/posts')
+        }
+    },[currentAuthorID])
+
     const clickHandler = () => {
         setIsActive(!isActive)
     }
-    const currentProfile = useSelector(getCurrentProfile)
+    const openFriendList = () => {
+        navigate('/users?friend=true')
+    }
+
+
+
     return (
         <>
             <Sider>
@@ -45,53 +80,18 @@ export const AnimatedSider = () => {
                         <li>
                             <NavLink to="/users"><TeamOutlined /><span>Find friends</span></NavLink>
                         </li>
-                        <li>
+                       {/* <li>
                             <NavLink to="/test"><TeamOutlined /><span>Test</span></NavLink>
-                        </li>
+                        </li>*/}
                     </ul>
 
                     <div className="friends-block">
-                        <div className="friends">
-                            <span>Friends (38)</span>
-                            <span>See all</span>
-                        </div>
+                        {friends
+                            && <div className="friends">
+                                    <span onClick={openFriendList}>Friends ({totalFriends})</span>
+                                </div>}
                         <div className="friends__list">
-                            <div className="friends__list-item">
-                                <div className="friends__list-item-avatar">
-                                    <img style={{width:"44px", height:"44px"}} src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg" } alt='ava'/>
-                                </div>
-                                <div className="friends__list-item-name">
-                                    <span>Anne Couture</span>
-                                    <span>5 min ago</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-item">
-                                <div className="friends__list-item-avatar">
-                                    <img style={{width:"44px", height:"44px"}} src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"} alt='ava'/>
-                                </div>
-                                <div className="friends__list-item-name">
-                                    <span>John Paddington</span>
-                                    <span>5 hours ago</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-item">
-                                <div className="friends__list-item-avatar">
-                                    <img style={{width:"44px", height:"44px"}} src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"} alt='ava'/>
-                                </div>
-                                <div className="friends__list-item-name">
-                                    <span>Michael Siguirdney</span>
-                                    <span>22 min ago</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-item">
-                                <div className="friends__list-item-avatar">
-                                    <img style={{width:"44px", height:"44px"}} src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"} alt='ava'/>
-                                </div>
-                                <div className="friends__list-item-name">
-                                    <span>Ivan Nalimov</span>
-                                    <span>2 days ago</span>
-                                </div>
-                            </div>
+                            {friends && friends.map((item) => <FriendItem item={item}/>)}
                         </div>
                     </div>
                     <div
@@ -102,51 +102,12 @@ export const AnimatedSider = () => {
                 </div>
                 {transitionFriends((style, item) =>
                     item ? <animated.div style={style} className="friends-block-short">
-                        <div className="friends-short">
-                            <span>Friends (38)</span>
-                            <span>See all</span>
-                        </div>
+                        {friends
+                            &&  <div className="friends-short">
+                                    <span onClick={openFriendList}>Friends ({totalFriends})</span>
+                                </div>}
                         <div className="friends__list-short">
-                            <div className="friends__list-short-item">
-                                <div className="friends__list-short-item-avatar">
-                                    <img style={{width: "44px", height: "44px"}}
-                                         src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"}
-                                         alt='ava'/>
-                                </div>
-                                <div className="friends__list-short-item-name">
-                                    <span>Anne Couture</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-short-item">
-                                <div className="friends__list-short-item-avatar">
-                                    <img style={{width: "44px", height: "44px"}}
-                                         src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"}
-                                         alt='ava'/>
-                                </div>
-                                <div className="friends__list-short-item-name">
-                                    <span>Anne Couture</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-short-item">
-                                <div className="friends__list-short-item-avatar">
-                                    <img style={{width: "44px", height: "44px"}}
-                                         src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"}
-                                         alt='ava'/>
-                                </div>
-                                <div className="friends__list-short-item-name">
-                                    <span>Anne Couture</span>
-                                </div>
-                            </div>
-                            <div className="friends__list-short-item">
-                                <div className="friends__list-short-item-avatar">
-                                    <img style={{width: "44px", height: "44px"}}
-                                         src={currentProfile ? currentProfile.photos.small : "https://i.pinimg.com/236x/5a/43/81/5a4381dac136ab3ea9740ac9f1746dc2.jpg"}
-                                         alt='ava'/>
-                                </div>
-                                <div className="friends__list-short-item-name">
-                                    <span>Anne Couture</span>
-                                </div>
-                            </div>
+                            {friends && friends.slice(0,5).map((item) => <FriendItemShort item={item}/>)}
                         </div>
                     </animated.div> : ''
                 )}

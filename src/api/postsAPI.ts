@@ -5,8 +5,11 @@ import {AddPostType, UserType} from "typings/types";
 
 
 export const postsAPI = {
-    getPosts(searchFilter:string | null = null, page:number = 1, limit:number = 5) {
-        return instanceBlog.get(`posts?page=${page}&limit=${limit}` + (searchFilter === null ? '':`&searchFilter=${searchFilter}`)).then(response => response.data)
+    getPosts(searchFilter:string | null = null, viewed:boolean = false, page:number = 1, limit:number = 5) {
+        return instanceBlog.get(`posts?page=${page}&limit=${limit}`
+            + (searchFilter === null ? '':`&searchFilter=${searchFilter}`)
+            + (!viewed ? '' : `&viewed=${viewed}`)
+        ).then(response => response.data)
     },
     writePost(post: AddPostType) {
       return instanceBlog.post(`posts`, post).then(response => response.data)
@@ -36,6 +39,12 @@ export const postsAPI = {
     },
     getTagMatch(tag:string) {
         return instanceBlog.get(`tags/${tag}`).then(response => response.data)
+    },
+    getTopWriters() {
+        return instanceBlog.get(`views`).then(response => response.data)
+    },
+    getPostsByAuthor(userId:string) {
+        return instanceBlog.get(`author/${userId}`,).then(response => response.data)
     }
 }
 export  const commentsAPI = {

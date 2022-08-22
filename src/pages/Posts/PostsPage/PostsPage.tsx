@@ -7,7 +7,7 @@ import {
     getCurrentFilter,
     getFetching, getMyPosts, getMyTabPickStatus, getMyTotalPosts,
     getPosts,
-    getPostsOnPage,
+    getPostsOnPage, getScrollState,
     getTotalCount
 } from "redux/post-selectors";
 import {handlingAuthDataBlog} from "redux/authBlogReducer";
@@ -26,6 +26,7 @@ const PostsPage = () => {
     const myPosts = useSelector(getMyPosts)
     const myTotalPosts = useSelector(getMyTotalPosts)
     const totalCount = useSelector(getTotalCount)
+    const isScrollTop = useSelector(getScrollState)
     const postsOnPage = useSelector(getPostsOnPage)
     const activePage = useSelector(getActivePostPage)
     const isFetching = useSelector(getFetching)
@@ -33,6 +34,7 @@ const PostsPage = () => {
     const [isAuth, id] = useSelector(getMe)
     const searchFilter = useSelector(getCurrentFilter)
     const [isDataLoading, setDataLoading] = useState(false)
+    const [isPopularFilter, setPopularFilter] = useState(false)
     const scrollbarRef = useRef<Scrollbar & HTMLDivElement>(null)
 
 
@@ -46,41 +48,51 @@ const PostsPage = () => {
             loadMyPosts()
             dispatch(actions.pickMineTab(false))
         } else {
-            dispatch(handlingAuthDataBlog())
-            dispatch(getAllPosts())
+            //dispatch(handlingAuthDataBlog())
+           // dispatch(getAllPosts())
+            console.log('load posts')
         }
         return () => {
             dispatch(actions.addSearchFilter(null))
         }
     },[])
 
+   useEffect(() => {
+
+       if(isScrollTop){
+           scrollbarRef?.current?.scrollToTop()
+       }
+   }, [posts])
 
     useEffect(() => {
         if(isDataLoading){
-            dispatch(handlingAddPosts(nextPage, postsOnPage, searchFilter)).then(() => {
-                setDataLoading(false)
-            })
+                dispatch(actions.setScrollToTop(false))
+                dispatch(handlingAddPosts(nextPage, postsOnPage, searchFilter, isPopularFilter)).then(()=>{
+                    setDataLoading(false)
+                })
+
         }
     },[isDataLoading])
 
-   /* const loadMyPosts = useCallback(() => {
-        dispatch(actions.setAllPosts(myPosts))
-        dispatch(actions.setTotalPosts(myTotalPosts))
-        pixelsFromTop = 0
-    },[myPosts, myTotalPosts])*/
-    const loadMyPosts = () => {
+
+    const loadMyPosts = useCallback(() => {
         dispatch(actions.setAllPosts(myPosts))
         dispatch(actions.setTotalPosts(myTotalPosts))
         dispatch(actions.setActivePostPage(1))
+        setPopularFilter(false)
         scrollbarRef?.current?.scrollToTop()
-    }
+    },[myPosts, myTotalPosts])
+
     const loadAllPosts = useCallback(() => {
         dispatch(getAllPosts())
+        setPopularFilter(false)
         scrollbarRef?.current?.scrollToTop()
     },[myPosts])
 
     const loadPopularPosts = useCallback(() => {
-
+        dispatch(getAllPosts(null,true))
+        setPopularFilter(true)
+        scrollbarRef?.current?.scrollToTop()
     },[myPosts])
 
 

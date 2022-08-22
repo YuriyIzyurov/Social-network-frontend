@@ -1,7 +1,7 @@
-import {ResultCode} from "../api/api";
-import { CurrentProfileType, MessagesDataType, PhotosType } from "../typings/types";
+import {ResultCode} from "api/api";
+import { CurrentProfileType, MessagesDataType, PhotosType } from "typings/types";
 import {BaseThunkType, InferActionsTypes} from "./reduxStore";
-import {profileAPI} from "../api/profileAPI";
+import {profileAPI} from "api/profileAPI";
 
 export type InitialStateType = typeof initialState
 export type ActionType = InferActionsTypes<typeof actions>
@@ -16,7 +16,8 @@ let initialState = {
     textArea : '',
     profileID: null as number | null,
     currentProfile: null as CurrentProfileType | null,
-    status: ""
+    status: "",
+    avatarBorderColors: ["#A73EE7","#00EBFF"] as string[]
 }
 const profileReducer = (state = initialState, action: ActionType):InitialStateType => {
     switch (action.type) {
@@ -45,6 +46,11 @@ const profileReducer = (state = initialState, action: ActionType):InitialStateTy
             return {
                 ...state,
                 currentProfile: {...state.currentProfile, photos: action.photo} as CurrentProfileType
+            }
+        case "SET_COLORS":
+            return {
+                ...state,
+                avatarBorderColors: action.colors
             }
         default:
             return state
@@ -111,7 +117,8 @@ export const actions = {
     getProfileID: (id: number) => ({type: "CHANGE_PROFILE_ID", id} as const),
     setCurrentProfile: (profile:CurrentProfileType) => ({type: "SET_CURRENT_PROFILE", profile} as const),
     setStatusOnProfile: (status: string) => ({type: "SET_STATUS", status} as const),
-    setPhotoOnProfile: (photo: PhotosType) => ({type: "SET_PHOTO", photo} as const)
+    setPhotoOnProfile: (photo: PhotosType) => ({type: "SET_PHOTO", photo} as const),
+    setMainColors: (colors: string[]) => ({type: "SET_COLORS", colors} as const),
 }
 
 

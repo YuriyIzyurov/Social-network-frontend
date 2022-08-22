@@ -1,12 +1,14 @@
-import React, {useEffect} from "react"
-
+import React, {useEffect, useState} from "react"
+import './Header.scss'
 import {NavLink, useLocation} from "react-router-dom";
 import Button from "antd/lib/button";
-import Avatar from "antd/lib/avatar/avatar";
+import { LogoutOutlined } from '@ant-design/icons';
 import {PhotosType} from "../../typings/types";
 import {useSelector} from "react-redux";
-import {getAuthAvatar, getCurrentProfile, getLoggedUserPhoto} from "../../redux/profile-selectors";
+import {getAuthAvatar, getCurrentProfile, getLoggedUserPhoto, getMainColors} from "redux/profile-selectors";
 import {Navigate, useNavigate} from "react-router";
+import HeaderAvatar from "components/HeaderAvatar";
+import MiniAvatarBorder from "components/MiniAvatarBorder";
 
 
 type PropsLoginType = {
@@ -18,6 +20,7 @@ type PropsLoginType = {
 const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handlingBlogUserLogout }) =>{
 
     const loggedUserPhoto = useSelector(getLoggedUserPhoto)
+    const colors = useSelector(getMainColors)
     const navigate = useNavigate()
 
     const Logout = () => {
@@ -28,13 +31,15 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handl
 
     return <div className="login">
             {!isAuth ? <NavLink to={'/login'}>Login</NavLink>
-                : <div>
-                    <div>
-                        <Avatar src={loggedUserPhoto ? loggedUserPhoto.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeUWgApzeLkRHZjMcLb9wzsJuNzjqTRxzRBqs99_I&s"} />
-                        {login}
-                        <Button onClick={Logout}>Logout</Button>
+                :
+                <>
+                    <div className="header__avatar">
+                        <MiniAvatarBorder colors={colors}/>
+                        <HeaderAvatar photos={loggedUserPhoto}/>
+                        <span>{login}</span>
                     </div>
-                </div>
+                    <LogoutOutlined onClick={Logout}/>
+                </>
             }
         </div>
 }

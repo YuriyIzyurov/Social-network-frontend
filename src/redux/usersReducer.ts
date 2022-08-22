@@ -18,7 +18,9 @@ let initialState = {users: [] as Array<UserType>,
                     searchFilter: {
                         term: '',
                         friend: null as null | boolean
-                    }
+                    },
+                    friends: [] as Array<UserType>,
+                    totalFriends: 0
 }
 
 const usersReducer = (state = initialState, action:ActionType):InitialStateType => {
@@ -67,6 +69,16 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
                 ...state,
                 searchFilter:action.payload
             }
+        case "SET_FRIENDS":
+            return {
+                ...state,
+                friends: action.friends
+            }
+        case "SET_TOTAL_FRIENDS":
+            return {
+                ...state,
+                totalFriends: action.totalFriends
+            }
         default:
             return state
     }
@@ -75,13 +87,24 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
 
 export const handlingUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkType => {
     return async (dispatch, getState) => {
-        dispatch(actions.dataIsFetching(true))
+            dispatch(actions.dataIsFetching(true))
             dispatch(actions.setActivePage(activePage))
             dispatch(actions.filterSettings(filter))
         let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
             dispatch(actions.dataIsFetching(false))
             dispatch(actions.setUsers(response.items))
             dispatch(actions.setTotalUsers(response.totalCount))
+
+    }
+}
+export const handlingSidebarUsers =  (): ThunkType => {
+    return async (dispatch, getState) => {
+            dispatch(actions.dataIsFetching(true))
+        let response = await usersAPI.getSidebarUsers()
+            dispatch(actions.dataIsFetching(false))
+            const shuffledArray = response.items.sort(() => Math.round(Math.random() * 100) - 50)
+            dispatch(actions.setFriends(shuffledArray))
+            dispatch(actions.setTotalFriends(response.totalCount))
 
     }
 }
@@ -126,7 +149,9 @@ export const actions = {
     setTotalUsers: (totalUsers:number)=> ({type: "SET_TOTAL_USERS", totalUsers} as const),
     dataIsFetching: (isFetching:boolean) => ({type: "FETCHING", isFetching} as const),
     followActionInProcess: (isFetching:boolean, userID:number)=>({type:"FOLLOW_IN_PROCESS", isFetching, userID} as const),
-    filterSettings: (searchFilter: FilterType)=>({type:"FILTERED_USERS", payload:searchFilter} as const)
+    filterSettings: (searchFilter: FilterType)=>({type:"FILTERED_USERS", payload:searchFilter} as const),
+    setFriends: (friends: Array<UserType>)=>({type:"SET_FRIENDS", friends} as const),
+    setTotalFriends: (totalFriends:number)=>({type:"SET_TOTAL_FRIENDS", totalFriends} as const),
 }
 
 

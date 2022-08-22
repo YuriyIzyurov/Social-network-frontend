@@ -9,6 +9,12 @@ export const getUsers = (state:AppStateType) => {
 export const getTotalUsers = (state:AppStateType) => {
     return state.userList.totalUsers
 }
+export const getFriends = (state:AppStateType) => {
+    return state.userList.friends
+}
+export const getTotalFriends = (state:AppStateType) => {
+    return state.userList.totalFriends
+}
 
 export const getUsersOnPage = (state:AppStateType) => {
     return state.userList.usersOnPage

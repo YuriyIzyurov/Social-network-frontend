@@ -8,6 +8,8 @@ import classnames from "classnames";
 import { Input } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import {animated, useTransition} from "react-spring";
+import Avatar from "components/Dialogs/DialogItem/Avatar";
+import {Link} from "react-router-dom";
 const { TextArea } = Input;
 
 
@@ -29,7 +31,7 @@ const Chat: React.FC<PropsType> = React.memo(({isActive}) => {
         },
         enter:{
             y: 0,
-            height: 606
+            height:"auto",
         },
         leave:{
             y: 486,
@@ -90,17 +92,17 @@ const Messages: React.FC = React.memo(() => {
 })
 const Message: React.FC<{message: ChatMessageAPIType}> = React.memo(({message}) => {
 
-    return <div className="chat__block-message">
-        <div className="chat__block-avatar">
-            <img src={message.photo} style={{width: '40px'}}/> <b>{message.userName}</b>
+    return <div className="chat__block-messages-message">
+        <div className="chat-avatar">
+            <Link to={"/profile/" + message.userId}>
+                <Avatar avatarUrl={message.photo} name={message.userName}/>
+            </Link>
         </div>
-        <div className="chat__block-text">
-            <br/>
+        <div className="chat-text">
             <span>
-                {message.message}
+                <b>{message.userName}</b>
             </span>
-            <hr/>
-            <span>2 hours ago</span>
+            <p>{message.message}</p>
         </div>
     </div>
 })

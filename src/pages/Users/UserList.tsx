@@ -27,7 +27,7 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
     const ItemList = ({item}: {item: UserType}) => {
         return <>
             <List.Item.Meta
-                avatar={<Link to={"/profile/" + item.id}><Avatar user={item}/></Link>}
+                avatar={<Link to={"/profile/" + item.id}><Avatar avatarUrl={item.photos.small} name={item.name}/></Link>}
                 title={<Link to={"/profile/" + item.id}>{item.name}</Link>}
                 description={item.status}
             />

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 type PropsType = {
 
     id:string, colors:string[]
 }
 const AvatarEffect:React.FC<PropsType> = ({id, colors}) => {
+
 
 
     switch (id) {

@@ -16,7 +16,9 @@ let initialState = {
     searchFilter: null as string | null,
     myPosts: [] as Array<PostType>,
     countOfMyPosts: null as number | null,
-    isMyTabPicked: false as boolean | false
+    isMyTabPicked: true as boolean | true,
+    currentAuthorID: null as string | null,
+    isScrollTop: false as boolean | false
 }
 
 const postsReducer = (state = initialState, action: ActionType ):initialStateType => {
@@ -78,15 +80,27 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 isMyTabPicked: action.status
             }
         }
+        case 'SET_CURRENT_AUTHOR_ID': {
+            return {
+                ...state,
+                currentAuthorID: action.id
+            }
+        }
+        case 'SET_SCROLL_TO_TOP':{
+            return {
+                ...state,
+                isScrollTop: action.isScrollTop
+            }
+        }
         default:
             return state
     }
 }
-export const getAllPosts = (searchFilter:string|null = null):ThunkType => {
+export const getAllPosts = (searchFilter:string|null = null, viewed:boolean = false):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setActivePostPage(1))
         dispatch(actions.setFetching(true))
-        const response = await postsAPI.getPosts(searchFilter)
+        const response = await postsAPI.getPosts(searchFilter,viewed)
         dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
             dispatch(actions.setAllPosts(response.posts))
@@ -96,11 +110,11 @@ export const getAllPosts = (searchFilter:string|null = null):ThunkType => {
         }
     }
 }
-export const handlingAddPosts = (page:number, limit:number, searchFilter:string|null = null):ThunkType => {
+export const handlingAddPosts = (page:number, limit:number, searchFilter:string|null = null, viewed:boolean = false):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setActivePostPage(page))
         dispatch(actions.setFetching(true))
-        const response = await postsAPI.getPosts(searchFilter, page, limit)
+        const response = await postsAPI.getPosts(searchFilter,viewed, page, limit)
         dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
             dispatch(actions.addPosts(response.posts))
@@ -139,6 +153,16 @@ export const deletePublication = (id:string):ThunkType => {
             } else console.log("Проверь респонс, допиши бэк")
     }
 }
+export const handlingSetAllPosts = (item:string):ThunkType => {
+    return async (dispatch) => {
+        dispatch(actions.setFetching(true))
+        const response = await postsAPI.getTagMatch(item)
+        dispatch(actions.setFetching(false))
+        dispatch(actions.setTotalPosts(response.length))
+        dispatch(actions.setAllPosts(response))
+        dispatch(actions.setScrollToTop(true))
+    }
+}
 
 export const actions = {
     setAllPosts: (posts: PostType[]) => ({type: 'SET_ALL_POSTS', payload: posts} as const),
@@ -152,6 +176,8 @@ export const actions = {
     loadMyPosts: (posts: PostType[],count: number) => ({type: 'LOAD_POSTS', payload: {posts, count}} as const),
     addSearchFilter: (filter: string | null) => ({type: 'ADD_POST_SEARCH_FILTER', filter} as const),
     pickMineTab: (status:boolean) => ({type: 'PICK_MY_POSTS_TAB', status} as const),
+    setCurrentAuthorId: (id:string) => ({type: 'SET_CURRENT_AUTHOR_ID', id} as const),
+    setScrollToTop: (isScrollTop:boolean) => ({type: 'SET_SCROLL_TO_TOP', isScrollTop} as const)
 }
 
 

@@ -3,6 +3,9 @@ import {AppStateType} from "./reduxStore";
 export const getCurrentProfile = (state:AppStateType) => {
     return state.profile.currentProfile
 }
+export const getMainColors = (state:AppStateType) => {
+    return state.profile.avatarBorderColors
+}
 export const getLoggedUserPhoto = (state:AppStateType) => {
     return state.auth.photos
 }

@@ -1,0 +1,42 @@
+
+.login {
+  position: absolute;
+  left: 20px;
+  z-index: 2;
+  width: 305px;
+  height: 73px;
+  padding: 12px 20px;
+  display: flex;
+  border-radius: 15px;
+  background-color: #2c2f48;
+  align-items: center;
+  justify-content: space-between;
+  span{
+    padding: 0 10px;
+    align-self: center;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .anticon{
+    font-size: 20px;
+  }
+  .anticon:hover{
+    opacity: 0.6;
+  }
+}
+.header__avatar {
+  display: flex;
+  position: relative;
+  img{
+    width: 49px;
+    height: 49px;
+    clip-path: polygon(50% 0%, 91% 21%, 96% 29%, 96% 69%, 93% 79%, 50% 104%, 9% 78%, 4% 66%, 4% 34%, 9% 23%);
+  }
+  &-border svg{
+    position: absolute;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+  }
+}
+
