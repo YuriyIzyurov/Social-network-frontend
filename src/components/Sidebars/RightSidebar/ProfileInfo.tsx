@@ -1,7 +1,8 @@
-import React, {createRef, useEffect, useState} from "react"
+import React, {createRef, useEffect, useRef, useState} from "react"
+import { FormOutlined} from "@ant-design/icons";
 // @ts-ignore
 import UserDefaultPhoto from 'assets/images/UserDefaultPhoto'
-import {actions, handlePhotoChange} from "redux/profileReducer";
+import {actions, getUserStatusInProfile, handlePhotoChange, updateMyStatus} from "redux/profileReducer";
 import {useAppDispatch} from "redux/reduxStore";
 import {startDialogWithFriend} from "redux/dialogReducer";
 // @ts-ignore
@@ -15,12 +16,16 @@ import {Bell, Chat, Mail, Setting} from "assets/images/TopAction/TopIcons"
 import {handlingAuthDataBlog, handlingChangeAvatar} from "redux/authBlogReducer";
 import {useSelector} from "react-redux";
 import {getAuthID} from "redux/auth-selectors";
-import {getCurrentProfile, getMainColors} from "redux/profile-selectors";
+import {getCurrentProfile, getMainColors, getStatus} from "redux/profile-selectors";
 import Preloader from "common/Preloader/Preloader";
 import HeaderAvatar from "components/HeaderAvatar";
 import MainAvatar from "components/MainAvatar";
 import TopWriter from "components/Sidebars/RightSidebar/TopWriter";
 import {postsAPI} from "api/postsAPI";
+import ProfileStatus from "components/Sidebars/RightSidebar/ProfileStatus";
+import ProfileDataInput from "./ProfileDataInput";
+import ProfileContactsInput from "components/ProfileContactsInput";
+import SocialMediaContact from "components/SocialMediaContact";
 
 
 export type TopUserType = {
@@ -39,6 +44,8 @@ const ProfileInfo = React.memo(() => {
    // const navigate = useNavigate()
     const authID = useSelector(getAuthID)
     const currentProfile = useSelector(getCurrentProfile)
+    const status = useSelector(getStatus)
+    const inputImgRef = useRef<HTMLInputElement>(null)
 
 
     const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -56,7 +63,13 @@ const ProfileInfo = React.memo(() => {
             console.log('не удалось загрузить авторов')
         }
     }
+    const updateStatus = (status:string) => {
+        dispatch(updateMyStatus(status))
+    }
     useEffect(() => {
+        if(currentProfile){
+            dispatch(getUserStatusInProfile(currentProfile.userId))
+        }
         getTopWriters()
     }, [])
 
@@ -84,41 +97,68 @@ const ProfileInfo = React.memo(() => {
                 <Setting/>
             </div>
             <div className="profile__info-main">
-                <div className="ava-border">
+                <div
+                    className="ava-border"
+                    onClick={() => inputImgRef.current?.click()}
+                    style={{cursor: authID === currentProfile.userId ? 'pointer':'inherit'}}
+                >
                     <AvatarBorderFinal colors={colors} toggle={toggle} setToggle={setToggle}/>
                 </div>
                     <ContainerAvatarEffect colors={colors} toggle={toggle}/>
-                <MainAvatar photos={currentProfile.photos} changeAvaBorderColors={changeAvaBorderColors}/>
+                <MainAvatar
+                    photos={currentProfile.photos}
+                    changeAvaBorderColors={changeAvaBorderColors}
+                />
+                {authID === currentProfile.userId
+                    &&
+                    <input
+                    type={"file"}
+                    onChange={OnPhotoSelected}
+                    ref={inputImgRef}
+                    hidden
+                />}
                 <div  className="profile__info-main-name">
                     Sophie Fortune
                 </div>
                 <div className="profile__info-main-social">
-                    @batm1x
+                    <ProfileStatus status={status} updateStatus={updateStatus}/>
                 </div>
             </div>
             <div className="profile__info-members">
                 <div className="new-members">
-                    <span>New Members</span>
-                    <span>See all</span>
+                    <span>Top viewed</span>
                 </div>
                 <div className="members__list">
                     {topUsers?.map((user) => <TopWriter user={user}/>)}
                 </div>
             </div>
             <div className="profile__info-social">
-                <div className="follow">Follow me</div>
-                <div className="social__media">
-                    <div className="social__media-background">
-                        <img src={instagram} alt='insta'/>
-                    </div>
-                    <div className="social__media-link">
-                        @izyurovy
-                    </div>
+                <div className="follow">
+                    <span>
+                        Follow me
+                    </span>
+                    <span onClick={() => changeEditMode(true)}>
+                        <FormOutlined/>
+                    </span>
                 </div>
+                {!editMode
+                    ?
+                    <>
+                        {Object.keys(currentProfile.contacts).map(key =>
+                            <SocialMediaContact key={key}
+                                                socialMedia={key}
+                                                contactValue={currentProfile.contacts[key as any]}
+                        />)}
+                    </>
+                    :
+                    <ProfileContactsInput
+                        currentProfile={currentProfile}
+                        changeEditMode={changeEditMode}
+                    />}
             </div>
-            {authID === currentProfile.userId && <input type={"file"} onChange={OnPhotoSelected}/>}
+
             {/*{!isShowMyProfile && <button onClick={openDialog}>Send message</button>}*/}
-                {/*<ProfileStatus status={status} updateMyStatus={updateMyStatus}/>*/}
+
             {/*{!editMode && <ProfileData currentProfile={currentProfile}/>}*/}
            {/* {editMode && <ProfileDataInput currentProfile={currentProfile} sendProfileDataOnServ={sendProfileDataOnServ} changeEditMode={changeEditMode}/>}*/}
             {/*{isShowMyProfile && <button onClick={(e) => {changeEditMode(true)}}>Edit</button>}*/}

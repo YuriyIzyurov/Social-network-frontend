@@ -26,15 +26,15 @@ const Chat: React.FC<PropsType> = React.memo(({isActive}) => {
 
     const transition = useTransition(isActive, {
         from:{
-            y: 486,
+            y: 0,
             height: 120,
         },
         enter:{
             y: 0,
-            height:"auto",
+            height:'auto',
         },
         leave:{
-            y: 486,
+            y: 0,
             height: 120
         },
         config:{duration: 90}

@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react"
 
 type PropsType = {
     status: string
-    updateMyStatus:(localStatus:string) => void
+    updateStatus:(localStatus:string) => void
 }
-const ProfileStatus:React.FC<PropsType> = ({status, updateMyStatus}) => {
+const ProfileStatus:React.FC<PropsType> = ({status, updateStatus}) => {
     let [editMode, setState ] = useState(false)
     let [localStatus, setLocalStatus ] = useState(status)
 
@@ -17,17 +17,20 @@ const ProfileStatus:React.FC<PropsType> = ({status, updateMyStatus}) => {
     }
     const updateStatusOnServ = () => {
         setState(false)
-        updateMyStatus(localStatus)
+        updateStatus(localStatus)
+
     }
 
-    return <div>
-        <div>
-            {!editMode && <span onDoubleClick={() => setState(true)}>{status || "no status"}</span>}
+    return(
+        <div className='status-area'>
+            <div className='profile-status'>
+                {!editMode && <span onDoubleClick={() => setState(true)}>{status || "Установить статус"}</span>}
+            </div>
+            <div className='input-status'>
+                {editMode && <input placeholder='Введите статус' onChange={updateLocalStatus}  onBlur={updateStatusOnServ} autoFocus={true} value={localStatus}/>}
+            </div>
         </div>
-        <div>
-            {editMode && <input onChange={updateLocalStatus} autoFocus={true} onBlur={updateStatusOnServ} value={localStatus}/>}
-        </div>
-    </div>
+    )
 }
 
 export default ProfileStatus

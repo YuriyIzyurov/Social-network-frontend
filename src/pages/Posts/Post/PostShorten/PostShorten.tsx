@@ -12,6 +12,8 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 // @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {GetMessageTime} from "utils/Time/CustomTime";
+// @ts-ignore
+import DefaultImage from 'assets/images/defaultPostImage.jpg'
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -48,7 +50,7 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                 <div className={classnames("postPreview__main", {"postPreview__main-tooltip": isTooltipVisible})}>
                     <Link to={`/posts/${id}`}>
                         <div className="postPreview__main-headerImg">
-                            <img src={imageUrl} alt='les' />
+                            <img src={imageUrl ? imageUrl : DefaultImage} alt='image' />
                         </div>
                     </Link>
                     <div className="postPreview__main-info">

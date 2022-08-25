@@ -90,24 +90,27 @@ export const handlePhotoChange = (image:File):ThunkType =>{
     }
 }
 
-//надо будет затипизировать
-export const sendProfileDataOnServ = (newData:CurrentProfileType) =>{
-    return async (dispatch:any, getState:any) => {
+
+export const sendProfileDataOnServ = (newData:CurrentProfileType):ThunkType =>{
+
+    return async (dispatch,getState) => {
         const userId = getState().auth.id
         const response = await profileAPI.updateProfileData(newData)
-        if (response.resultCode === ResultCode.Success) {
+        if (response.resultCode === ResultCode.Success && userId) {
             dispatch(setProfileOnPage(userId))
         } else {
-            let error = response.messages[0]
-            let errorObj = {'_error': error}
-            let match = error.match(/Invalid url format \(Contacts->(.+)\)/)
+            const error = response.messages[0]
+            const errorObj = {
+                '_error': error,
+                'contacts': {}
+            }
+            const match = error.match(/Invalid url format \(Contacts->(.+)\)/)
             if (match) {
-                let fieldName = match[1].toLowerCase()
-                let errorObj = { 'contacts': {}}
+                const fieldName = match[1].toLowerCase()
                 // @ts-ignore
                 errorObj.contacts[fieldName] = error
             }
-            dispatch(/*stopSubmit("ProfileInfo", errorObj)*/)
+            console.log(errorObj)
             throw error
         }
     }

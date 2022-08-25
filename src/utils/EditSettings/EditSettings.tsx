@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './EditSettings.scss'
 import {Popover, Tooltip} from "antd";
 import {CheckOutlined, CloseOutlined, DeleteOutlined, FormOutlined} from "@ant-design/icons";
-import {deletePublication} from "../../redux/postsReducer";
-import {useAppDispatch} from "../../redux/reduxStore";
+import {deletePublication} from "redux/postsReducer";
+import {useAppDispatch} from "redux/reduxStore";
 import {useNavigate} from "react-router";
 
 type PropsType = {

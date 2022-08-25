@@ -76,9 +76,13 @@ const PostFull = () => {
         <Scrollbar>
         <div className="post">
             <div className="post__main">
+                {post.imageUrl
+                    ?
                     <div className="post__main-headerImg">
-                        <img src={post.imageUrl} alt='image'/>
-                    </div>
+                    <img src={post.imageUrl} alt='image'/>
+                </div>
+                    :
+                    <div></div>}
                     <div className="post__main-info">
                         <div className="post__main-info-author">
                             <div style={{display: "flex"}}>

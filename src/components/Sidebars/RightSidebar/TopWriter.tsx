@@ -3,6 +3,7 @@ import {TopUserType} from "components/Sidebars/RightSidebar/ProfileInfo";
 import {useAppDispatch} from "redux/reduxStore";
 import {postsAPI} from "api/postsAPI";
 import {actions} from "redux/postsReducer";
+import {EyeOutlined} from '@ant-design/icons';
 import {useNavigate} from "react-router";
 
 
@@ -28,7 +29,7 @@ const TopWriter = ({user}:{user:TopUserType}) => {
             </div>
             <div className="members__list-item-name">
                 <span>{user.fullName}</span>
-                <span>{user.viewsCount}</span>
+               <span><EyeOutlined />{user.viewsCount}</span>
             </div>
         </div>
     );

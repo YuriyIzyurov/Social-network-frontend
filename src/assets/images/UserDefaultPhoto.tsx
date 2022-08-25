@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserDefaultPhoto = () => {
     return (
-        <svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="140" height="140"  viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="4 1" clip-path="url(#clip0_6_200)">
                 <g id="chelik">
                     <g id="Rectangle 2">

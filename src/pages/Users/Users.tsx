@@ -15,6 +15,7 @@ import {startDialogWithFriend} from "redux/dialogReducer";
 import {useNavigate} from "react-router";
 import Preloader from "common/Preloader/Preloader";
 import {UserList} from "pages/Users/UserList";
+import fill from "zadachi";
 
 type PropsType = {
     totalUsers: number
@@ -47,6 +48,10 @@ const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, use
         let path = `/dialogs/${id}`
         navigate(path)
     }
+    useEffect(() => {
+        let array = [4,2,0,3,2,5]
+        fill(array)
+    },[])
 
     return (
         <div className="users">
