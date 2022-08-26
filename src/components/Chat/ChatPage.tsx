@@ -5,12 +5,13 @@ import {AppDispatch, AppStateType, useAppDispatch} from "redux/reduxStore";
 import {AnyAction} from "redux";
 import { ChatMessageAPIType } from "api/chatAPI";
 import classnames from "classnames";
-import { Input } from 'antd';
+
 import { SendOutlined } from '@ant-design/icons';
 import {animated, useTransition} from "react-spring";
 import Avatar from "components/Dialogs/DialogItem/Avatar";
 import {Link} from "react-router-dom";
-const { TextArea } = Input;
+import {SendMessageForm} from "components/FormikForms/SendMessageForm";
+
 
 
 
@@ -35,7 +36,7 @@ const Chat: React.FC<PropsType> = React.memo(({isActive}) => {
         },
         leave:{
             y: 0,
-            height: 120
+            height: 'auto'
         },
         config:{duration: 90}
     })
@@ -107,29 +108,14 @@ const Message: React.FC<{message: ChatMessageAPIType}> = React.memo(({message}) 
     </div>
 })
 const AddChatMessageForm: React.FC<{}> = ({}) => {
-    const [message, setMessage] = useState('')
-    const status = useSelector((state: AppStateType) => state.chat.status)
 
     const dispatch = useAppDispatch()
 
-    const sendMessageHandler = () => {
+    const sendMessageHandler = (message:string) => {
         if(!message) return
         dispatch(sendMessage(message))
-        setMessage('')
     }
-    return <div className="chat__block-textarea">
-        <div className={classnames("input-full",{"input-empty": !message})} >
-            <TextArea
-                className="textarea"
-                size="small"
-                placeholder="Введите текст сообщения..."
-                autoSize={{ minRows: 2, maxRows: 6 }}
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-            />
-            {message && <SendOutlined onClick={sendMessageHandler} disabled={true} className="icon"/>}
-        </div>
-    </div>
+    return <SendMessageForm sendMessage={sendMessageHandler}/>
 }
 
 export default ChatPage

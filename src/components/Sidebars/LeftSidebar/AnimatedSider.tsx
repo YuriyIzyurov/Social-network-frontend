@@ -4,7 +4,7 @@ import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} fr
 import {Layout} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
-import {getCurrentProfile} from "redux/profile-selectors";
+import {getCurrentProfile, getRedirectStatus} from "redux/profile-selectors";
 import {useTransition, animated} from "react-spring";
 import ChatPage from "components/Chat/ChatPage";
 import {useAppDispatch} from "redux/reduxStore";
@@ -20,7 +20,7 @@ const {Sider} = Layout
 export const AnimatedSider = () => {
 
     const [isActive, setIsActive] = useState(false)
-    const currentProfile = useSelector(getCurrentProfile)
+    const redirectToDialog = useSelector(getRedirectStatus)
     const friends = useSelector(getFriends)
     const currentAuthorID = useSelector(getCurrentAuthor)
     const usersOnPage = useSelector(getUsersOnPage)
@@ -49,7 +49,10 @@ export const AnimatedSider = () => {
         if(currentAuthorID){
             navigate('/posts')
         }
-    },[currentAuthorID])
+        if(redirectToDialog){
+            navigate(`/dialogs/${redirectToDialog}`)
+        }
+    },[currentAuthorID, redirectToDialog])
 
     const clickHandler = () => {
         setIsActive(!isActive)

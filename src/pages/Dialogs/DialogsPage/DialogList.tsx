@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import DialogItem from "pages/Dialogs/DialogItem/DialogItem";
 import {DialogType} from "typings/types";
 import { Empty } from 'antd';
@@ -7,6 +7,7 @@ type PropsType = {
     dialogs: DialogType[]
     filter: string
     selectedId: number | null
+
 }
 export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) => {
 
@@ -17,14 +18,14 @@ export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) =
     return (
         <>
             {filteredDialogs.map(n => <DialogItem name={n.userName}
-                                          key={n.id}
-                                          id={n.id}
-                                          src={n.photos.small}
-                                          hasNewMessages={n.hasNewMessages}
-                                          newMessagesCount={n.newMessagesCount}
-                                          date={n.lastDialogActivityDate}
-                                          activityDate={n.lastUserActivityDate}
-                                          selectedId={selectedId}
+                                                  key={n.id}
+                                                  id={n.id}
+                                                  src={n.photos.small}
+                                                  hasNewMessages={n.hasNewMessages}
+                                                  newMessagesCount={n.newMessagesCount}
+                                                  date={n.lastDialogActivityDate}
+                                                  activityDate={n.lastUserActivityDate}
+                                                  selectedId={selectedId}
 
             />)}
 

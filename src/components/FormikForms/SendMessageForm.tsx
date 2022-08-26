@@ -8,18 +8,17 @@ import classnames from "classnames";
 const { TextArea } = Input;
 
 type PropsType = {
-    id: number | null
-    handlingMessage: (id: number, body: string) => ThunkType
-    setMessageSending: Dispatch<SetStateAction<boolean>>
+    sendMessage:(value:string) => void
 }
-export const SendMessageForm: React.FC<PropsType> = React.memo(({id, handlingMessage, setMessageSending}) => {
+export const SendMessageForm: React.FC<PropsType> = React.memo(({sendMessage}) => {
+
     const [value, setValue] = useState('');
 
-    const sendMessage:MouseEventHandler<HTMLSpanElement> = () => {
-        setMessageSending(true)
-        handlingMessage(id as number, value)
+    const handleMessage = () => {
+        sendMessage(value)
         setValue('')
     }
+
     return (
         <div className="message__form">
             <div className={classnames("message__form--full",{"message__form--empty": !value})} >
@@ -27,11 +26,10 @@ export const SendMessageForm: React.FC<PropsType> = React.memo(({id, handlingMes
                     className="message__form-textarea"
                     size="small"
                     placeholder="Введите текст сообщения..."
-                    autoSize={{ minRows: 2, maxRows: 6 }}
                     value={value}
                     onChange={e => setValue(e.target.value)}
                 />
-                {value && <SendOutlined onClick={sendMessage} disabled={true} className="message__form-icon"/>}
+                {value && <SendOutlined onClick={handleMessage} disabled={true} className="message__form-icon"/>}
             </div>
         </div>
 

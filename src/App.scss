@@ -41,13 +41,11 @@
       align-items: center;
       flex-direction: column;
       position: absolute;
-      width: 305px;
+      width: 335px;
       height: 100px;
-      top: 137px;
-      right: 1px;
-      left: -9px;
+      top: 129px;
+      left: 1px;
       background: #2c2f48;
-      margin-left: 30px;
       border-radius: 20px;
       box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
       .friends__list-short{
@@ -86,13 +84,11 @@
       align-items: center;
       flex-direction: column;
       position: absolute;
-      width: 305px;
-      max-height: 605px;
-      top: 239px;
-      right: 1px;
-      left: -9px;
+      width: 335px;
+      max-height: 738px;
+      top: 231px;
+      left: 1px;
       background: #2c2f48;
-      margin-left: 30px;
       border-radius: 20px;
       box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
       &-name {
@@ -129,7 +125,7 @@
             display: flex;
             flex-direction: column;
             span:first-child{
-              color: #5f3ec7;
+              color: #2c2f48;
             }
             p{
               overflow: hidden;
@@ -138,45 +134,21 @@
           }
         }
       }
-      &-textarea {
-        padding: 20px;
-        width: 100%;
-        background: #393d5d;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-      .input-full {
-        width: 260px;
-        display: flex;
-        align-items: center;
-        .ant-input {
-          color: white;
-          background: #393d5d !important;
-        }
-        .ant-input:hover,
-        .ant-input:focus{
-          border-color: #b5cff8;
-        }
-        span {
-          font-size: 24px;
-          padding-left: 5px;
-          color: #b6d1f9;
-        }
-      }
-      }
+
     }
   }
 
   &-left-sider {
     position: fixed;
-    margin-top: 55px;
-    inset: 20px;
+    margin-top: 66px;
+    inset: 1px;
     background: #2c2f48;
-    width: 307px;
+    width: 335px;
     border-left: 10px solid #2c2f48;
     border-radius: 15px;
     box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
     overflow: hidden;
-    max-height: 800px;
+    max-height: 920px;
     transition: max-height 0.2s;
     ul {
       position: absolute;
@@ -575,9 +547,9 @@
         }
         &-social {
           cursor: pointer;
-          width: 178px;
+          width: 205px;
           height: 18px;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           margin-top: 4px;
           line-height: 18px;
           text-align: center;
@@ -591,6 +563,12 @@
             .profile-status:hover{
               opacity: 0.6;
             }
+            .profile-status-notMe {
+              cursor: context-menu;
+              span{
+                color: rgba(255, 255, 255, 0.45);
+              }
+            }
             .input-status {
               input {
                 background-color: #393d5d;
@@ -600,6 +578,21 @@
                 outline: none;
               }
             }
+          }
+        }
+        &-sendMessage{
+          height: 24px;
+          padding: 0 5px;
+          cursor: pointer;
+          span{
+            color: #868896;
+            font-size: 16px;
+          }
+        }
+        &-sendMessage:hover{
+          background-color: #393d5d;
+          span{
+            color: #FFFFFF;
           }
         }
       }
@@ -745,33 +738,7 @@
             opacity: 0.5;
           }
         }
-        .social__media{
-          display: flex;
-          padding: 8px 40px 8px 8px;
-          margin-bottom: 8px;
-          width: 100%;
-          height: 60px;
-          background: #393D5D;
-          background-blend-mode: overlay;
-          border-radius: 5px;
-          box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
-          &-background{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 8px;
-            width: 44px;
-            height: 44px;
-            background-color: #2E314B;
-            clip-path: polygon(50% 0%, 89% 22%, 95% 32%, 95% 69%, 89% 78%, 50% 104%, 8% 75%, 4% 68%, 4% 34%, 10% 24%);
-          }
 
-          &-link{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-          }
-        }
       }
     }
   }
@@ -800,6 +767,9 @@
 }
 .ant-menu-submenu-selected {
   color: green !important;
+}
+.ant-scrolling-effect{
+  width:100% !important;
 }
 
 

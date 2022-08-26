@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {MouseEventHandler, useEffect, useState} from "react"
 import {DialogType, SelfPrivateMessageType} from "typings/types";
 import {actions, handlingDialogs, handlingMessageList, ThunkType} from "redux/dialogReducer";
 import {Empty} from 'antd'
@@ -14,6 +14,8 @@ import {DialogList} from "pages/Dialogs/DialogsPage/DialogList";
 import {MessagesList} from "pages/Dialogs/Message/MessagesList";
 import {DialogHeader} from "pages/Dialogs/DialogsPage/DialogHeader";
 import {Link} from "react-router-dom";
+import StyledSearch from "components/StyledSearch";
+import ModalCloseDialog from "components/ModalCloseDialog";
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -47,26 +49,32 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
         if(id) thunkDispatch(handlingMessageList(id, activePage,messagesOnPage))
     }, [privateMessageData])
 
+    const sendMessage = (value:string) => {
+        setMessageSending(true)
+        handlingMessage(id as number, value)
 
+    }
     const [filter, setFilter] = useState('')
+
+    const handleSetFilter = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setFilter(e.target.value)
+    }
 
     return <section className="home">
         <div className="chat">
             <div className="chat__sidebar">
                 <div className="chat__sidebar-header">
-                    <Link to={`/posts/62edf411f4bd0d10e74f4e9b`}>
                     <div>
                         <TeamOutlined />
                         <span>Список диалогов</span>
                     </div>
-                    </Link>
                     <FormOutlined />
                 </div>
                 <div className="chat__sidebar-search">
-                    <Search  placeholder="Поиск среди контактов" allowClear onChange={e => setFilter(e.target.value)} />
+                    <StyledSearch  handleSetFilter={handleSetFilter}/>
                 </div>
                 <div className="chat__sidebar-list">
-                    <DialogList selectedId={id} dialogs={dialogs} filter={filter}/>
+                    <DialogList selectedId={id} dialogs={dialogs} filter={filter} />
                 </div>
             </div>
             <div className="chat__dialog">
@@ -80,7 +88,7 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
                     {!userID && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
                 </div>
                 <div className="chat__dialog-input">
-                    {userID && <SendMessageForm id={id} handlingMessage={handlingMessage} setMessageSending={setMessageSending}/>}
+                    {userID && <SendMessageForm sendMessage={sendMessage}/>}
                 </div>
             </div>
         </div>

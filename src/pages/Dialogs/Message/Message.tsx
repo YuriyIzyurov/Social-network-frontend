@@ -27,7 +27,7 @@ const Message: React.FC<PropsType> = React.memo(({message, avatar, date, isMe,vi
                     <img src={avatar} alt="User"/>
                 </div>
                 <div className="message__content-info-bubble">
-                    <p className="message__content-bubble-text">{message}</p>
+                    <p>{message}</p>
                 </div>
                 {viewed && <img src={MessageReadImage} alt=""/>}
                 {!viewed && <img src={MessageNoReadImage} alt=""/>}

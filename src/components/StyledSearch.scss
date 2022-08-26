@@ -1,0 +1,39 @@
+.ant-input-affix-wrapper{
+  background-color: #393d5d !important;
+  input{
+    background-color: #393d5d !important;
+    color: #FFFFFF;
+  }
+  &:hover,
+  &:focus{
+    border-color: #b5cff8 !important;
+  }
+  &:focus{
+    box-shadow: 0 0 0 2px rgb(180, 205, 247);
+  }
+  .ant-input-clear-icon{
+    background-color: inherit !important;
+    svg{
+      color: #FFFFFF;
+    }
+  }
+}
+.ant-input-affix-wrapper-focused{
+ border-color: #b3cbf6 !important;
+}
+.ant-input-search-button{
+  background-color: #393d5d !important;
+  span{
+    color: #FFFFFF !important;
+    background-color: #393d5d !important;
+    svg{
+      background-color: #393d5d !important;
+    }
+  }
+  &:hover{
+    border-color: #b5cff8 !important;
+    span{
+      color:#b5cff8 !important;
+    }
+  }
+}

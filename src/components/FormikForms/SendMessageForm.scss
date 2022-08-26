@@ -1,12 +1,21 @@
 .message__form {
-  width: 460px;
+  width: 100%;
+  padding:20px;
   display: flex;
   &-textarea{
-    background-color: #f7f8f9
+    background: #393d5d;
   }
   &--full {
-    width: 460px;
+    width: 430px;
+    margin: 0 auto;
     display: flex;
+    .ant-input{
+      color: white;
+    }
+    .ant-input:hover,
+    .ant-input:focus{
+      border-color: #b5cff8;
+    }
   }
   &-icon {
     font-size: 25px;
@@ -18,11 +27,36 @@
     transition: opacity 0.2s ease-in-out;
     &:hover {
       opacity: 1;
-      color: #03325e;
+      color: #b6d1f9;
       cursor: pointer;
     }
   }
 }
-.message__form--empty{
-  width: 430px
-}
+
+
+/*
+&-textarea {
+  padding: 20px;
+  width: 100%;
+  background: #393d5d;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  .input-full {
+    width: 260px;
+    display: flex;
+    align-items: center;
+    .ant-input {
+      color: white;
+      background: #393d5d !important;
+    }
+    .ant-input:hover,
+    .ant-input:focus{
+      border-color: #b5cff8;
+    }
+    span {
+      font-size: 24px;
+      padding-left: 5px;
+      color: #b6d1f9;
+    }
+  }
+}*/

@@ -8,7 +8,9 @@ import Skeleton from 'antd/lib/skeleton/Skeleton';
 import {CommentsType} from "typings/types";
 import PostTag from 'components/PostTag';
 import classnames from "classnames";
-
+import StyledSearch from 'components/StyledSearch';
+import { Segmented } from 'antd';
+import { SegmentedValue } from 'antd/lib/segmented';
 
 type PropsType= {
     loadPopularPosts: () => void
@@ -18,9 +20,9 @@ type PropsType= {
 }
 const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isMyTabPicked}) => {
 
-    const [newActive, setNewActive] = useState(true)
+    /*const [newActive, setNewActive] = useState(true)
     const [popActive, setPopActive] = useState(false)
-    const [myActive, setMyActive] = useState(false)
+    const [myActive, setMyActive] = useState(false)*/
 
     const [tags, setTags] = useState<string[] | undefined>(undefined)
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined)
@@ -28,13 +30,16 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if(isMyTabPicked) {
+       /* if(isMyTabPicked) {
             setMyActive(true)
             setPopActive(false)
             setNewActive(false)
-        }
+        }*/
         getTags()
         getComments()
+        return () => {
+            dispatch(actions.pickMineTab(true))
+        }
     }, [])
 
     const getComments = async () => {
@@ -51,33 +56,58 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
         })
     }
     const newTabHandler = () => {
-        setNewActive(true)
+        /*setNewActive(true)
         setPopActive(false)
-        setMyActive(false)
+        setMyActive(false)*/
         loadAllPosts()
     }
     const popTabHandler = () => {
-        setPopActive(true)
+       /* setPopActive(true)
         setNewActive(false)
-        setMyActive(false)
+        setMyActive(false)*/
         loadPopularPosts()
     }
     const myTabHandler = () => {
-        setMyActive(true)
+        /*setMyActive(true)
         setPopActive(false)
-        setNewActive(false)
+        setNewActive(false)*/
         loadMyPosts()
+    }
+    const handleSegmentChange = (value:SegmentedValue) => {
+        switch (value) {
+            case "Новые":
+                newTabHandler()
+                break
+            case "Популярные":
+                popTabHandler()
+                break
+            case "Мои":
+                myTabHandler()
+                break
+            default:
+                break
+        }
     }
 
     return (
         <div className="searchPost">
             <div className="searchPost__navigation">
-                <span onClick={newTabHandler} className={newActive ? "navigation-active" : ""}>Новые</span>
+                <Segmented
+                    block
+                    onChange={handleSegmentChange}
+                    defaultValue={isMyTabPicked ? "Мои" : "Автор"}
+                    options={[
+                    "Новые",
+                    "Популярные",
+                    "Мои",
+                    "Автор"
+                ]} />
+                {/*<span onClick={newTabHandler} className={newActive ? "navigation-active" : ""}>Новые</span>
                 <span onClick={popTabHandler} className={popActive ? "navigation-active" : ""}>Популярные</span>
-                <span onClick={myTabHandler} className={myActive ? "navigation-active" : ""}>Мои</span>
+                <span onClick={myTabHandler} className={myActive ? "navigation-active" : ""}>Мои</span>*/}
             </div>
             <div className="searchPost__input">
-                <Search  placeholder="Поиск по названию, тэгам" allowClear  onSearch={searchPosts}/>
+                <StyledSearch searchPosts={searchPosts}/>
             </div>
             <div className="searchPost__tagBlock">
                 <span>Популярные тэги</span>

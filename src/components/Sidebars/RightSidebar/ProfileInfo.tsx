@@ -3,6 +3,7 @@ import { FormOutlined} from "@ant-design/icons";
 // @ts-ignore
 import UserDefaultPhoto from 'assets/images/UserDefaultPhoto'
 import {actions, getUserStatusInProfile, handlePhotoChange, updateMyStatus} from "redux/profileReducer";
+import {actions as dialogActions} from "redux/dialogReducer";
 import {useAppDispatch} from "redux/reduxStore";
 import {startDialogWithFriend} from "redux/dialogReducer";
 // @ts-ignore
@@ -80,11 +81,16 @@ const ProfileInfo = React.memo(() => {
     },[colors])
 
 
-  /*  const openDialog = () =>{
-        dispatch(startDialogWithFriend(currentProfile.userId))
-        /!*let path = `/dialogs/${currentProfile.userId}`
-        navigate(path)*!/
-    }*/
+    const openDialog = () =>{
+        if(currentProfile){
+            dispatch(startDialogWithFriend(currentProfile.userId))
+            dispatch(actions.setRedirect(currentProfile.userId))
+            dispatch(dialogActions.setDialogID(currentProfile.userId))
+        }
+
+        /*let path = `/dialogs/${currentProfile.userId}`
+        navigate(path)*/
+    }
 
     if(!currentProfile) return <Preloader/>
 
@@ -118,11 +124,27 @@ const ProfileInfo = React.memo(() => {
                     hidden
                 />}
                 <div  className="profile__info-main-name">
-                    Sophie Fortune
+                    {currentProfile.fullName}
                 </div>
                 <div className="profile__info-main-social">
-                    <ProfileStatus status={status} updateStatus={updateStatus}/>
+                    <ProfileStatus
+                        status={status}
+                        updateStatus={updateStatus}
+                        currentProfile={currentProfile.userId}
+                        authID={authID}
+                    />
                 </div>
+                {authID !== currentProfile.userId
+                    ?
+                    <div onClick={openDialog} className="profile__info-main-sendMessage">
+                        <span>
+                            Написать сообщение
+                        </span>
+                    </div>
+                    :
+                    <div style={{height:'24px'}}>
+                    </div>
+                }
             </div>
             <div className="profile__info-members">
                 <div className="new-members">
@@ -137,18 +159,23 @@ const ProfileInfo = React.memo(() => {
                     <span>
                         Follow me
                     </span>
-                    <span onClick={() => changeEditMode(true)}>
-                        <FormOutlined/>
-                    </span>
+                    {currentProfile.userId === authID &&
+                        <span onClick={() => changeEditMode(true)}>
+                             <FormOutlined/>
+                        </span>
+                    }
                 </div>
                 {!editMode
                     ?
                     <>
-                        {Object.keys(currentProfile.contacts).map(key =>
-                            <SocialMediaContact key={key}
-                                                socialMedia={key}
-                                                contactValue={currentProfile.contacts[key as any]}
-                        />)}
+                        {Object.keys(currentProfile.contacts).map(key => {
+                            if(key === 'vk'||key ==='instagram'||key ==='github') {
+                                return <SocialMediaContact key={key}
+                                                           socialMedia={key}
+                                                           contactValue={currentProfile.contacts[key as any]}
+                                />
+                            }
+                        })}
                     </>
                     :
                     <ProfileContactsInput

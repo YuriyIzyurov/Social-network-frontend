@@ -191,6 +191,23 @@
     display: flex;
     justify-content: center;
     padding:0 0 10px;
+    .ant-segmented{
+      width: 100%;
+      &-item{
+        color:white;
+        &-label{
+          padding: 0 4px;
+        }
+        &-selected{
+          color: black;
+        }
+      }
+      label:last-child{
+        width: 0;
+        overflow: hidden;
+        flex: inherit;
+      }
+    }
     span{
       display: flex;
       flex-direction: column-reverse;

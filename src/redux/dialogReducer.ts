@@ -121,6 +121,9 @@ export const handlingMessage =  (id: number, body: string): ThunkType => {
 export const startDialogWithFriend = (id: number):ThunkType => {
     return async (dispatch) => {
         let response = await dialogsAPI.startChatting(id)
+        if(response.resultCode !== 0) {
+            console.log('check')
+        }
     }
 }
 export const handlingMessageList =  (id: number, activePage: number, messagesOnPage: number): ThunkType => {
