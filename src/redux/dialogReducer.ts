@@ -18,6 +18,7 @@ import {ThunkAction} from "redux-thunk/es/types";
 import {dialogsAPI} from "../api/dialogsAPI";
 import {ResultCode} from "../api/api";
 import {profileAPI} from "../api/profileAPI";
+import {DeleteNotification, SpamNotification} from "common/constants/constants";
 
 
 
@@ -28,11 +29,16 @@ export type FriendFilterType = {
     term: string
     friend: boolean
 }
+export type SpamDataType = {
+    messageId:string
+    message:string
+}
+type Delete = "delete"
+type Spam = "spam"
 
 let initialState = {
     privateMessageData : [] as Array<SelfPrivateMessageType>,
     messagesList: [] as Array<AllMessageType>,
-    lastMessage: [] as Array<string>,
     textAreaMess : '',
     dialogs: [] as Array<DialogType>,
     activePage: 1,
@@ -40,7 +46,8 @@ let initialState = {
     isFetching: false,
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,
-    dialogID: null as number | null
+    dialogID: null as number | null,
+    deletedMessages: [] as Array<SpamDataType>
 }
 
 const dialogReducer = (state = initialState,action:ActionType | UserActionType | SidebarActionType):InitialStateType => {
@@ -57,10 +64,24 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
                 ...state,
                 messagesList : [...action.messages]
             }
-       case "LAST_MESSAGE":
+        case "MUTATE_MESSAGE_LIST":
             return {
                 ...state,
-                lastMessage : [...state.lastMessage, action.lastMessage]
+                messagesList : [...state.messagesList.map(item => {
+                    if(item.id === action.messageId){
+                        if(action.message) {
+                            item.body = action.message
+                        } else {
+                            if(action.reason === 'spam') {
+                                item.body = SpamNotification
+                            }
+                            if(action.reason === 'delete') {
+                                item.body = DeleteNotification
+                            }
+                        }
+                    }
+                    return item
+                })]
             }
        case "CLEAR_MESSAGES":
             return {
@@ -94,6 +115,17 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType |
                 ...state,
                 dialogID: action.id
             }
+        case "MARK_MESSAGE_ID_AS_DELETED":
+            return {
+                ...state,
+                deletedMessages: [...state.deletedMessages, action.payload]
+            }
+        case "REMOVE_MARK_OF_DELETE":
+            return {
+                ...state,
+                deletedMessages: [...state.deletedMessages.filter(item => item.messageId !== action.messageId)]
+            }
+
 
         default:
             return state
@@ -113,8 +145,6 @@ export const handlingMessage =  (id: number, body: string): ThunkType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
         dispatch(actions.sendNewMessage(response.data.message))
-        /*let date = new Date();
-        console.log(date.toISOString().slice(0,23))*/
     }
 }
 
@@ -135,11 +165,28 @@ export const handlingMessageList =  (id: number, activePage: number, messagesOnP
 
     }
 }
-export const getLastMessage =  (id: number, activePage: number, messagesOnPage: number): ThunkType => {
+export const handlingSpamMessage =  (messageId: string, message: string): ThunkType => {
     return async (dispatch, getState) => {
-        let response = await dialogsAPI.getFriendMessagesList(id, activePage, messagesOnPage)
-        let lastMessage = response.items[messagesOnPage]
-        dispatch(actions.setLastMessage(lastMessage))
+        await dialogsAPI.markMessageAsSpam(messageId)
+        dispatch(actions.mutateMessageList(messageId, undefined ,'spam'))
+        const payload:SpamDataType = {messageId, message}
+        dispatch(actions.markMessageIdAsDeleted(payload))
+    }
+}
+export const handlingDeleteMessage =  (messageId: string, message: string): ThunkType => {
+    return async (dispatch, getState) => {
+        let response = await dialogsAPI.deleteMessage(messageId)
+        console.log(response)
+        dispatch(actions.mutateMessageList(messageId, undefined, 'delete'))
+        const payload:SpamDataType = {messageId, message}
+        dispatch(actions.markMessageIdAsDeleted(payload))
+    }
+}
+export const handlingRestoreMessage =  (messageId: string, message:string | undefined): ThunkType => {
+    return async (dispatch, getState) => {
+        await dialogsAPI.restoreDeletedMessage(messageId)
+        dispatch(actions.mutateMessageList(messageId,message))
+        dispatch(actions.deleteMark(messageId))
     }
 }
 
@@ -149,12 +196,14 @@ export const actions = {
     sendNewMessage: (messageData: SelfPrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
     setDialogs: (dialogs: Array<DialogType>) => ({type: "SET_DIALOGS", dialogs} as const),
     setMessages: (messages: Array<AllMessageType>) => ({type: "SET_MESSAGES", messages} as const),
-    setLastMessage: (lastMessage: string) => ({type: "LAST_MESSAGE", lastMessage} as const),
     clearMessageList: () => ({type: "CLEAR_MESSAGES"} as const),
     setActiveDialogPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
     dialogListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
     clearDialogList: () => ({type: "CLEAR_DIALOG_LIST"} as const),
-    setDialogID: (id:number) => ({type: "SET_DIALOG_ID", id} as const)
+    setDialogID: (id:number | null) => ({type: "SET_DIALOG_ID", id} as const),
+    mutateMessageList: (messageId:string, message?:string | undefined, reason?: Delete | Spam) => ({type: "MUTATE_MESSAGE_LIST", messageId,message,reason} as const),
+    markMessageIdAsDeleted: (payload:SpamDataType) => ({type: "MARK_MESSAGE_ID_AS_DELETED", payload}as const),
+    deleteMark: (messageId:string) => ({type: "REMOVE_MARK_OF_DELETE", messageId}as const),
 }
 
 export default dialogReducer

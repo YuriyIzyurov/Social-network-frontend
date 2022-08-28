@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {svgList} from "../../../common/constants/ListSVG";
 import AvatarEffect from "./AvatarEffect";
-import {animated, easings, useSprings} from 'react-spring'
+import {animated, easings, SpringValue, SpringValues, useSprings} from 'react-spring'
 
 
 export const ContainerAvatarEffect = ({colors, toggle}:{colors:string[], toggle: boolean}) => {
@@ -41,15 +41,21 @@ export const ContainerAvatarEffect = ({colors, toggle}:{colors:string[], toggle:
             }
         }
     }))
-
-    const animatedFigures = springs.map((animatedStyle, index) => {
+    const Figure = ({animatedStyle, index}:{animatedStyle: any, index:number}) => {
         return <animated.svg style={{
             transformOrigin: "center",
             transformBox: "fill-box",
             ...animatedStyle
         }
         }>{figures[index]}</animated.svg>
-    })
+    }
+
+    const animatedFigures = springs.map((animatedStyle, index) =>
+        <Figure
+            key={'style' + index}
+            animatedStyle={animatedStyle}
+            index={index}
+        />)
 
     return (
         <>

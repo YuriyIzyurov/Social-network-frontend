@@ -22,16 +22,52 @@
         }
       }
       &-bubble{
+        cursor: pointer;
         background: #b6d1f9;
         box-shadow: 0px 5px 5px rgba(54, 116, 255, 0.196733);
         border-radius: 12px 12px 12px 0px;
-        padding: 15px;
+        padding: 10px;
         p {
           color: #090909;
-          line-height: 20px;
+          line-height: 25px;
+          margin-bottom: 0;
         }
       }
+      .deleted-message{
+        font-style: italic;
+        cursor: default;
+      }
+      &-options{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        opacity:0.7;
+        .deleteAndSpam{
+          display: flex;
+          flex-direction: column;
+          margin-right: 3px;
+          margin-left: 3px;
+          span{
+            margin-top: 5px;
+          }
+        }
+
+      }
+      .spam-restore{
+        cursor: pointer;
+        line-height: 13px;
+        height: 13px;
+        align-self: center;
+        padding: 0 5px;
+        opacity: 0.6;
+        font-size: 13px;
+        &:hover {
+          opacity: 0.3;
+        }
+      }
+
     }
+
     &-date{
       font-size: 12px;
       opacity: 0.5;

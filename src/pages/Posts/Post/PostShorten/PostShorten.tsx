@@ -14,6 +14,7 @@ import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {GetMessageTime} from "utils/Time/CustomTime";
 // @ts-ignore
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
+import {Tag} from "pages/Posts/ProfilePage/PublicationShort";
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -70,7 +71,7 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                                 <h1>{title}</h1>
                             </div>
                             <div className="postPreview__main-info-tags">
-                                {tags.map((item) => <span>#{item}</span>)}
+                                {tags.map((item) => <Tag key={'tag-' + item} item={item}/>)}
                             </div>
                             <div className="postPreview__main-info-text">
                                 <ReactMarkdown children={text}

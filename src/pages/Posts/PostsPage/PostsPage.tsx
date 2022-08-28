@@ -47,10 +47,6 @@ const PostsPage = () => {
         if(isMyTabPicked) {
             loadMyPosts()
             dispatch(actions.pickMineTab(false))
-        } else {
-            //dispatch(handlingAuthDataBlog())
-           // dispatch(getAllPosts())
-            console.log('load posts')
         }
         return () => {
             dispatch(actions.addSearchFilter(null))

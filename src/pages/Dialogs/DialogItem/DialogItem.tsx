@@ -7,8 +7,6 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {useAppDispatch} from "redux/reduxStore";
 import {
     actions,
-    getLastMessage,
-    handlingMessage,
     handlingMessageList,
     startDialogWithFriend
 } from "redux/dialogReducer";
@@ -19,6 +17,7 @@ import { isUserOnline } from 'utils/Time/isUserOnline';
 import { customAvatar } from 'utils/Avatar/AvatarGenerator';
 import { CloseOutlined } from '@ant-design/icons';
 import {Modal, Tooltip} from "antd";
+import {dialogsAPI} from "api/dialogsAPI";
 const { confirm } = Modal;
 
 
@@ -53,20 +52,22 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
     let messagesOnPage = useSelector(getMessagesOnPage)
     const [isShown, setIsShown] = useState<boolean>(false);
 
-    useEffect(() => {
-        getLastMessage(id, activePage, 1)
-    }, [])
+
+    const removeDialog = async () => {
+        let response = await dialogsAPI.deleteChatting(id)
+        console.log(response)
+    }
 
     const showDeleteConfirm = () => {
         confirm({
-            title: 'Are you sure delete this task?',
+            title: 'Вы уверены, что хотите удалить диалог?',
             icon: <ExclamationCircleOutlined />,
-            content: 'Some descriptions',
+            content: 'Восстановить сообщения будет невозможно',
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                console.log('OK');
+                removeDialog()
             },
             onCancel() {
                 console.log('Cancel');
@@ -75,7 +76,7 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
     };
 
     const getMessageList = () => {
-       dispatch(handlingMessageList(id, activePage, messagesOnPage))
+        dispatch(handlingMessageList(id, activePage, messagesOnPage))
         dispatch(actions.setDialogID(id))
     }
     const deleteDialog = (e:React.MouseEvent<HTMLSpanElement>) => {
@@ -112,7 +113,6 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
                         <div className="dialog__item-info-bottom">
                             {!isUserOnline(activityDate) && <p><CustomTimeDistanceToNow date={activityDate}/></p>}
                             {isUserOnline(activityDate) && <p>В сети</p>}
-                            <img className="dialog__item-info-bottom-png" src={UnreadMessage} alt=""/>
                             {hasNewMessages && <div className="dialog__item-info-bottom-count">{newMessagesCount}</div>}
                         </div>
                     </div>

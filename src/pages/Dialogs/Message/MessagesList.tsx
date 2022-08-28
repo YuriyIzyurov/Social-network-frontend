@@ -40,13 +40,16 @@ export const MessagesList: React.FC<PropsType> = React.memo(({dialogs, id, setMe
     }
     return (
         <>
-            {messageList.map((m) => <Message key={m.id}
-                                             message={m.body}
-                                             avatar={m.senderId === isMe ? authAvatar : recipientAvatar}
-                                             date={m.addedAt}
-                                             isMe={m.senderId === isMe}
-                                             viewed={m.senderId !== isMe ? true : m.viewed}
-            />)}
+            {messageList.map((m) =>
+                <Message
+                    key={m.id}
+                    messageId={m.id}
+                    message={m.body}
+                    avatar={m.senderId === isMe ? authAvatar : recipientAvatar}
+                    date={m.addedAt}
+                    isMe={m.senderId === isMe}
+                    viewed={m.senderId !== isMe ? true : m.viewed}
+                />)}
             <div ref={messagesRef}></div>
         </>
     );

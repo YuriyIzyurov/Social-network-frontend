@@ -147,11 +147,14 @@ const PostFull = () => {
                        Комментарии
                     </span>
                     </div>
-                    {comments?.map((item) => <Comment item={item}
-                                                      bloggerId={id}
-                                                      getCommentsOfPost={getCommentsOfPost}
+                    {comments?.map((item) =>
+                        <Comment
+                            key={item._id}
+                            item={item}
+                            bloggerId={id}
+                            getCommentsOfPost={getCommentsOfPost}
 
-                    />)}
+                        />)}
                     <SendComment sendComment={sendComment}/>
                 </div>
             </div>

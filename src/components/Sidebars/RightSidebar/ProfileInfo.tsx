@@ -151,7 +151,7 @@ const ProfileInfo = React.memo(() => {
                     <span>Top viewed</span>
                 </div>
                 <div className="members__list">
-                    {topUsers?.map((user) => <TopWriter user={user}/>)}
+                    {topUsers?.map((user) => <TopWriter key={user.id} user={user}/>)}
                 </div>
             </div>
             <div className="profile__info-social">

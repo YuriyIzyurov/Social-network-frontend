@@ -15,7 +15,7 @@ import {MessagesList} from "pages/Dialogs/Message/MessagesList";
 import {DialogHeader} from "pages/Dialogs/DialogsPage/DialogHeader";
 import {Link} from "react-router-dom";
 import StyledSearch from "components/StyledSearch";
-import ModalCloseDialog from "components/ModalCloseDialog";
+
 
 type PropsMessagesType = {
     dialogs: Array<DialogType>
@@ -43,6 +43,7 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
         thunkDispatch(handlingDialogs())
         return () => {
             dispatch(actions.clearDialogList())
+            dispatch(actions.setDialogID(null))
         }
     }, [])
     useEffect(() => {

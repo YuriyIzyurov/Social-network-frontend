@@ -11,11 +11,21 @@ const PublicationShort = ({item}:{item: PostType}) => {
                     <img src={item.imageUrl ? item.imageUrl : DefaultImage} alt='image'/>
                 <div className="publication__glass">
                     <h2>{item.title}</h2>
-                    <p>{item.tags.map((item)=><span>#{item}</span>)}</p>
+                    <p>{item.tags.map((item)=><Tag key={'tag-' + item} item={item}/>)}</p>
                 </div>
             </Link>
         </div>
     );
 };
+
+
+
+export const Tag = ({item}:{item:string}) => {
+    return (
+        <span>#{item}</span>
+    );
+};
+
+
 
 export default PublicationShort;

@@ -11,6 +11,7 @@ type PropsType = {
 }
 export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) => {
 
+    console.log(dialogs)
     const filteredDialogs = dialogs.filter(dialog => dialog.userName.toLowerCase().indexOf(filter) !== -1)
     if (filteredDialogs.length === 0) {
         return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Нет диалогов"/>

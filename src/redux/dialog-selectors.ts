@@ -29,3 +29,6 @@ export const getFriendsIsFetching = (state:AppStateType) => {
 export const getCurrentDialogID = (state:AppStateType) => {
     return state.dialog.dialogID
 }
+export const getListOfDeletedMessages = (state:AppStateType) => {
+    return state.dialog.deletedMessages
+}

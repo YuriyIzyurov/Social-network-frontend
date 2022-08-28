@@ -112,7 +112,7 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
             <div className="searchPost__tagBlock">
                 <span>Популярные тэги</span>
                 <div className="searchPost__tagBlock-tags">
-                    {tags ? tags.map((item)=><PostTag item={item}/>)
+                    {tags ? tags.map((item, index)=><PostTag key={'tag-' + index} item={item}/>)
                         : <Skeleton title={false}
                               active paragraph={{ rows: 5, width: ["60%","45%","50%","55%","40%",]}}/>}
                 </div>
@@ -120,7 +120,7 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
             <div className="searchPost__comments">
                 <span className="comments-description">Последние комментарии</span>
                 <div className="searchPost__comments-list">
-                    {comments?.map((item) => <LastComment item={item} />)}
+                    {comments?.map((item) => <LastComment key={item._id} item={item} />)}
                 </div>
             </div>
         </div>

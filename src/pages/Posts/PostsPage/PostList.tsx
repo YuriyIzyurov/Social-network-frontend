@@ -10,7 +10,7 @@ type PropsType = {
 const PostList:React.FC<PropsType> = ({posts,id, isFetching}) => {
 
 
-    const SkeletonArray = Array.from({length: posts.length}).map(() => <PostSkeleton/>)
+    const SkeletonArray = Array.from({length: posts.length}).map((_,index) => <PostSkeleton key={'skeleton' + index}/>)
 
     return (
     <>

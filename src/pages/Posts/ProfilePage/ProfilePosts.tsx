@@ -71,8 +71,8 @@ const ProfilePosts = () => {
                 </div>
             </div>
             <div className="profile__posts-publications">
-                {isLoading ? Array.from({length: 3}).map(() => <PublicationShortSkeleton/>)
-                : topPosts.map((item) => <PublicationShort item={item}/>)}
+                {isLoading ? Array.from({length: 3}).map((_,index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
+                : topPosts.map((item) => <PublicationShort key={item._id} item={item}/>)}
             </div>
             <div className="profile__posts-mine">
                 <div className="description">
@@ -84,8 +84,8 @@ const ProfilePosts = () => {
                 </div>
             </div>
             <div className="profile__posts-publications">
-                {isLoading ? Array.from({length: 3}).map(() => <PublicationShortSkeleton/>)
-                    : myPosts.slice(0,3).map((item) => <PublicationShort item={item}/>)}
+                {isLoading ? Array.from({length: 3}).map((_,index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
+                    : myPosts.slice(0,3).map((item) => <PublicationShort key={item._id} item={item}/>)}
             </div>
             {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null} getPostById={null}/>}
         </div>

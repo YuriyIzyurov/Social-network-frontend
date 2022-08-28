@@ -41,9 +41,6 @@ export const AnimatedSider = () => {
         dispatch(handlingSidebarUsers())
     },[])
 
-    useEffect(() => {
-            console.log(friends,totalFriends)
-    },[friends])
 
     useEffect(() => {
         if(currentAuthorID){
@@ -94,7 +91,7 @@ export const AnimatedSider = () => {
                                     <span onClick={openFriendList}>Friends ({totalFriends})</span>
                                 </div>}
                         <div className="friends__list">
-                            {friends && friends.map((item) => <FriendItem item={item}/>)}
+                            {friends && friends.map((item) => <FriendItem key={item.id} item={item}/>)}
                         </div>
                     </div>
                     <div
@@ -110,7 +107,7 @@ export const AnimatedSider = () => {
                                     <span onClick={openFriendList}>Friends ({totalFriends})</span>
                                 </div>}
                         <div className="friends__list-short">
-                            {friends && friends.slice(0,5).map((item) => <FriendItemShort item={item}/>)}
+                            {friends && friends.slice(0,5).map((item) => <FriendItemShort key={item.id} item={item}/>)}
                         </div>
                     </animated.div> : ''
                 )}
