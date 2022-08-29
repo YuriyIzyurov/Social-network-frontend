@@ -18,7 +18,7 @@ import {ThunkAction} from "redux-thunk/es/types";
 import {dialogsAPI} from "../api/dialogsAPI";
 import {ResultCode} from "../api/api";
 import {profileAPI} from "../api/profileAPI";
-import {DeleteNotification, SpamNotification} from "common/constants/constants";
+import {DeleteNotification, SpamNotification} from "constants/constants";
 
 
 
@@ -42,7 +42,7 @@ let initialState = {
     textAreaMess : '',
     dialogs: [] as Array<DialogType>,
     activePage: 1,
-    messagesOnPage: 13,
+    messagesOnPage: 20,
     isFetching: false,
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,
@@ -161,8 +161,11 @@ export const handlingMessageList =  (id: number, activePage: number, messagesOnP
         dispatch(actions.dialogListIsFetching(true))
         let response = await dialogsAPI.getFriendMessagesList(id, activePage, messagesOnPage)
         dispatch(actions.dialogListIsFetching(false))
-        dispatch(actions.setMessages(response.items))
-
+        if(response.error) {
+            console.log(response.error)
+        } else {
+            dispatch(actions.setMessages(response.items))
+        }
     }
 }
 export const handlingSpamMessage =  (messageId: string, message: string): ThunkType => {

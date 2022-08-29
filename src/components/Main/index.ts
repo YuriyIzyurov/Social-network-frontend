@@ -1,0 +1,10 @@
+export * from './Chat/ChatMessage'
+export * from './Chat/ChatMessages'
+export * from './LeftSidebar/FriendItemShort'
+export * from './LeftSidebar/FriendItem'
+export * from './LeftSidebar/AnimatedSider'
+export * from './RightSidebar/ProfileStatus'
+export * from './RightSidebar/TopWriter'
+
+export {default as ChatPage} from './Chat/ChatPage'
+export {default as ProfileInfo} from './RightSidebar/ProfileInfo'

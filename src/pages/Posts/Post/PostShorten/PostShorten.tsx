@@ -71,7 +71,7 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
                                 <h1>{title}</h1>
                             </div>
                             <div className="postPreview__main-info-tags">
-                                {tags.map((item) => <Tag key={'tag-' + item} item={item}/>)}
+                                {tags.map((item, index) => <Tag key={'tag-' + index} item={item}/>)}
                             </div>
                             <div className="postPreview__main-info-text">
                                 <ReactMarkdown children={text}

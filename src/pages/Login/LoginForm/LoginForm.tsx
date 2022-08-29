@@ -2,7 +2,6 @@ import { LockOutlined, UserOutlined, ReloadOutlined  } from '@ant-design/icons';
 import {Button, Form, Input} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {withFormik, FormikProps, Formik} from "formik";
-import { Button as CustomButton} from "components/Button/Button";
 import {Checkbox } from 'formik-antd'
 import 'pages/Login/LoginPage/Login.scss'
 import {actions, ThunkType } from 'redux/authReducer';

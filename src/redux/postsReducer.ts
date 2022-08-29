@@ -103,8 +103,8 @@ export const getAllPosts = (searchFilter:string|null = null, viewed:boolean = fa
         const response = await postsAPI.getPosts(searchFilter,viewed)
         dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
-            dispatch(actions.setAllPosts(response.posts))
-            dispatch(actions.setTotalPosts(response.totalCount))
+            dispatch(actions.setAllPosts(response.data.posts))
+            dispatch(actions.setTotalPosts(response.data.totalCount))
         } else {
             console.log('Smthng go wrong')
         }
@@ -117,7 +117,7 @@ export const handlingAddPosts = (page:number, limit:number, searchFilter:string|
         const response = await postsAPI.getPosts(searchFilter,viewed, page, limit)
         dispatch(actions.setFetching(false))
         if(response.resultCode === 0) {
-            dispatch(actions.addPosts(response.posts))
+            dispatch(actions.addPosts(response.data.posts))
         } else {
             console.log('Smthng go wrong')
         }
@@ -129,7 +129,7 @@ export const publicPost = (post: AddPostType, id: string | null = null):ThunkTyp
         if(id) {
             const response = await postsAPI.updatePost(post, id)
             if(response.resultCode === 0) {
-                dispatch(actions.setCreatedPostId(response._id))
+                dispatch(actions.setCreatedPostId(response.data._id))
             } else console.log(response)
         } else {
             const response = await postsAPI.writePost(post)
@@ -158,8 +158,8 @@ export const handlingSetAllPosts = (item:string):ThunkType => {
         dispatch(actions.setFetching(true))
         const response = await postsAPI.getTagMatch(item)
         dispatch(actions.setFetching(false))
-        dispatch(actions.setTotalPosts(response.length))
-        dispatch(actions.setAllPosts(response))
+        dispatch(actions.setTotalPosts(response.data.length))
+        dispatch(actions.setAllPosts(response.data))
         dispatch(actions.setScrollToTop(true))
     }
 }

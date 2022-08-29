@@ -1,8 +1,9 @@
 
 import {InferActionsTypes, BaseThunkType} from "./reduxStore";
-import {chatAPI, ChatMessageAPIType} from "../api/chatAPI";
+import {chatAPI} from "api/chatAPI";
 import {Dispatch} from "redux";
 import {v1} from 'uuid';
+import {ChatMessageAPIType} from "typings/APITypes";
 
 
 export type initialStateType = typeof initialState

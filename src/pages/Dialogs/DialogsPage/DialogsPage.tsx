@@ -69,7 +69,7 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
                         <TeamOutlined />
                         <span>Список диалогов</span>
                     </div>
-                    <FormOutlined />
+                    <div></div>
                 </div>
                 <div className="chat__sidebar-search">
                     <StyledSearch  handleSetFilter={handleSetFilter}/>

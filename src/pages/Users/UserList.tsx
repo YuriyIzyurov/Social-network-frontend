@@ -1,7 +1,7 @@
 import React, {LegacyRef, useEffect, useRef} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Button as AntButton, Divider, List, Skeleton, Tooltip} from "antd";
-import Avatar from "components/Dialogs/DialogItem/Avatar";
+import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
 import {CommentOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
 import {UserType} from "typings/types";
 import {FilterType} from "redux/usersReducer";
@@ -27,7 +27,7 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
     const ItemList = ({item}: {item: UserType}) => {
         return <>
             <List.Item.Meta
-                avatar={<Link to={"/profile/" + item.id}><Avatar avatarUrl={item.photos.small} name={item.name}/></Link>}
+                avatar={<Link to={"/profile/" + item.id}><GradientCharAvatar avatarUrl={item.photos.small} name={item.name}/></Link>}
                 title={<Link to={"/profile/" + item.id}>{item.name}</Link>}
                 description={item.status}
             />

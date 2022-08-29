@@ -1,5 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import Search from "antd/lib/input/Search";
+import React, {useEffect, useState} from 'react';
 import LastComment from 'pages/Posts/PostsSidebar/LastComment';
 import {useAppDispatch} from "redux/reduxStore";
 import {actions, getAllPosts} from "redux/postsReducer";
@@ -7,10 +6,9 @@ import {commentsAPI, postsAPI} from "api/postsAPI";
 import Skeleton from 'antd/lib/skeleton/Skeleton';
 import {CommentsType} from "typings/types";
 import PostTag from 'components/PostTag';
-import classnames from "classnames";
 import StyledSearch from 'components/StyledSearch';
-import { Segmented } from 'antd';
-import { SegmentedValue } from 'antd/lib/segmented';
+import {Segmented} from 'antd';
+import {SegmentedValue} from 'antd/lib/segmented';
 
 type PropsType= {
     loadPopularPosts: () => void
@@ -44,11 +42,11 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
 
     const getComments = async () => {
         const response = await commentsAPI.getAll()
-        setComments(response)
+        setComments(response.data)
     }
     const getTags = async () => {
         const response = await postsAPI.getTags()
-        setTags(response)
+        setTags(response.data)
     }
     const searchPosts = (value:string) => {
         dispatch(getAllPosts(value)).then(() => {

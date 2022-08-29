@@ -1,18 +1,10 @@
 import {instanceSocial, ResponseAPIType } from "./api"
-import {AllMessageType, DialogType, PrivateMessageDataType, UserType} from "../typings/types";
-import {FilterType} from "../redux/usersReducer";
+import {AllMessageType, DialogType, GetItemsType, PrivateMessageDataType} from "typings/types";
 
-type GetItemsType<T> = {
-    items: Array<T>
-    totalCount: number
-    error: string | null
-}
+
 export const dialogsAPI = {
     startChatting(id: number) {
-        return instanceSocial.put<ResponseAPIType<null>>(`dialogs/${id}`, {}).then(response => response.data)
-    },
-    deleteChatting(id: number) {
-        return instanceSocial.delete<ResponseAPIType<null>>(`dialogs/${id}`, {}).then(response => response.data)
+        return instanceSocial.put<ResponseAPIType>(`dialogs/${id}`, {}).then(response => response.data)
     },
     getAllDialogs() {
         return instanceSocial.get<DialogType[]>(`dialogs`).then(response => response.data)
@@ -24,13 +16,12 @@ export const dialogsAPI = {
         return instanceSocial.post<ResponseAPIType<PrivateMessageDataType>>(`dialogs/${id}/messages`, {body}).then(response => response.data)
     },
     markMessageAsSpam(messageId: string) {
-        return instanceSocial.post(`dialogs/messages/${messageId}/spam`).then(response => response.data)
+        return instanceSocial.post<ResponseAPIType>(`dialogs/messages/${messageId}/spam`).then(response => response.data)
     },
     deleteMessage(messageId: string) {
-        return instanceSocial.delete(`dialogs/messages/${messageId}`).then(response => response.data)
+        return instanceSocial.delete<ResponseAPIType>(`dialogs/messages/${messageId}`).then(response => response.data)
     },
     restoreDeletedMessage(messageId: string) {
-        return instanceSocial.put(`dialogs/messages/${messageId}/restore`).then(response => response.data)
+        return instanceSocial.put<ResponseAPIType>(`dialogs/messages/${messageId}/restore`).then(response => response.data)
     },
-//<ResponseAPIType<DialogType>>
 }

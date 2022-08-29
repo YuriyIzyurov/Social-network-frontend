@@ -105,6 +105,7 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType):ThunkType =>{
         if (response.resultCode === ResultCode.Success && userId) {
             dispatch(setProfileOnPage(userId))
         } else {
+            debugger
             const error = response.messages[0]
             const errorObj = {
                 '_error': error,

@@ -1,8 +1,5 @@
 import {authBlogAPI} from "../api/postsAPI";
 import {BaseThunkType, InferActionsTypes} from "./reduxStore";
-import {authAPI} from "../api/authAPI";
-import {ResultCode} from "../api/api";
-import {profileAPI} from "../api/profileAPI";
 
 type ActionType = InferActionsTypes<typeof actions>
 export type ThunkBlogType = BaseThunkType<ActionType>
@@ -50,10 +47,10 @@ const actions = {
 export const handlingBlogUserAuth = (email: string, password: string): ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.submitAuth(email, password)
-        if(response._id) {
-            const {_id, fullName, email, avatarUrl} = response
+        if(response.data._id) {
+            const {_id, fullName, email, avatarUrl} = response.data
             dispatch(actions.setBlogUserAuth({email: email, id: _id, fullName: fullName, avatarUrl}))
-            const {token} = response
+            const {token} = response.data
             window.localStorage.setItem('token', token)
         }
     }
@@ -65,7 +62,7 @@ export const handlingAuthDataBlog = ():ThunkBlogType => {
             const {_id, fullName, email, avatarUrl} = response.data
             dispatch(actions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
         } else if(response.resultCode === 1) {
-            alert(response.message)
+            alert(response.data.message)
         }
     }
 }
@@ -79,7 +76,7 @@ export const handlingChangeAvatar = (file: File):ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.uploadAvatar(file)
         if(response.resultCode === 0) {
-            dispatch(actions.setAvatar(response.avatarUrl))
+            dispatch(actions.setAvatar(response.data.avatarUrl))
         }
     }
 }

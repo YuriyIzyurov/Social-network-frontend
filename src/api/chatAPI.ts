@@ -1,16 +1,9 @@
-
-import {StatusType} from "../redux/chatReducer";
+import {StatusType} from "redux/chatReducer";
+import {ChatMessageAPIType} from "typings/APITypes";
 
 type MessagesReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void
 type StatusChangedSubscriberType = (status: StatusType) => void
 type EventNamesType = 'message-received' | 'status-changed'
-export type ChatMessageAPIType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
-
 
 let subscribers = {
     'message-received': [] as MessagesReceivedSubscriberType[],
@@ -27,7 +20,6 @@ const openHandler = () => {
 }
 const errorHandler = () => {
     notifySubscribersAboutStatus('error')
-    console.log("refresh page")
 }
 const messageHandler = (e: MessageEvent) => {
     const newMessages = JSON.parse(e.data)
@@ -43,7 +35,6 @@ const notifySubscribersAboutStatus = (status: StatusType) => {
     subscribers["status-changed"].forEach(s => s(status))
 }
 function CreateChannel() {
-
     cleanup()
     ws?.close()
     ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')

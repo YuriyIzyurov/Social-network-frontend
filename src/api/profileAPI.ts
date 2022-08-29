@@ -1,4 +1,4 @@
-import {CurrentProfileType, PhotosType} from "../typings/types";
+import {CurrentProfileType, PhotosType} from "typings/types";
 import {instanceSocial, ResponseAPIType} from "./api";
 
 
@@ -14,7 +14,7 @@ export const profileAPI = {
         return instanceSocial.get<string>(`profile/status/${id}`).then(response => response.data)
     },
     updateStatus(status: string) {
-        return instanceSocial.put<ResponseAPIType<null>>('profile/status', {status: status}).then(response => response.data)
+        return instanceSocial.put<ResponseAPIType>('profile/status', {status: status}).then(response => response.data)
     },
     uploadPhoto(file: File) {
         const formData = new FormData()
@@ -22,6 +22,6 @@ export const profileAPI = {
         return instanceSocial.put<ResponseAPIType<UploadPhotoType>>('profile/photo', formData).then(response => response.data)
     },
     updateProfileData(newData: any) {
-        return instanceSocial.put<ResponseAPIType<null>>('profile', newData).then(response => response.data)
+        return instanceSocial.put<ResponseAPIType>('profile', newData).then(response => response.data)
     }
 }

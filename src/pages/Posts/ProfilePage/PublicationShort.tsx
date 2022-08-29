@@ -11,7 +11,7 @@ const PublicationShort = ({item}:{item: PostType}) => {
                     <img src={item.imageUrl ? item.imageUrl : DefaultImage} alt='image'/>
                 <div className="publication__glass">
                     <h2>{item.title}</h2>
-                    <p>{item.tags.map((item)=><Tag key={'tag-' + item} item={item}/>)}</p>
+                    <p>{item.tags.map((item,index)=><Tag key={'tag-' + index} item={item}/>)}</p>
                 </div>
             </Link>
         </div>

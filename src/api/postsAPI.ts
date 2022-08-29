@@ -1,99 +1,111 @@
 import {instanceBlog} from "./api"
-import {AddPostType, UserType} from "typings/types";
+import {AddPostType, CommentsType, PostType, PostUserType} from "typings/types";
 
-//todo: написать типы респонсов
+type BlogResponseType<D = {}|[]> = {
+    data: D
+    resultCode: number
+}
+type PostResponse = {
+    posts: PostType[]
+    totalCount: number
+}
+type PatchResponse = {
+    message: string
+    _id: string
+}
+type TopPostsType = {
+    totalCount: number
+    topPosts:PostType[]
+    myPosts:PostType[]
+}
+type TopType = {
+    top:TopUserType[]
+}
+type TopUserType = {
+    avatarUrl: string
+    fullName: string
+    id: string
+    viewsCount: number
+}
 
 
 export const postsAPI = {
     getPosts(searchFilter:string | null = null, viewed:boolean = false, page:number = 1, limit:number = 5) {
-        return instanceBlog.get(`posts?page=${page}&limit=${limit}`
+        return instanceBlog.get<BlogResponseType<PostResponse>>(`posts?page=${page}&limit=${limit}`
             + (searchFilter === null ? '':`&searchFilter=${searchFilter}`)
             + (!viewed ? '' : `&viewed=${viewed}`)
-        ).then(response => response.data)
+        ).then(response => {
+            console.log(response.data)
+           return response.data
+        })
     },
     writePost(post: AddPostType) {
-      return instanceBlog.post(`posts`, post).then(response => response.data)
+      return instanceBlog.post<BlogResponseType<PostType>>(`posts`, post).then(response => {
+          console.log(response.data)
+         return response.data
+      })
     },
     uploadPreview(file: File) {
         const formData = new FormData()
         formData.append("preview", file)
-      return instanceBlog.post(`upload`, formData).then(response => response.data)
+      return instanceBlog.post<BlogResponseType<{url:string}>>(`upload`, formData).then(response => response.data)
     },
     getPostById(id:string | undefined) {
-        return instanceBlog.get(`posts/${id}`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<PostType>>(`posts/${id}`).then(response => response.data)
     },
     updatePost(post: AddPostType, id:string) {
-        return instanceBlog.patch(`posts/${id}`, post).then(response => response.data)
+        return instanceBlog.patch<BlogResponseType<PatchResponse>>(`posts/${id}`, post).then(response => response.data)
     },
     deletePost(id:string) {
-        return instanceBlog.delete(`posts/${id}`).then(response => response.data)
+        return instanceBlog.delete<BlogResponseType<{message:string}>>(`posts/${id}`).then(response => response.data)
     },
     getTags() {
-        return instanceBlog.get(`tags`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<string[]>>(`tags`).then(response => response.data)
     },
     getTopPosts() {
-        return instanceBlog.get(`top`).then(response => response.data)
-    },
-    getMyPosts() {
-        return instanceBlog.get(`publications`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<TopPostsType>>(`top`).then(response => response.data)
     },
     getTagMatch(tag:string) {
-        return instanceBlog.get(`tags/${tag}`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<PostType[]>>(`tags/${tag}`).then(response => response.data)
     },
     getTopWriters() {
-        return instanceBlog.get(`views`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<TopType>>(`views`).then(response => {
+            console.log(response.data)
+            return response.data
+        })
     },
     getPostsByAuthor(userId:string) {
-        return instanceBlog.get(`author/${userId}`,).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<PostType[]>>(`author/${userId}`,).then(response => response.data)
     }
 }
 export  const commentsAPI = {
     getAll() {
-      return instanceBlog.get(`/comments`).then(response => response.data)
+      return instanceBlog.get<BlogResponseType<CommentsType[]>>(`/comments`).then(response => response.data)
     },
     writeComment(id:string, text:string){
-        return instanceBlog.post(`comments/${id}`, {text}).then(response => response.data)
+        return instanceBlog.post<BlogResponseType<CommentsType>>(`comments/${id}`, {text}).then(response => response.data)
     },
     getAllCommentsOfPost(id:string | undefined){
-        return instanceBlog.get(`comments/${id}`).then(response => response.data)
+        return instanceBlog.get<BlogResponseType<CommentsType[]>>(`comments/${id}`).then(response => response.data)
     },
     deleteComment(id:string) {
-        return instanceBlog.delete(`comments/${id}`).then(response => response.data)
+        return instanceBlog.delete<BlogResponseType<{message: string}>>(`comments/${id}`).then(response => response.data)
     },
     updateComment(text: string, id:string) {
-        return instanceBlog.patch(`comments/${id}`, {text}).then(response => response.data)
+        return instanceBlog.patch<BlogResponseType<{message: string}>>(`comments/${id}`, {text}).then(response => response.data)
     }
 }
 export const authBlogAPI = {
     submitAuth(email: string, password: string) {
-        return instanceBlog.post('login', {email, password}).then(response => response.data)
+        return instanceBlog.post<BlogResponseType<PostUserType & {token:string}>>('login', {email, password}).then(response => response.data)
     },
     getMe() {
-      return instanceBlog.get('auth/me').then(response => response.data)
+      return instanceBlog.get<BlogResponseType<PostUserType & {message:string}>>('auth/me').then(response => response.data)
     },
     uploadAvatar(file: File) {
         const formData = new FormData()
         formData.append("avatar", file)
-        return  instanceBlog.post('user/avatar',formData).then(response => response.data)
+        return  instanceBlog.post<BlogResponseType<{messages: string,avatarUrl: string}>>('user/avatar',formData).then(response => response.data)
     }
 }
-/*
-type GetItemsType<T> = {
-    items: Array<T>
-    totalCount: number
-    error: string | null
-}
-export const usersAPI = {
-    getUsers(activePage: number, usersOnPage: number, term: string = '', friend: null|boolean = null) {
-        return instanceSocial.get<GetItemsType<UserType>>(`users?page=${activePage}&count=${usersOnPage}&term=${term}` + (friend === null ? '':`&friend=${friend}`)).then(response => response.data)
-    },
-    followUser(id: number) {
-        return instanceSocial.post<ResponseAPIType>(`follow/${id}`, {}).then(response => response.data)
-    },
-    unFollowUser(id: number) {
-        return instanceSocial.delete<ResponseAPIType>(`follow/${id}`).then(response => response.data)
-    },
-    getFriends(usersOnPage: number) {
-        return instanceSocial.get<GetItemsType<UserType>>(`users?count=${usersOnPage}&friend=${true}`).then(response => response.data)
-    }
-}*/
+

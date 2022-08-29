@@ -1,17 +1,15 @@
-import React, {MouseEventHandler, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "pages/Posts/Post/PostFull/PostFull.scss"
-import { Button} from 'antd';
-import { DownloadOutlined, CommentOutlined, EyeOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-import { Scrollbar } from 'react-scrollbars-custom';
-import {Link} from "react-router-dom";
+import {Input} from 'antd';
+import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
+import {Scrollbar} from 'react-scrollbars-custom';
 import {useParams} from "react-router";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import {CommentsType, PostType} from "typings/types";
-import Preloader from "common/Preloader/Preloader";
+import Preloader from "components/Preloader/Preloader";
 import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
-import {getBloggerID, getMe} from "redux/auth-selectors";
+import {getBloggerID} from "redux/auth-selectors";
 import EditSettings from "utils/EditSettings/EditSettings";
 import AddPost from "components/Forms/AddPost";
 import Comment from "pages/Posts/Comment/Comment";
@@ -21,6 +19,7 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 // @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import SendComment from 'components/Forms/SendComment';
+
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
 
@@ -37,11 +36,11 @@ const PostFull = () => {
 
     const getPostById = async () => {
         const response = await postsAPI.getPostById(params.id)
-        setPost(response)
+        setPost(response.data)
     }
     const getCommentsOfPost = async () => {
             const response = await commentsAPI.getAllCommentsOfPost(params.id)
-            setComments(response)
+            setComments(response.data)
 
     }
     useEffect(() => {

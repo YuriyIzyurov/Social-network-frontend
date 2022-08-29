@@ -1,15 +1,11 @@
 import {instanceSocial, ResponseAPIType } from "./api"
-import {UserType} from "../typings/types";
-import {FilterType} from "../redux/usersReducer";
+import {GetItemsType, UserType} from "typings/types";
 
-type GetItemsType<T> = {
-    items: Array<T>
-    totalCount: number
-    error: string | null
-}
+
 export const usersAPI = {
     getUsers(activePage: number, usersOnPage: number, term: string = '', friend: null|boolean = null) {
-        return instanceSocial.get<GetItemsType<UserType>>(`users?page=${activePage}&count=${usersOnPage}&term=${term}` + (friend === null ? '':`&friend=${friend}`)).then(response => response.data)
+        return instanceSocial.get<GetItemsType<UserType>>(`users?page=${activePage}&count=${usersOnPage}&term=${term}` + (friend === null ? '':`&friend=${friend}`))
+            .then(response => response.data)
     },
     getSidebarUsers() {
         return instanceSocial.get<GetItemsType<UserType>>(`users?friend=true&count=100`).then(response => response.data)

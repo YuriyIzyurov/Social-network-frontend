@@ -1,8 +1,8 @@
 import React, {createRef, Dispatch, SetStateAction, useEffect} from 'react';
 import {PhotosType} from "typings/types";
 import {ProxyImageUrl} from "utils/ChangeURL/ProxifyURL";
-import UserDefaultPhoto from "assets/images/UserDefaultPhoto";
 import {getTwoMainColors} from "utils/Color/MainColorsThief";
+import {UserDefaultPhoto} from "assets/images";
 
 
 type PropsType = {

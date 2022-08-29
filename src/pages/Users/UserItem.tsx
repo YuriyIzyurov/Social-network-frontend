@@ -3,7 +3,6 @@ import React from "react"
 import './Users.scss'
 import {Link, NavLink} from "react-router-dom";
 import Avatar from "../DialogsPage/DialogItem/Avatar";
-import userDefaultPhoto from '../../assets/images/personal-user.png'
 import {UserType} from "../../typings/types";
 // @ts-ignore
 import {customAvatar} from "../../utils/Avatar/AvatarGenerator";

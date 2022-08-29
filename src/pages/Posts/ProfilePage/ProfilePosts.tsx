@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from "react"
 import 'pages/Posts/ProfilePage/ProfilePosts.scss'
-import {MessagesDataType, PostType} from "typings/types";
+import {PostType} from "typings/types";
 import banner from "assets/images/Banner.png"
 import {FormOutlined} from '@ant-design/icons';
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import AddPost from "components/Forms/AddPost";
-import {Navigate, useNavigate, useParams} from "react-router";
+import {Navigate, useNavigate} from "react-router";
 import {postsAPI} from "api/postsAPI";
 import {useSelector} from "react-redux";
 import {getMe} from "redux/auth-selectors";
 import PublicationShort from "pages/Posts/ProfilePage/PublicationShort";
-import PostSkeleton from "components/Skeletons/PostSkeleton";
 import PublicationShortSkeleton from "components/Skeletons/PublicationShortSkeleton";
 import {useAppDispatch} from "redux/reduxStore";
 import {actions} from "redux/postsReducer";
 import {getMyPosts} from "redux/post-selectors";
-
-
-
 
 
 const ProfilePosts = () => {

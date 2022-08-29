@@ -9,7 +9,7 @@ import {
     handlingUsers,
 } from "redux/usersReducer";
 import React, {ComponentType, LegacyRef, useEffect, useRef, useState} from "react";
-import Preloader from "common/Preloader/Preloader";
+import Preloader from "components/Preloader/Preloader";
 import {withRedirectIfNoAuth} from "components/HOC/withRedirectIfNoAuth";
 import {compose} from "redux";
 import {

@@ -1,4 +1,4 @@
-import React, {Dispatch, MouseEventHandler, SetStateAction, useState} from 'react';
+import React, {useState} from 'react';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import {CommentsType} from "typings/types";

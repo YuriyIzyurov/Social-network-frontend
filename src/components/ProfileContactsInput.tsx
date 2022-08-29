@@ -30,9 +30,8 @@ const ProfileContactsInput: React.FC<PropsDataType> = ({currentProfile,  changeE
     }, [form]);*/
 
     const validateMessages = {
-        required: "'${name}' is required!",
         types: {
-            url: "'${name}' is not a valid url",
+            url: `Not a valid url`,
         },
     }
 
@@ -84,7 +83,12 @@ const ProfileContactsInput: React.FC<PropsDataType> = ({currentProfile,  changeE
         return (
             <div className='input-media'>
                 {!hidden && <SocialMediaImage image={image}/>}
-                <Form.Item  hidden={hidden} name={'contacts:' + socialMedia} initialValue={contactValue}>
+                <Form.Item
+                    hidden={hidden}
+                    name={'contacts:' + socialMedia}
+                    initialValue={contactValue}
+                  //  rules={[{ type: 'url' }]}
+                >
                     <Input placeholder={socialMedia} />
                 </Form.Item>
             </div>
@@ -126,33 +130,6 @@ const ProfileContactsInput: React.FC<PropsDataType> = ({currentProfile,  changeE
                 </Form>
 
             </>
-            /*<form >
-                <div className={s.descriptionBlock}>
-                    <span>{currentProfile.fullName}</span><Field  placeholder={"nickname"} component={Input}
-                                                                  validate={[required, maxLength30]} name={"fullName"}/>
-                </div>
-                <div className={s.descriptionBlock}>
-                    <b>About me:</b><Field placeholder={"some words about me"} component={Input} validate={[maxLength200]}
-                                           name={"aboutMe"} />
-                </div>
-                <div>
-                    <b>Looking for a job:</b> <Field component="input"
-                                                     type={"checkbox"} name={"lookingForAJob"}/>
-                </div>
-                <div className={s.descriptionBlock}>
-                    <div><b>Looking for a job description:</b><Field placeholder={"my skills"} component={Input} validate={[maxLength200]}
-                                                                     name={"lookingForAJobDescription"}/></div>
-                </div>
-                <div>
-                    <b>Contacts:</b> {Object.keys(currentProfile.contacts).map(key => {
-                    //todo: change key as any
-                    return <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key as any]}/>
-                })}
-                </div>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-        </form>*/
         )
 
 }

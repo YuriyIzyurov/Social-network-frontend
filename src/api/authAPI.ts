@@ -2,9 +2,9 @@ import {instanceSocial, ResponseAPIType, ResultCode, ResultCodeForCaptcha} from 
 
 
 type GetAuthType = {
-        id: number
-        email: string
-        login: string
+    id: number
+    email: string
+    login: string
 }
 type GetCaptchaType = {
     url: string
@@ -25,7 +25,7 @@ export const authAPI = {
         }).then(response => response.data)
     },
     logout() {
-        return instanceSocial.delete("auth/login").then(response => response.data)
+        return instanceSocial.delete<ResponseAPIType>("auth/login").then(response =>  response.data)
     },
     getCaptcha() {
         return instanceSocial.get<GetCaptchaType>("security/get-captcha-url").then(response => response.data)

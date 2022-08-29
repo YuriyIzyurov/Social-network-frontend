@@ -1,28 +1,21 @@
-
 import React, {FocusEventHandler, useState} from "react"
-import  'pages/Dialogs/Message/Message.scss'
-import {StopOutlined, DeleteOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
+import 'pages/Dialogs/Message/Message.scss'
+import {DeleteOutlined, ExclamationCircleOutlined, StopOutlined} from '@ant-design/icons';
 
 import classNames from "classnames";
-import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
+import classnames from "classnames";
+import {GetMessageTime} from "utils/Time/CustomTime";
 // @ts-ignore
 import MessageReadImage from "assets/images/readed.svg"
 // @ts-ignore
 import MessageNoReadImage from "assets/images/noreaded.svg"
-import {Modal, Tooltip} from "antd";
-import {dialogsAPI} from "api/dialogsAPI";
+import {Modal} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
-import {
-    actions,
-    handlingDeleteMessage,
-    handlingMessageList,
-    handlingRestoreMessage,
-    handlingSpamMessage
-} from "redux/dialogReducer";
-import {SpamNotification} from "common/constants/constants";
+import {handlingDeleteMessage, handlingRestoreMessage, handlingSpamMessage} from "redux/dialogReducer";
+import {SpamNotification} from "constants/constants";
 import {useSelector} from "react-redux";
 import {getListOfDeletedMessages} from "redux/dialog-selectors";
-import classnames from "classnames";
+
 const { confirm } = Modal;
 
 type PropsType = {
@@ -66,10 +59,9 @@ const Message: React.FC<PropsType> = React.memo(({message, messageId, avatar, da
         confirm({
             title: 'Пометить сообщение как спам?',
             icon: <ExclamationCircleOutlined />,
-            content: 'Да да я',
-            okText: 'Yes',
+            okText: 'Да',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: 'Нет',
             onOk() {
                 signAsSpam()
             },
@@ -82,10 +74,9 @@ const Message: React.FC<PropsType> = React.memo(({message, messageId, avatar, da
         confirm({
             title: 'Удалить сообщение?',
             icon: <ExclamationCircleOutlined />,
-            content: '',
-            okText: 'Yes',
+            okText: 'Да',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: 'Нет',
             onOk() {
                 signAsDeleted()
             },

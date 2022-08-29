@@ -6,21 +6,20 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "pages/Login/LoginPage/LoginPageContainer";
 import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "redux/appReducer";
-import Preloader from "./common/Preloader/Preloader";
+import Preloader from "./components/Preloader/Preloader";
 import {WithLazyLoading} from "components/HOC/withLazyLoading";
 import {AppStateType} from "redux/reduxStore";
 import {Layout} from 'antd';
-import {AnimatedSider} from "components/Sidebars/LeftSidebar/AnimatedSider";
 import PostsPage from "pages/Posts/PostsPage/PostsPage";
 import PostFull from "pages/Posts/Post/PostFull/PostFull";
 import Test from "./components/Test";
 import HeaderRouter from "./components/Header/HeaderRouter";
 import ProfilePosts from "pages/Posts/ProfilePage/ProfilePosts";
-import ProfileInfo from "components/Sidebars/RightSidebar/ProfileInfo";
+import {ProfileInfo, AnimatedSider} from "components/Main";
 
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
-const LazyChatContainer = React.lazy(() => import("./components/Chat/ChatPage"))
+const LazyChatContainer = React.lazy(() => import("./components/Main/Chat/ChatPage"))
 const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
 const ChatPage =  WithLazyLoading(LazyChatContainer)
 

@@ -92,6 +92,12 @@ export type PostUserType = {
     "__v": number,
     "avatarUrl": string
 }
+export type TopUserType = {
+    id: string
+    fullName: string
+    avatarUrl:string
+    viewsCount: number
+}
 export type PostType = {
     "_id": string,
     "title": string,
@@ -180,6 +186,12 @@ export  type ScrollState = {
      */
     zoomLevel: number;
 };
+//Common types
+export type GetItemsType<T> = {
+    items: Array<T>
+    totalCount: number
+    error: string | null
+}
 
 
 

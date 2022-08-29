@@ -1,23 +1,18 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import 'pages/Dialogs/DialogItem/DialogItem.scss'
 // @ts-ignore
 import UnreadMessage from 'assets/images/noreaded.svg'
 import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {CloseOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import {useAppDispatch} from "redux/reduxStore";
-import {
-    actions,
-    handlingMessageList,
-    startDialogWithFriend
-} from "redux/dialogReducer";
+import {actions, handlingMessageList} from "redux/dialogReducer";
 import {useSelector} from "react-redux";
 import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
 import classnames from 'classnames';
-import { isUserOnline } from 'utils/Time/isUserOnline';
-import { customAvatar } from 'utils/Avatar/AvatarGenerator';
-import { CloseOutlined } from '@ant-design/icons';
+import {isUserOnline} from 'utils/Time/isUserOnline';
+import {customAvatar} from 'utils/Avatar/AvatarGenerator';
 import {Modal, Tooltip} from "antd";
-import {dialogsAPI} from "api/dialogsAPI";
+
 const { confirm } = Modal;
 
 
@@ -53,9 +48,13 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
     const [isShown, setIsShown] = useState<boolean>(false);
 
 
+    const error = () => {
+        Modal.error({
+            title: 'Невозможно удалить диалог',
+        });
+    };
     const removeDialog = async () => {
-        let response = await dialogsAPI.deleteChatting(id)
-        console.log(response)
+        error()
     }
 
     const showDeleteConfirm = () => {
@@ -63,14 +62,12 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
             title: 'Вы уверены, что хотите удалить диалог?',
             icon: <ExclamationCircleOutlined />,
             content: 'Восстановить сообщения будет невозможно',
-            okText: 'Yes',
+            okText: 'Да',
+            okButtonProps : {ghost : true},
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: 'Нет',
             onOk() {
                 removeDialog()
-            },
-            onCancel() {
-                console.log('Cancel');
             },
         });
     };

@@ -3,7 +3,7 @@ import 'pages/Users/Users.scss'
 import {UserType} from "typings/types";
 import {FilterType, handlingAddUsers} from "redux/usersReducer";
 import { Button, Divider, Dropdown, List, Menu, Pagination, Skeleton} from "antd";
-import Avatar from "components/Dialogs/DialogItem/Avatar";
+import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
 import Search from "antd/lib/input/Search";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {useAppDispatch} from "redux/reduxStore";
@@ -13,7 +13,7 @@ import { Button as AntButton, Tooltip, Avatar as AntAvatar } from 'antd';
 import { UserAddOutlined, UserDeleteOutlined, CommentOutlined } from '@ant-design/icons'
 import {startDialogWithFriend} from "redux/dialogReducer";
 import {useNavigate} from "react-router";
-import Preloader from "common/Preloader/Preloader";
+import Preloader from "components/Preloader/Preloader";
 import {UserList} from "pages/Users/UserList";
 import fill from "zadachi";
 
