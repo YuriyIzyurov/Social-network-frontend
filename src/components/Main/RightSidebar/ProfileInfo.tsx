@@ -1,24 +1,23 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useState} from "react"
 import './ProfileInfo.scss'
 import {FormOutlined} from "@ant-design/icons";
-import {actions, getUserStatusInProfile, handlePhotoChange, updateMyStatus} from "redux/profileReducer";
-import {actions as dialogActions, startDialogWithFriend} from "redux/dialogReducer";
+import {actions, getUserStatusInProfile} from "redux/profileReducer";
+import {actions as appActions} from "redux/appReducer";
 import {useAppDispatch} from "redux/reduxStore";
 // @ts-ignore
 import {Bell, Chat, Mail, Setting} from "assets/images/VectorComponents/TopIcons"
-import {handlingAuthDataBlog, handlingChangeAvatar} from "redux/authBlogReducer";
 import {useSelector} from "react-redux";
 import {getAuthID} from "redux/auth-selectors";
-import {getCurrentProfile, getStatus} from "redux/profile-selectors";
+import {getCurrentProfile} from "redux/profile-selectors";
 import Preloader from "components/Preloader/Preloader";
-import MainAvatar from "components/MainAvatar";
-import {TopWriter, ProfileStatus} from "./../index";
+import {AuthData, ProfileInfoMain, TopWriter} from "./../index";
 import {postsAPI} from "api/postsAPI";
 import ProfileContactsInput from "components/ProfileContactsInput";
 import SocialMediaContact from "components/SocialMediaContact";
-import { AvatarBorderFinal, ContainerAvatarEffect } from "assets/images";
-import { TopUserType } from "typings/types";
-
+import {TopUserType} from "typings/types";
+import { Button } from 'antd';
+import {useNavigate} from "react-router";
+import {getRedirectLoginStatus} from "redux/app-selector";
 
 
 const ProfileInfo = React.memo(() => {
@@ -26,15 +25,14 @@ const ProfileInfo = React.memo(() => {
     //todo: переделать в useReducer
     const [editMode, changeEditMode] = useState(false)
     const [colors, changeAvaBorderColors] = useState(["#A73EE7","#00EBFF"])
-    const [toggle, setToggle] = useState(false)
+
     const [topUsers, setTopUsers] = useState<TopUserType[]>([])
 
     const authID = useSelector(getAuthID)
     const currentProfile = useSelector(getCurrentProfile)
-    const status = useSelector(getStatus)
+    const isRedirect = useSelector(getRedirectLoginStatus)
 
     const dispatch = useAppDispatch()
-    const inputImgRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         if(currentProfile){
@@ -49,13 +47,7 @@ const ProfileInfo = React.memo(() => {
         }
     },[colors])
 
-    const OnPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        if(e.target.files) {
-            dispatch(handlePhotoChange(e.target.files[0]))
-            dispatch(handlingChangeAvatar(e.target.files[0]))
-            dispatch(handlingAuthDataBlog())
-        }
-    }
+
     const getTopWriters = async () => {
         const response = await postsAPI.getTopWriters()
         if(response.resultCode === 0) {
@@ -64,72 +56,41 @@ const ProfileInfo = React.memo(() => {
             console.log('не удалось загрузить авторов')
         }
     }
-    const updateStatus = (status:string) => {
-        dispatch(updateMyStatus(status))
+    const redirectHandler = () => {
+        dispatch(appActions.setRedirectToLogin(true))
     }
-
-    const openDialog = () =>{
-        if(currentProfile){
-            dispatch(startDialogWithFriend(currentProfile.userId))
-            dispatch(actions.setRedirect(currentProfile.userId))
-            dispatch(dialogActions.setDialogID(currentProfile.userId))
-        }
-    }
-
-    if(!currentProfile) return <Preloader/>
 
     return (
         <div className='profile__info'>
-            <div className="profile__info-menu">
+            <div style={{cursor: authID ? "default" : 'not-allowed'}} className="profile__info-menu">
                 <Bell/>
                 <Chat/>
                 <Mail/>
                 <Setting/>
             </div>
-            <div className="profile__info-main">
-                <div
-                    className="ava-border"
-                    onClick={() => inputImgRef.current?.click()}
-                    style={{cursor: authID === currentProfile.userId ? 'pointer':'inherit'}}
-                >
-                    <AvatarBorderFinal colors={colors} toggle={toggle} setToggle={setToggle}/>
-                </div>
-                    <ContainerAvatarEffect colors={colors} toggle={toggle}/>
-                <MainAvatar
-                    photos={currentProfile.photos}
+            {authID && currentProfile
+                ?
+                <ProfileInfoMain
+                    currentProfile={currentProfile}
+                    authID={authID}
+                    colors={colors}
                     changeAvaBorderColors={changeAvaBorderColors}
                 />
-                {authID === currentProfile.userId
-                    &&
-                    <input
-                    type={"file"}
-                    onChange={OnPhotoSelected}
-                    ref={inputImgRef}
-                    hidden
-                />}
-                <div  className="profile__info-main-name">
-                    {currentProfile.fullName}
+                :
+                <div className="profile__info-login">
+                    <span>
+                        Authorization
+                    </span>
+                    {isRedirect
+                        ?
+                        <AuthData/>
+                        :
+                        <div className="profile__info-login-authInfo">
+                            <Button onClick={redirectHandler} type="primary">Войти</Button>
+                        </div>
+                    }
                 </div>
-                <div className="profile__info-main-social">
-                    <ProfileStatus
-                        status={status}
-                        updateStatus={updateStatus}
-                        currentProfile={currentProfile.userId}
-                        authID={authID}
-                    />
-                </div>
-                {authID !== currentProfile.userId
-                    ?
-                    <div onClick={openDialog} className="profile__info-main-sendMessage">
-                        <span>
-                            Написать сообщение
-                        </span>
-                    </div>
-                    :
-                    <div style={{height:'24px'}}>
-                    </div>
-                }
-            </div>
+            }
             <div className="profile__info-members">
                 <div className="new-members">
                     <span>Top viewed</span>
@@ -138,35 +99,36 @@ const ProfileInfo = React.memo(() => {
                     {topUsers?.map((user) => <TopWriter key={user.id} user={user}/>)}
                 </div>
             </div>
-            <div className="profile__info-social">
-                <div className="follow">
+            {currentProfile &&
+                <div className="profile__info-social">
+                    <div className="follow">
                     <span>
                         Follow me
                     </span>
-                    {currentProfile.userId === authID &&
-                        <span onClick={() => changeEditMode(true)}>
+                        {currentProfile.userId === authID &&
+                            <span onClick={() => changeEditMode(true)}>
                              <FormOutlined/>
                         </span>
-                    }
-                </div>
-                {!editMode
-                    ?
-                    <>
-                        {Object.keys(currentProfile.contacts).map(key => {
-                            if(key === 'vk'||key ==='instagram'||key ==='github') {
-                                return <SocialMediaContact key={key}
-                                                           socialMedia={key}
-                                                           contactValue={currentProfile.contacts[key as any]}
-                                />
-                            }
-                        })}
-                    </>
-                    :
-                    <ProfileContactsInput
-                        currentProfile={currentProfile}
-                        changeEditMode={changeEditMode}
-                    />}
-            </div>
+                        }
+                    </div>
+                    {!editMode
+                        ?
+                        <>
+                            {Object.keys(currentProfile.contacts).map(key => {
+                                if (key === 'vk' || key === 'instagram' || key === 'github') {
+                                    return <SocialMediaContact key={key}
+                                                               socialMedia={key}
+                                                               contactValue={currentProfile.contacts[key as any]}
+                                    />
+                                }
+                            })}
+                        </>
+                        :
+                        <ProfileContactsInput
+                            currentProfile={currentProfile}
+                            changeEditMode={changeEditMode}
+                        />}
+                </div>}
         </div>
     )
 

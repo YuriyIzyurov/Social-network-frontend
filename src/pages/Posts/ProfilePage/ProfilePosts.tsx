@@ -54,7 +54,6 @@ const ProfilePosts = () => {
     }
 
 
-    if(!isAuth) return <Navigate to={'/login'} />
     return  (
         <div className="profile__posts">
             <div className="profile__posts-animation">

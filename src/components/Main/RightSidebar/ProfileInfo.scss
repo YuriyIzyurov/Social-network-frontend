@@ -44,7 +44,7 @@
       }
       svg:not(:first-child) {
         left: 80px;
-        top: 0px;
+        top: 0;
         width: 169px;
         height: 172px;
       }
@@ -146,6 +146,49 @@
         background-color: #393d5d;
         span{
           color: #FFFFFF;
+        }
+      }
+    }
+    &-login{
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      > span:first-child {
+        font-size: 22px;
+        font-weight: 600;
+        padding: 20px;
+      }
+      &-authInfo{
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        font-size: 17px;
+        align-self: flex-start;
+        padding-left: 20px;
+        .authInfo-data{
+          position: relative;
+          span:first-child{
+            font-weight: 600;
+          }
+          span:nth-child(2),
+          span:nth-child(3){
+            opacity: 0.6;
+          }
+          span:nth-child(3){
+            margin-left: 5px;
+          }
+          span:nth-child(4){
+            position: absolute;
+            top: 4px;
+            font-size: 13px;
+            opacity: 0;
+            transition: 0.3s;
+          }
+          .descr{
+            opacity: 0.6 !important;
+          }
         }
       }
     }

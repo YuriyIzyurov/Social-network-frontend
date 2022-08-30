@@ -9,7 +9,8 @@ type ActionsType = InferActionsTypes<typeof actions>
 type ThunkType = BaseThunkType<ActionsType>
 
 let initialState = {
-    initialized: false
+    initialized: false,
+    isRedirect: false
 }
 const appReducer = (state = initialState,action:ActionsType): InitialStateType => {
     switch (action.type) {
@@ -17,6 +18,11 @@ const appReducer = (state = initialState,action:ActionsType): InitialStateType =
             return {
                 ...state,
                 initialized: true
+            }
+        case "REDIRECT_TO_LOGIN":
+            return {
+                ...state,
+                isRedirect: action.isRedirect
             }
         default:
             return state
@@ -34,8 +40,9 @@ export const setInitializeThunkCreator = () => {
     }
 }
 
-const actions = {
-    setInitialize: () => ({type : "SET_INIT"} as const)
+export const actions = {
+    setInitialize: () => ({type : "SET_INIT"} as const),
+    setRedirectToLogin: (isRedirect: boolean) => ({type : "REDIRECT_TO_LOGIN", isRedirect} as const)
 }
 
 export default appReducer

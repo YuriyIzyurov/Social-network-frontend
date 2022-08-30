@@ -1,25 +1,10 @@
-import {
-    AllMessageType,
-    DialogDataType,
-    DialogType,
-    PhotosType,
-    PrivateMessageDataType,
-    SelfPrivateMessageType,
-    UserType
-} from "../typings/types";
+import {AllMessageType, DialogType, SelfPrivateMessageType, UserType} from "../typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
-import {usersAPI} from "../api/usersAPI";
-import {ThunkType as SidebarThunkType} from "./sidebarReducer";
-import {actions as actionsUser} from "../redux/usersReducer"
-import {actions as actionsSidebar} from "../redux/sidebarReducer"
 import {ActionType as UserActionType} from "../redux/usersReducer"
 import {ActionType as SidebarActionType} from "../redux/sidebarReducer"
 import {ThunkAction} from "redux-thunk/es/types";
 import {dialogsAPI} from "../api/dialogsAPI";
-import {ResultCode} from "../api/api";
-import {profileAPI} from "../api/profileAPI";
 import {DeleteNotification, SpamNotification} from "constants/constants";
-
 
 
 export type InitialStateType = typeof initialState

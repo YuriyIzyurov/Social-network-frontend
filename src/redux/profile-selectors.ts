@@ -3,7 +3,7 @@ import {AppStateType} from "./reduxStore";
 export const getCurrentProfile = (state:AppStateType) => {
     return state.profile.currentProfile
 }
-export const getRedirectStatus = (state:AppStateType) => {
+export const getRedirectDialogStatus = (state:AppStateType) => {
     return state.profile.redirectToDialog
 }
 export const getMainColors = (state:AppStateType) => {

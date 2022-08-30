@@ -75,11 +75,11 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 </Content>
             </Layout>
             </BrowserRouter>
-                {this.props.isAuth && <Sider className="site__layout-right-sider">
+                 <Sider className="site__layout-right-sider">
                     <div className='profile__info'>
                         <ProfileInfo/>
                     </div>
-                </Sider>}
+                </Sider>
         </Layout>
         )
     }

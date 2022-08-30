@@ -4,7 +4,7 @@ import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} fr
 import {Layout} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
-import {getRedirectStatus} from "redux/profile-selectors";
+import {getRedirectDialogStatus} from "redux/profile-selectors";
 import {animated, useTransition} from "react-spring";
 import {useAppDispatch} from "redux/reduxStore";
 import {handlingSidebarUsers} from "redux/usersReducer";
@@ -12,6 +12,8 @@ import {getFriends, getTotalFriends} from "redux/user-selectors";
 import {useNavigate} from "react-router";
 import {getCurrentAuthor} from "redux/post-selectors";
 import { FriendItemShort, FriendItem, ChatPage } from './../index';
+import {actions} from "redux/appReducer";
+import {getRedirectLoginStatus} from "redux/app-selector";
 
 
 const {Sider} = Layout
@@ -20,10 +22,11 @@ export const AnimatedSider:React.FC = () => {
 
     const [isActive, setIsActive] = useState(false)
 
-    const redirectToDialog = useSelector(getRedirectStatus)
+    const redirectToDialog = useSelector(getRedirectDialogStatus)
     const friends = useSelector(getFriends)
     const currentAuthorID = useSelector(getCurrentAuthor)
     const totalFriends = useSelector(getTotalFriends)
+    const redirectToLogin = useSelector(getRedirectLoginStatus)
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -47,7 +50,10 @@ export const AnimatedSider:React.FC = () => {
         if(redirectToDialog){
             navigate(`/dialogs/${redirectToDialog}`)
         }
-    },[currentAuthorID, redirectToDialog])
+        if(redirectToLogin){
+            navigate(`/login`)
+        }
+    },[currentAuthorID, redirectToDialog, redirectToLogin])
 
     const clickHandler = () => {
         setIsActive(!isActive)
@@ -78,7 +84,7 @@ export const AnimatedSider:React.FC = () => {
                         </li>
                     </ul>
                     <div className="friends-block">
-                        {friends
+                        {friends.length !== 0
                             && <div className="friends">
                                     <span onClick={openFriendList}>Friends ({totalFriends})</span>
                                 </div>}

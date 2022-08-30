@@ -3,10 +3,19 @@ import "pages/Login/LoginPage/Login.scss"
 import {LoginFormWithFormik} from "pages/Login/LoginForm/LoginForm";
 import {DispatchPropsLoginType, StatePropsLoginType} from "pages/Login/LoginPage/LoginPageContainer";
 import {Navigate} from "react-router";
+import {actions} from "redux/appReducer";
+import {useAppDispatch} from "redux/reduxStore";
 
 
 const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({handlingBlogUserAuth, sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error}) => {
 
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        return () => {
+            dispatch(actions.setRedirectToLogin(false))
+        }
+    }, [])
 
     if(isAuth) {
         return <Navigate to={"/profile"}/>
