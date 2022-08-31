@@ -1,0 +1,65 @@
+.glowing-button{
+  position: relative;
+  cursor: pointer;
+  background: #FFFFFF;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  transition: 0.5s;
+  align-self: center;
+  border-width: 0;
+  &:hover {
+    letter-spacing: 0.45em;
+    color: #8665d6;
+    background:#8665d6;
+    box-shadow: 0 0 25px #8665d6;
+  }
+  &:before{
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #2C2F48;
+  }
+  span{
+    position: relative;
+    z-index: 1;
+  }
+  i{
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  i::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 80%;
+    width: 10px;
+    height: 4px;
+    background: #2C2F48;
+    transform: translateX(-50%) skewX(325deg);
+    transition: 0.5s;
+  }
+  &:hover i::before{
+    width: 20px;
+    left: 20%;
+  }
+  i::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 10px;
+    height: 4px;
+    background: #2C2F48;
+    transform: translateX(-50%) skewX(325deg);
+    transition: 0.5s;
+  }
+  &:hover i::after{
+    width: 20px;
+    left: 80%;
+  }
+}

@@ -8,6 +8,7 @@ import {actions, ThunkType } from 'redux/authReducer';
 import { openNotification } from 'utils/notifications/notificationTop';
 import {useDispatch} from "react-redux";
 import {ThunkBlogType} from "redux/authBlogReducer";
+import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 
 
 interface FormValues {
@@ -100,7 +101,7 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button htmlType="submit" disabled={isSubmitting} type="primary" size="large">Войти в аккаунт</Button>
+                    <GlowingEnterButton sizeX={100}/>
                 </Form.Item>
             </Form>
     );

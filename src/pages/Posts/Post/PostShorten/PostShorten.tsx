@@ -4,7 +4,7 @@ import {Input} from 'antd';
 import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import AddPost from "components/Forms/AddPost";
+import {AddPost}from "components/Main";
 import classnames from 'classnames';
 import EditSettings from "utils/EditSettings/EditSettings";
 // @ts-ignore

@@ -18,6 +18,7 @@ import {TopUserType} from "typings/types";
 import { Button } from 'antd';
 import {useNavigate} from "react-router";
 import {getRedirectLoginStatus} from "redux/app-selector";
+import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 
 
 const ProfileInfo = React.memo(() => {
@@ -86,7 +87,7 @@ const ProfileInfo = React.memo(() => {
                         <AuthData/>
                         :
                         <div className="profile__info-login-authInfo">
-                            <Button onClick={redirectHandler} type="primary">Войти</Button>
+                            <GlowingEnterButton sizeX={35} onClick={redirectHandler}/>
                         </div>
                     }
                 </div>

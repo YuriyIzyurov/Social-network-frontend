@@ -4,7 +4,7 @@ import {sendMessage, startChatListening, stopChatListening} from "redux/chatRedu
 import {AppStateType, useAppDispatch} from "redux/reduxStore";
 import {animated, useTransition} from "react-spring";
 import {ChatMessages} from "components/Main/Chat/ChatMessages";
-import {SendMessageForm} from "components/FormikForms/SendMessageForm";
+import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import './ChatPage.scss'
 
 type PropsType = {

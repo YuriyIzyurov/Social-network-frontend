@@ -10,7 +10,6 @@ import {
     getPostsOnPage, getScrollState,
     getTotalCount
 } from "redux/post-selectors";
-import {handlingAuthDataBlog} from "redux/authBlogReducer";
 import {getMe} from "redux/auth-selectors";
 import {Navigate} from "react-router";
 import Scrollbar from "react-scrollbars-custom";

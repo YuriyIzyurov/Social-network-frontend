@@ -4,7 +4,7 @@ import {PostType} from "typings/types";
 import banner from "assets/images/Banner.png"
 import {FormOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
-import AddPost from "components/Forms/AddPost";
+import {AddPost} from "components/Main";
 import {Navigate, useNavigate} from "react-router";
 import {postsAPI} from "api/postsAPI";
 import {useSelector} from "react-redux";

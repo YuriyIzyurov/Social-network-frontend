@@ -1,8 +1,7 @@
-import React, {Dispatch, MouseEventHandler, SetStateAction, useState} from 'react';
-import { Input } from 'antd';
-import { SendOutlined } from '@ant-design/icons';
+import React, {useState} from 'react';
+import {Input} from 'antd';
+import {SendOutlined} from '@ant-design/icons';
 import './SendMessageForm.scss'
-import {ThunkType} from "../../redux/dialogReducer";
 import classnames from "classnames";
 
 const { TextArea } = Input;
@@ -29,7 +28,7 @@ export const SendMessageForm: React.FC<PropsType> = React.memo(({sendMessage}) =
                     value={value}
                     onChange={e => setValue(e.target.value)}
                 />
-                {value && <SendOutlined onClick={handleMessage} disabled={true} className="message__form-icon"/>}
+                {value && <SendOutlined onClick={handleMessage} disabled className="message__form-icon"/>}
             </div>
         </div>
 

@@ -9,12 +9,12 @@ import {useAppDispatch} from "redux/reduxStore";
 import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
 import Search from "antd/lib/input/Search";
 import "pages/Dialogs/DialogsPage/DialogsPage.scss"
-import {SendMessageForm} from "components/FormikForms/SendMessageForm";
+import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import {DialogList} from "pages/Dialogs/DialogsPage/DialogList";
 import {MessagesList} from "pages/Dialogs/Message/MessagesList";
 import {DialogHeader} from "pages/Dialogs/DialogsPage/DialogHeader";
 import {Link} from "react-router-dom";
-import StyledSearch from "components/StyledSearch";
+import StyledSearch from "components/Forms/StyledSearch";
 
 
 type PropsMessagesType = {

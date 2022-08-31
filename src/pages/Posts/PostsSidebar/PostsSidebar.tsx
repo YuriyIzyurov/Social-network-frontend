@@ -6,7 +6,7 @@ import {commentsAPI, postsAPI} from "api/postsAPI";
 import Skeleton from 'antd/lib/skeleton/Skeleton';
 import {CommentsType} from "typings/types";
 import PostTag from 'components/PostTag';
-import StyledSearch from 'components/StyledSearch';
+import StyledSearch from 'components/Forms/StyledSearch';
 import {Segmented} from 'antd';
 import {SegmentedValue} from 'antd/lib/segmented';
 
@@ -105,7 +105,7 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
                 <span onClick={myTabHandler} className={myActive ? "navigation-active" : ""}>Мои</span>*/}
             </div>
             <div className="searchPost__input">
-                <StyledSearch searchPosts={searchPosts}/>
+                <StyledSearch onSearch={searchPosts}/>
             </div>
             <div className="searchPost__tagBlock">
                 <span>Популярные тэги</span>

@@ -1,16 +1,16 @@
 import React from 'react';
 import Search from "antd/lib/input/Search";
-import './StyledSearch.scss'
+import 'components/Forms/StyledSearch.scss'
 
 type PropsType = {
-    searchPosts?:(value:string) => void
+    onSearch?:(value:string) => void
     handleSetFilter?:(e:React.ChangeEvent<HTMLInputElement>) => void
 }
-const StyledSearch:React.FC<PropsType> = ({searchPosts, handleSetFilter}) => {
+const StyledSearch:React.FC<PropsType> = ({onSearch, handleSetFilter}) => {
 
     return (
    <>
-       {searchPosts && <Search placeholder="Поиск по названию, тэгам" allowClear onSearch={searchPosts}/>}
+       {onSearch && <Search placeholder="Поиск по названию, тэгам" allowClear onSearch={onSearch}/>}
        {handleSetFilter && <Search placeholder="Поиск среди контактов" allowClear onChange={handleSetFilter}/>}
    </>
     );

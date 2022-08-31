@@ -4,15 +4,16 @@ import {AppStateType, BaseThunkType, InferActionsTypes} from "./reduxStore";
 import {handlingAuthDataBlog} from "./authBlogReducer";
 
 
+
 export type InitialStateType = typeof initialState
-type ActionsType = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsType>
+type ActionType = InferActionsTypes<typeof actions>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
 let initialState = {
     initialized: false,
     isRedirect: false
 }
-const appReducer = (state = initialState,action:ActionsType): InitialStateType => {
+const appReducer = (state = initialState,action:ActionType): InitialStateType => {
     switch (action.type) {
         case "SET_INIT":
             return {
@@ -29,8 +30,8 @@ const appReducer = (state = initialState,action:ActionsType): InitialStateType =
     }
 }
 
-export const setInitializeThunkCreator = () => {
-    return (dispatch: any) => {
+export const setInitializeThunkCreator = ():ThunkType => {
+    return async (dispatch) => {
         let promise1 = dispatch(handlingAuthData())
         let promise2 = dispatch(handlingAuthDataBlog())
         Promise.all([promise1, promise2])

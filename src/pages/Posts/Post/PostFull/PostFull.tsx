@@ -11,7 +11,6 @@ import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
 import {getBloggerID} from "redux/auth-selectors";
 import EditSettings from "utils/EditSettings/EditSettings";
-import AddPost from "components/Forms/AddPost";
 import Comment from "pages/Posts/Comment/Comment";
 // @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
@@ -19,6 +18,7 @@ import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 // @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import SendComment from 'components/Forms/SendComment';
+import { AddPost } from 'components/Main';
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?

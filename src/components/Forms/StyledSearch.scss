@@ -17,6 +17,13 @@
       color: #FFFFFF;
     }
   }
+  &-lg{
+    background-color: #e8f0fe !important;
+    .ant-input-lg{
+      background-color: #e8f0fe !important;
+      color: #1d203e;
+    }
+  }
 }
 .ant-input-affix-wrapper-focused{
  border-color: #b3cbf6 !important;

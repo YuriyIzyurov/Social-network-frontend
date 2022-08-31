@@ -5,11 +5,9 @@ import {postsAPI} from "api/postsAPI";
 import {useAppDispatch} from "redux/reduxStore";
 import SimpleMDERedactor from 'SimpleMDERedactor';
 import {AddPostType} from "typings/types";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {getPostID} from "redux/post-selectors";
 import {useNavigate, useParams} from "react-router";
-
-const {TextArea} = Input
 
 
 
@@ -21,7 +19,7 @@ type PropsType = {
 }
 
 
-const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
+export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
 
     const [imageUrl, setImageUrl] = useState(``)
     const [title, setTitle] = useState(``)
@@ -122,4 +120,3 @@ const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}
         </div>
     );
 };
-export default AddPost

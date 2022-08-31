@@ -62,7 +62,7 @@ export const handlingAuthDataBlog = ():ThunkBlogType => {
             const {_id, fullName, email, avatarUrl} = response.data
             dispatch(actions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
         } else if(response.resultCode === 1) {
-            alert(response.data.message)
+            console.log(response.message)
         }
     }
 }

@@ -4,6 +4,7 @@ import {AddPostType, CommentsType, PostType, PostUserType} from "typings/types";
 type BlogResponseType<D = {}|[]> = {
     data: D
     resultCode: number
+    message:string
 }
 type PostResponse = {
     posts: PostType[]

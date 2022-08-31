@@ -1,7 +1,7 @@
-import { UserType } from "../typings/types";
+import { UserType } from "typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
 import { ThunkAction } from "redux-thunk/es/types";
-import {usersAPI} from "../api/usersAPI";
+import {usersAPI} from "api/usersAPI";
 
 
 export type ActionType = InferActionsTypes<typeof actions>
