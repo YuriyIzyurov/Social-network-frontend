@@ -53,6 +53,8 @@
     &-publications{
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 27px;
       .publication{
         width: 31.5%;
         height: 250px;

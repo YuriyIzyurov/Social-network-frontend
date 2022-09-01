@@ -8,7 +8,10 @@ import {useNavigate} from "react-router";
 import HeaderAvatar from "components/HeaderAvatar";
 import MiniAvatarBorder from "components/MiniAvatarBorder";
 import {actions} from "redux/appReducer";
+import {actions as userActions} from "redux/usersReducer";
 import {useAppDispatch} from "redux/reduxStore";
+import {logoutFromServer} from "redux/authReducer";
+import {chatAPI} from "api/chatAPI";
 
 
 type PropsLoginType = {
@@ -17,7 +20,7 @@ type PropsLoginType = {
     logoutFromServer: () => void
     handlingBlogUserLogout: () => void
 }
-const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handlingBlogUserLogout }) =>{
+const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout }) =>{
 
     const loggedUserPhoto = useSelector(getLoggedUserPhoto)
     const colors = useSelector(getMainColors)
@@ -25,9 +28,12 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, logoutFromServer,handl
     const dispatch = useAppDispatch()
 
     const Logout = () => {
-        logoutFromServer()
+        dispatch(logoutFromServer()).then(() => {
+            dispatch(userActions.deleteFriendsFromSidebar())
+            navigate('/login')
+        })
         handlingBlogUserLogout()
-        navigate('/login')
+        chatAPI.stop()
     }
 
     return <div className="login">

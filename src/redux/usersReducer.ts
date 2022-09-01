@@ -79,6 +79,12 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
                 ...state,
                 totalFriends: action.totalFriends
             }
+        case "DELETE_FRIENDS":
+            return {
+                ...state,
+                friends: [],
+                totalFriends: 0
+            }
         default:
             return state
     }
@@ -141,6 +147,13 @@ export const handlingUnfollowAction = (id:number):ThunkType => {
             dispatch(actions.followActionInProcess(false, id))
     }
 }
+
+export const handleDeleteFriends = ():ThunkType => {
+    return async (dispatch) => {
+
+    }
+}
+
 export const actions = {
     followToggle: (userID:number) => ({type : "FOLLOW", userID} as const),
     setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
@@ -152,6 +165,7 @@ export const actions = {
     filterSettings: (searchFilter: FilterType)=>({type:"FILTERED_USERS", payload:searchFilter} as const),
     setFriends: (friends: Array<UserType>)=>({type:"SET_FRIENDS", friends} as const),
     setTotalFriends: (totalFriends:number)=>({type:"SET_TOTAL_FRIENDS", totalFriends} as const),
+    deleteFriendsFromSidebar: ()=>({type:"DELETE_FRIENDS"} as const),
 }
 
 

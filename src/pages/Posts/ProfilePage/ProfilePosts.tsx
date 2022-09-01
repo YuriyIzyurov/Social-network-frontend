@@ -5,7 +5,7 @@ import banner from "assets/images/Banner.png"
 import {FormOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
 import {AddPost} from "components/Main";
-import {Navigate, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 import {postsAPI} from "api/postsAPI";
 import {useSelector} from "react-redux";
 import {getMe} from "redux/auth-selectors";
@@ -26,24 +26,35 @@ const ProfilePosts = () => {
     const myPosts = useSelector(getMyPosts)
     const navigate = useNavigate()
 
-    const loadActualPosts = async () => {
+    const NumberOfDisplayedPosts = {length : 3}
+    if(!isAuth) {
+        NumberOfDisplayedPosts.length = 6
+    }
+
+
+    const loadMainPagePosts = async () => {
         setLoading(true)
-        const response = await postsAPI.getTopPosts()
+        const responseTop = await postsAPI.getTopPosts()
+        if(isAuth){
+            const responseMy = await postsAPI.getMyPosts()
+            if(responseMy.resultCode === 0) {
+                dispatch(actions.loadMyPosts(responseMy.data.myPosts, responseMy.data.totalCount))
+            }
+        }
         setLoading(false)
-        if(response.resultCode === 0) {
-            setTopPosts(response.data.topPosts)
-            dispatch(actions.loadMyPosts(response.data.myPosts, response.data.totalCount))
-           /* setPosts(existingValue => ({
-                ...existingValue,
-                myPosts: response.data.myPosts
-            }))*/
+        if(responseTop.resultCode === 0) {
+            if(isAuth) {
+                setTopPosts(responseTop.data.topPosts.slice(0,3))
+            } else {
+                setTopPosts(responseTop.data.topPosts)
+            }
         }
     }
+
+
     useEffect(() => {
-        if(isAuth){
-            loadActualPosts()
-        }
-    },[])
+        loadMainPagePosts()
+    },[isAuth])
 
     const postHandler = () => {
         setPostAdding(!isPostAdding)
@@ -66,27 +77,40 @@ const ProfilePosts = () => {
                 </div>
             </div>
             <div className="profile__posts-publications">
-                {isLoading ? Array.from({length: 3}).map((_,index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
-                : topPosts.map((item) => <PublicationShort key={item._id} item={item}/>)}
+                {isLoading
+                    ?
+                    Array.from(NumberOfDisplayedPosts).map((_,index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
+                    :
+                    topPosts.map((item) => <PublicationShort key={item._id} item={item}/>)}
             </div>
-            <div className="profile__posts-mine">
-                <div className="description">
-                    <span>My posts</span>
-                    <div className="description-options">
-                        <span onClick={postHandler}><FormOutlined /></span>
-                        <span onClick={setMyPosts}>See all</span>
+            {isAuth
+                &&
+                <>
+                    <div className="profile__posts-mine">
+                        <div className="description">
+                            <span>My posts</span>
+                            <div className="description-options">
+                                <span onClick={postHandler}><FormOutlined/></span>
+                                <span onClick={setMyPosts}>See all</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className="profile__posts-publications">
-                {isLoading ? Array.from({length: 3}).map((_,index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
-                    : myPosts.slice(0,3).map((item) => <PublicationShort key={item._id} item={item}/>)}
-            </div>
-            {isPostAdding && <AddPost  postHandler={postHandler} currentPost={null} id={null} getPostById={null}/>}
+                    <div className="profile__posts-publications">
+                        {isLoading && isAuth
+                            ?
+                            Array.from({length: 3}).map((_, index) => <PublicationShortSkeleton key={'skeletonShort' + index}/>)
+                            :
+                            myPosts.slice(0, 3).map((item) => <PublicationShort key={item._id} item={item}/>)}
+                    </div>
+                </>}
+            {isPostAdding
+                &&
+                <AddPost
+                    postHandler={postHandler}
+                    currentPost={null} id={null}
+                    getPostById={null}/>}
         </div>
     )
-
-
 }
 
 export default ProfilePosts

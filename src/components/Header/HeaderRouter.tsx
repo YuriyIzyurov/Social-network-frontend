@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {useLocation} from "react-router-dom";
 import {Navigate} from "react-router";
-import {getCurrentProfile, getId} from "../../redux/profile-selectors";
-import {getAuth} from "../../redux/auth-selectors";
+import {getCurrentProfile, getId} from "redux/profile-selectors";
+import {getAuth} from "redux/auth-selectors";
 import {useSelector} from "react-redux";
-import {useAppDispatch} from "../../redux/reduxStore";
-import {getUserStatusInProfile, setProfileOnPage} from "../../redux/profileReducer";
+import {useAppDispatch} from "redux/reduxStore";
+import {getUserStatusInProfile, setProfileOnPage} from "redux/profileReducer";
+import {handlingSidebarUsers} from "redux/usersReducer";
 
 const HeaderRouter = () => {
 
@@ -14,15 +15,17 @@ const HeaderRouter = () => {
     const currentProfile = useSelector(getCurrentProfile)
     const dispatch = useAppDispatch()
 
-
     let location = useLocation()
+
     useEffect(() => {
+
         if(location.pathname === '/') {
             if(loggedUser) {
                 dispatch(setProfileOnPage(loggedUser))
                 dispatch(getUserStatusInProfile(loggedUser))
                 return
             }
+            return
         }
         const letters = location.pathname.match(/[a-z]/g)?.join('')
         if(letters !== 'profile') {
@@ -33,6 +36,7 @@ const HeaderRouter = () => {
                 }
                 return
             }
+            return
         }
         let idFromURL = location.pathname.replace(/\D/g,'')
         if(idFromURL){
@@ -43,16 +47,9 @@ const HeaderRouter = () => {
             if(loggedUser) {
                 dispatch(setProfileOnPage(loggedUser))
                 dispatch(getUserStatusInProfile(loggedUser))
+                dispatch(handlingSidebarUsers())
             }
         }
-        /*if (!isShowMyProfile) {
-            if (isAuth && +idFromURL === loggedUser) {
-                setMyProfile(true)
-            }
-            if (isAuth && !idFromURL && loggedUser) {
-                setMyProfile(true)
-            }
-        }*/
     }, [location.pathname])
 
     if (!isAuth && !location.pathname) return <Navigate to={'/login'} />

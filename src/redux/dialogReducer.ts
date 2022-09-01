@@ -1,9 +1,8 @@
-import {AllMessageType, DialogType, SelfPrivateMessageType, UserType} from "../typings/types";
+import {AllMessageType, DialogType, SelfPrivateMessageType, UserType} from "typings/types";
 import {AppStateType, InferActionsTypes} from "./reduxStore";
 import {ActionType as UserActionType} from "../redux/usersReducer"
-import {ActionType as SidebarActionType} from "../redux/sidebarReducer"
 import {ThunkAction} from "redux-thunk/es/types";
-import {dialogsAPI} from "../api/dialogsAPI";
+import {dialogsAPI} from "api/dialogsAPI";
 import {DeleteNotification, SpamNotification} from "constants/constants";
 
 
@@ -35,7 +34,7 @@ let initialState = {
     deletedMessages: [] as Array<SpamDataType>
 }
 
-const dialogReducer = (state = initialState,action:ActionType | UserActionType | SidebarActionType):InitialStateType => {
+const dialogReducer = (state = initialState,action:ActionType | UserActionType ):InitialStateType => {
 
     switch (action.type) {
         case "SEND_MESSAGE":

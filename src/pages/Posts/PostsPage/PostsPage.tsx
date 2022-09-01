@@ -103,11 +103,6 @@ const PostsPage = () => {
     }
 
 
-
-    if (!isAuth) {
-        return <Navigate to={"/login"}/>
-    }
-
     return (
 
                 <div className="all-posts">

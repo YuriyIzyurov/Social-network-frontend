@@ -18,21 +18,12 @@ type PropsType= {
 }
 const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isMyTabPicked}) => {
 
-    /*const [newActive, setNewActive] = useState(true)
-    const [popActive, setPopActive] = useState(false)
-    const [myActive, setMyActive] = useState(false)*/
-
     const [tags, setTags] = useState<string[] | undefined>(undefined)
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-       /* if(isMyTabPicked) {
-            setMyActive(true)
-            setPopActive(false)
-            setNewActive(false)
-        }*/
         getTags()
         getComments()
         return () => {
@@ -54,21 +45,12 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
         })
     }
     const newTabHandler = () => {
-        /*setNewActive(true)
-        setPopActive(false)
-        setMyActive(false)*/
         loadAllPosts()
     }
     const popTabHandler = () => {
-       /* setPopActive(true)
-        setNewActive(false)
-        setMyActive(false)*/
         loadPopularPosts()
     }
     const myTabHandler = () => {
-        /*setMyActive(true)
-        setPopActive(false)
-        setNewActive(false)*/
         loadMyPosts()
     }
     const handleSegmentChange = (value:SegmentedValue) => {
@@ -100,9 +82,7 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
                     "Мои",
                     "Автор"
                 ]} />
-                {/*<span onClick={newTabHandler} className={newActive ? "navigation-active" : ""}>Новые</span>
-                <span onClick={popTabHandler} className={popActive ? "navigation-active" : ""}>Популярные</span>
-                <span onClick={myTabHandler} className={myActive ? "navigation-active" : ""}>Мои</span>*/}
+
             </div>
             <div className="searchPost__input">
                 <StyledSearch onSearch={searchPosts}/>

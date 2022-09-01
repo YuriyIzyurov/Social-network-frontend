@@ -18,7 +18,7 @@ import {getRedirectLoginStatus} from "redux/app-selector";
 
 const {Sider} = Layout
 
-export const AnimatedSider:React.FC = () => {
+export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
 
     const [isActive, setIsActive] = useState(false)
 
@@ -31,17 +31,26 @@ export const AnimatedSider:React.FC = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const transitionFriends = useTransition(isActive, {
-        from:{y: 228, opacity: 0.8},
-        enter:{y: 0, opacity: 1},
-        leave:{y: 228, opacity: 0.8},
+        from:{
+            y: 228,
+            opacity: 0.8
+        },
+        enter:{
+            y: 0,
+            opacity: 1
+        },
+        leave:{
+            y: 228,
+            opacity: 0.3
+        },
         config: {
-            duration: 90,
+            duration: 100,
         }
     })
 
     useEffect(() => {
         dispatch(handlingSidebarUsers())
-    },[])
+    },[totalFriends])
 
     useEffect(() => {
         if(currentAuthorID){
@@ -54,6 +63,12 @@ export const AnimatedSider:React.FC = () => {
             navigate(`/login`)
         }
     },[currentAuthorID, redirectToDialog, redirectToLogin])
+
+    useEffect(() => {
+        if(!isAuth) {
+            setIsActive(false)
+        }
+    }, [isAuth])
 
     const clickHandler = () => {
         setIsActive(!isActive)
@@ -92,7 +107,7 @@ export const AnimatedSider:React.FC = () => {
                             {friends && friends.map((item) => <FriendItem key={item.id} item={item}/>)}
                         </div>
                     </div>
-                    <div className="toggle" onClick={clickHandler}></div>
+                    {isAuth && <div className="toggle" onClick={clickHandler}></div>}
                 </div>
                 {transitionFriends((style, item) =>
                     item ? <animated.div style={style} className="friends-block-short">
@@ -105,7 +120,7 @@ export const AnimatedSider:React.FC = () => {
                         </div>
                     </animated.div> : ''
                 )}
-                <ChatPage isActive={isActive}/>
+                {isAuth && <ChatPage isActive={isActive}/>}
             </Sider>
         </>
     );

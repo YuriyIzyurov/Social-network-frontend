@@ -19,12 +19,15 @@ export const CopyToClipBoardData = ({name, data}:{name:string, data:string}) => 
                     {name}:
                 </span>
             <span>{data}</span>
-            <CopyToClipboard text={data}
-                             onCopy={handleCopyFirst}>
+            <CopyToClipboard text={data} onCopy={handleCopyFirst}>
                     <span style={{position:'relative'}}>
                        <CopyOutlined/>
-                        <span className={classnames('descr',{  "description-copy" : !copiedFirst})}>Copy</span>
-                         <span className={classnames('popup-descr',{  "description-copied" : copiedFirst})}>Copied!</span>
+                        <span className={classnames('descr',{  "description-copy" : !copiedFirst})}>
+                            Copy
+                        </span>
+                        <span className={classnames('popup-descr',{  "description-copied" : copiedFirst})}>
+                            Copied!
+                        </span>
                     </span>
             </CopyToClipboard>
         </div>
