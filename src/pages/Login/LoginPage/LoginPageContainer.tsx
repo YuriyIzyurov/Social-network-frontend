@@ -12,6 +12,7 @@ export type StatePropsLoginType ={
     isAuth: boolean
     captcha: string | null
     error: string | null
+    isFetching: boolean
 }
 export type DispatchPropsLoginType = {
     sendAuthDataOnServ: (email:string, password:string, rememberMe:boolean, captcha:string) => ThunkType
@@ -23,7 +24,8 @@ let mapStateToProps = (state: AppStateType): StatePropsLoginType  => {
     return {
         isAuth: state.auth.isAuth,
         captcha: state.auth.captcha,
-        error: state.auth.error
+        error: state.auth.error,
+        isFetching: state.auth.isFetching
     }
 }
 

@@ -31,18 +31,18 @@ type PropsType = {
 
     const transition = useTransition(isActive, {
         from:{
-            y: 0,
+            y: 620,
             height: 120,
         },
         enter:{
             y: 0,
-            height:'auto',
+            height: 738,
         },
         leave:{
-            y: 0,
-            height: 'auto'
+            y: 620,
+            height: 120,
         },
-        config:{duration: 90}
+        config:{duration: 100}
     })
 
     return <>

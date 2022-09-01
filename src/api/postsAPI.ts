@@ -17,6 +17,9 @@ type PatchResponse = {
 type TopPostsType = {
     totalCount: number
     topPosts:PostType[]
+}
+type MyPostsType = {
+    totalCount: number
     myPosts:PostType[]
 }
 type TopType = {
@@ -65,6 +68,9 @@ export const postsAPI = {
     },
     getTopPosts() {
         return instanceBlog.get<BlogResponseType<TopPostsType>>(`top`).then(response => response.data)
+    },
+    getMyPosts() {
+        return instanceBlog.get<BlogResponseType<MyPostsType>>(`myPosts`).then(response => response.data)
     },
     getTagMatch(tag:string) {
         return instanceBlog.get<BlogResponseType<PostType[]>>(`tags/${tag}`).then(response => response.data)

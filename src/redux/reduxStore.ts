@@ -1,7 +1,6 @@
 import {Action, AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
 import dialogReducer from "./dialogReducer";
 import profileReducer, { ThunkType } from "./profileReducer";
-import sidebarReducer from "./sidebarReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import thunk, {ThunkAction, ThunkDispatch, ThunkMiddleware} from "redux-thunk";
@@ -14,7 +13,6 @@ import authBlogReducer from "./authBlogReducer";
 let rootReducer = combineReducers({
     dialog: dialogReducer,
     profile: profileReducer,
-    sidebar: sidebarReducer,
     userList: usersReducer,
     auth: authReducer,
     app: appReducer,

@@ -24,6 +24,7 @@ interface OtherProps {
     askForCaptcha: () => ThunkType
     sendAuthDataOnServ: (email:string, password:string, remember:boolean, captcha:string) => ThunkType
     handlingBlogUserAuth: (email:string, password:string) => ThunkBlogType
+    isFetching: boolean
 }
 const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
     const {
@@ -101,7 +102,7 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <GlowingEnterButton sizeX={100}/>
+                    <GlowingEnterButton sizeX={100} disabled={props.isFetching}/>
                 </Form.Item>
             </Form>
     );

@@ -11,6 +11,10 @@
   transition: 0.5s;
   align-self: center;
   border-width: 0;
+  &-disabled{
+    opacity: 0.4;
+    cursor: no-drop;
+  }
   &:hover {
     letter-spacing: 0.45em;
     color: #8665d6;

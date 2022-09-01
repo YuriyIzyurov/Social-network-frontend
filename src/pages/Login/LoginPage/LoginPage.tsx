@@ -7,7 +7,7 @@ import {actions} from "redux/appReducer";
 import {useAppDispatch} from "redux/reduxStore";
 
 
-const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({handlingBlogUserAuth, sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error}) => {
+const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({handlingBlogUserAuth, sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error, isFetching}) => {
 
     const dispatch = useAppDispatch()
 
@@ -32,6 +32,7 @@ const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({hand
                                     captcha={captcha}
                                     askForCaptcha={askForCaptcha}
                                     error={error}
+                                    isFetching={isFetching}
                                     />
             </div>
         </div>

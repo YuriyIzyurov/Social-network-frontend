@@ -51,7 +51,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
         <Layout className="site__layout">
             <BrowserRouter>
                 <HeaderContainer/>
-                <AnimatedSider />
+                <AnimatedSider isAuth={this.props.isAuth}/>
             <Layout>
                 <Header className="header">
                     <HeaderRouter/>
