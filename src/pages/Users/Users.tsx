@@ -1,19 +1,12 @@
-import React, {Dispatch, LegacyRef, memo, SetStateAction, useEffect, useState} from "react"
+import React, {LegacyRef, memo, useEffect} from "react"
 import 'pages/Users/Users.scss'
 import {UserType} from "typings/types";
 import {FilterType, handlingAddUsers} from "redux/usersReducer";
-import { Button, Divider, Dropdown, List, Menu, Pagination, Skeleton} from "antd";
-import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
-import Search from "antd/lib/input/Search";
-import InfiniteScroll from "react-infinite-scroll-component";
+import {Pagination} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
 import UserSearchform from "components/Forms/UserSearchform";
-import { NavLink } from "react-router-dom";
-import { Button as AntButton, Tooltip, Avatar as AntAvatar } from 'antd';
-import { UserAddOutlined, UserDeleteOutlined, CommentOutlined } from '@ant-design/icons'
 import {startDialogWithFriend} from "redux/dialogReducer";
 import {useNavigate} from "react-router";
-import Preloader from "components/Preloader/Preloader";
 import {UserList} from "pages/Users/UserList";
 import fill from "zadachi";
 
@@ -70,6 +63,7 @@ const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, use
 
                 <div className="users__find-paginator">
                     <Pagination
+                        showSizeChanger={false}
                         defaultCurrent={1}
                         current={activePage}
                         total={totalUsers}

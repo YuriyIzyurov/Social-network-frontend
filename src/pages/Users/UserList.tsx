@@ -60,7 +60,7 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
                 className="users__find-content"
                 ref={usersRef}
             >
-                <InfiniteScroll
+               {/* <InfiniteScroll
                     dataLength={users.length}
                     next={loadMoreData}
                     hasMore={users.length < 1000}
@@ -69,7 +69,7 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
                     endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                     scrollableTarget="scrollableDiv"
 
-                >
+                >*/}
                     <List
                         dataSource={users}
                         renderItem={item => (
@@ -80,7 +80,7 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
                             </List.Item>
                         )}
                     />
-                </InfiniteScroll>
+                {/*</InfiniteScroll>*/}
             </div>
         );
 };

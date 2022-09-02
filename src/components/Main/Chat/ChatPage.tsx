@@ -31,7 +31,7 @@ type PropsType = {
 
     const transition = useTransition(isActive, {
         from:{
-            y: 620,
+            y: 617,
             height: 120,
         },
         enter:{
@@ -39,10 +39,10 @@ type PropsType = {
             height: 738,
         },
         leave:{
-            y: 620,
+            y: 598,
             height: 120,
         },
-        config:{duration: 100}
+        config:{duration: 300}
     })
 
     return <>

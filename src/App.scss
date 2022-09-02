@@ -93,7 +93,7 @@
     box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
     overflow: hidden;
     max-height: 920px;
-    transition: max-height 0.2s;
+    transition: max-height 0.3s linear;
     ul {
       position: absolute;
       left: 0;
