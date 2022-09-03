@@ -1,0 +1,75 @@
+@media only screen and (max-height: 930px) {
+    .list-item-card{
+        padding: 2px 40px 2px 8px;
+        margin-bottom: 5px;
+    }
+    .profile__info-members{
+        bottom: 218px !important;
+    }
+    .friends__list{
+        height: 323px !important;
+    }
+
+}
+@media only screen and (max-height: 830px) {
+    .clip-avatar{
+        clip-path: none !important;
+    }
+    .clip-avatar img {
+        width: 33px !important;
+        height: 33px !important;
+        border-radius: 50%;
+    }
+    .members__list-item-name{
+        flex-direction: row !important;
+        align-items: center;
+    }
+    .members__list-item-name span:nth-child(2){
+        margin-left: 10px;
+    }
+    .social__media-background{
+        clip-path: none !important;
+        width: auto !important;
+        height: auto !important;
+    }
+    .profile__info-members {
+        bottom: 145px !important;
+    }
+    .follow {
+        margin-bottom: 9px !important;
+    }
+    .new-members{
+        padding: 9px 20px !important;
+    }
+    .friends__list{
+        height: 282px !important;
+    }
+
+}
+@media only screen and (max-height: 770px) {
+    .friends-block {
+        margin-top: 0 !important;
+    }
+    .friends__list{
+        height: 133px !important;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .profile__info-social {
+        position: initial !important;
+    }
+    .profile__info-members {
+        position: initial !important;
+    }
+    .profile__info{
+        overflow: auto;
+    }
+}
+@media only screen and (max-height: 565px){
+    .site__layout-left-sider {
+        overflow: auto;
+    }
+     .friends__list {
+         padding: 0 65px 0 20px !important;
+     }
+}

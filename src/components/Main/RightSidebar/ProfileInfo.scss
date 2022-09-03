@@ -1,11 +1,15 @@
+
+
 .site__layout-right-sider{
+  min-height: 100vh;
+
   .profile__info {
+    position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-left: 4px;
-    //min-width: 280px;
+    margin-left: 2px;
     background: #2C2F48;
     &-menu{
       width: 100%;
@@ -102,7 +106,7 @@
         cursor: pointer;
         width: 205px;
         height: 18px;
-        margin-bottom: 10px;
+        margin-bottom: 4px;
         margin-top: 4px;
         line-height: 18px;
         text-align: center;
@@ -211,7 +215,11 @@
         }
       }
     }
+
     &-members{
+      position: absolute;
+      bottom: 262px;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -236,24 +244,6 @@
         width: 100%;
         padding: 0 20px;
         &-item{
-          cursor: pointer;
-          display: flex;
-          padding: 8px 40px 8px 8px;
-          margin-bottom: 8px;
-          width: 100%;
-          height: 60px;
-          background: #393D5D;
-          background-blend-mode: overlay;
-          border-radius: 5px;
-          box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
-          &-avatar{
-            margin-right: 8px;
-            clip-path: polygon(37% 5%, 61% 5%, 90% 26%, 94% 36%, 94% 66%, 91% 75%, 60% 97%, 38% 97%, 10% 76%, 5% 68%, 5% 35%, 11% 24%);
-            img{
-              object-fit: cover;
-              object-position: 0 0;
-            }
-          }
           &-name{
             display: flex;
             flex-direction: column;
@@ -278,12 +268,16 @@
         }
       }
 
+
     }
     &-social{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
       display: flex;
       align-items: flex-start;
       flex-direction: column;
-      padding: 20px;
+      padding: 10px 20px;
       .ant-form {
         width: 100%;
         &-item{
@@ -357,3 +351,6 @@
     }
   }
 }
+@import "adaptive.css";
+
+

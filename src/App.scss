@@ -4,6 +4,9 @@
   justify-content: space-between;
   background-color: #2C2F48;
   padding: 0;
+  height: 65px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
   &__content {
     width: 224px;
     background: #684fb5;
@@ -87,10 +90,9 @@
     margin-top: 66px;
     inset: 1px;
     background: #2c2f48;
-    width: 335px;
+    width: 337px;
     border-left: 10px solid #2c2f48;
     border-radius: 15px;
-    box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
     overflow: hidden;
     max-height: 920px;
     transition: max-height 0.3s linear;
@@ -134,7 +136,7 @@
         .friends__list{
           width: 100%;
           padding: 0 20px;
-          height: 336px;
+          height: 345px;
           overflow: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -147,20 +149,6 @@
             color:#b6d1f9;
           }
           &-item{
-            display: flex;
-            padding: 8px 40px 8px 8px;
-            margin-bottom: 8px;
-            width: 100%;
-            height: 60px;
-            background: #393D5D;
-            background-blend-mode: overlay;
-            border-radius: 5px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-            &-avatar{
-              margin-right: 8px;
-              // clip-path: polygon(50% 0%, 89% 22%, 95% 32%, 95% 69%, 89% 78%, 50% 104%, 8% 75%, 4% 68%, 4% 34%, 10% 24%);
-              clip-path: polygon(37% 5%, 61% 5%, 90% 26%, 94% 36%, 94% 66%, 91% 75%, 60% 97%, 38% 97%, 10% 76%, 5% 68%, 5% 35%, 11% 24%);
-            }
             &-name{
               display: flex;
               flex-direction: column;
@@ -418,5 +406,27 @@
 .ant-scrolling-effect{
   width:100% !important;
 }
-
-
+.list-item-card {
+  cursor: pointer;
+  display: flex;
+  padding: 8px 40px 8px 8px;
+  margin-bottom: 8px;
+  width: 100%;
+  background: #393D5D;
+  background-blend-mode: overlay;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .2);
+  .clip-avatar{
+    margin-right: 8px;
+    clip-path: polygon(37% 5%, 61% 5%, 90% 26%, 94% 36%, 94% 66%, 91% 75%, 60% 97%, 38% 97%, 10% 76%, 5% 68%, 5% 35%, 11% 24%);
+    img{
+      object-fit: cover;
+      object-position: 0 0;
+    }
+  }
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

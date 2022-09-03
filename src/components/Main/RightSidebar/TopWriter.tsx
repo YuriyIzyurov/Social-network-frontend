@@ -21,8 +21,8 @@ export const TopWriter = ({user}:{user:TopUserType}) => {
     }
 
     return (
-        <div onClick={getPostsByAuthor} className="members__list-item">
-            <div className="members__list-item-avatar">
+        <div onClick={getPostsByAuthor} className="members__list-item list-item-card">
+            <div className="clip-avatar">
                 <img style={{width:"44px", height:"44px"}} src={user.avatarUrl} alt='ava'/>
             </div>
             <div className="members__list-item-name">

@@ -4,8 +4,8 @@ import {GetMessageTime} from "utils/Time/CustomTime";
 
 const LastComment = ({item}:{item:CommentsType}) => {
     return (
-        <div className="searchPost__comments-list-item">
-            <div className="searchPost__comments-list-item-avatar">
+        <div className="searchPost__comments-list-item list-item-card">
+            <div className="clip-avatar">
                 <img style={{width:"44px", height:"44px"}} src={item.user.avatarUrl} alt='ava'/>
             </div>
             <div className="searchPost__comments-list-item-name">

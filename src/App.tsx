@@ -76,9 +76,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
             </Layout>
             </BrowserRouter>
                  <Sider className="site__layout-right-sider">
-                    <div className='profile__info'>
-                        <ProfileInfo/>
-                    </div>
+                     <ProfileInfo/>
                 </Sider>
         </Layout>
         )
