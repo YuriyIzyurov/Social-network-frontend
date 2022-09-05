@@ -64,8 +64,9 @@ const authReducer = (state = initialState,action:ActionType):initialStateType =>
 
 export const handlingAuthData = ():ThunkType => {
     return async (dispatch) => {
-        dispatch(actions.dataIsFetching(true))
-       let response = await authAPI.getAuth()
+        try {
+            dispatch(actions.dataIsFetching(true))
+            let response = await authAPI.getAuth()
             if(response.resultCode === ResultCode.Success){
                 let response2 = await profileAPI.getProfile(response.data.id)
                 dispatch(actions.dataIsFetching(false))
@@ -75,9 +76,12 @@ export const handlingAuthData = ():ThunkType => {
             } else {
                 dispatch(actions.dataIsFetching(false))
             }
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
-export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean, captcha:string):ThunkType => {
+export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean = true, captcha:string):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.dataIsFetching(true))
         let response = await authAPI.submitAuth(email, password, rememberMe, captcha)

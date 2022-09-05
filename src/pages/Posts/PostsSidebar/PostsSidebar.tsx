@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import LastComment from 'pages/Posts/PostsSidebar/LastComment';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, getAllPosts} from "redux/postsReducer";
+import {actions, handlingGetAllPosts} from "redux/postsReducer";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import Skeleton from 'antd/lib/skeleton/Skeleton';
 import {CommentsType} from "typings/types";
@@ -14,21 +14,20 @@ type PropsType= {
     loadPopularPosts: () => void
     loadAllPosts: () => void
     loadMyPosts: () => void
-    isMyTabPicked: boolean
+    isAuthorTabPicked: boolean
+    isAuth: boolean
 }
-const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isMyTabPicked}) => {
+const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isAuthorTabPicked, isAuth}) => {
 
     const [tags, setTags] = useState<string[] | undefined>(undefined)
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined)
+    const [currentValue, setCurrentValue] = useState("Новые")
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         getTags()
         getComments()
-        return () => {
-            dispatch(actions.pickMineTab(true))
-        }
     }, [])
 
     const getComments = async () => {
@@ -40,29 +39,35 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
         setTags(response.data)
     }
     const searchPosts = (value:string) => {
-        dispatch(getAllPosts(value)).then(() => {
+        dispatch(handlingGetAllPosts(value)).then(() => {
             dispatch(actions.addSearchFilter(value))
         })
     }
     const newTabHandler = () => {
         loadAllPosts()
+        dispatch(actions.pickAuthorTab(false))
     }
     const popTabHandler = () => {
         loadPopularPosts()
+        dispatch(actions.pickAuthorTab(false))
     }
     const myTabHandler = () => {
         loadMyPosts()
+        dispatch(actions.pickAuthorTab(false))
     }
     const handleSegmentChange = (value:SegmentedValue) => {
         switch (value) {
             case "Новые":
                 newTabHandler()
+                setCurrentValue("Новые")
                 break
             case "Популярные":
                 popTabHandler()
+                setCurrentValue("Популярные")
                 break
             case "Мои":
                 myTabHandler()
+                setCurrentValue("Мои")
                 break
             default:
                 break
@@ -75,11 +80,12 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
                 <Segmented
                     block
                     onChange={handleSegmentChange}
-                    defaultValue={isMyTabPicked ? "Мои" : "Автор"}
+                    defaultValue={"Новые"}
+                    value={isAuthorTabPicked ? "Автор" : currentValue}
                     options={[
                     "Новые",
                     "Популярные",
-                    "Мои",
+                    { label: 'Мои', value: 'Мои', disabled: !isAuth },
                     "Автор"
                 ]} />
 

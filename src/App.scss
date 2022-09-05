@@ -25,7 +25,7 @@
   height: 100vh;
   background: radial-gradient(73.23% 106% at 34.94% 108.33%, #F7CBFD 0%, #7758D1 100%);
   &-content{
-    overflow: auto;
+
   }
   .ant-layout-sider {
     background: transparent;
@@ -136,7 +136,7 @@
         .friends__list{
           width: 100%;
           padding: 0 20px;
-          height: 345px;
+          height: 339px;
           overflow: auto;
           &::-webkit-scrollbar {
             display: none;
@@ -407,6 +407,7 @@
   width:100% !important;
 }
 .list-item-card {
+  height: 60px;
   cursor: pointer;
   display: flex;
   padding: 8px 40px 8px 8px;
@@ -417,9 +418,17 @@
   border-radius: 5px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, .2);
   .clip-avatar{
+    height: 44px;
+    width: 44px;
     margin-right: 8px;
     clip-path: polygon(37% 5%, 61% 5%, 90% 26%, 94% 36%, 94% 66%, 91% 75%, 60% 97%, 38% 97%, 10% 76%, 5% 68%, 5% 35%, 11% 24%);
     img{
+      /*width: 44px;
+      object-fit: cover;
+      object-position: 0 0;*/
+      display: block;
+      max-width: 100%;
+      height: auto;
       object-fit: cover;
       object-position: 0 0;
     }
@@ -429,4 +438,20 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+  .ant-select-selector{
+    background-color: #393d5d !important;
+    color: #FFFFFF;
+  }
+
+.ant-select-focused {
+  .ant-select-selector{
+    border-color: #72ffff !important;
+  }
+}
+.ant-select:hover{
+  .ant-select-selector{
+    border-color: #72ffff !important;
+  }
 }

@@ -1,19 +1,25 @@
 @media only screen and (max-height: 930px) {
     .list-item-card{
-        padding: 2px 40px 2px 8px;
+        padding: 2px 4px 2px 8px;
         margin-bottom: 5px;
+        height: 48px;
     }
     .profile__info-members{
         bottom: 218px !important;
     }
     .friends__list{
-        height: 323px !important;
+        height: 317px !important;
     }
 
 }
 @media only screen and (max-height: 830px) {
+    .list-item-card{
+        height: 38px;
+        overflow: hidden;
+    }
     .clip-avatar{
         clip-path: none !important;
+        height: 33px !important;
     }
     .clip-avatar img {
         width: 33px !important;
@@ -26,6 +32,9 @@
     }
     .members__list-item-name span:nth-child(2){
         margin-left: 10px;
+    }
+    .social__media{
+        height: 25px;
     }
     .social__media-background{
         clip-path: none !important;
@@ -42,7 +51,12 @@
         padding: 9px 20px !important;
     }
     .friends__list{
-        height: 282px !important;
+        height: 258px !important;
+    }
+    .gradient-avatar{
+        width: 33px !important;
+        height: 33px !important;
+        line-height: unset;
     }
 
 }
@@ -51,7 +65,13 @@
         margin-top: 0 !important;
     }
     .friends__list{
-        height: 133px !important;
+        height: 258px !important;
+    }
+    .searchPost__comments-list-item {
+        height: 39px;
+    }
+    .searchPost {
+        overflow: auto;
     }
 }
 @media only screen and (max-height: 700px) {
@@ -64,12 +84,13 @@
     .profile__info{
         overflow: auto;
     }
+    .friends__list {
+        padding: 0 65px 0 20px !important;
+    }
 }
 @media only screen and (max-height: 565px){
     .site__layout-left-sider {
         overflow: auto;
     }
-     .friends__list {
-         padding: 0 65px 0 20px !important;
-     }
+
 }

@@ -16,14 +16,14 @@ export const TopWriter = ({user}:{user:TopUserType}) => {
         dispatch(actions.setActivePostPage(1))
         dispatch(actions.setTotalPosts(response.data.length))
         dispatch(actions.setAllPosts(response.data))
-        dispatch(actions.pickMineTab(false))
+        dispatch(actions.pickAuthorTab(true))
         dispatch(actions.setCurrentAuthorId(user.id))
     }
 
     return (
         <div onClick={getPostsByAuthor} className="members__list-item list-item-card">
             <div className="clip-avatar">
-                <img style={{width:"44px", height:"44px"}} src={user.avatarUrl} alt='ava'/>
+                <img  src={user.avatarUrl} alt='ava'/>
             </div>
             <div className="members__list-item-name">
                 <span>{user.fullName}</span>

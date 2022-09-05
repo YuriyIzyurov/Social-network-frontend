@@ -16,7 +16,7 @@ let initialState = {
     searchFilter: null as string | null,
     myPosts: [] as Array<PostType>,
     countOfMyPosts: null as number | null,
-    isMyTabPicked: true as boolean | true,
+    isAuthorTabPicked: false as boolean | false,
     currentAuthorID: null as string | null,
     isScrollTop: false as boolean | false
 }
@@ -74,10 +74,10 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
                 ...state,
                 searchFilter:action.filter
             }
-        case "PICK_MY_POSTS_TAB":{
+        case "PICK_AUTHOR_POSTS_TAB":{
             return {
                 ...state,
-                isMyTabPicked: action.status
+                isAuthorTabPicked: action.status
             }
         }
         case 'SET_CURRENT_AUTHOR_ID': {
@@ -96,7 +96,7 @@ const postsReducer = (state = initialState, action: ActionType ):initialStateTyp
             return state
     }
 }
-export const getAllPosts = (searchFilter:string|null = null, viewed:boolean = false):ThunkType => {
+export const handlingGetAllPosts = (searchFilter:string|null = null, viewed:boolean = false):ThunkType => {
     return async (dispatch) => {
         dispatch(actions.setActivePostPage(1))
         dispatch(actions.setFetching(true))
@@ -175,7 +175,7 @@ export const actions = {
     addPosts: (posts: PostType[]) => ({type: 'ADD_POSTS', payload:posts} as const),
     loadMyPosts: (posts: PostType[],count: number) => ({type: 'LOAD_POSTS', payload: {posts, count}} as const),
     addSearchFilter: (filter: string | null) => ({type: 'ADD_POST_SEARCH_FILTER', filter} as const),
-    pickMineTab: (status:boolean) => ({type: 'PICK_MY_POSTS_TAB', status} as const),
+    pickAuthorTab: (status:boolean) => ({type: 'PICK_AUTHOR_POSTS_TAB', status} as const),
     setCurrentAuthorId: (id:string) => ({type: 'SET_CURRENT_AUTHOR_ID', id} as const),
     setScrollToTop: (isScrollTop:boolean) => ({type: 'SET_SCROLL_TO_TOP', isScrollTop} as const)
 }

@@ -1,7 +1,15 @@
 import React, {useEffect, useState} from "react"
 import 'pages/Posts/ProfilePage/ProfilePosts.scss'
 import {PostType} from "typings/types";
-import banner from "assets/images/Banner.png"
+// @ts-ignore
+import banner3 from "assets/images/banner3.jpg"
+// @ts-ignore
+import banner2 from "assets/images/banner2-edited2-cropped.jpg"
+// @ts-ignore
+import banner4 from "assets/images/banner4.jpg"
+// @ts-ignore
+import banner5 from "assets/images/banner5.jpg"
+
 import {FormOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
 import {AddPost} from "components/Main";
@@ -19,7 +27,7 @@ import {getMyPosts} from "redux/post-selectors";
 const ProfilePosts = () => {
 
     const [isPostAdding, setPostAdding] = useState(false);
-    const [isAuth] = useSelector(getMe)
+    const isAuth = useSelector(getMe)
     const [topPosts, setTopPosts] = useState<PostType[]>([])
     const [isLoading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
@@ -60,7 +68,6 @@ const ProfilePosts = () => {
         setPostAdding(!isPostAdding)
     }
     const setMyPosts = () => {
-        dispatch(actions.pickMineTab(true))
         navigate("/posts")
     }
 
@@ -68,7 +75,7 @@ const ProfilePosts = () => {
     return  (
         <div className="profile__posts">
             <div className="profile__posts-animation">
-                <img src={banner} alt='banner'/>
+                <img src={banner2} alt='banner'/>
             </div>
             <div className="profile__posts-recommended">
                 <div className="description">

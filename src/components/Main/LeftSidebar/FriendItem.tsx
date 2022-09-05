@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {UserType} from "typings/types";
+import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
 
 
 export const FriendItem = ({item}:{item: UserType}) => {
@@ -8,11 +9,11 @@ export const FriendItem = ({item}:{item: UserType}) => {
         <NavLink to={"/profile/" + item.id}>
         <div className="friends__list-item list-item-card">
             <div className="clip-avatar">
-                <img style={{width:"44px", height:"44px"}} src={item.photos.small} alt='ava'/>
+                <GradientCharAvatar avatarUrl={item.photos.small} name={item.name}/>
             </div>
             <div className="friends__list-item-name">
                 <span>{item.name}</span>
-                <span>{item.status}</span>
+                {item.status && <span>{item.status}</span>}
             </div>
         </div>
         </NavLink>

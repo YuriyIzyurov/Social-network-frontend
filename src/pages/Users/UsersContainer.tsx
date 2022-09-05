@@ -98,7 +98,6 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
         props.handlingUsers(1,usersOnPage, filter)
     }
     return (
-        <div>
             <Users totalUsers={props.totalUsers}
                     usersOnPage={props.usersOnPage}
                     activePage={props.activePage}
@@ -112,7 +111,6 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
                     isFetching={props.isFetching}
                    usersRef={usersRef}
             />
-        </div>
     )
 }
 

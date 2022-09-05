@@ -8,6 +8,7 @@ import {Button, Dropdown, Menu} from "antd";
 import { Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
+import StyledSearch from "components/Forms/StyledSearch";
 const { Option } = Select;
 
 
@@ -44,12 +45,15 @@ const UserSearchForm: React.FC<PropsType> = React.memo(({handlingFilteredUsers})
 
     const handleChange = (value: string) => {
         setSelectValue(value)
-    };
+    }
+    const handleSearchChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value)
+    }
 
     return (
         <div className="users__find-search">
             <div className="users__find-search-input">
-                <Search defaultValue={filter.term} onSearch={searchUsers} onChange={e => setInputValue(e.target.value)} placeholder="Поиск среди контактов" />
+                <StyledSearch defaultValue={filter.term} onSearch={searchUsers} onChange={handleSearchChange} userSearch/>
             </div>
             <div></div>
             {/*for justify-content: space-between*/}

@@ -44,7 +44,7 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
             opacity: 0.3
         },
         config: {
-            duration: 90,
+            duration: 100,
         }
     })
 

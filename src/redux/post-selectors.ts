@@ -37,7 +37,7 @@ export const getFetching = (state: AppStateType) => {
     return state.blog.isFetching
 }
 export const getMyTabPickStatus = (state: AppStateType) => {
-    return state.blog.isMyTabPicked
+    return state.blog.isAuthorTabPicked
 }
 export const getCurrentFilter = (state: AppStateType) => {
     return state.blog.searchFilter

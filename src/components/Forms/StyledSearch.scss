@@ -6,10 +6,10 @@
   }
   &:hover,
   &:focus{
-    border-color: #b5cff8 !important;
+    border-color: #72ffff !important;
   }
   &:focus{
-    box-shadow: 0 0 0 2px rgb(180, 205, 247);
+    box-shadow: 0 0 0 2px rgb(56, 150, 150);
   }
   .ant-input-clear-icon{
     background-color: inherit !important;
@@ -26,7 +26,7 @@
   }
 }
 .ant-input-affix-wrapper-focused{
- border-color: #b3cbf6 !important;
+ border-color: #72ffff !important;
 }
 .ant-input-search-button{
   background-color: #393d5d !important;
@@ -38,9 +38,9 @@
     }
   }
   &:hover{
-    border-color: #b5cff8 !important;
+    border-color: #72ffff !important;
     span{
-      color:#b5cff8 !important;
+      color:#72ffff !important;
     }
   }
 }

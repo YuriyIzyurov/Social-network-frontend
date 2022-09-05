@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: flex-start;
     margin-left: 2px;
+    //min-width: 280px;
     background: #2C2F48;
     &-menu{
       width: 100%;
@@ -32,11 +33,11 @@
       align-items: center;
 
       .ava-border {
+        position: absolute;
+        left:170px;
         display: flex;
         height: 160px;
         margin-top: 9px;
-        top: 13px;
-        left: 80px;
         justify-content: center;
         z-index: 1;
       }
@@ -60,7 +61,7 @@
         height: 138px;
         position: absolute;
         top:37px;
-        left: 97px;
+        left: 100px;
 
         img {
           border-radius: 9px;
@@ -100,7 +101,7 @@
         font-weight: 700;
         font-size: 17px;
         text-align: center;
-        margin-top: 45px;
+        margin-top: 205px;
       }
       &-social {
         cursor: pointer;

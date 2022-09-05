@@ -97,10 +97,9 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
                         <img src={props.captcha}/>
                     </div>}
                 </Form.Item>
-                <Form.Item valuePropName="checked" noStyle>
-                    <Checkbox name="remember">Remember me</Checkbox>
-                </Form.Item>
-
+                {/*<Form.Item valuePropName="checked" noStyle>
+                    <Checkbox name="remember">Remember me</Checkbox> //пока по умолчанию запоминать auth
+                </Form.Item>*/}
                 <Form.Item>
                     <GlowingEnterButton sizeX={100} disabled={props.isFetching}/>
                 </Form.Item>
@@ -129,7 +128,7 @@ export const LoginFormWithFormik = withFormik<OtherProps, FormValues>({
 
     handleSubmit: (values, { setSubmitting, props }) => {
 
-        props.sendAuthDataOnServ(values.email, values.password, values.remember,values.captcha)
+        props.sendAuthDataOnServ(values.email, values.password, true,values.captcha)
         props.handlingBlogUserAuth(values.email, values.password)
         setTimeout(() => {
             setSubmitting(false);
