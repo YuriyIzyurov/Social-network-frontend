@@ -1,0 +1,111 @@
+@media only screen and (max-width: 1735px) {
+    .publication {
+        width: 32.3% !important;
+        height: 230px !important;
+    }
+    .publication__glass h2{
+        font-size: 18px !important;
+        line-height: 18px !important;
+        font-weight: 600;
+    }
+    .publication__glass{
+        top: 114px !important;
+    }
+    .profile__posts-publications{
+        justify-content: unset !important;
+        gap: 14px !important;
+    }
+}
+
+@media only screen and (max-width: 1655px) {
+    .ava-border{
+        left:127px !important;
+    }
+   .profile__info-main svg:not(:first-child) {
+       left: 39px !important;
+   }
+    .profile__info-main-avatar{
+        left:58px !important;
+    }
+    .site__layout-left-sider {
+        width: 257px !important;
+    }
+    .login{
+        width: 257px !important;
+    }
+    .friends__list-item-name span:nth-child(2){
+        font-size: 12px !important;
+    }
+    .clip-avatar{
+        margin-right: -3px !important;
+    }
+}
+@media only screen and (max-width: 1500px){
+    .publication {
+        width: 32.7% !important;
+        height: 220px !important;
+    }
+    .profile__posts-publications{
+        justify-content: unset !important;
+        gap: 7px !important;
+    }
+    .profile__posts-animation{
+        height: 130px !important;
+    }
+    .publication__glass{
+        padding: 5px !important;
+    }
+}
+
+@media only screen and (max-width: 1335px) {
+    .clip-avatar{
+        min-width: 33px !important;
+    }
+    .list-item-card{
+        padding: 2px 1px 2px 3px !important;
+    }
+    .ava-border{
+        left:111px !important;
+    }
+    .profile__info-main svg:not(:first-child) {
+        left: 23px !important;
+    }
+    .profile__info-main-avatar{
+        left:42px !important;
+    }
+    .description{
+        font-size: 18px !important;
+
+    }
+    .publication {
+        width: 32% !important;
+    }
+    .profile__posts-publications {
+        justify-content: space-between !important;
+    }
+    .profile__posts-animation{
+        min-height: 100px !important;
+    }
+    .site__layout-left-sider {
+        width: 217px !important;
+    }
+    .login{
+        width: 217px !important;
+    }
+    .friends__list-item-name span:nth-child(1),
+    .members__list-item-name span:nth-child(1)
+    {
+        font-size: 13px !important;
+        line-height: 13px !important;
+    }
+    .members__list-item-name{
+        width: 100%;
+        margin-left: 8px !important;
+        justify-content: space-between !important;
+    }
+    .members__list-item-name span:nth-child(2) {
+        width: 40px;
+        font-size: 11px !important;
+        line-height: 11px !important;
+    }
+}

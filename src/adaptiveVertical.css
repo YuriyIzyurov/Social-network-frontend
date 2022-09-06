@@ -89,7 +89,7 @@
     }
 }
 @media only screen and (max-height: 565px){
-    .site__layout-left-sider {
+    .left-sider-inactive {
         overflow: auto;
     }
 

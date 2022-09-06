@@ -77,7 +77,7 @@ export const handlingAuthData = ():ThunkType => {
                 dispatch(actions.dataIsFetching(false))
             }
         } catch (e) {
-            console.log(e)
+            throw new Error('Connecting to database')
         }
     }
 }

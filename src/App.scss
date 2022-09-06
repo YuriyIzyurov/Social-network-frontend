@@ -33,10 +33,17 @@
   .ant-layout {
     background: transparent;
   }
+
   aside {
     flex:none !important;
     max-width: none !important;
     min-width: auto !important;
+    @media only screen and (max-width: 1655px) {
+      width: 260px !important;
+    }
+    @media only screen and (max-width: 1335px) {
+      width: 220px !important;
+    }
     width: 340px !important;
     .friends-block-short{
       display: flex;
@@ -455,3 +462,4 @@ img {
     border-color: #72ffff !important;
   }
 }
+@import "adaptiveHorizontal.css";

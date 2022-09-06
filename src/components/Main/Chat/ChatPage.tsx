@@ -21,6 +21,11 @@ type PropsType = {
         dispatch(sendMessage(message))
     }
 
+     const pageHeight = document.documentElement.scrollHeight
+    useEffect(() => {
+        console.log(pageHeight)
+    }, [pageHeight])
+
     useEffect(() => {
 
         dispatch(startChatListening()).then(() => null)
@@ -31,16 +36,16 @@ type PropsType = {
 
     const transition = useTransition(isActive, {
         from:{
-            y: 620,
+            y: pageHeight - 350,
             height: 120,
         },
         enter:{
             y: 0,
-            height: 738,
+            height: pageHeight - 234,
         },
         leave:{
-            y: 598,
-            height: 120,
+            y: pageHeight - 400,
+            height: 130,
         },
         config:{duration: 100}
 

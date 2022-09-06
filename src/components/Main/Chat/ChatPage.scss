@@ -1,8 +1,9 @@
 .chat__block {
+
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   width: 335px;
   max-height: 738px;
   top: 231px;
