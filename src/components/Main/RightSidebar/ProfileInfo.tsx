@@ -57,7 +57,7 @@ const ProfileInfo = React.memo(() => {
             console.log('не удалось загрузить авторов')
         }
     }
-    const redirectHandler = () => {
+    const redirectHandler = async () => {
         dispatch(appActions.setRedirectToLogin(true))
     }
 
@@ -97,7 +97,7 @@ const ProfileInfo = React.memo(() => {
                     <span>Top viewed</span>
                 </div>
                 <div className="members__list">
-                    {topUsers?.map((user) => <TopWriter key={user.id} user={user}/>)}
+                    {topUsers?.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)}
                 </div>
             </div>
             {currentProfile &&

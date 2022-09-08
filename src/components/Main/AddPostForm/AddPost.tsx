@@ -8,6 +8,8 @@ import {AddPostType} from "typings/types";
 import {useSelector} from "react-redux";
 import {getPostID} from "redux/post-selectors";
 import {useNavigate, useParams} from "react-router";
+import AddPostButton from "components/CustomButtons/AddPostButton";
+
 
 
 
@@ -78,18 +80,23 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     }, [])
 
     return (
-        <div style={{position: currentPost ? "unset" : "absolute"}} className="profile__posts-adding">
+        <div style={{
+            position: currentPost ? "unset" : "absolute",
+            width: currentPost ? "unset" : "97%",
+            boxShadow: currentPost ? "" : "-10px 20px 10px rgba(0,0,0,0.2)"
+        }} className="profile__posts-adding">
             <div className="profile__posts-adding-preview">
-                <Button size="large" onClick={() => inputImgRef.current?.click()}>Загрузить превью</Button>
+                {/*<Button size="large" ghost onClick={() => inputImgRef.current?.click()}>Загрузить превью</Button>*/}
+                    <AddPostButton onClick={() => inputImgRef.current?.click()} text='Загрузить превью'/>
                     <input name='image'
                            type='file'
                            onChange={handleFile}
                            ref={inputImgRef}
                            hidden/>
-                {imageUrl && <Button size="large" onClick={() => setImageUrl('')}>Удалить</Button>}
+                {imageUrl && <AddPostButton onClick={() => setImageUrl('')} text='Удалить' animation={false}/>}
             </div>
             {imageUrl && <div>
-                <img style={{height: "300px", width: "350px"}} src={imageUrl} alt='preview'/>
+                <img src={imageUrl} alt='preview'/>
             </div>}
             <div className="profile__posts-adding-inputs">
                 <Divider orientation="left" orientationMargin={0} plain>
@@ -111,11 +118,9 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                 </Divider>
                 <SimpleMDERedactor handleSetText={handleSetText} text={text}/>
             </div>
-            <div className="profile__posts-adding-buttons">
-                    <Button onClick={sendNewPost} type="primary" size="large">
-                        Опубликовать
-                    </Button>
-                <Button onClick={postHandler} size="large">Отмена</Button>
+            <div className="profile__posts-adding-buttons contacts-button">
+                <AddPostButton onClick={sendNewPost} text='Опубликовать'/>
+                <AddPostButton onClick={postHandler} text='Отмена' animation={false}/>
             </div>
         </div>
     );

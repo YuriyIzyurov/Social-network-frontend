@@ -96,9 +96,11 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
             <div className="searchPost__tagBlock">
                 <span>Популярные тэги</span>
                 <div className="searchPost__tagBlock-tags">
-                    {tags ? tags.map((item, index)=><PostTag key={'tag-' + index} item={item}/>)
-                        : <Skeleton title={false}
-                              active paragraph={{ rows: 5, width: ["60%","45%","50%","55%","40%",]}}/>}
+                    <ul>
+                        {tags ? tags.map((item, index)=><PostTag key={'tag-' + index} item={item}/>)
+                            : <Skeleton title={false}
+                                        active paragraph={{ rows: 5, width: ["60%","45%","50%","55%","40%",]}}/>}
+                    </ul>
                 </div>
             </div>
             <div className="searchPost__comments">

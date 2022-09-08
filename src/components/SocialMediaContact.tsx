@@ -16,7 +16,7 @@ const SocialMediaContact = ({contactValue,socialMedia}:{contactValue:string,soci
 
     if(!contactValue) return <div></div>
     return (
-        <div onClick={redirectToExternal} className="social__media list-item-card">
+        <div onClick={redirectToExternal} className="social__media list-item-card common-card-animation">
             <div className="social__media-background">
                 {!(socialMedia === 'github') && <img src={socialMedia === 'instagram' ? instagram : vk} alt='inst'/>}
                 {(socialMedia === 'github') && <GithubOutlined style={{fontSize:'24px'}}/>}

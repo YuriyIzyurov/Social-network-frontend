@@ -6,7 +6,7 @@ import {EyeOutlined} from '@ant-design/icons';
 import {TopUserType} from "typings/types";
 
 
-export const TopWriter = ({user}:{user:TopUserType}) => {
+export const TopWriter = ({user, index}:{user:TopUserType, index:number}) => {
 
     const dispatch = useAppDispatch()
 
@@ -21,13 +21,21 @@ export const TopWriter = ({user}:{user:TopUserType}) => {
     }
 
     return (
-        <div onClick={getPostsByAuthor} className="members__list-item list-item-card">
+        <div onClick={getPostsByAuthor} className="members__list-item list-item-card rank-animation">
             <div className="clip-avatar">
                 <img  src={user.avatarUrl} alt='ava'/>
             </div>
             <div className="members__list-item-name">
                 <span>{user.fullName}</span>
-               <span><EyeOutlined />{user.viewsCount}</span>
+               <span>
+                   <EyeOutlined />
+                   <span>
+                       {user.viewsCount}
+                   </span>
+               </span>
+            </div>
+            <div className="rank-number">
+                <span><small>#</small>{index}</span>
             </div>
         </div>
     );

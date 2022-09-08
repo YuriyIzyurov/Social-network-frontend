@@ -156,23 +156,37 @@
     &-adding{
       display: flex;
       flex-direction: column;
-      margin-left: 36px;
-      margin-right: 36px;
-      width: 94.2%;
-      left:0;
+      left:19px;
       position: absolute;
       background-color: #2c2f48;
+      border-radius: 15px;
+      .ant-divider-inner-text{
+        color: #FFFFFF;
+        font-weight: 600;
+      }
       &-preview{
-        padding: 20px 0 0 20px;
+        padding: 20px;
       }
       &-inputs{
         padding: 0 20px 0 20px;
         display: flex;
         flex-direction: column;
         height: 60%;
+        input {
+          background: #edf5ff;
+        }
         .textarea-MDE {
           color:black;
         }
+      }
+      .editor-toolbar{
+        color:#edf5ff !important;
+        button:hover i{
+            color: #2C2F48;
+        }
+      }
+      .CodeMirror{
+        background: #edf5ff !important;
       }
       &-buttons{
         height: 80px;

@@ -11,9 +11,9 @@ const PostTag = ({item}:{item:string}) => {
     }
 
     return (
-        <span onClick={getPostsWithTag}>
+        <li onClick={getPostsWithTag}>
             #{item}
-        </span>
+        </li>
     );
 };
 
