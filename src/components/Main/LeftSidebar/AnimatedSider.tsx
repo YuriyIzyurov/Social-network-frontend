@@ -39,10 +39,7 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
             y: 0,
             opacity: 1
         },
-        leave:{
-            y: 228,
-            opacity: 0.3
-        },
+
         config: {
             duration: 100,
         }
@@ -98,29 +95,29 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
                             <NavLink to="/users"><TeamOutlined /><span>Find friends</span></NavLink>
                         </li>
                     </ul>
-                    <div className="friends-block">
+                    {!isActive && <div className="friends-block">
                         {friends.length !== 0
                             && <div className="friends">
-                                    <span onClick={openFriendList}>Friends ({totalFriends})</span>
-                                </div>}
+                                <span onClick={openFriendList}>Friends ({totalFriends})</span>
+                            </div>}
                         <div className="friends__list">
                             {friends && friends.map((item) => <FriendItem key={item.id} item={item}/>)}
                         </div>
-                    </div>
+                    </div>}
                     {isAuth && <div className="toggle" onClick={clickHandler}></div>}
-                </div>
-                {transitionFriends((style, item) =>
-                    item ? <animated.div style={style} className="friends-block-short">
-                        {friends
-                            &&  <div className="friends-short">
+                    {transitionFriends((style, item) =>
+                        item ? <animated.div style={style} className="friends-block-short">
+                            {friends
+                                &&  <div className="friends-short">
                                     <span onClick={openFriendList}>Friends ({totalFriends})</span>
                                 </div>}
-                        <div className="friends__list-short">
-                            {friends && friends.slice(0,5).map((item) => <FriendItemShort key={item.id} item={item}/>)}
-                        </div>
-                    </animated.div> : ''
-                )}
-                {isAuth && <ChatPage isActive={isActive}/>}
+                            <div className="friends__list-short">
+                                {friends && friends.slice(0,5).map((item) => <FriendItemShort key={item.id} item={item}/>)}
+                            </div>
+                        </animated.div> : ''
+                    )}
+                    {isAuth && <ChatPage isActive={isActive}/>}
+                </div>
             </Sider>
         </>
     );

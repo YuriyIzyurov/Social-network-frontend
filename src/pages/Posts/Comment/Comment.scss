@@ -13,6 +13,7 @@
       flex-direction: column;
       flex: 1 1 auto;
       .headerOf-comment  {
+        color:#b6d1f9;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -41,6 +42,10 @@
       }
       .input{
         margin: 5px 0;
+        textarea{
+          background: #393d5d;
+          color: white;
+        }
       }
       .footerOf-comment{
         display: flex;

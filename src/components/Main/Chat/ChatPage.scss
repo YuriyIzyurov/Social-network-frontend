@@ -1,24 +1,31 @@
 .chat__block {
-
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: fixed;
-  width: 335px;
+  width: 337px;
   max-height: 738px;
-  top: 231px;
-  left: 1px;
   background: #2c2f48;
   border-radius: 20px;
-  box-shadow: 15px 15px 25px rgba(0,0,0,0.2);
   &-name {
     width: 100%;
+    position: relative;
     padding: 15px 22px 15px 20px;
     display: flex;
     justify-content: space-between;
+    color:rgba(255, 255, 255, 0.55);
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      opacity: 0.6;
+      background: #FFFFFF;
+    }
   }
+
   &-messages {
-    height: auto;
     width: 100%;
     overflow-y: auto;
     padding: 0 20px;
@@ -54,5 +61,18 @@
       }
     }
   }
-
+  &-empty {
+    height: 100%;
+    width: 100%;
+    padding: 0 20px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0.6;
+    p{
+      text-align: center
+    }
+  }
 }

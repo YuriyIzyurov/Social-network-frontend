@@ -19,14 +19,25 @@ export const ChatMessages: React.FC = React.memo(() => {
     useEffect(() => {
         messagesAnchorRef.current?.scrollIntoView()
     }, [messagesAnchorRef.current])
+
     useEffect(() => {
         if(isActiveAutoScroll) {
             messagesAnchorRef.current?.scrollIntoView({behavior: "smooth", block: 'end'})
         }
     },[messages])
 
-    return <div className="chat__block-messages" onScroll={scrollHandler}>
-        {messages.map((m,index) => <ChatMessage key={m.id} message={m}/>)}
-        <div ref={messagesAnchorRef}></div>
-    </div>
+    if (messages.length) {
+        return (
+            <div className="chat__block-messages" onScroll={scrollHandler}>
+                {messages.map((m, index) => <ChatMessage key={m.id} message={m}/>)}
+                <div ref={messagesAnchorRef}></div>
+            </div>
+        )
+    } else
+        return (
+            <div className="chat__block-empty">
+                <p>Тут пока никто ничего не написал.</p>
+                <p>Будьте первыми!</p>
+            </div>
+    )
 })

@@ -1,10 +1,16 @@
 import React from 'react';
 import {Input} from 'antd';
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
+import {useSelector} from "react-redux";
+import {getLoggedUserPhoto} from "redux/profile-selectors";
+import {getMe} from "redux/auth-selectors";
 
 const { TextArea } = Input;
 
 const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {
+
+    const profileAvatar = useSelector(getLoggedUserPhoto)
+    const isAuth = useSelector(getMe)
 
     const handleComment = (value:string) => {
         sendComment(value)
@@ -14,10 +20,10 @@ const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {
        <>
            <div className="post__comments-textarea">
                <div className="post-avatar">
-                   <img src="https://bipbap.ru/wp-content/uploads/2021/07/1551512888_2-730x617.jpg" alt="ava"/>
+                   {isAuth && <img src={profileAvatar?.small} alt="ava"/>}
                </div>
+               <SendMessageForm sendMessage={handleComment}/>
            </div>
-           <SendMessageForm sendMessage={handleComment}/>
        </>
     );
 };

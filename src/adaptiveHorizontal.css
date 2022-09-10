@@ -3,6 +3,7 @@
         width: 32.3% !important;
         height: 230px !important;
     }
+
     .publication__glass h2{
         font-size: 18px !important;
         line-height: 18px !important;
@@ -37,7 +38,40 @@
         font-size: 12px !important;
     }
     .clip-avatar{
-        margin-right: -3px !important;
+        margin-right: 3px !important;
+        min-width: 44px !important;
+    }
+    .members__list-item-name > span:nth-child(2) {
+        display: none !important;
+    }
+    .friends-block-short{
+        width: 257px !important;
+    }
+    .chat__block{
+        width: 257px !important;
+    }
+    .friends__list-short-item{
+        width: 44px !important;
+    }
+    .left-sider-active ul {
+        gap: 0 !important;
+    }
+    .searchPost{
+        width: 300px !important;
+        min-width: 300px !important;
+    }
+    .comments-description{
+        font-size: 19px !important;
+    }
+    .searchPost__tagBlock{
+        font-size: 19px !important;
+        margin: 0 !important;
+    }
+    .searchPost__tagBlock-tags li{
+        font-size: 17px !important;
+    }
+    .ant-segmented-item-label{
+        font-size: 11px !important;
     }
 }
 @media only screen and (max-width: 1500px){
@@ -60,6 +94,9 @@
 @media only screen and (max-width: 1335px) {
     .clip-avatar{
         min-width: 33px !important;
+        width: 33px !important;
+        height: 33px !important;
+        align-self: center !important;
     }
     .list-item-card{
         padding: 2px 1px 2px 3px !important;
@@ -92,20 +129,36 @@
     .login{
         width: 217px !important;
     }
+    .friends-block-short{
+        width: 217px !important;
+    }
+    .chat__block{
+        width: 217px !important;
+    }
     .friends__list-item-name span:nth-child(1),
     .members__list-item-name span:nth-child(1)
     {
-        font-size: 13px !important;
-        line-height: 13px !important;
+        font-size: 12px !important;
+        line-height: 12px !important;
     }
-    .members__list-item-name{
+
+    .friends__list-item-name {
         width: 100%;
-        margin-left: 8px !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
+    }
+
+    .anticon-eye{
+        height: 11px !important;
     }
     .members__list-item-name span:nth-child(2) {
         width: 40px;
         font-size: 11px !important;
         line-height: 11px !important;
+    }
+    .members__list-item-name span:nth-child(1){
+        margin-bottom: 2px !important;
+    }
+    .friends__list-short-item{
+        width: 37px !important;
     }
 }

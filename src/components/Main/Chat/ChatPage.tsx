@@ -16,52 +16,53 @@ type PropsType = {
     const dispatch = useAppDispatch()
     const status = useSelector((state: AppStateType) => state.chat.status)
 
+    const pageHeight = document.documentElement.scrollHeight
+    const transition = useTransition(isActive, {
+         from:{
+             y: pageHeight - 350,
+             height: 120,
+         },
+         enter:{
+             y: 0,
+             height: pageHeight - 234,
+         },
+         leave:{
+             y: pageHeight - 400,
+             height: 130,
+         },
+         config:{duration: 100}
+
+     })
+
+     useEffect(() => {
+         console.log(pageHeight)
+     }, [pageHeight])
+
+     useEffect(() => {
+         dispatch(startChatListening())
+         return () => {
+             dispatch(stopChatListening())
+         }
+     },[])
+
     const sendMessageHandler = (message:string) => {
         if(!message) return
         dispatch(sendMessage(message))
     }
 
-     const pageHeight = document.documentElement.scrollHeight
-    useEffect(() => {
-        console.log(pageHeight)
-    }, [pageHeight])
-
-    useEffect(() => {
-
-        dispatch(startChatListening()).then(() => null)
-        return () => {
-            dispatch(stopChatListening()).then(() => null)
-        }
-    },[])
-
-    const transition = useTransition(isActive, {
-        from:{
-            y: pageHeight - 350,
-            height: 120,
-        },
-        enter:{
-            y: 0,
-            height: pageHeight - 234,
-        },
-        leave:{
-            y: pageHeight - 400,
-            height: 130,
-        },
-        config:{duration: 100}
-
-    })
-
     return <>
-        {transition((style, item) => item ? <animated.div style={style} className="chat__block">
-            {status === 'error' && <div>Error occurred, refresh page</div>}
-            <>
-                <div className="chat__block-name">
-                    <span>Chat</span>
-                </div>
-                <ChatMessages />
-                <SendMessageForm sendMessage={sendMessageHandler}/>
-            </>
-        </animated.div> : '')}
+        {transition((style, item) => item
+            ?
+            <animated.div style={style} className="chat__block">
+                {status === 'error' && <div>Error occurred, refresh page</div>}
+                <>
+                    <div className="chat__block-name">
+                        <span>Chat</span>
+                    </div>
+                    <ChatMessages />
+                    <SendMessageForm sendMessage={sendMessageHandler}/>
+                </>
+            </animated.div> : '')}
     </>
 })
 
