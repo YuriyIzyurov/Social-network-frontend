@@ -18,7 +18,8 @@ let initialState = {
     currentProfile: null as CurrentProfileType | null,
     status: "",
     avatarBorderColors: ["#A73EE7","#00EBFF"] as string[],
-    redirectToDialog: null as number | null
+    redirectToDialog: null as number | null,
+    editMode: false
 }
 const profileReducer = (state = initialState, action: ActionType):InitialStateType => {
     switch (action.type) {
@@ -57,6 +58,11 @@ const profileReducer = (state = initialState, action: ActionType):InitialStateTy
             return {
                 ...state,
                 redirectToDialog: action.id
+            }
+        case "SET_PROFILE_EDIT_MODE":
+            return {
+                ...state,
+                editMode: action.status
             }
         default:
             return state
@@ -130,6 +136,7 @@ export const actions = {
     setPhotoOnProfile: (photo: PhotosType) => ({type: "SET_PHOTO", photo} as const),
     setMainColors: (colors: string[]) => ({type: "SET_COLORS", colors} as const),
     setRedirect: (id:number) => ({type: "SET_REDIRECT_TO_DIALOG",id} as const),
+    setEditMode: (status:boolean) => ({type: "SET_PROFILE_EDIT_MODE",status} as const),
 }
 
 

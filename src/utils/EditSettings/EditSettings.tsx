@@ -64,11 +64,11 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
                         content={
                             <div className="popover-options">
                                 <div>
-                                    <CheckOutlined style={{color: '#39e324'}}/>
+                                    <CheckOutlined style={{color: 'red'}}/>
                                     <a onClick={sendDeleteDataOnServ}>Да</a>
                                 </div>
                                 <div>
-                                    <CloseOutlined style={{color: 'red'}}/>
+                                    <CloseOutlined style={{color: '#39e324'}}/>
                                     <a onClick={hide}>Нет</a>
                                 </div>
                             </div>

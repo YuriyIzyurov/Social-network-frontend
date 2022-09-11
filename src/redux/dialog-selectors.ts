@@ -15,7 +15,9 @@ export const getDialogs = (state:AppStateType) => {
     return state.dialog.dialogs
 }
 //export const getUsersSuperSelector = createSelector
-
+export const getRedirectDialogPage = (state:AppStateType) => {
+    return state.dialog.redirectToDialogPage
+}
 export const getActiveMessagePage = (state:AppStateType) => {
     return state.dialog.activePage
 }
@@ -31,4 +33,7 @@ export const getCurrentDialogID = (state:AppStateType) => {
 }
 export const getListOfDeletedMessages = (state:AppStateType) => {
     return state.dialog.deletedMessages
+}
+export const getNumberOfNewMessages = (state:AppStateType) => {
+    return state.dialog.numberOfNewMessages
 }

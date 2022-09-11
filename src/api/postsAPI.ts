@@ -39,15 +39,11 @@ export const postsAPI = {
             + (searchFilter === null ? '':`&searchFilter=${searchFilter}`)
             + (!viewed ? '' : `&viewed=${viewed}`)
         ).then(response => {
-            console.log(response.data)
            return response.data
         })
     },
     writePost(post: AddPostType) {
-      return instanceBlog.post<BlogResponseType<PostType>>(`posts`, post).then(response => {
-          console.log(response.data)
-         return response.data
-      })
+      return instanceBlog.post<BlogResponseType<PostType>>(`posts`, post).then(response =>  response.data)
     },
     uploadPreview(file: File) {
         const formData = new FormData()
@@ -76,10 +72,7 @@ export const postsAPI = {
         return instanceBlog.get<BlogResponseType<PostType[]>>(`tags/${tag}`).then(response => response.data)
     },
     getTopWriters() {
-        return instanceBlog.get<BlogResponseType<TopType>>(`views`).then(response => {
-            console.log(response.data)
-            return response.data
-        })
+        return instanceBlog.get<BlogResponseType<TopType>>(`views`).then(response => response.data)
     },
     getPostsByAuthor(userId:string) {
         return instanceBlog.get<BlogResponseType<PostType[]>>(`author/${userId}`,).then(response => response.data)

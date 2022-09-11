@@ -12,6 +12,7 @@ import {
 import {AppStateType} from "redux/reduxStore";
 import React, { ComponentType } from "react";
 import {withRouter} from "components/HOC/withRouter";
+import {getRedirectDialogPage} from "redux/dialog-selectors";
 
 
 type OwnPropsType = {
@@ -41,7 +42,7 @@ let mapStateToProps = (state: AppStateType) => {
         privateMessageData: getPrivateMessageData(state),
         dialogs: getDialogs(state),
         isFetching: getFriendsIsFetching(state),
-        dialogID: getCurrentDialogID(state)
+        dialogID: getCurrentDialogID(state),
     }
 }
 

@@ -34,9 +34,6 @@ type PropsType = {
 
      })
 
-     useEffect(() => {
-         console.log(pageHeight)
-     }, [pageHeight])
 
      useEffect(() => {
          dispatch(startChatListening())

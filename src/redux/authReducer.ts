@@ -5,6 +5,7 @@ import {profileAPI} from "api/profileAPI";
 import {PhotosType} from "typings/types";
 
 
+
 export type initialStateType = typeof initialState
 export type ActionType = InferActionsTypes<typeof actions>
 export type ThunkType = BaseThunkType<ActionType>

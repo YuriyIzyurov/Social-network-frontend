@@ -5,25 +5,33 @@
   }
 }
 .ant-popover{
+
   &-content{
     .ant-popover-inner {
       border-radius: 20px;
+      box-shadow: 1px 0 18px 9px rgba(0, 0, 0 , 0.25);
       &-content{
+        padding: 3px 0;
         .popover-options{
           display: flex;
           padding: 0 65px;
           justify-content: space-around;
           a, span {
-            font-size: 18px;
+            font-size: 14px;
             color: #FFFFFF;
           }
+          a{
+            font-weight: 600;
+          }
           a:hover {
-            color:#a783e2;
+            color:#5afdfe;
           }
         }
       }
       .ant-popover-title {
         color: white;
+        border-bottom: 1px solid #5afdfe;
+        text-align: center;
       }
     }
   }

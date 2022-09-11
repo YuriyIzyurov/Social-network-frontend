@@ -3,18 +3,21 @@ import React from 'react';
 import './GlowingEnterButton.scss'
 
 type PropsType = {
-    onClick?: () => void
+    onClick?: (destination:string) => void
     sizeX?: number
     disabled?: boolean
 }
 export const GlowingEnterButton:React.FC<PropsType> = ({onClick, sizeX, disabled}) => {
 
 
+    const redirectToLogin = () => {
+        if(onClick) onClick('login')
+    }
     return (
         <button
             type='submit'
             disabled={disabled}
-            onClick={onClick}
+            onClick={redirectToLogin}
             className={classnames('glowing-button', {'glowing-button-disabled': disabled})}
             style={{
                 paddingLeft:`${sizeX}px`,

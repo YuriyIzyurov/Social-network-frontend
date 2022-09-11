@@ -31,7 +31,9 @@ let initialState = {
     followInProcess: [] as Array<number>, //array of users ID is now following in process
     friendList: [] as Array<UserType>,
     dialogID: null as number | null,
-    deletedMessages: [] as Array<SpamDataType>
+    deletedMessages: [] as Array<SpamDataType>,
+    redirectToDialogPage: false,
+    numberOfNewMessages: 0
 }
 
 const dialogReducer = (state = initialState,action:ActionType | UserActionType ):InitialStateType => {
@@ -76,7 +78,7 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType )
         case "SET_DIALOGS":
             return {
                 ...state,
-                dialogs: [...state.dialogs, ...action.dialogs]
+                dialogs: action.dialogs
             }
         case "CLEAR_DIALOG_LIST":
             return {
@@ -109,8 +111,16 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType )
                 ...state,
                 deletedMessages: [...state.deletedMessages.filter(item => item.messageId !== action.messageId)]
             }
-
-
+        case "SET_REDIRECT_TO_DIALOG_PAGE":
+            return {
+                ...state,
+                redirectToDialogPage: action.status
+            }
+        case "SET_NUMBER_OF_NEW_MESSAGES":
+            return {
+                ...state,
+                numberOfNewMessages: action.number
+            }
         default:
             return state
     }
@@ -191,6 +201,8 @@ export const actions = {
     mutateMessageList: (messageId:string, message?:string | undefined, reason?: Delete | Spam) => ({type: "MUTATE_MESSAGE_LIST", messageId,message,reason} as const),
     markMessageIdAsDeleted: (payload:SpamDataType) => ({type: "MARK_MESSAGE_ID_AS_DELETED", payload}as const),
     deleteMark: (messageId:string) => ({type: "REMOVE_MARK_OF_DELETE", messageId}as const),
+    setRedirectToDialogPage: (status:boolean) => ({type: "SET_REDIRECT_TO_DIALOG_PAGE", status} as const),
+    setNumberOfNewMessages: (number:number) => ({type: "SET_NUMBER_OF_NEW_MESSAGES", number} as const),
 }
 
 export default dialogReducer

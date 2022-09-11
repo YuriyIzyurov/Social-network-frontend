@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "pages/Posts/Post/PostFull/PostFull.scss"
 import {Input} from 'antd';
 import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
 import {Scrollbar} from 'react-scrollbars-custom';
-import {useParams} from "react-router";
+import {useLocation, useParams} from "react-router";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import {CommentsType, PostType} from "typings/types";
 import Preloader from "components/Preloader/Preloader";
@@ -31,8 +31,12 @@ const PostFull = () => {
     const [isTooltipVisible, setTooltipVisible] = useState(false)
     const [post, setPost] = useState<PostType | undefined>(undefined);
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined);
+    const scrollbarRef = useRef<Scrollbar & HTMLDivElement>(null)
     const id = useSelector(getBloggerID)
     const params = useParams()
+    const location = useLocation()
+
+    const {state} = location
 
     const getPostById = async () => {
         const response = await postsAPI.getPostById(params.id)
@@ -44,9 +48,15 @@ const PostFull = () => {
 
     }
     useEffect(() => {
-        getPostById().then(() =>{
-            getCommentsOfPost()
-        })
+        getPostById()
+            .then(() => getCommentsOfPost())
+            .then(() => {
+                getCommentsOfPost()
+                if(state) {
+                    scrollbarRef.current?.scrollToBottom()
+                }
+            })
+
     },[])
 
     const editPost = () => {
@@ -72,7 +82,7 @@ const PostFull = () => {
         return  <AddPost  postHandler={editPost} currentPost={{title, text, tags, imageUrl}} id={post._id} getPostById={getPostById} />
     }
     return (
-        <Scrollbar>
+        <Scrollbar ref={scrollbarRef}>
         <div className="post">
             <div className="post__main">
                 {post.imageUrl

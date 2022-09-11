@@ -5,13 +5,14 @@ import UnreadMessage from 'assets/images/noreaded.svg'
 import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
 import {CloseOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingMessageList} from "redux/dialogReducer";
+import {actions as dialogActions, actions, handlingDialogs, handlingMessageList} from "redux/dialogReducer";
 import {useSelector} from "react-redux";
 import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
 import classnames from 'classnames';
 import {isUserOnline} from 'utils/Time/isUserOnline';
 import {customAvatar} from 'utils/Avatar/AvatarGenerator';
 import {Modal, Tooltip} from "antd";
+import {dialogsAPI} from "api/dialogsAPI";
 
 const { confirm } = Modal;
 
@@ -72,8 +73,15 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
         });
     };
 
-    const getMessageList = () => {
+    const checkNewMessages = async () => {
+        const response =  await dialogsAPI.getNewMessages()
+        dispatch(dialogActions.setNumberOfNewMessages(response))
+    }
+
+    const getMessageList = async () => {
         dispatch(handlingMessageList(id, activePage, messagesOnPage))
+            .then(() => dispatch(handlingDialogs()))
+            .then(() => checkNewMessages())
         dispatch(actions.setDialogID(id))
     }
     const deleteDialog = (e:React.MouseEvent<HTMLSpanElement>) => {

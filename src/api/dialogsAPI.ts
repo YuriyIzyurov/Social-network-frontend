@@ -9,6 +9,9 @@ export const dialogsAPI = {
     getAllDialogs() {
         return instanceSocial.get<DialogType[]>(`dialogs`).then(response => response.data)
     },
+    getNewMessages() {
+        return instanceSocial.get(`dialogs/messages/new/count`).then(response => response.data)
+    },
     getFriendMessagesList(id: number, activePage: number, messagesOnPage: number) {
         return instanceSocial.get<GetItemsType<AllMessageType>>(`dialogs/${id}/messages?page=${activePage}&count=${messagesOnPage}`).then(response => response.data)
     },

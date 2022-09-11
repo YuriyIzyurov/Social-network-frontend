@@ -34,20 +34,22 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
     let activePage = useSelector(getActiveMessagePage)
     let messagesOnPage = useSelector(getMessagesOnPage)
 
-    const dispatch = useDispatch()
-    const thunkDispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
 
     const [isMessageSending, setMessageSending] = useState(false)
 
     useEffect(() => {
-        thunkDispatch(handlingDialogs())
+        dispatch(handlingDialogs())
+        dispatch(actions.setRedirectToDialogPage(false))
         return () => {
             dispatch(actions.clearDialogList())
             dispatch(actions.setDialogID(null))
+            dispatch(actions.setRedirectToDialogPage(false))
         }
     }, [])
+
     useEffect(() => {
-        if(id) thunkDispatch(handlingMessageList(id, activePage,messagesOnPage))
+        if(id) dispatch(handlingMessageList(id, activePage,messagesOnPage))
     }, [privateMessageData])
 
     const sendMessage = (value:string) => {

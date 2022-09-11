@@ -6,6 +6,7 @@ export const getCurrentProfile = (state:AppStateType) => {
 export const getRedirectDialogStatus = (state:AppStateType) => {
     return state.profile.redirectToDialog
 }
+
 export const getMainColors = (state:AppStateType) => {
     return state.profile.avatarBorderColors
 }
@@ -22,4 +23,7 @@ export const getId = (state:AppStateType) => {
 }
 export const getAuthAvatar = (state:AppStateType) => {
     return state.auth.photos?.small
+}
+export const getEditMode = (state:AppStateType) => {
+    return state.profile.editMode
 }

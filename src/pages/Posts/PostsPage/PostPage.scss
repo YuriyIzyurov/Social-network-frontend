@@ -328,6 +328,9 @@
     }
     &-list{
       width: 100%;
+      a {
+        color:#FFFFFF;
+      }
       &-item{
         align-items: center;
         padding: 3px 8px 5px 8px;

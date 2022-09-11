@@ -105,13 +105,13 @@ const ProfileContactsInput: React.FC<PropsDataType> = ({currentProfile,  changeE
                     validateMessages={validateMessages}
 
                 >
-                    <Form.Item hidden label="aboutMe" name={"aboutMe"} initialValue={currentProfile.aboutMe}>
+                    <Form.Item hidden label="aboutMe" name={"aboutMe"} initialValue={'empty'}>
                         <Input placeholder="input placeholder" />
                     </Form.Item>
                     <Form.Item hidden label="Looking for a job:" name={"lookingForAJob"} initialValue={currentProfile.lookingForAJob}>
                         <Checkbox></Checkbox>
                     </Form.Item>
-                    <Form.Item hidden label="Looking for a job description:" name={"lookingForAJobDescription"} initialValue={currentProfile.lookingForAJobDescription}>
+                    <Form.Item hidden label="Looking for a job description:" name={"lookingForAJobDescription"} initialValue={'empty'}>
                         <Input placeholder="input placeholder" />
                     </Form.Item>
                     <Form.Item hidden label="fullName" name={"fullName"} initialValue={currentProfile.fullName}>

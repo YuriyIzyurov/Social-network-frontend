@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
 import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} from "@ant-design/icons";
-import {Layout} from 'antd';
+import {Layout, Tooltip} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
 import {getRedirectDialogStatus} from "redux/profile-selectors";
+import {getRedirectDialogPage} from "redux/dialog-selectors";
 import {animated, useTransition} from "react-spring";
 import {useAppDispatch} from "redux/reduxStore";
 import {handlingSidebarUsers} from "redux/usersReducer";
@@ -27,6 +28,7 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
     const currentAuthorID = useSelector(getCurrentAuthor)
     const totalFriends = useSelector(getTotalFriends)
     const redirectToLogin = useSelector(getRedirectLoginStatus)
+    const redirectToDialogPage = useSelector(getRedirectDialogPage)
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -56,10 +58,13 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
         if(redirectToDialog){
             navigate(`/dialogs/${redirectToDialog}`)
         }
+        if(redirectToDialogPage){
+            navigate(`/dialogs`)
+        }
         if(redirectToLogin){
             navigate(`/login`)
         }
-    },[currentAuthorID, redirectToDialog, redirectToLogin])
+    },[currentAuthorID, redirectToDialog, redirectToLogin, redirectToDialogPage])
 
     useEffect(() => {
         if(!isAuth) {
@@ -104,7 +109,15 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
                             {friends && friends.map((item) => <FriendItem key={item.id} item={item}/>)}
                         </div>
                     </div>}
-                    {isAuth && <div className="toggle" onClick={clickHandler}></div>}
+                    {isAuth
+                        &&
+                        <Tooltip mouseLeaveDelay={0.05}
+                                 mouseEnterDelay={0.5}
+                                 title={isActive ? "Закрыть чат" : "Открыть чат"}
+                        >
+                            <div className="toggle" onClick={clickHandler}></div>
+                        </Tooltip>
+                    }
                     {transitionFriends((style, item) =>
                         item ? <animated.div style={style} className="friends-block-short">
                             {friends
