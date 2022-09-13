@@ -1,29 +1,35 @@
 import React from "react";
 import './App.scss';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import UsersContainer from "./pages/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginContainer from "pages/Login/LoginPage/LoginPageContainer";
 import {connect} from "react-redux";
-import {setInitializeThunkCreator} from "redux/appReducer";
-import Preloader from "./components/Preloader/Preloader";
-import {WithLazyLoading} from "components/HOC/withLazyLoading";
+import {setInitializeThunkCreator} from "redux/Reducers/appReducer";
+import {WithLazyLoading} from "components/HOC";
 import {AppStateType} from "redux/reduxStore";
-import {Layout} from 'antd';
-import PostsPage from "pages/Posts/PostsPage/PostsPage";
-import PostFull from "pages/Posts/Post/PostFull/PostFull";
-import Test from "./components/Test";
+import {Layout, Spin} from 'antd';
 import HeaderRouter from "./components/Header/HeaderRouter";
-import ProfilePosts from "pages/Posts/ProfilePage/ProfilePosts";
 import {ProfileInfo, AnimatedSider} from "components/Main";
-
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
 const LazyChatContainer = React.lazy(() => import("./components/Main/Chat/ChatPage"))
-const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
-const ChatPage =  WithLazyLoading(LazyChatContainer)
+const LazyLoginContainer = React.lazy(() => import("pages/Login/LoginPageContainer"))
+const LazyPostsPage = React.lazy(() => import("pages/Posts/PostsPage/PostsPage"))
+const LazyProfilePosts = React.lazy(() => import("pages/Posts/ProfilePage/ProfilePosts"))
+const LazyUsersContainer = React.lazy(() => import("pages/Users/UsersContainer"))
+const LazyPostFull = React.lazy(() => import("pages/Posts/Post/PostFull/PostFull"))
+const LazyErrorPage = React.lazy(() => import("./components/Main/Errors/ErrorPage"))
 
-const { Header, Content, Footer, Sider } = Layout
+const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
+const LoginContainer =  WithLazyLoading(LazyLoginContainer)
+const PostsPage =  WithLazyLoading(LazyPostsPage)
+const ProfilePosts =  WithLazyLoading(LazyProfilePosts)
+const UsersContainer =  WithLazyLoading(LazyUsersContainer)
+const PostFull =  WithLazyLoading(LazyPostFull)
+const ErrorPage =  WithLazyLoading(LazyErrorPage)
+export const ChatPage =  WithLazyLoading(LazyChatContainer)
+
+
+const { Header, Content, Sider } = Layout
 
 type StatePropsAppType = ReturnType<typeof mapStateToProps>
 type DispatchPropsAppType = {
@@ -44,9 +50,16 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
     }
 
     render() {
-        if(!this.props.initialized) {
-            return <Preloader/>
+        if(!this.props.initialized && !this.props.socialError && !this.props.blogError) {
+            return (
+                <div className='main-spin'>
+                    <Spin  size="large" />
+                </div>
+            )}
+        if(this.props.blogError || this.props.socialError) {
+            return <ErrorPage/>
         }
+
         return (
         <Layout className="site__layout">
             <BrowserRouter>
@@ -58,7 +71,6 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 </Header>
                 <Content className="site__layout-content">
                         <Routes>
-                            {/*<Route path="/dialogs/!*" element={<DialogsContainer/>}/>*/}
                             <Route path="/dialogs/:id" element={<DialogsContainer/>}/>
                             <Route path="/dialogs" element={<DialogsContainer/>}/>
                             <Route path="/profile/:id" element={<ProfilePosts/>}/>
@@ -68,7 +80,6 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/posts/:id" element={<PostFull/>}/>
                             <Route path="/posts" element={<PostsPage />}/>
                             <Route path="/" element={<ProfilePosts/>}/>
-                            <Route path="/test" element={<Test/>}/>
                             <Route path="/author/:id" element={<PostsPage />}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                         </Routes>
@@ -84,7 +95,9 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
 }
 const mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized,
-    isAuth: state.auth.isAuth && state.blogAuth.isAuth
+    isAuth: state.auth.isAuth && state.blogAuth.isAuth,
+    socialError: state.auth.error,
+    blogError: state.blogAuth.errorBlog
 })
 
 export default connect(mapStateToProps, {setInitializeThunkCreator})(App)

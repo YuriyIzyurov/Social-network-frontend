@@ -1,11 +1,9 @@
-import React, {LegacyRef, useEffect, useRef} from 'react';
-import InfiniteScroll from "react-infinite-scroll-component";
-import {Button as AntButton, Divider, List, Skeleton, Tooltip} from "antd";
-import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
+import React, {LegacyRef} from 'react';
+import {Button as AntButton, List, Skeleton, Tooltip} from "antd";
+import {GradientCharAvatar} from "components/CustomAvatars";
 import {CommentOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
 import {UserType} from "typings/types";
-import {FilterType} from "redux/usersReducer";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 type PropsType = {
     users: Array<UserType>
@@ -60,16 +58,6 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
                 className="users__find-content"
                 ref={usersRef}
             >
-               {/* <InfiniteScroll
-                    dataLength={users.length}
-                    next={loadMoreData}
-                    hasMore={users.length < 1000}
-                    loader={isPagesLast ? <Divider plain>It is all, nothing more 🤐</Divider> :
-                        <Skeleton avatar paragraph={{rows: 1}} active/>}
-                    endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                    scrollableTarget="scrollableDiv"
-
-                >*/}
                     <List
                         dataSource={users}
                         renderItem={item => (
@@ -80,7 +68,6 @@ export const UserList: React.FC<PropsType> = ({users,   loadMoreData, isFetching
                             </List.Item>
                         )}
                     />
-                {/*</InfiniteScroll>*/}
             </div>
         );
 };

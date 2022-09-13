@@ -1,13 +1,13 @@
 import React, {LegacyRef, memo, useEffect} from "react"
 import 'pages/Users/Users.scss'
 import {UserType} from "typings/types";
-import {FilterType, handlingAddUsers} from "redux/usersReducer";
+import {FilterType, handlingAddUsers} from "redux/Reducers/usersReducer";
 import {Pagination} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
-import UserSearchform from "components/Forms/UserSearchform";
-import {startDialogWithFriend} from "redux/dialogReducer";
+import {UserSearchForm} from "components/Forms";
+import {startDialogWithFriend} from "redux/Reducers/dialogReducer";
 import {useNavigate} from "react-router";
-import {UserList} from "pages/Users/UserList";
+import {UserList} from "pages/Users";
 import fill from "zadachi";
 
 type PropsType = {
@@ -26,7 +26,7 @@ type PropsType = {
 }
 
 
-const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users,searchFilter, handlingFollow, handlingUnfollow, followInProcess, isFetching, usersRef }) => {
+export const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, usersOnPage, activePage, getUsersOnPage, users,searchFilter, handlingFollow, handlingUnfollow, followInProcess, isFetching, usersRef }) => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, use
     return (
         <div className="users">
             <div className="users__find">
-                <UserSearchform handlingFilteredUsers={handlingFilteredUsers}/>
+                <UserSearchForm handlingFilteredUsers={handlingFilteredUsers}/>
                          <UserList users={users}
                                     handlingFollow={handlingFollow}
                                     handlingUnfollow={handlingUnfollow}
@@ -74,5 +74,5 @@ const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUsers, use
         </div>
     );
 })
-export default Users
+
 

@@ -1,13 +1,11 @@
 import React from 'react';
-import {Input} from 'antd';
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import {useSelector} from "react-redux";
-import {getLoggedUserPhoto} from "redux/profile-selectors";
-import {getMe} from "redux/auth-selectors";
+import {getLoggedUserPhoto} from "redux/Selectors/profile-selectors";
+import {getMe} from "redux/Selectors/auth-selectors";
 
-const { TextArea } = Input;
 
-const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {
+export const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {
 
     const profileAvatar = useSelector(getLoggedUserPhoto)
     const isAuth = useSelector(getMe)
@@ -28,4 +26,3 @@ const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {
     );
 };
 
-export default SendComment;

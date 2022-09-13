@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
-import {CustomerServiceOutlined, HomeOutlined, MessageOutlined, TeamOutlined} from "@ant-design/icons";
+import {ReadOutlined, HomeOutlined, MessageOutlined, TeamOutlined} from "@ant-design/icons";
 import {Layout, Tooltip} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
-import {getRedirectDialogStatus} from "redux/profile-selectors";
-import {getRedirectDialogPage} from "redux/dialog-selectors";
+import {getRedirectDialogStatus} from "redux/Selectors/profile-selectors";
+import {getRedirectDialogPage} from "redux/Selectors/dialog-selectors";
 import {animated, useTransition} from "react-spring";
 import {useAppDispatch} from "redux/reduxStore";
-import {handlingSidebarUsers} from "redux/usersReducer";
-import {getFriends, getTotalFriends} from "redux/user-selectors";
+import {handlingSidebarUsers} from "redux/Reducers/usersReducer";
+import {getFriends, getTotalFriends} from "redux/Selectors/user-selectors";
 import {useNavigate} from "react-router";
-import {getCurrentAuthor} from "redux/post-selectors";
-import { FriendItemShort, FriendItem, ChatPage } from './../index';
-import {actions} from "redux/appReducer";
-import {getRedirectLoginStatus} from "redux/app-selector";
+import {getCurrentAuthor} from "redux/Selectors/post-selectors";
+import { FriendItem, FriendItemShort} from './../index';
+import {getRedirectLoginStatus} from "redux/Selectors/app-selector";
+import { ChatPage } from 'App';
 
 
 const {Sider} = Layout
@@ -88,16 +88,16 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
                 })}>
                     <ul>
                         <li>
-                            <NavLink to="/profile"><HomeOutlined /><span>Profile</span></NavLink>
+                            <NavLink to="/profile"><HomeOutlined className='nav-icon'/><span>Profile</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dialogs"><MessageOutlined /><span>Messages</span></NavLink>
+                            <NavLink to="/dialogs"><MessageOutlined className='nav-icon'/><span>Messages</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/posts"><CustomerServiceOutlined /><span>All posts</span></NavLink>
+                            <NavLink to="/posts"><ReadOutlined className='nav-icon'/><span>All posts</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/users"><TeamOutlined /><span>Find friends</span></NavLink>
+                            <NavLink to="/users"><TeamOutlined className='nav-icon'/><span>Find friends</span></NavLink>
                         </li>
                     </ul>
                     {!isActive && <div className="friends-block">

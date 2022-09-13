@@ -1,8 +1,6 @@
 import {CurrentProfileType, PhotosType} from "typings/types";
 import {instanceSocial, ResponseAPIType} from "./api";
 
-
-
 type UploadPhotoType = {
   photos: PhotosType
 }

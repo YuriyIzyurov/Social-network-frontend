@@ -1,29 +1,20 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "pages/Posts/Post/PostFull/PostFull.scss"
-import {Input} from 'antd';
 import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
 import {Scrollbar} from 'react-scrollbars-custom';
 import {useLocation, useParams} from "react-router";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import {CommentsType, PostType} from "typings/types";
-import Preloader from "components/Preloader/Preloader";
 import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
-import {getBloggerID} from "redux/auth-selectors";
+import {getBloggerID} from "redux/Selectors/auth-selectors";
 import EditSettings from "utils/EditSettings/EditSettings";
 import Comment from "pages/Posts/Comment/Comment";
-// @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-//выбрать nightOwl,
-// @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
-import SendComment from 'components/Forms/SendComment';
+import {SendComment} from 'components/Forms';
 import { AddPost } from 'components/Main';
-
-const { TextArea } = Input;
-//todo: в один компонент сделать инпут?
-
-
+import {Spin} from "antd";
 
 const PostFull = () => {
 
@@ -75,7 +66,11 @@ const PostFull = () => {
     }
 
     if(!post) {
-        return <Preloader/>
+        return (
+            <div className='main-spin'>
+                <Spin  size="large" />
+            </div>
+        )
     }
     if(edit) {
         const {title, text, tags, imageUrl} = post

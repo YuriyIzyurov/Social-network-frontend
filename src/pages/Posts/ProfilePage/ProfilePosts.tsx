@@ -1,27 +1,22 @@
 import React, {useEffect, useState} from "react"
 import 'pages/Posts/ProfilePage/ProfilePosts.scss'
 import {PostType} from "typings/types";
-// @ts-ignore
 import banner3 from "assets/images/banner3.jpg"
-// @ts-ignore
 import banner2 from "assets/images/banner2-edited2-cropped.jpg"
-// @ts-ignore
 import banner4 from "assets/images/banner4.jpg"
-// @ts-ignore
 import banner5 from "assets/images/banner5.jpg"
-
 import {FormOutlined} from '@ant-design/icons';
 import {NavLink} from "react-router-dom";
 import {AddPost} from "components/Main";
 import {useNavigate} from "react-router";
 import {postsAPI} from "api/postsAPI";
 import {useSelector} from "react-redux";
-import {getMe} from "redux/auth-selectors";
-import PublicationShort from "pages/Posts/ProfilePage/PublicationShort";
-import PublicationShortSkeleton from "components/Skeletons/PublicationShortSkeleton";
+import {getMe} from "redux/Selectors/auth-selectors";
+import {PublicationShort} from "pages/Posts";
+import {PublicationShortSkeleton} from "components/Skeletons";
 import {useAppDispatch} from "redux/reduxStore";
-import {actions} from "redux/postsReducer";
-import {getMyPosts} from "redux/post-selectors";
+import {actions} from "redux/Reducers/postsReducer";
+import {getMyPosts} from "redux/Selectors/post-selectors";
 
 
 const ProfilePosts = () => {
@@ -38,7 +33,6 @@ const ProfilePosts = () => {
     if(!isAuth) {
         NumberOfDisplayedPosts.length = 6
     }
-
 
     const loadMainPagePosts = async () => {
         setLoading(true)

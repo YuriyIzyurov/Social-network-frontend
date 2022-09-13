@@ -1,4 +1,4 @@
-import {StatusType} from "redux/chatReducer";
+import {StatusType} from "redux/Reducers/chatReducer";
 import {ChatMessageAPIType} from "typings/APITypes";
 
 type MessagesReceivedSubscriberType = (messages: ChatMessageAPIType[]) => void

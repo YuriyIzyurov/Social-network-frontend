@@ -1,7 +1,7 @@
 import React from 'react';
 import {Skeleton, Space} from 'antd';
 
-const PostSkeleton = () => {
+export const PostSkeleton = () => {
     return (
         <div className='post__skeleton'>
             <div className="post__skeleton-content">
@@ -15,5 +15,3 @@ const PostSkeleton = () => {
         </div>
     );
 };
-
-export default PostSkeleton;

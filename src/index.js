@@ -1,4 +1,3 @@
-
 import './index.css';
 import store from "./redux/reduxStore";
 import React from 'react';

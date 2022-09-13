@@ -22,21 +22,7 @@
                 display: none;
             }
         }
-        &-search {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            &-input {
-                width: 65%;
-                padding: 20px;
-                span :nth-child(1) {
-                    background-color: #f7f8f9;
-                }
-            }
-            &-select {
-                padding: 20px;
-            }
-        }
+
         .ant-list-item-meta{
             align-items: center;
             &-content  {

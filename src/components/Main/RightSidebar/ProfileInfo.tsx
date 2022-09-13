@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from "react"
 import './ProfileInfo.scss'
 import {FormOutlined} from "@ant-design/icons";
-
-import {actions, getUserStatusInProfile} from "redux/profileReducer";
-import {actions as appActions} from "redux/appReducer";
-import {actions as dialogActions} from "redux/dialogReducer";
+import {actions, getUserStatusInProfile} from "redux/Reducers/profileReducer";
+import {actions as appActions} from "redux/Reducers/appReducer";
+import {actions as dialogActions} from "redux/Reducers/dialogReducer";
 import {useAppDispatch} from "redux/reduxStore";
-// @ts-ignore
-import {Bell, Chat, Mail, Setting} from "assets/images/VectorComponents/TopIcons"
+import {Bell, Chat, Mail, Setting} from "assets/VectorComponents"
 import {useSelector} from "react-redux";
-import {getAuthID} from "redux/auth-selectors";
-import {getCurrentProfile, getEditMode} from "redux/profile-selectors";
+import {getAuthID} from "redux/Selectors/auth-selectors";
+import {getCurrentProfile, getEditMode} from "redux/Selectors/profile-selectors";
 import {AuthData, ProfileInfoMain, TopWriter} from "./../index";
 import {postsAPI} from "api/postsAPI";
-import ProfileContactsInput from "components/ProfileContactsInput";
-import SocialMediaContact from "components/SocialMediaContact";
+import {ProfileContactsInput} from "components/Forms";
+import {SocialMediaContact} from "components/Main";
 import {TopUserType} from "typings/types";
-import {getRedirectLoginStatus} from "redux/app-selector";
+import {getRedirectLoginStatus} from "redux/Selectors/app-selector";
 import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 import {dialogsAPI} from "api/dialogsAPI";
-import {getNumberOfNewMessages} from "redux/dialog-selectors";
+import {getNumberOfNewMessages} from "redux/Selectors/dialog-selectors";
 
 
 const ProfileInfo = React.memo(() => {

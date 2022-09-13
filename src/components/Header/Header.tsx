@@ -3,15 +3,16 @@ import './Header.scss'
 import {NavLink} from "react-router-dom";
 import {LogoutOutlined, LoginOutlined} from '@ant-design/icons';
 import {useSelector} from "react-redux";
-import {getLoggedUserPhoto, getMainColors} from "redux/profile-selectors";
+import {getLoggedUserPhoto, getMainColors} from "redux/Selectors/profile-selectors";
 import {useNavigate} from "react-router";
-import HeaderAvatar from "components/HeaderAvatar";
-import MiniAvatarBorder from "components/MiniAvatarBorder";
-import {actions} from "redux/appReducer";
-import {actions as userActions} from "redux/usersReducer";
+import {HeaderAvatar} from "components/CustomAvatars";
+
+import {actions} from "redux/Reducers/appReducer";
+import {actions as userActions} from "redux/Reducers/usersReducer";
 import {useAppDispatch} from "redux/reduxStore";
-import {logoutFromServer} from "redux/authReducer";
+import {logoutFromServer} from "redux/Reducers/authReducer";
 import {chatAPI} from "api/chatAPI";
+import { MiniAvatarBorder } from "assets/VectorComponents";
 
 
 type PropsLoginType = {

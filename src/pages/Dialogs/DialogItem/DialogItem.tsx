@@ -1,34 +1,18 @@
 import React, {useState} from 'react';
 import 'pages/Dialogs/DialogItem/DialogItem.scss'
-// @ts-ignore
-import UnreadMessage from 'assets/images/noreaded.svg'
 import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
 import {CloseOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions as dialogActions, actions, handlingDialogs, handlingMessageList} from "redux/dialogReducer";
+import {actions, handlingDialogs, handlingMessageList} from "redux/Reducers/dialogReducer";
 import {useSelector} from "react-redux";
-import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors/dialog-selectors";
 import classnames from 'classnames';
 import {isUserOnline} from 'utils/Time/isUserOnline';
-import {customAvatar} from 'utils/Avatar/AvatarGenerator';
 import {Modal, Tooltip} from "antd";
 import {dialogsAPI} from "api/dialogsAPI";
+import {GradientCharAvatar} from "components/CustomAvatars";
 
 const { confirm } = Modal;
-
-
-const getCustomAvatar = (avatar: string | undefined, name: string) => {
-    if(avatar) {
-        return <img
-            src={avatar}
-            alt="User"/>
-    } else {
-        const {mainColor, lightColor} = customAvatar(name)
-        const firstChar = name[0].toUpperCase()
-        return <div className="dialog__item-avatar-custom" style={{background:`linear-gradient(135deg, ${mainColor} 0%, ${lightColor} 96.52%)`}}>{firstChar}</div>
-    }
-}
-
 
 type PropsType = {
     name: string
@@ -41,7 +25,7 @@ type PropsType = {
     selectedId: number | null
 }
 
-const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
+export const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessages, newMessagesCount, date, activityDate, selectedId}) => {
 
     const dispatch = useAppDispatch()
     let activePage = useSelector(getActiveMessagePage)
@@ -75,7 +59,7 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
 
     const checkNewMessages = async () => {
         const response =  await dialogsAPI.getNewMessages()
-        dispatch(dialogActions.setNumberOfNewMessages(response))
+        dispatch(actions.setNumberOfNewMessages(response))
     }
 
     const getMessageList = async () => {
@@ -100,7 +84,7 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
                         "dialog__item--selected": id === selectedId
                     })}>
                     <div className="dialog__item-avatar">
-                        {getCustomAvatar(src, name)}
+                        <GradientCharAvatar avatarUrl={src} name={name} height={'40px'}/>
                     </div>
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">
@@ -125,4 +109,3 @@ const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNewMessag
     );
 })
 
-export default DialogItem;

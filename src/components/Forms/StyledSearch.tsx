@@ -3,13 +3,13 @@ import Search from "antd/lib/input/Search";
 import 'components/Forms/StyledSearch.scss'
 
 type PropsType = {
-    onSearch?:(value:string) => void
-    handleSetFilter?:(e:React.ChangeEvent<HTMLInputElement>) => void
+    onSearch?: (value:string) => void
+    handleSetFilter?: (e:React.ChangeEvent<HTMLInputElement>) => void
     defaultValue?: string
     onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void
     userSearch?: boolean | undefined
 }
-const StyledSearch:React.FC<PropsType> = ({
+export const StyledSearch:React.FC<PropsType> = ({
                                               onSearch,
                                               handleSetFilter,
                                               defaultValue,
@@ -25,5 +25,3 @@ const StyledSearch:React.FC<PropsType> = ({
    </>
     );
 };
-
-export default StyledSearch;

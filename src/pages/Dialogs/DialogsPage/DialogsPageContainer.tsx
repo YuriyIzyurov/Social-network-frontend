@@ -1,18 +1,11 @@
-import DialogsPage from "pages/Dialogs/DialogsPage/DialogsPage";
-import {actions, FriendFilterType, handlingMessage, ThunkType} from "redux/dialogReducer";
+import {DialogsPage} from "pages/Dialogs";
+import {actions, FriendFilterType, handlingMessage, ThunkType} from "redux/Reducers/dialogReducer";
 import {connect} from "react-redux";
-import {withRedirectIfNoAuth} from "components/HOC/withRedirectIfNoAuth";
+import {withRedirectIfNoAuth} from "components/HOC";
 import {compose} from "redux";
-import {
-    getCurrentDialogID,
-    getDialogs,
-    getFriendsIsFetching,
-    getPrivateMessageData,
-} from "redux/dialog-selectors";
+import {getCurrentDialogID, getDialogs, getFriendsIsFetching, getPrivateMessageData,} from "redux/Selectors/dialog-selectors";
 import {AppStateType} from "redux/reduxStore";
-import React, { ComponentType } from "react";
-import {withRouter} from "components/HOC/withRouter";
-import {getRedirectDialogPage} from "redux/dialog-selectors";
+import React, {ComponentType} from "react";
 
 
 type OwnPropsType = {
@@ -20,13 +13,12 @@ type OwnPropsType = {
 }
 type StatePropsDialogType = ReturnType<typeof mapStateToProps>
 type DispatchPropsDialogType = {
-    sendNewMessage: typeof sendNewMessage
     handlingFriends: (activePage:number,usersOnPage:number, filter:FriendFilterType) => ThunkType
     handlingMessage: (id: number, body: string) => ThunkType
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
-const DialogsPageContainer: React.FC<PropsType> = React.memo(({ privateMessageData, sendNewMessage, dialogs, handlingMessage, dialogID}) => {
+const DialogsPageContainer: React.FC<PropsType> = React.memo(({ privateMessageData, dialogs, handlingMessage, dialogID}) => {
 
 
     return <DialogsPage dialogs={dialogs}
@@ -47,6 +39,7 @@ let mapStateToProps = (state: AppStateType) => {
 }
 
 const sendNewMessage = actions.sendNewMessage
+
 export default compose<ComponentType>(
     connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingMessage}),
     withRedirectIfNoAuth,

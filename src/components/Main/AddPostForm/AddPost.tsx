@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from 'react';
 import {Button, Divider, Input} from "antd";
-import {actions, publicPost} from "redux/postsReducer";
+import {actions, publicPost} from "redux/Reducers/postsReducer";
 import {postsAPI} from "api/postsAPI";
 import {useAppDispatch} from "redux/reduxStore";
 import SimpleMDERedactor from 'SimpleMDERedactor';
 import {AddPostType} from "typings/types";
 import {useSelector} from "react-redux";
-import {getPostID} from "redux/post-selectors";
+import {getPostID} from "redux/Selectors/post-selectors";
 import {useNavigate, useParams} from "react-router";
 import AddPostButton from "components/CustomButtons/AddPostButton";
 

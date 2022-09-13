@@ -1,20 +1,17 @@
 import React, {FocusEventHandler, useState} from "react"
 import 'pages/Dialogs/Message/Message.scss'
 import {DeleteOutlined, ExclamationCircleOutlined, StopOutlined} from '@ant-design/icons';
-
 import classNames from "classnames";
 import classnames from "classnames";
 import {GetMessageTime} from "utils/Time/CustomTime";
-// @ts-ignore
 import MessageReadImage from "assets/images/readed.svg"
-// @ts-ignore
 import MessageNoReadImage from "assets/images/noreaded.svg"
 import {Modal} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
-import {handlingDeleteMessage, handlingRestoreMessage, handlingSpamMessage} from "redux/dialogReducer";
-import {SpamNotification} from "constants/constants";
+import {handlingDeleteMessage, handlingRestoreMessage, handlingSpamMessage} from "redux/Reducers/dialogReducer";
 import {useSelector} from "react-redux";
-import {getListOfDeletedMessages} from "redux/dialog-selectors";
+import {getListOfDeletedMessages} from "redux/Selectors/dialog-selectors";
+import { SpamNotification } from "constants/constants";
 
 const { confirm } = Modal;
 
@@ -26,7 +23,7 @@ type PropsType = {
     viewed: boolean
     messageId: string
 }
-const Message: React.FC<PropsType> = React.memo(({message, messageId, avatar, date, isMe,viewed}) => {
+export const Message: React.FC<PropsType> = React.memo(({message, messageId, avatar, date, isMe,viewed}) => {
 
     const [isOptionsVisible, setOptionsVisible] = useState<boolean>(false)
     const [isOptionsHovered, setOptionsHovered] = useState<boolean>(false)
@@ -137,4 +134,3 @@ const Message: React.FC<PropsType> = React.memo(({message, messageId, avatar, da
     </div>
 })
 
-export default Message

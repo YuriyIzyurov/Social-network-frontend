@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {PostType} from "typings/types";
-// @ts-ignore
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
 import { useSpring, animated, config} from '@react-spring/web'
 
@@ -14,7 +13,7 @@ const calc = (x:number, y:number, rect: DOMRect) => [
 const trans = (x:number, y:number, s:number) =>
     `perspective(1100px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
-const PublicationShort = ({item}:{item: PostType}) => {
+export const PublicationShort = ({item}:{item: PostType}) => {
 
     const ref = useRef<HTMLDivElement>(null);
     const [xys, set] = useState([0, 0, 1]);
@@ -50,5 +49,3 @@ export const Tag = ({item}:{item:string}) => {
         <span>#{item}</span>
     );
 };
-
-export default PublicationShort;

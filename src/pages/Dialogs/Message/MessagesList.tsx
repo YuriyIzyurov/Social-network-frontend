@@ -1,11 +1,11 @@
-import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from 'react';
-import Message from "pages/Dialogs/Message/Message";
+import React, {Dispatch, SetStateAction, useEffect, useRef} from 'react';
+import {Message} from "pages/Dialogs";
 import {useSelector} from "react-redux";
-import {getAuthID} from "redux/auth-selectors";
-import {getAuthAvatar} from "redux/profile-selectors";
-import {getMessageList} from "redux/dialog-selectors";
+import {getAuthID} from "redux/Selectors/auth-selectors";
+import {getAuthAvatar} from "redux/Selectors/profile-selectors";
+import {getMessageList} from "redux/Selectors/dialog-selectors";
 import {DialogType} from "typings/types";
-import { Empty } from 'antd';
+import {Empty} from 'antd';
 
 type PropsType = {
     dialogs: DialogType[]
@@ -18,9 +18,9 @@ export const MessagesList: React.FC<PropsType> = React.memo(({dialogs, id, setMe
     const isMe = useSelector(getAuthID)
     const authAvatar = useSelector(getAuthAvatar)
     const messageList = useSelector(getMessageList)
-    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
     const messagesRef = useRef<HTMLDivElement>(null)
 
+    const recipientAvatar = dialogs.find(elem => elem.id === id)?.photos.small
 
     useEffect(() => {
             messagesRef.current?.scrollIntoView(
@@ -38,6 +38,7 @@ export const MessagesList: React.FC<PropsType> = React.memo(({dialogs, id, setMe
     if(messageList.length === 0) {
         return <Empty  className="chat__dialog-messages-empty" description="Нет сообщений"/>
     }
+
     return (
         <>
             {messageList.map((m) =>

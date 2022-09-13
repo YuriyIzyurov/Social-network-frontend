@@ -1,5 +1,5 @@
 import {connect, useDispatch} from "react-redux";
-import Users from "pages/Users/Users";
+import {Users} from "pages/Users";
 import {
     actions,
     FilterType,
@@ -7,10 +7,9 @@ import {
     handlingFollowAction,
     handlingUnfollowAction,
     handlingUsers,
-} from "redux/usersReducer";
-import React, {ComponentType, LegacyRef, useEffect, useRef, useState} from "react";
-import Preloader from "components/Preloader/Preloader";
-import {withRedirectIfNoAuth} from "components/HOC/withRedirectIfNoAuth";
+} from "redux/Reducers/usersReducer";
+import React, {ComponentType, useEffect, useRef} from "react";
+import {withRedirectIfNoAuth} from "components/HOC";
 import {compose} from "redux";
 import {
     getActivePage,
@@ -20,10 +19,9 @@ import {
     getTotalUsers,
     getUsers,
     getUsersOnPage
-} from "redux/user-selectors";
+} from "redux/Selectors/user-selectors";
 import {UserType} from "typings/types";
 import {AppStateType} from "redux/reduxStore";
-import {useLocation, useNavigate} from "react-router";
 import {useSearchParams} from "react-router-dom";
 //todo перерисовка всей страницы из-за изменения роута
 

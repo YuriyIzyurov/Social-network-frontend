@@ -1,0 +1,39 @@
+.serverError{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #2C2F48;
+  &__header{
+    font-size: 35px;
+    color: #ef8a07;
+  }
+  &__body{
+    display: flex;
+    position: relative;
+    background: #2C2F48;
+    width: 60%;
+    height: 78%;
+    p{
+      align-self: center;
+      color: white;
+      font-size: 25px;
+    }
+    &-footer{
+      position: absolute;
+      bottom: 0;
+      left: 540px;
+      button{
+        width: 171px;
+        height: 50px;
+        border-radius: 30px;
+        background: orangered;
+        color: #ffffff;
+        font-size: 18px;
+        border: none;
+      }
+    }
+  }
+
+}

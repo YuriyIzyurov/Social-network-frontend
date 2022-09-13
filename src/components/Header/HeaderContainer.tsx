@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {handlingAuthData, logoutFromServer} from "redux/authReducer";
+import {handlingAuthData, logoutFromServer} from "redux/Reducers/authReducer";
 import {AppStateType} from "redux/reduxStore";
-import {handlingBlogUserLogout} from "redux/authBlogReducer";
+import {handlingBlogUserLogout} from "redux/Reducers/authBlogReducer";
 //классовая компонента с коннектом для примера
 
 

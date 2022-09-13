@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {CommentsType} from "typings/types";
 import {GetMessageTime} from "utils/Time/CustomTime";
 
-const LastComment = ({item}:{item:CommentsType}) => {
+export const LastComment = ({item}:{item:CommentsType}) => {
     return (
         <Link to={`/posts/${item.post}`} state={{scrollToBottom: true}}>
         <div className="searchPost__comments-list-item  common-card-animation">
@@ -23,5 +23,3 @@ const LastComment = ({item}:{item:CommentsType}) => {
         </Link>
     );
 };
-
-export default LastComment;

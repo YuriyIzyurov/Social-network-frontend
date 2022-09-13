@@ -2,11 +2,15 @@ import React from "react"
 import {customAvatar} from "utils/Avatar/AvatarGenerator";
 import './GradientCharAvatar.scss'
 
-
-const GradientCharAvatar = React.memo(({avatarUrl, name}:{avatarUrl:string | undefined, name:string}) => {
+type PropsType = {
+    avatarUrl:string | undefined
+    name:string
+    height?:string
+}
+export const GradientCharAvatar:React.FC<PropsType> = React.memo(({avatarUrl, name, height = '44px'}) => {
 
     if(avatarUrl) {
-        return <img src={avatarUrl} width='44px' height='44px'/>
+        return <img src={avatarUrl} width='44px' height='44px' alt="User"/>
     } else {
         const {mainColor, lightColor} = customAvatar(name)
         const firstChar = name[0].toUpperCase()
@@ -16,7 +20,7 @@ const GradientCharAvatar = React.memo(({avatarUrl, name}:{avatarUrl:string | und
                 style={{
                     background: `linear-gradient(135deg,${mainColor} 0%,${lightColor} 96.52%)`,
                     width: '44px',
-                    height: '44px'
+                    height: `${height}`
                 }}
             >
                 {firstChar}
@@ -24,4 +28,3 @@ const GradientCharAvatar = React.memo(({avatarUrl, name}:{avatarUrl:string | und
         )}
 })
 
-export default GradientCharAvatar

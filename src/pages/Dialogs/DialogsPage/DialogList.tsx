@@ -1,7 +1,7 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import DialogItem from "pages/Dialogs/DialogItem/DialogItem";
+import React from 'react';
+import {DialogItem} from "pages/Dialogs";
 import {DialogType} from "typings/types";
-import { Empty } from 'antd';
+import {Empty} from 'antd';
 
 type PropsType = {
     dialogs: DialogType[]

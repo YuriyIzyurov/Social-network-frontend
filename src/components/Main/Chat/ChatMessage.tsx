@@ -1,7 +1,8 @@
 import React from "react";
 import {ChatMessageAPIType} from "typings/APITypes";
 import {Link} from "react-router-dom";
-import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
+import { GradientCharAvatar } from "components/CustomAvatars";
+
 
 export const ChatMessage: React.FC<{message: ChatMessageAPIType}> = React.memo(({message}) => {
 

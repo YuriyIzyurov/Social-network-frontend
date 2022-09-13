@@ -1,14 +1,14 @@
 import {Action, AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
-import dialogReducer from "./dialogReducer";
-import profileReducer, { ThunkType } from "./profileReducer";
-import usersReducer from "./usersReducer";
-import authReducer from "./authReducer";
+import dialogReducer from "redux/Reducers/dialogReducer";
+import profileReducer, { ThunkType } from "redux/Reducers/profileReducer";
+import usersReducer from "redux/Reducers/usersReducer";
+import authReducer from "redux/Reducers/authReducer";
 import thunk, {ThunkAction, ThunkDispatch, ThunkMiddleware} from "redux-thunk";
-import appReducer from "./appReducer";
+import appReducer from "redux/Reducers/appReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import chatReducer from "./chatReducer";
-import postsReducer from "./postsReducer";
-import authBlogReducer from "./authBlogReducer";
+import chatReducer from "redux/Reducers/chatReducer";
+import postsReducer from "redux/Reducers/postsReducer";
+import authBlogReducer from "redux/Reducers/authBlogReducer";
 
 let rootReducer = combineReducers({
     dialog: dialogReducer,

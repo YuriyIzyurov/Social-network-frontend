@@ -1,7 +1,7 @@
 import React from 'react';
-import {Skeleton, Space} from 'antd';
+import {Skeleton} from 'antd';
 
-const PublicationShortSkeleton = () => {
+export const PublicationShortSkeleton = () => {
     return (
         <div className="publication">
             <div className='publication__skeleton'>
@@ -11,5 +11,3 @@ const PublicationShortSkeleton = () => {
         </div>
     );
 };
-
-export default PublicationShortSkeleton;

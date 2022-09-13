@@ -1,16 +1,20 @@
 import React from 'react';
-import PostShorten from "pages/Posts/Post/PostShorten/PostShorten";
 import {PostType} from "typings/types";
-import PostSkeleton from "components/Skeletons/PostSkeleton";
+import {PostSkeleton} from "components/Skeletons";
+import { PostShorten } from '..';
+
+
+
 type PropsType = {
     posts:Array<PostType>
     id:string | boolean | null
     isFetching: boolean
 }
-const PostList:React.FC<PropsType> = ({posts,id, isFetching}) => {
+export const PostList:React.FC<PropsType> = ({posts,id, isFetching}) => {
 
+    const SkeletonArray = Array.from({length: 2}).map((_,index) => <PostSkeleton key={'skeleton' + index}/>)
 
-    const SkeletonArray = Array.from({length: posts.length}).map((_,index) => <PostSkeleton key={'skeleton' + index}/>)
+    if(!posts.length) return <PostSkeleton />
 
     return (
     <>
@@ -33,4 +37,3 @@ const PostList:React.FC<PropsType> = ({posts,id, isFetching}) => {
     );
 };
 
-export default PostList;

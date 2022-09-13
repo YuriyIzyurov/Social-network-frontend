@@ -1,42 +1,34 @@
-import React, {MouseEventHandler, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {DialogType, SelfPrivateMessageType} from "typings/types";
-import {actions, handlingDialogs, handlingMessageList, ThunkType} from "redux/dialogReducer";
+import {actions, handlingDialogs, handlingMessageList, ThunkType} from "redux/Reducers/dialogReducer";
 import {Empty} from 'antd'
-import {EllipsisOutlined, FormOutlined, TeamOutlined} from '@ant-design/icons';
+import {EllipsisOutlined, TeamOutlined} from '@ant-design/icons';
 import 'pages/Dialogs/DialogItem/DialogItem.scss'
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useAppDispatch} from "redux/reduxStore";
-import {getActiveMessagePage, getMessagesOnPage} from "redux/dialog-selectors";
-import Search from "antd/lib/input/Search";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors/dialog-selectors";
 import "pages/Dialogs/DialogsPage/DialogsPage.scss"
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
-import {DialogList} from "pages/Dialogs/DialogsPage/DialogList";
-import {MessagesList} from "pages/Dialogs/Message/MessagesList";
-import {DialogHeader} from "pages/Dialogs/DialogsPage/DialogHeader";
-import {Link} from "react-router-dom";
-import StyledSearch from "components/Forms/StyledSearch";
+import {DialogList, MessagesList,DialogHeader} from "pages/Dialogs";
+import {StyledSearch} from "components/Forms";
 
 
-type PropsMessagesType = {
+type PropsType = {
     dialogs: Array<DialogType>
     privateMessageData: Array<SelfPrivateMessageType>
     handlingMessage: (id: number, body: string) => ThunkType
     userID: number | null
 }
-type FormDataMessageType = {
-    message: string
-}
-type PropsType = {}
 
-const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
+const DialogsPage: React.FC<PropsType> = React.memo(({dialogs, privateMessageData,  handlingMessage, userID}) => {
 
     let id = userID
     let activePage = useSelector(getActiveMessagePage)
     let messagesOnPage = useSelector(getMessagesOnPage)
-
+    const [isMessageSending, setMessageSending] = useState(false)
+    const [filter, setFilter] = useState('')
     const dispatch = useAppDispatch()
 
-    const [isMessageSending, setMessageSending] = useState(false)
 
     useEffect(() => {
         dispatch(handlingDialogs())
@@ -55,9 +47,7 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
     const sendMessage = (value:string) => {
         setMessageSending(true)
         handlingMessage(id as number, value)
-
     }
-    const [filter, setFilter] = useState('')
 
     const handleSetFilter = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value)
@@ -82,12 +72,17 @@ const DialogsPage: React.FC<PropsMessagesType> = React.memo(({dialogs, privateMe
             </div>
             <div className="chat__dialog">
                 <div className="chat__dialog-header">
-                    <div></div> {/*специальный див для justify-content: space-between*/}
+                    <div></div>
                     <DialogHeader dialogs={dialogs} id={id}/>
                     <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
-                    {userID && <MessagesList dialogs={dialogs} id={id} setMessageSending={setMessageSending} isMessageSending={isMessageSending}/>}
+                    {userID &&
+                        <MessagesList
+                            dialogs={dialogs}
+                            id={id}
+                            setMessageSending={setMessageSending}
+                            isMessageSending={isMessageSending}/>}
                     {!userID && <Empty className="chat__dialog-messages-empty" description="Выберите диалог"/>}
                 </div>
                 <div className="chat__dialog-input">

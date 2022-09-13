@@ -7,14 +7,11 @@ import ReactMarkdown from "react-markdown";
 import {AddPost}from "components/Main";
 import classnames from 'classnames';
 import EditSettings from "utils/EditSettings/EditSettings";
-// @ts-ignore
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-// @ts-ignore
 import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {GetMessageTime} from "utils/Time/CustomTime";
-// @ts-ignore
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
-import {Tag} from "pages/Posts/ProfilePage/PublicationShort";
+import {Tag} from "pages/Posts";
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -32,7 +29,7 @@ type PropsType = {
     createdAt: string,
     isEditable: boolean
 }
-const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text, viewsCount, commentsCount, createdAt,isEditable }) => {
+export const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text, viewsCount, commentsCount, createdAt,isEditable }) => {
 
     const [edit, setEdit] = useState(false)
     const [isTooltipVisible, setTooltipVisible] = useState(false)
@@ -117,5 +114,3 @@ const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tags, text
         </>
     );
 };
-
-export default PostShorten;

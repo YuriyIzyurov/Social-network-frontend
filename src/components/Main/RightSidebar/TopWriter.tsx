@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch} from "redux/reduxStore";
 import {postsAPI} from "api/postsAPI";
-import {actions} from "redux/postsReducer";
+import {actions} from "redux/Reducers/postsReducer";
 import {EyeOutlined} from '@ant-design/icons';
 import {TopUserType} from "typings/types";
 

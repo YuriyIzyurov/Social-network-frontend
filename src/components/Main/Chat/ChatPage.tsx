@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
-import {sendMessage, startChatListening, stopChatListening} from "redux/chatReducer";
+import {sendMessage, startChatListening, stopChatListening} from "redux/Reducers/chatReducer";
 import {AppStateType, useAppDispatch} from "redux/reduxStore";
 import {animated, useTransition} from "react-spring";
 import {ChatMessages} from "components/Main/Chat/ChatMessages";

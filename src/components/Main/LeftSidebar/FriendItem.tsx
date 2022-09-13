@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {UserType} from "typings/types";
-import GradientCharAvatar from "components/CustomAvatars/GradientCharAvatar";
+import {GradientCharAvatar} from "components/CustomAvatars";
 
 
 export const FriendItem = ({item}:{item: UserType}) => {

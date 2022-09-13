@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import LastComment from 'pages/Posts/PostsSidebar/LastComment';
+import {LastComment, PostTag} from 'pages/Posts';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingGetAllPosts} from "redux/postsReducer";
+import {actions, handlingGetAllPosts, handlingSetAllPosts} from "redux/Reducers/postsReducer";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import Skeleton from 'antd/lib/skeleton/Skeleton';
 import {CommentsType} from "typings/types";
-import PostTag from 'components/PostTag';
-import StyledSearch from 'components/Forms/StyledSearch';
+import {StyledSearch} from 'components/Forms';
 import {Segmented} from 'antd';
 import {SegmentedValue} from 'antd/lib/segmented';
 
@@ -17,7 +16,7 @@ type PropsType= {
     isAuthorTabPicked: boolean
     isAuth: boolean
 }
-const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isAuthorTabPicked, isAuth}) => {
+export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isAuthorTabPicked, isAuth}) => {
 
     const [tags, setTags] = useState<string[] | undefined>(undefined)
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined)
@@ -74,6 +73,11 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
         }
     }
 
+    const getPostsWithTag = (item:string) => {
+        dispatch(handlingSetAllPosts(item))
+    }
+
+
     return (
         <div className="searchPost">
             <div className="searchPost__navigation">
@@ -96,21 +100,33 @@ const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadM
             <div className="searchPost__tagBlock">
                 <span>Популярные тэги</span>
                 <div className="searchPost__tagBlock-tags">
-                    <ul>
-                        {tags ? tags.map((item, index)=><PostTag key={'tag-' + index} item={item}/>)
+
+                        {tags
+                            ? <ul className='tagList'>
+                                {tags.map((item, index) =>
+                                    <PostTag
+                                        key={'tag-' + index}
+                                        item={item}
+                                        getPostsWithTag={getPostsWithTag}
+                                    />)}
+                              </ul>
                             : <Skeleton title={false}
                                         active paragraph={{ rows: 5, width: ["60%","45%","50%","55%","40%",]}}/>}
-                    </ul>
                 </div>
             </div>
             <div className="searchPost__comments">
                 <span className="comments-description">Последние комментарии</span>
                 <div className="searchPost__comments-list">
-                    {comments?.map((item) => <LastComment key={item._id} item={item} />)}
+                    {comments
+                        ?
+                        comments.map((item) => <LastComment key={item._id} item={item} />)
+                        : Array.from({length:5}).map(() =>
+                            <div className='skeleton-comment'>
+                                <Skeleton.Input active size='large' />
+                            </div>
+                        )}
                 </div>
             </div>
         </div>
     );
 };
-
-export default PostsSidebar;

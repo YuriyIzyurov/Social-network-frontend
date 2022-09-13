@@ -203,7 +203,6 @@
           width: 100%;
           display: block;
           color:white;
-
           span:first-child {
             position: relative;
             display: inline-block;
@@ -313,12 +312,13 @@
       a {
         position: relative;
         width: 100%;
-        display: block;
+        display: flex;
         color:white;
-
         span:first-child {
           position: relative;
-          display: inline-block;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           min-width: 60px;
           height: 60px;
           line-height: 60px;
@@ -533,4 +533,22 @@ img {
     border-color: #72ffff !important;
   }
 }
+.main-spin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #2C2F48;
+}
+.lazyload-preloader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: #2C2F48;
+  color: #FFFFFF;
+  font-size: 22px;
+}
+
 @import "adaptiveHorizontal.css";

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingGetAllPosts, handlingAddPosts} from "redux/postsReducer";
+import {actions, handlingGetAllPosts, handlingAddPosts} from "redux/Reducers/postsReducer";
 import {useSelector} from "react-redux";
 import {
     getActivePostPage,
@@ -9,13 +9,12 @@ import {
     getPosts,
     getPostsOnPage, getScrollState,
     getTotalCount
-} from "redux/post-selectors";
-import {getBloggerID, getMe} from "redux/auth-selectors";
-import {Navigate} from "react-router";
+} from "redux/Selectors/post-selectors";
+import {getBloggerID, getMe} from "redux/Selectors/auth-selectors";
 import Scrollbar from "react-scrollbars-custom";
-import PostList from 'pages/Posts/PostsPage/PostList';
-import PostsSidebar from 'pages/Posts/PostsSidebar/PostsSidebar';
+import {PostList, PostsSidebar} from 'pages/Posts';
 import {ScrollState} from 'typings/types';
+
 
 
 const PostsPage = () => {
@@ -113,7 +112,7 @@ const PostsPage = () => {
                                   isAuth={isAuth}
                     />
                     <Scrollbar  ref={scrollbarRef} onScroll={scrollHandler} >
-                    <PostList posts={posts} id={id} isFetching={isFetching}/>
+                        <PostList posts={posts} id={id} isFetching={isFetching}/>
                     </Scrollbar>
                 </div>
 
