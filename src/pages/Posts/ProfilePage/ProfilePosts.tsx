@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import 'pages/Posts/ProfilePage/ProfilePosts.scss'
-import {PostType} from "typings/types";
+import {PostType} from "typings";
 import banner3 from "assets/images/banner3.jpg"
 import banner2 from "assets/images/banner2-edited2-cropped.jpg"
 import banner4 from "assets/images/banner4.jpg"
@@ -11,12 +11,11 @@ import {AddPost} from "components/Main";
 import {useNavigate} from "react-router";
 import {postsAPI} from "api/postsAPI";
 import {useSelector} from "react-redux";
-import {getMe} from "redux/Selectors/auth-selectors";
+import {getMe, getMyPosts} from "redux/Selectors";
 import {PublicationShort} from "pages/Posts";
 import {PublicationShortSkeleton} from "components/Skeletons";
 import {useAppDispatch} from "redux/reduxStore";
-import {actions} from "redux/Reducers/postsReducer";
-import {getMyPosts} from "redux/Selectors/post-selectors";
+import {postActions} from "redux/Actions";
 
 
 const ProfilePosts = () => {
@@ -40,7 +39,7 @@ const ProfilePosts = () => {
         if(isAuth){
             const responseMy = await postsAPI.getMyPosts()
             if(responseMy.resultCode === 0) {
-                dispatch(actions.loadMyPosts(responseMy.data.myPosts, responseMy.data.totalCount))
+                dispatch(postActions.loadMyPosts(responseMy.data.myPosts, responseMy.data.totalCount))
             }
         }
         setLoading(false)

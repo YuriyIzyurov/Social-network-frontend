@@ -1,19 +1,17 @@
-import {handlingAuthData} from 'redux/Reducers/authReducer';
+import {handlingAuthData, handlingAuthDataBlog} from 'redux/Reducers';
 import {ThunkAction} from "redux-thunk/es/types";
-import {AppStateType, BaseThunkType, InferActionsTypes} from "redux/reduxStore";
-import {handlingAuthDataBlog} from "redux/Reducers/authBlogReducer";
+import {AppStateType, InferActionsTypes} from "redux/reduxStore";
+import {appActions} from "redux/Actions";
 
-
-
-export type InitialStateType = typeof initialState
-type ActionType = InferActionsTypes<typeof actions>
+type InitialAppStateType = typeof initialState
+type ActionType = InferActionsTypes<typeof appActions>
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
-let initialState = {
+const initialState = {
     initialized: false,
     isRedirect: false
 }
-const appReducer = (state = initialState,action:ActionType): InitialStateType => {
+export const appReducer = (state = initialState,action:ActionType): InitialAppStateType => {
     switch (action.type) {
         case "SET_INIT":
             return {
@@ -36,14 +34,9 @@ export const setInitializeThunkCreator = ():ThunkType => {
         let promise2 = dispatch(handlingAuthDataBlog())
         Promise.all([promise1, promise2])
             .then(() => {
-                dispatch(actions.setInitialize())
+                dispatch(appActions.setInitialize())
             })
     }
 }
 
-export const actions = {
-    setInitialize: () => ({type : "SET_INIT"} as const),
-    setRedirectToLogin: (isRedirect: boolean) => ({type : "REDIRECT_TO_LOGIN", isRedirect} as const)
-}
 
-export default appReducer

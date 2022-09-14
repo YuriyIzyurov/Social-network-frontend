@@ -1,10 +1,8 @@
 import React, {Dispatch, SetStateAction, useEffect, useRef} from 'react';
 import {Message} from "pages/Dialogs";
 import {useSelector} from "react-redux";
-import {getAuthID} from "redux/Selectors/auth-selectors";
-import {getAuthAvatar} from "redux/Selectors/profile-selectors";
-import {getMessageList} from "redux/Selectors/dialog-selectors";
-import {DialogType} from "typings/types";
+import {getAuthID, getAuthAvatar,getMessageList } from "redux/Selectors";
+import {DialogType} from "typings";
 import {Empty} from 'antd';
 
 type PropsType = {

@@ -1,10 +1,8 @@
-import {createSelector} from "reselect";
 import {AppStateType} from "redux/reduxStore";
 
 export const getUsers = (state:AppStateType) => {
     return state.userList.users
 }
-//export const getUsersSuperSelector = createSelector
 
 export const getTotalUsers = (state:AppStateType) => {
     return state.userList.totalUsers

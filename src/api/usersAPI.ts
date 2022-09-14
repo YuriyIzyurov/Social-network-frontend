@@ -1,5 +1,5 @@
 import {instanceSocial, ResponseAPIType } from "./api"
-import {GetItemsType, UserType} from "typings/types";
+import {GetItemsType, UserType} from "typings";
 
 
 export const usersAPI = {

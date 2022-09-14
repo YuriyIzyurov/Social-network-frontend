@@ -1,13 +1,15 @@
-import { UserType } from "typings/types";
+import { UserType,FilterType } from "typings";
 import {AppStateType, InferActionsTypes} from "redux/reduxStore";
 import { ThunkAction } from "redux-thunk/es/types";
 import {usersAPI} from "api/usersAPI";
+import {userActions} from "redux/Actions";
 
 
-export type ActionType = InferActionsTypes<typeof actions>
-export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
-export type InitialStateType = typeof initialState
-export type FilterType = typeof initialState.searchFilter
+
+type ActionType = InferActionsTypes<typeof userActions>
+export type ThunkUserType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
+type InitialUserStateType = typeof initialState
+
 
 let initialState = {users: [] as Array<UserType>,
                     totalUsers: 0,
@@ -23,7 +25,7 @@ let initialState = {users: [] as Array<UserType>,
                     totalFriends: 0
 }
 
-const usersReducer = (state = initialState, action:ActionType):InitialStateType => {
+export const usersReducer = (state = initialState, action:ActionType):InitialUserStateType => {
     switch(action.type){
         case "FOLLOW":
             return {
@@ -91,82 +93,68 @@ const usersReducer = (state = initialState, action:ActionType):InitialStateType 
 
 }
 
-export const handlingUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkType => {
+export const handlingUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkUserType => {
     return async (dispatch, getState) => {
-            dispatch(actions.dataIsFetching(true))
-            dispatch(actions.setActivePage(activePage))
-            dispatch(actions.filterSettings(filter))
+            dispatch(userActions.dataIsFetching(true))
+            dispatch(userActions.setActivePage(activePage))
+            dispatch(userActions.filterSettings(filter))
         let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
-            dispatch(actions.dataIsFetching(false))
-            dispatch(actions.setUsers(response.items))
-            dispatch(actions.setTotalUsers(response.totalCount))
+            dispatch(userActions.dataIsFetching(false))
+            dispatch(userActions.setUsers(response.items))
+            dispatch(userActions.setTotalUsers(response.totalCount))
 
     }
 }
-export const handlingSidebarUsers =  (): ThunkType => {
+export const handlingSidebarUsers =  (): ThunkUserType => {
     return async (dispatch, getState) => {
-            dispatch(actions.dataIsFetching(true))
+            dispatch(userActions.dataIsFetching(true))
         let response = await usersAPI.getSidebarUsers()
-            dispatch(actions.dataIsFetching(false))
+            dispatch(userActions.dataIsFetching(false))
             const shuffledArray = response.items.sort(() => Math.round(Math.random() * 100) - 50)
-            dispatch(actions.setFriends(shuffledArray))
-            dispatch(actions.setTotalFriends(response.totalCount))
+            dispatch(userActions.setFriends(shuffledArray))
+            dispatch(userActions.setTotalFriends(response.totalCount))
 
     }
 }
 
-export const handlingAddUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkType => {
+export const handlingAddUsers =  (activePage:number,usersOnPage:number,filter: FilterType): ThunkUserType => {
     return async (dispatch, getState) => {
-            dispatch(actions.setActivePage(activePage))
-            dispatch(actions.filterSettings(filter))
+            dispatch(userActions.setActivePage(activePage))
+            dispatch(userActions.filterSettings(filter))
         let response = await usersAPI.getUsers(activePage, usersOnPage, filter.term, filter.friend )
-            dispatch(actions.addUsers(response.items))
-            dispatch(actions.setTotalUsers(response.totalCount))
+            dispatch(userActions.addUsers(response.items))
+            dispatch(userActions.setTotalUsers(response.totalCount))
 
     }
 }
 
-export const handlingFollowAction = (id:number):ThunkType => {
+export const handlingFollowAction = (id:number):ThunkUserType => {
     return async (dispatch) => {
-        dispatch(actions.followActionInProcess(true, id))
+        dispatch(userActions.followActionInProcess(true, id))
         let response = await usersAPI.followUser(id)
             if(response.resultCode === 0){
-                dispatch(actions.followToggle(id))
+                dispatch(userActions.followToggle(id))
             }
-            dispatch(actions.followActionInProcess(false, id))
+            dispatch(userActions.followActionInProcess(false, id))
     }
 }
 
-export const handlingUnfollowAction = (id:number):ThunkType => {
+export const handlingUnfollowAction = (id:number):ThunkUserType => {
     return async (dispatch) => {
-        dispatch(actions.followActionInProcess(true, id))
+        dispatch(userActions.followActionInProcess(true, id))
         let response = await usersAPI.unFollowUser(id)
             if(response.resultCode === 0){
-                dispatch(actions.followToggle(id))
+                dispatch(userActions.followToggle(id))
             }
-            dispatch(actions.followActionInProcess(false, id))
+            dispatch(userActions.followActionInProcess(false, id))
     }
 }
 
-export const handleDeleteFriends = ():ThunkType => {
+export const handleDeleteFriends = ():ThunkUserType => {
     return async (dispatch) => {
 
     }
 }
 
-export const actions = {
-    followToggle: (userID:number) => ({type : "FOLLOW", userID} as const),
-    setUsers: (users: Array<UserType>) => ({type: "SET_USERS", users} as const),
-    addUsers: (users: Array<UserType>) => ({type: "ADD_USERS", users} as const),
-    setActivePage: (activePage:number) => ({type: "SET_ACTIVE_PAGE", activePage} as const),
-    setTotalUsers: (totalUsers:number)=> ({type: "SET_TOTAL_USERS", totalUsers} as const),
-    dataIsFetching: (isFetching:boolean) => ({type: "FETCHING", isFetching} as const),
-    followActionInProcess: (isFetching:boolean, userID:number)=>({type:"FOLLOW_IN_PROCESS", isFetching, userID} as const),
-    filterSettings: (searchFilter: FilterType)=>({type:"FILTERED_USERS", payload:searchFilter} as const),
-    setFriends: (friends: Array<UserType>)=>({type:"SET_FRIENDS", friends} as const),
-    setTotalFriends: (totalFriends:number)=>({type:"SET_TOTAL_FRIENDS", totalFriends} as const),
-    deleteFriendsFromSidebar: ()=>({type:"DELETE_FRIENDS"} as const),
-}
 
 
-export default usersReducer

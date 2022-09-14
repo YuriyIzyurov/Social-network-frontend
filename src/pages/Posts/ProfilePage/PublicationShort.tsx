@@ -1,6 +1,6 @@
 import React, { useRef, useState} from 'react';
 import {Link} from "react-router-dom";
-import {PostType} from "typings/types";
+import {PostType} from "typings";
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
 import { useSpring, animated, config} from '@react-spring/web'
 

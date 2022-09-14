@@ -1,14 +1,15 @@
 import React, {ChangeEvent, useCallback, useEffect, useRef, useState} from 'react';
-import {Button, Divider, Input} from "antd";
-import {actions, publicPost} from "redux/Reducers/postsReducer";
+import { Divider, Input} from "antd";
+import { publicPost} from "redux/Reducers";
 import {postsAPI} from "api/postsAPI";
 import {useAppDispatch} from "redux/reduxStore";
 import SimpleMDERedactor from 'SimpleMDERedactor';
-import {AddPostType} from "typings/types";
+import {AddPostType} from "typings";
 import {useSelector} from "react-redux";
-import {getPostID} from "redux/Selectors/post-selectors";
+import {getPostID} from "redux/Selectors";
 import {useNavigate, useParams} from "react-router";
 import AddPostButton from "components/CustomButtons/AddPostButton";
+import {postActions} from "redux/Actions";
 
 
 
@@ -38,12 +39,12 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     useEffect(() => {
         if(params.id && postId && getPostById) {
             getPostById()
-            dispatch(actions.deleteCreatedPostId())
+            dispatch(postActions.deleteCreatedPostId())
             postHandler()
         }
          if(postId) {
             navigate(`/posts/${postId}`)
-            dispatch(actions.deleteCreatedPostId())
+            dispatch(postActions.deleteCreatedPostId())
         }
     },[postId])
 

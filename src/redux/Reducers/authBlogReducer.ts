@@ -1,7 +1,8 @@
 import {authBlogAPI} from "api/postsAPI";
 import {BaseThunkType, InferActionsTypes} from "redux/reduxStore";
+import {blogAuthActions} from "redux/Actions";
 
-type ActionType = InferActionsTypes<typeof actions>
+type ActionType = InferActionsTypes<typeof blogAuthActions>
 export type ThunkBlogType = BaseThunkType<ActionType>
 type initialStateType = typeof initialState
 
@@ -14,7 +15,7 @@ let initialState = {
     errorBlog:null as string | null,
 }
 
-const authBlogReducer = (state = initialState, action: ActionType):initialStateType => {
+export const authBlogReducer = (state = initialState, action: ActionType):initialStateType => {
     switch(action.type) {
         case "BLOG_LOGIN_USER":
             return {
@@ -52,7 +53,7 @@ export const handlingBlogUserAuth = (email: string, password: string): ThunkBlog
         let response = await authBlogAPI.submitAuth(email, password)
         if(response.data._id) {
             const {_id, fullName, email, avatarUrl} = response.data
-            dispatch(actions.setBlogUserAuth({email: email, id: _id, fullName: fullName, avatarUrl}))
+            dispatch(blogAuthActions.setBlogUserAuth({email: email, id: _id, fullName: fullName, avatarUrl}))
             const {token} = response.data
             window.localStorage.setItem('token', token)
         }
@@ -65,19 +66,19 @@ export const handlingAuthDataBlog = ():ThunkBlogType => {
             let response = await authBlogAPI.getMe()
             if(response.resultCode === 0) {
                 const {_id, fullName, email, avatarUrl} = response.data
-                dispatch(actions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
+                dispatch(blogAuthActions.setBlogUserAuth({email, id: _id, fullName, avatarUrl}))
             } else if(response.resultCode === 1) {
                 console.log(response.message)
             }
         } catch (e) {
-            dispatch(actions.incorrectData('Blog database is unavailable'))
+            dispatch(blogAuthActions.incorrectData('Blog database is unavailable'))
             throw new Error('Connecting to database')
         }
     }
 }
 export const handlingBlogUserLogout = ():ThunkBlogType => {
     return async (dispatch) => {
-        dispatch(actions.logoutBlogUserAuth())
+        dispatch(blogAuthActions.logoutBlogUserAuth())
         window.localStorage.removeItem('token')
     }
 }
@@ -85,15 +86,9 @@ export const handlingChangeAvatar = (file: File):ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.uploadAvatar(file)
         if(response.resultCode === 0) {
-            dispatch(actions.setAvatar(response.data.avatarUrl))
+            dispatch(blogAuthActions.setAvatar(response.data.avatarUrl))
         }
     }
 }
 
-const actions = {
-    setBlogUserAuth: (payload: any) => ({type:"BLOG_LOGIN_USER", payload} as const),
-    logoutBlogUserAuth: () => ({type:"BLOG_LOGOUT"} as const),
-    setAvatar: (avatarUrl: string) => ({type:"SET_BLOG_AVATAR", avatarUrl} as const),
-    incorrectData: (message: string) => ({type : "ERROR_MESSAGE_BLOG", message} as const),
-}
-export default authBlogReducer
+

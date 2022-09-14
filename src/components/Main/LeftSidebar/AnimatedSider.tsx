@@ -4,16 +4,12 @@ import {ReadOutlined, HomeOutlined, MessageOutlined, TeamOutlined} from "@ant-de
 import {Layout, Tooltip} from 'antd';
 import classnames from "classnames";
 import {useSelector} from "react-redux";
-import {getRedirectDialogStatus} from "redux/Selectors/profile-selectors";
-import {getRedirectDialogPage} from "redux/Selectors/dialog-selectors";
+import {getRedirectDialogStatus, getRedirectDialogPage, getRedirectLoginStatus,getFriends, getTotalFriends,getCurrentAuthor } from "redux/Selectors";
 import {animated, useTransition} from "react-spring";
 import {useAppDispatch} from "redux/reduxStore";
-import {handlingSidebarUsers} from "redux/Reducers/usersReducer";
-import {getFriends, getTotalFriends} from "redux/Selectors/user-selectors";
+import {handlingSidebarUsers} from "redux/Reducers";
 import {useNavigate} from "react-router";
-import {getCurrentAuthor} from "redux/Selectors/post-selectors";
 import { FriendItem, FriendItemShort} from './../index';
-import {getRedirectLoginStatus} from "redux/Selectors/app-selector";
 import { ChatPage } from 'App';
 
 

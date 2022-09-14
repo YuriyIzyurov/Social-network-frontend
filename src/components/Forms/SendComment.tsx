@@ -1,8 +1,8 @@
 import React from 'react';
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import {useSelector} from "react-redux";
-import {getLoggedUserPhoto} from "redux/Selectors/profile-selectors";
-import {getMe} from "redux/Selectors/auth-selectors";
+import {getLoggedUserPhoto, getMe} from "redux/Selectors";
+
 
 
 export const SendComment = ({sendComment}:{sendComment: (value: string) => void}) => {

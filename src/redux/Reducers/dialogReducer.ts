@@ -1,26 +1,17 @@
-import {AllMessageType, DialogType, SelfPrivateMessageType, UserType} from "typings/types";
+import {AllMessageType, DialogType, SelfPrivateMessageType, UserType, SpamDataType} from "typings";
 import {AppStateType, InferActionsTypes} from "redux/reduxStore";
-import {ActionType as UserActionType} from "redux/Reducers/usersReducer"
 import {ThunkAction} from "redux-thunk/es/types";
 import {dialogsAPI} from "api/dialogsAPI";
 import {DeleteNotification, SpamNotification } from "constants/constants";
+import {dialogActions} from "redux/Actions";
 
 
 
+type InitialDialogStateType = typeof initialState
+type ActionType = InferActionsTypes<typeof dialogActions>
+export type ThunkDialogType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
-export type InitialStateType = typeof initialState
-type ActionType = InferActionsTypes<typeof actions>
-export type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
-export type FriendFilterType = {
-    term: string
-    friend: boolean
-}
-export type SpamDataType = {
-    messageId:string
-    message:string
-}
-type Delete = "delete"
-type Spam = "spam"
+
 
 let initialState = {
     privateMessageData : [] as Array<SelfPrivateMessageType>,
@@ -38,7 +29,7 @@ let initialState = {
     numberOfNewMessages: 0
 }
 
-const dialogReducer = (state = initialState,action:ActionType | UserActionType ):InitialStateType => {
+export  const dialogReducer = (state = initialState,action:ActionType ):InitialDialogStateType => {
 
     switch (action.type) {
         case "SEND_MESSAGE":
@@ -71,11 +62,6 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType )
                     return item
                 })]
             }
-       case "CLEAR_MESSAGES":
-            return {
-                ...state,
-                messagesList : []
-            }
 
         case "SET_DIALOGS":
             return {
@@ -86,11 +72,6 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType )
             return {
                 ...state,
                 dialogs: []
-            }
-        case "SET_ACTIVE_FRIEND_PAGE":
-            return {
-                ...state,
-                activePage: action.activePage
             }
 
         case  "IS_FETCHING":
@@ -127,24 +108,24 @@ const dialogReducer = (state = initialState,action:ActionType | UserActionType )
             return state
     }
 }
-export const handlingDialogs =  (): ThunkType => {
+export const handlingDialogs =  (): ThunkDialogType => {
     return async (dispatch, getState) => {
-        dispatch(actions.dialogListIsFetching(true))
+        dispatch(dialogActions.dialogListIsFetching(true))
         let response = await dialogsAPI.getAllDialogs()
-        dispatch(actions.dialogListIsFetching(false))
-        dispatch(actions.setDialogs(response))
+        dispatch(dialogActions.dialogListIsFetching(false))
+        dispatch(dialogActions.setDialogs(response))
 
     }
 }
 
-export const handlingMessage =  (id: number, body: string): ThunkType => {
+export const handlingMessage =  (id: number, body: string): ThunkDialogType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.sendMessageToFriend(id, body)
-        dispatch(actions.sendNewMessage(response.data.message))
+        dispatch(dialogActions.sendNewMessage(response.data.message))
     }
 }
 
-export const startDialogWithFriend = (id: number):ThunkType => {
+export const startDialogWithFriend = (id: number):ThunkDialogType => {
     return async (dispatch) => {
         let response = await dialogsAPI.startChatting(id)
         if(response.resultCode !== 0) {
@@ -152,59 +133,41 @@ export const startDialogWithFriend = (id: number):ThunkType => {
         }
     }
 }
-export const handlingMessageList =  (id: number, activePage: number, messagesOnPage: number): ThunkType => {
+export const handlingMessageList =  (id: number, activePage: number, messagesOnPage: number): ThunkDialogType => {
     return async (dispatch, getState) => {
-        dispatch(actions.dialogListIsFetching(true))
+        dispatch(dialogActions.dialogListIsFetching(true))
         let response = await dialogsAPI.getFriendMessagesList(id, activePage, messagesOnPage)
-        dispatch(actions.dialogListIsFetching(false))
+        dispatch(dialogActions.dialogListIsFetching(false))
         if(response.error) {
             console.log(response.error)
         } else {
-            dispatch(actions.setMessages(response.items))
+            dispatch(dialogActions.setMessages(response.items))
         }
     }
 }
-export const handlingSpamMessage =  (messageId: string, message: string): ThunkType => {
+export const handlingSpamMessage =  (messageId: string, message: string): ThunkDialogType => {
     return async (dispatch, getState) => {
         await dialogsAPI.markMessageAsSpam(messageId)
-        dispatch(actions.mutateMessageList(messageId, undefined ,'spam'))
+        dispatch(dialogActions.mutateMessageList(messageId, undefined ,'spam'))
         const payload:SpamDataType = {messageId, message}
-        dispatch(actions.markMessageIdAsDeleted(payload))
+        dispatch(dialogActions.markMessageIdAsDeleted(payload))
     }
 }
-export const handlingDeleteMessage =  (messageId: string, message: string): ThunkType => {
+export const handlingDeleteMessage =  (messageId: string, message: string): ThunkDialogType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.deleteMessage(messageId)
         console.log(response)
-        dispatch(actions.mutateMessageList(messageId, undefined, 'delete'))
+        dispatch(dialogActions.mutateMessageList(messageId, undefined, 'delete'))
         const payload:SpamDataType = {messageId, message}
-        dispatch(actions.markMessageIdAsDeleted(payload))
+        dispatch(dialogActions.markMessageIdAsDeleted(payload))
     }
 }
-export const handlingRestoreMessage =  (messageId: string, message:string | undefined): ThunkType => {
+export const handlingRestoreMessage =  (messageId: string, message:string | undefined): ThunkDialogType => {
     return async (dispatch, getState) => {
         await dialogsAPI.restoreDeletedMessage(messageId)
-        dispatch(actions.mutateMessageList(messageId,message))
-        dispatch(actions.deleteMark(messageId))
+        dispatch(dialogActions.mutateMessageList(messageId,message))
+        dispatch(dialogActions.deleteMark(messageId))
     }
 }
 
 
-
-export const actions = {
-    sendNewMessage: (messageData: SelfPrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
-    setDialogs: (dialogs: Array<DialogType>) => ({type: "SET_DIALOGS", dialogs} as const),
-    setMessages: (messages: Array<AllMessageType>) => ({type: "SET_MESSAGES", messages} as const),
-    clearMessageList: () => ({type: "CLEAR_MESSAGES"} as const),
-    setActiveDialogPage: (activePage:number) => ({type: "SET_ACTIVE_FRIEND_PAGE", activePage} as const),
-    dialogListIsFetching: (isFetching:boolean) => ({type: "IS_FETCHING", isFetching} as const),
-    clearDialogList: () => ({type: "CLEAR_DIALOG_LIST"} as const),
-    setDialogID: (id:number | null) => ({type: "SET_DIALOG_ID", id} as const),
-    mutateMessageList: (messageId:string, message?:string | undefined, reason?: Delete | Spam) => ({type: "MUTATE_MESSAGE_LIST", messageId,message,reason} as const),
-    markMessageIdAsDeleted: (payload:SpamDataType) => ({type: "MARK_MESSAGE_ID_AS_DELETED", payload}as const),
-    deleteMark: (messageId:string) => ({type: "REMOVE_MARK_OF_DELETE", messageId}as const),
-    setRedirectToDialogPage: (status:boolean) => ({type: "SET_REDIRECT_TO_DIALOG_PAGE", status} as const),
-    setNumberOfNewMessages: (number:number) => ({type: "SET_NUMBER_OF_NEW_MESSAGES", number} as const),
-}
-
-export default dialogReducer

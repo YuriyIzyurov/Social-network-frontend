@@ -3,14 +3,15 @@ import 'pages/Dialogs/DialogItem/DialogItem.scss'
 import {CustomTimeDistanceToNow, GetMessageTime} from "utils/Time/CustomTime";
 import {CloseOutlined, ExclamationCircleOutlined} from '@ant-design/icons';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingDialogs, handlingMessageList} from "redux/Reducers/dialogReducer";
+import {handlingDialogs, handlingMessageList} from "redux/Reducers";
 import {useSelector} from "react-redux";
-import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors/dialog-selectors";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors";
 import classnames from 'classnames';
 import {isUserOnline} from 'utils/Time/isUserOnline';
 import {Modal, Tooltip} from "antd";
 import {dialogsAPI} from "api/dialogsAPI";
 import {GradientCharAvatar} from "components/CustomAvatars";
+import {dialogActions} from "redux/Actions";
 
 const { confirm } = Modal;
 
@@ -59,14 +60,14 @@ export const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNe
 
     const checkNewMessages = async () => {
         const response =  await dialogsAPI.getNewMessages()
-        dispatch(actions.setNumberOfNewMessages(response))
+        dispatch(dialogActions.setNumberOfNewMessages(response))
     }
 
     const getMessageList = async () => {
         dispatch(handlingMessageList(id, activePage, messagesOnPage))
             .then(() => dispatch(handlingDialogs()))
             .then(() => checkNewMessages())
-        dispatch(actions.setDialogID(id))
+        dispatch(dialogActions.setDialogID(id))
     }
     const deleteDialog = (e:React.MouseEvent<HTMLSpanElement>) => {
         showDeleteConfirm()

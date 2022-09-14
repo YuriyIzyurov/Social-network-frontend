@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from "react"
 import './ProfileInfo.scss'
 import {FormOutlined} from "@ant-design/icons";
-import {actions, getUserStatusInProfile} from "redux/Reducers/profileReducer";
-import {actions as appActions} from "redux/Reducers/appReducer";
-import {actions as dialogActions} from "redux/Reducers/dialogReducer";
+import {getUserStatusInProfile} from "redux/Reducers";
 import {useAppDispatch} from "redux/reduxStore";
 import {Bell, Chat, Mail, Setting} from "assets/VectorComponents"
 import {useSelector} from "react-redux";
-import {getAuthID} from "redux/Selectors/auth-selectors";
-import {getCurrentProfile, getEditMode} from "redux/Selectors/profile-selectors";
+import {getCurrentProfile, getEditMode, getRedirectLoginStatus,getNumberOfNewMessages,getAuthID} from "redux/Selectors";
 import {AuthData, ProfileInfoMain, TopWriter} from "./../index";
 import {postsAPI} from "api/postsAPI";
 import {ProfileContactsInput} from "components/Forms";
 import {SocialMediaContact} from "components/Main";
-import {TopUserType} from "typings/types";
-import {getRedirectLoginStatus} from "redux/Selectors/app-selector";
+import {TopUserType} from "typings";
 import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 import {dialogsAPI} from "api/dialogsAPI";
-import {getNumberOfNewMessages} from "redux/Selectors/dialog-selectors";
+import {appActions, dialogActions, profileActions} from "redux/Actions";
 
 
 const ProfileInfo = React.memo(() => {
@@ -46,7 +42,7 @@ const ProfileInfo = React.memo(() => {
 
     useEffect(() => {
         if(currentProfile?.userId === authID) {
-            dispatch(actions.setMainColors(colors))
+            dispatch(profileActions.setMainColors(colors))
         }
     },[colors])
 
@@ -79,7 +75,7 @@ const ProfileInfo = React.memo(() => {
         }
     }
     const changeEditMode = (status:boolean) => {
-        dispatch(actions.setEditMode(status))
+        dispatch(profileActions.setEditMode(status))
     }
 
     const getFollowBlockStatus= () => {

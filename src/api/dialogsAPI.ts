@@ -1,5 +1,5 @@
 import {instanceSocial, ResponseAPIType } from "./api"
-import {AllMessageType, DialogType, GetItemsType, PrivateMessageDataType} from "typings/types";
+import {AllMessageType, DialogType, GetItemsType, PrivateMessageDataType} from "typings";
 
 
 export const dialogsAPI = {

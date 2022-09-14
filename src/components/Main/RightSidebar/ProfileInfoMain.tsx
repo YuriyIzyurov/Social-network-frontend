@@ -3,12 +3,11 @@ import {AvatarBorderFinal, ContainerAvatarEffect} from "assets/VectorComponents"
 import {MainAvatar} from "components/CustomAvatars";
 import {ProfileStatus} from "components/Main/RightSidebar/ProfileStatus";
 import {useSelector} from "react-redux";
-import {getStatus} from "redux/Selectors/profile-selectors";
-import {actions, handlePhotoChange, updateMyStatus} from "redux/Reducers/profileReducer";
-import {handlingAuthDataBlog, handlingChangeAvatar} from "redux/Reducers/authBlogReducer";
+import {getStatus} from "redux/Selectors";
+import { handlePhotoChange, updateMyStatus, handlingChangeAvatar, handlingAuthDataBlog,  startDialogWithFriend} from 'redux/Reducers';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions as dialogActions, startDialogWithFriend} from "redux/Reducers/dialogReducer";
-import {CurrentProfileType} from "typings/types";
+import {CurrentProfileType} from "typings";
+import {dialogActions, profileActions} from "redux/Actions";
 
 type PropsType = {
     currentProfile: CurrentProfileType
@@ -34,7 +33,7 @@ export const ProfileInfoMain:React.FC<PropsType> = ({currentProfile, authID, col
     const openDialog = () =>{
         if(currentProfile){
             dispatch(startDialogWithFriend(currentProfile.userId))
-            dispatch(actions.setRedirect(currentProfile.userId))
+            dispatch(profileActions.setRedirect(currentProfile.userId))
             dispatch(dialogActions.setDialogID(currentProfile.userId))
         }
     }

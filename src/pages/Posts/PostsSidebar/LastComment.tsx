@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {CommentsType} from "typings/types";
+import {CommentsType} from "typings";
 import {GetMessageTime} from "utils/Time/CustomTime";
 
 export const LastComment = ({item}:{item:CommentsType}) => {

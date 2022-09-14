@@ -1,13 +1,11 @@
 import {connect, useDispatch} from "react-redux";
 import {Users} from "pages/Users";
 import {
-    actions,
-    FilterType,
     handlingAddUsers,
     handlingFollowAction,
     handlingUnfollowAction,
     handlingUsers,
-} from "redux/Reducers/usersReducer";
+} from "redux/Reducers";
 import React, {ComponentType, useEffect, useRef} from "react";
 import {withRedirectIfNoAuth} from "components/HOC";
 import {compose} from "redux";
@@ -19,10 +17,11 @@ import {
     getTotalUsers,
     getUsers,
     getUsersOnPage
-} from "redux/Selectors/user-selectors";
-import {UserType} from "typings/types";
+} from "redux/Selectors";
+import {UserType, FilterType} from "typings";
 import {AppStateType} from "redux/reduxStore";
 import {useSearchParams} from "react-router-dom";
+import { userActions } from "redux/Actions";
 //todo перерисовка всей страницы из-за изменения роута
 
 type StatePropsType = {
@@ -67,8 +66,8 @@ function UsersContainer(props: StatePropsType & DispatchPropsType) {
         props.handlingUsers(actualPage,usersOnPage, actualFilter)
 
         return () => {
-            dispatch(actions.setActivePage(1))
-            dispatch(actions.filterSettings({term:'', friend: null}))
+            dispatch(userActions.setActivePage(1))
+            dispatch(userActions.filterSettings({term:'', friend: null}))
         }
     },[])
 

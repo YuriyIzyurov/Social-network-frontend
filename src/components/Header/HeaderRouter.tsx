@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
 import {useLocation} from "react-router-dom";
 import {Navigate} from "react-router";
-import {getCurrentProfile, getId} from "redux/Selectors/profile-selectors";
-import {getAuth} from "redux/Selectors/auth-selectors";
+import {getCurrentProfile, getId, getAuth} from "redux/Selectors";
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "redux/reduxStore";
-import {getUserStatusInProfile, setProfileOnPage} from "redux/Reducers/profileReducer";
-import {handlingSidebarUsers} from "redux/Reducers/usersReducer";
+import {getUserStatusInProfile, setProfileOnPage, handlingSidebarUsers} from "redux/Reducers";
 
 const HeaderRouter = () => {
 

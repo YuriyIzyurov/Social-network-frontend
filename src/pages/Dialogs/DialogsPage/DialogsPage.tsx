@@ -1,22 +1,23 @@
 import React, {useEffect, useState} from "react"
-import {DialogType, SelfPrivateMessageType} from "typings/types";
-import {actions, handlingDialogs, handlingMessageList, ThunkType} from "redux/Reducers/dialogReducer";
+import {DialogType, SelfPrivateMessageType} from "typings";
+import {handlingDialogs, handlingMessageList, ThunkDialogType} from "redux/Reducers";
 import {Empty} from 'antd'
 import {EllipsisOutlined, TeamOutlined} from '@ant-design/icons';
 import 'pages/Dialogs/DialogItem/DialogItem.scss'
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "redux/reduxStore";
-import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors/dialog-selectors";
+import {getActiveMessagePage, getMessagesOnPage} from "redux/Selectors";
 import "pages/Dialogs/DialogsPage/DialogsPage.scss"
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import {DialogList, MessagesList,DialogHeader} from "pages/Dialogs";
 import {StyledSearch} from "components/Forms";
+import {dialogActions} from "redux/Actions";
 
 
 type PropsType = {
     dialogs: Array<DialogType>
     privateMessageData: Array<SelfPrivateMessageType>
-    handlingMessage: (id: number, body: string) => ThunkType
+    handlingMessage: (id: number, body: string) => ThunkDialogType
     userID: number | null
 }
 
@@ -32,11 +33,11 @@ const DialogsPage: React.FC<PropsType> = React.memo(({dialogs, privateMessageDat
 
     useEffect(() => {
         dispatch(handlingDialogs())
-        dispatch(actions.setRedirectToDialogPage(false))
+        dispatch(dialogActions.setRedirectToDialogPage(false))
         return () => {
-            dispatch(actions.clearDialogList())
-            dispatch(actions.setDialogID(null))
-            dispatch(actions.setRedirectToDialogPage(false))
+            dispatch(dialogActions.clearDialogList())
+            dispatch(dialogActions.setDialogID(null))
+            dispatch(dialogActions.setRedirectToDialogPage(false))
         }
     }, [])
 

@@ -1,5 +1,3 @@
-
-// @ts-ignore
 import tinycolor from "tinycolor2"
 
 const validColorNumber = (number: number) => {

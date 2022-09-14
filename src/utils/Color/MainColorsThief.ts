@@ -1,6 +1,4 @@
-// @ts-ignore
 import ColorThief from "colorthief"
-// @ts-ignore
 import tinycolor from "tinycolor2"
 
 const rgbToHex = (r:number, g:number, b:number) => '#' + [r, g, b].map(x => {

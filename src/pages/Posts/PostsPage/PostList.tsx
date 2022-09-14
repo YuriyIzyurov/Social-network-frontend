@@ -1,5 +1,5 @@
 import React from 'react';
-import {PostType} from "typings/types";
+import {PostType} from "typings";
 import {PostSkeleton} from "components/Skeletons";
 import { PostShorten } from '..';
 

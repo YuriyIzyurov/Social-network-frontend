@@ -1,6 +1,6 @@
 import React from 'react';
 import {ProxyImageUrl} from "utils/ChangeURL/ProxifyURL";
-import {PhotosType} from "typings/types";
+import {PhotosType} from "typings";
 import {UserDefaultPhoto} from 'assets/VectorComponents';
 
 type PropsType = {

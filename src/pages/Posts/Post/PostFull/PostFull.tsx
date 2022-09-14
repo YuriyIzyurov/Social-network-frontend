@@ -4,10 +4,10 @@ import {CommentOutlined, EyeOutlined} from '@ant-design/icons';
 import {Scrollbar} from 'react-scrollbars-custom';
 import {useLocation, useParams} from "react-router";
 import {commentsAPI, postsAPI} from "api/postsAPI";
-import {CommentsType, PostType} from "typings/types";
+import {CommentsType, PostType} from "typings";
 import ReactMarkdown from 'react-markdown';
 import {useSelector} from "react-redux";
-import {getBloggerID} from "redux/Selectors/auth-selectors";
+import {getBloggerID} from "redux/Selectors";
 import EditSettings from "utils/EditSettings/EditSettings";
 import Comment from "pages/Posts/Comment/Comment";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'

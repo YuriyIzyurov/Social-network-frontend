@@ -1,4 +1,4 @@
-import {CurrentProfileType, PhotosType} from "typings/types";
+import {CurrentProfileType, PhotosType} from "typings";
 import {instanceSocial, ResponseAPIType} from "./api";
 
 type UploadPhotoType = {

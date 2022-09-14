@@ -3,16 +3,14 @@ import './Header.scss'
 import {NavLink} from "react-router-dom";
 import {LogoutOutlined, LoginOutlined} from '@ant-design/icons';
 import {useSelector} from "react-redux";
-import {getLoggedUserPhoto, getMainColors} from "redux/Selectors/profile-selectors";
+import {getLoggedUserPhoto, getMainColors} from "redux/Selectors";
 import {useNavigate} from "react-router";
 import {HeaderAvatar} from "components/CustomAvatars";
-
-import {actions} from "redux/Reducers/appReducer";
-import {actions as userActions} from "redux/Reducers/usersReducer";
 import {useAppDispatch} from "redux/reduxStore";
-import {logoutFromServer} from "redux/Reducers/authReducer";
+import {logoutFromServer} from "redux/Reducers";
 import {chatAPI} from "api/chatAPI";
 import { MiniAvatarBorder } from "assets/VectorComponents";
+import {appActions, userActions} from "redux/Actions";
 
 
 type PropsLoginType = {
@@ -44,7 +42,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
                     <div className="login__header">
                         <span>Login</span>
                         <NavLink to={'/login'}>
-                            <LoginOutlined onClick={() => dispatch(actions.setRedirectToLogin(true)) }/>
+                            <LoginOutlined onClick={() => dispatch(appActions.setRedirectToLogin(true)) }/>
                         </NavLink>
                     </div>
                 :

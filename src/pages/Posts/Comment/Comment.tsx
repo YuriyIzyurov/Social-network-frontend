@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
-import {CommentsType} from "typings/types";
+import {CommentsType} from "typings";
 import 'pages/Posts/Comment/Comment.scss'
 import {GetMessageTime} from "utils/Time/CustomTime";
 import {commentsAPI} from "api/postsAPI";

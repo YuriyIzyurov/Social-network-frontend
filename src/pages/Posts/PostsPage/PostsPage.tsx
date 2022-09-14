@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingGetAllPosts, handlingAddPosts} from "redux/Reducers/postsReducer";
+import {handlingGetAllPosts, handlingAddPosts} from "redux/Reducers";
 import {useSelector} from "react-redux";
 import {
     getActivePostPage,
@@ -8,12 +8,12 @@ import {
     getFetching, getMyPosts, getMyTabPickStatus, getMyTotalPosts,
     getPosts,
     getPostsOnPage, getScrollState,
-    getTotalCount
-} from "redux/Selectors/post-selectors";
-import {getBloggerID, getMe} from "redux/Selectors/auth-selectors";
+    getTotalCount,getBloggerID, getMe
+} from "redux/Selectors";
 import Scrollbar from "react-scrollbars-custom";
 import {PostList, PostsSidebar} from 'pages/Posts';
-import {ScrollState} from 'typings/types';
+import {ScrollState} from 'typings';
+import {postActions} from "redux/Actions";
 
 
 
@@ -47,7 +47,7 @@ const PostsPage = () => {
             loadAllPosts()
         }
         return () => {
-            dispatch(actions.addSearchFilter(null))
+            dispatch(postActions.addSearchFilter(null))
         }
     },[])
 
@@ -60,7 +60,7 @@ const PostsPage = () => {
 
     useEffect(() => {
         if(isDataLoading){
-                dispatch(actions.setScrollToTop(false))
+                dispatch(postActions.setScrollToTop(false))
                 dispatch(handlingAddPosts(nextPage, postsOnPage, searchFilter, isPopularFilter)).then(()=>{
                     setDataLoading(false)
                 })
@@ -70,9 +70,9 @@ const PostsPage = () => {
 
 
     const loadMyPosts = useCallback(() => {
-        dispatch(actions.setAllPosts(myPosts))
-        dispatch(actions.setTotalPosts(myTotalPosts))
-        dispatch(actions.setActivePostPage(1))
+        dispatch(postActions.setAllPosts(myPosts))
+        dispatch(postActions.setTotalPosts(myTotalPosts))
+        dispatch(postActions.setActivePostPage(1))
         setPopularFilter(false)
         scrollbarRef?.current?.scrollToTop()
     },[myPosts, myTotalPosts])

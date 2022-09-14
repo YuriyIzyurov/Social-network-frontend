@@ -8,9 +8,9 @@ import MessageReadImage from "assets/images/readed.svg"
 import MessageNoReadImage from "assets/images/noreaded.svg"
 import {Modal} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
-import {handlingDeleteMessage, handlingRestoreMessage, handlingSpamMessage} from "redux/Reducers/dialogReducer";
+import {handlingDeleteMessage, handlingRestoreMessage, handlingSpamMessage} from "redux/Reducers";
 import {useSelector} from "react-redux";
-import {getListOfDeletedMessages} from "redux/Selectors/dialog-selectors";
+import {getListOfDeletedMessages} from "redux/Selectors";
 import { SpamNotification } from "constants/constants";
 
 const { confirm } = Modal;

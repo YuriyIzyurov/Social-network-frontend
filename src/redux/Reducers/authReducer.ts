@@ -2,15 +2,16 @@ import {ResultCode, ResultCodeForCaptcha} from "api/api";
 import {BaseThunkType, InferActionsTypes} from "redux/reduxStore";
 import {authAPI} from "api/authAPI";
 import {profileAPI} from "api/profileAPI";
-import {PhotosType} from "typings/types";
+import {PhotosType} from "typings";
+import {authActions} from "redux/Actions";
 
 
 
-export type initialStateType = typeof initialState
-export type ActionType = InferActionsTypes<typeof actions>
-export type ThunkType = BaseThunkType<ActionType>
+type initialAuthStateType = typeof initialState
+type ActionAuthType = InferActionsTypes<typeof authActions>
+export type ThunkAuthType = BaseThunkType<ActionAuthType>
 
-let initialState = {
+const initialState = {
     email: null as string | null,
     id: null as number | null,
     login: null as string | null,
@@ -21,7 +22,7 @@ let initialState = {
     isFetching: false
 }
 
-const authReducer = (state = initialState,action:ActionType):initialStateType => {
+export const authReducer = (state = initialState,action:ActionAuthType):initialAuthStateType => {
     switch (action.type) {
         case "SET_USER_AUTH":
             return {
@@ -63,71 +64,59 @@ const authReducer = (state = initialState,action:ActionType):initialStateType =>
 }
 
 
-export const handlingAuthData = ():ThunkType => {
+export const handlingAuthData = ():ThunkAuthType => {
     return async (dispatch) => {
         try {
-            dispatch(actions.dataIsFetching(true))
+            dispatch(authActions.dataIsFetching(true))
             let response = await authAPI.getAuth()
             if(response.resultCode === ResultCode.Success){
                 let response2 = await profileAPI.getProfile(response.data.id)
-                dispatch(actions.dataIsFetching(false))
+                dispatch(authActions.dataIsFetching(false))
                 let {photos} = response2
                 let {email, id, login} = response.data
-                dispatch(actions.setUserAuth(email, id, login, photos))
+                dispatch(authActions.setUserAuth(email, id, login, photos))
             } else {
-                dispatch(actions.dataIsFetching(false))
+                dispatch(authActions.dataIsFetching(false))
             }
         } catch (e) {
-            dispatch(actions.incorrectData('Social database is unavailable'))
+            dispatch(authActions.incorrectData('Social database is unavailable'))
             throw new Error('Connecting to database')
         }
     }
 }
-export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean = true, captcha:string, APIKey:string):ThunkType => {
+export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boolean = true, captcha:string, APIKey:string):ThunkAuthType => {
     return async (dispatch) => {
         window.localStorage.setItem('API-KEY', APIKey)
-        dispatch(actions.dataIsFetching(true))
+        dispatch(authActions.dataIsFetching(true))
         let response = await authAPI.submitAuth(email, password, rememberMe, captcha)
             if(response.resultCode === ResultCode.Success){
-                dispatch(actions.deleteIncorrectData())
+                dispatch(authActions.deleteIncorrectData())
                 dispatch(handlingAuthData())
-                dispatch(actions.deleteCaptcha())
+                dispatch(authActions.deleteCaptcha())
             } else {
                 if(response.resultCode === ResultCodeForCaptcha.NeedCaptcha) {
                     dispatch(askForCaptcha())
                 }
-                dispatch(actions.incorrectData(response.messages[0]))
-                dispatch(actions.dataIsFetching(false))
+                dispatch(authActions.incorrectData(response.messages[0]))
+                dispatch(authActions.dataIsFetching(false))
             }
     }
 }
-export const askForCaptcha = ():ThunkType => {
+export const askForCaptcha = ():ThunkAuthType => {
     return async (dispatch) => {
         let response = await authAPI.getCaptcha()
-        dispatch(actions.setCaptchaImage(response.url))
+        dispatch(authActions.setCaptchaImage(response.url))
     }
 }
-export const logoutFromServer = ():ThunkType => async (dispatch) => {
+export const logoutFromServer = ():ThunkAuthType => async (dispatch) => {
             let response = await authAPI.logout()
             if(response.resultCode === ResultCode.Success){
                 let response2 = await authAPI.getAuth()
                     if(response2.resultCode === ResultCode.GoWrong){
-                        dispatch(actions.logoutUser())
+                        dispatch(authActions.logoutUser())
                         window.localStorage.removeItem('API-KEY')
                     }
                 }
             }
 
-export const actions = {
-    setUserAuth: (email:string,id:number,login:string, photos: PhotosType) => ({type : "SET_USER_AUTH", data : {email,id,login, photos}} as const),
-    logoutUser: () => ({type : "LOGOUT_USER"} as const),
-    setCaptchaImage: (imageURL:string) => ({type : "SET_CAPTCHA", imageURL} as const),
-    deleteCaptcha: () => ({type : "DEL_CAPTCHA"} as const),
-    incorrectData: (message: string) => ({type : "ERROR_MESSAGE", message} as const),
-    deleteIncorrectData: () => ({type : "DEL_ERROR"} as const),
-    dataIsFetching: (isFetching:boolean) => ({type: "AUTH_FETCHING", isFetching} as const),
-}
 
-
-
-export default authReducer

@@ -1,11 +1,13 @@
 import {DialogsPage} from "pages/Dialogs";
-import {actions, FriendFilterType, handlingMessage, ThunkType} from "redux/Reducers/dialogReducer";
+import { handlingMessage, ThunkDialogType} from "redux/Reducers";
 import {connect} from "react-redux";
 import {withRedirectIfNoAuth} from "components/HOC";
 import {compose} from "redux";
-import {getCurrentDialogID, getDialogs, getFriendsIsFetching, getPrivateMessageData,} from "redux/Selectors/dialog-selectors";
+import {getCurrentDialogID, getDialogs, getFriendsIsFetching, getPrivateMessageData,} from "redux/Selectors";
 import {AppStateType} from "redux/reduxStore";
 import React, {ComponentType} from "react";
+import {dialogActions} from "redux/Actions";
+import { FriendFilterType } from "typings";
 
 
 type OwnPropsType = {
@@ -13,8 +15,8 @@ type OwnPropsType = {
 }
 type StatePropsDialogType = ReturnType<typeof mapStateToProps>
 type DispatchPropsDialogType = {
-    handlingFriends: (activePage:number,usersOnPage:number, filter:FriendFilterType) => ThunkType
-    handlingMessage: (id: number, body: string) => ThunkType
+    handlingFriends: (activePage:number,usersOnPage:number, filter:FriendFilterType) => ThunkDialogType
+    handlingMessage: (id: number, body: string) => ThunkDialogType
 }
 type PropsType = StatePropsDialogType & DispatchPropsDialogType & OwnPropsType
 
@@ -38,7 +40,7 @@ let mapStateToProps = (state: AppStateType) => {
     }
 }
 
-const sendNewMessage = actions.sendNewMessage
+const sendNewMessage = dialogActions.sendNewMessage
 
 export default compose<ComponentType>(
     connect<StatePropsDialogType, {}, OwnPropsType, AppStateType>(mapStateToProps, {sendNewMessage, handlingMessage}),

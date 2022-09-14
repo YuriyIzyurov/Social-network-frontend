@@ -1,6 +1,6 @@
 import React from 'react';
 import {DialogItem} from "pages/Dialogs";
-import {DialogType} from "typings/types";
+import {DialogType} from "typings";
 import {Empty} from 'antd';
 
 type PropsType = {

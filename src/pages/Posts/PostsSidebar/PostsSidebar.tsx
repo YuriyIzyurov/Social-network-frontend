@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {LastComment, PostTag} from 'pages/Posts';
 import {useAppDispatch} from "redux/reduxStore";
-import {actions, handlingGetAllPosts, handlingSetAllPosts} from "redux/Reducers/postsReducer";
+import { handlingGetAllPosts, handlingSetAllPosts} from "redux/Reducers";
 import {commentsAPI, postsAPI} from "api/postsAPI";
 import Skeleton from 'antd/lib/skeleton/Skeleton';
-import {CommentsType} from "typings/types";
+import {CommentsType} from "typings";
 import {StyledSearch} from 'components/Forms';
 import {Segmented} from 'antd';
 import {SegmentedValue} from 'antd/lib/segmented';
+import {postActions} from "redux/Actions";
 
 type PropsType= {
     loadPopularPosts: () => void
@@ -39,20 +40,20 @@ export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts
     }
     const searchPosts = (value:string) => {
         dispatch(handlingGetAllPosts(value)).then(() => {
-            dispatch(actions.addSearchFilter(value))
+            dispatch(postActions.addSearchFilter(value))
         })
     }
     const newTabHandler = () => {
         loadAllPosts()
-        dispatch(actions.pickAuthorTab(false))
+        dispatch(postActions.pickAuthorTab(false))
     }
     const popTabHandler = () => {
         loadPopularPosts()
-        dispatch(actions.pickAuthorTab(false))
+        dispatch(postActions.pickAuthorTab(false))
     }
     const myTabHandler = () => {
         loadMyPosts()
-        dispatch(actions.pickAuthorTab(false))
+        dispatch(postActions.pickAuthorTab(false))
     }
     const handleSegmentChange = (value:SegmentedValue) => {
         switch (value) {

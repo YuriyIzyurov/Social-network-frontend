@@ -1,5 +1,5 @@
 import {instanceBlog} from "./api"
-import {AddPostType, CommentsType, PostType, PostUserType} from "typings/types";
+import {AddPostType, CommentsType, PostType, PostUserType} from "typings";
 
 type BlogResponseType<D = {}|[]> = {
     data: D

@@ -1,12 +1,5 @@
-import {ThunkAction} from "redux-thunk/es/types";
-import {AppStateType} from "../redux/reduxStore";
 
 //Profile types
-export type MessagesDataType = {
-    post: string
-    id: number
-    likesCount: number
-}
 export type ContactsType = {
     github:string
     vk:string
@@ -76,11 +69,7 @@ export type AllMessageType = {
     translatedBody: string | null
     viewed: boolean
 }
-export type DialogDataType = {
-    name: string
-    id: number
-    src: string
-}
+
 //Posts types
 export type PostUserType = {
     "_id": string,
@@ -186,12 +175,7 @@ export  type ScrollState = {
      */
     zoomLevel: number;
 };
-//Common types
-export type GetItemsType<T> = {
-    items: Array<T>
-    totalCount: number
-    error: string | null
-}
+
 
 
 

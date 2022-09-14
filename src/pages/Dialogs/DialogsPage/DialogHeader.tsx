@@ -1,6 +1,6 @@
 import React from 'react';
 import 'pages/Dialogs/DialogsPage/DialogsPage.scss'
-import {DialogType} from "typings/types";
+import {DialogType} from "typings";
 import {isUserOnline} from "utils/Time/isUserOnline";
 import classnames from 'classnames';
 

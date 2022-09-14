@@ -1,8 +1,5 @@
 import {AppStateType} from "redux/reduxStore";
 
-export const getTextAreaMess = (state:AppStateType) => {
-    return state.dialog.textAreaMess
-}
 
 export const getPrivateMessageData = (state:AppStateType) => {
     return state.dialog.privateMessageData

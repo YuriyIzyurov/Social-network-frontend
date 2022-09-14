@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {UserType} from "typings/types";
+import {UserType} from "typings";
 import {GradientCharAvatar} from "components/CustomAvatars";
 
 

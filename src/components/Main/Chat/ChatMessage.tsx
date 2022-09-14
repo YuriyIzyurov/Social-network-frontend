@@ -1,5 +1,5 @@
 import React from "react";
-import {ChatMessageAPIType} from "typings/APITypes";
+import {ChatMessageAPIType} from "typings";
 import {Link} from "react-router-dom";
 import { GradientCharAvatar } from "components/CustomAvatars";
 

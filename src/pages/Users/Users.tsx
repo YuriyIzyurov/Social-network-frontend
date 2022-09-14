@@ -1,14 +1,13 @@
-import React, {LegacyRef, memo, useEffect} from "react"
+import React, {LegacyRef, memo} from "react"
 import 'pages/Users/Users.scss'
-import {UserType} from "typings/types";
-import {FilterType, handlingAddUsers} from "redux/Reducers/usersReducer";
+import {UserType,FilterType} from "typings";
+import { handlingAddUsers, startDialogWithFriend} from "redux/Reducers";
 import {Pagination} from "antd";
 import {useAppDispatch} from "redux/reduxStore";
 import {UserSearchForm} from "components/Forms";
-import {startDialogWithFriend} from "redux/Reducers/dialogReducer";
 import {useNavigate} from "react-router";
 import {UserList} from "pages/Users";
-import fill from "zadachi";
+
 
 type PropsType = {
     totalUsers: number
@@ -41,10 +40,7 @@ export const Users: React.FC<PropsType> = memo(({totalUsers, handlingFilteredUse
         let path = `/dialogs/${id}`
         navigate(path)
     }
-    useEffect(() => {
-        let array = [4,2,0,3,2,5]
-        fill(array)
-    },[])
+
 
     return (
         <div className="users">

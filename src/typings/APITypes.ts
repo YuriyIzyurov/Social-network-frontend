@@ -4,3 +4,8 @@ export type ChatMessageAPIType = {
     userId: number
     userName: string
 }
+export type GetItemsType<T> = {
+    items: Array<T>
+    totalCount: number
+    error: string | null
+}

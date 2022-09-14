@@ -1,5 +1,5 @@
 import React, {createRef, Dispatch, SetStateAction, useEffect} from 'react';
-import {PhotosType} from "typings/types";
+import {PhotosType} from "typings";
 import {ProxyImageUrl} from "utils/ChangeURL/ProxifyURL";
 import {getTwoMainColors} from "utils/Color/MainColorsThief";
 import {UserDefaultPhoto} from "assets/VectorComponents";

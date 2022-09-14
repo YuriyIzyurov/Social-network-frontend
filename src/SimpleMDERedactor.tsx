@@ -1,11 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import EasyMDE from "easymde";
-import {useDispatch, useSelector} from "react-redux";
-import {getPostID} from "redux/Selectors/post-selectors";
-import {useNavigate} from "react-router";
-import {actions} from "redux/Reducers/postsReducer";
 
 
 type PropsType = {

@@ -1,15 +1,15 @@
-
 import {InferActionsTypes, BaseThunkType} from "redux/reduxStore";
 import {chatAPI} from "api/chatAPI";
 import {Dispatch} from "redux";
 import {v1} from 'uuid';
-import {ChatMessageAPIType} from "typings/APITypes";
+import {ChatMessageAPIType, StatusType} from "typings";
+import {chatActions} from "redux/Actions";
 
 
-export type initialStateType = typeof initialState
-export type ActionType = InferActionsTypes<typeof actions>
-export type ThunkType = BaseThunkType<ActionType>
-export type StatusType = 'pending' | 'ready' | 'error'
+
+type initialChatStateType = typeof initialState
+type ActionChatType = InferActionsTypes<typeof chatActions>
+type ThunkChatType = BaseThunkType<ActionChatType>
 type ChatMessageType = ChatMessageAPIType & {id: string}
 
 let initialState = {
@@ -17,7 +17,7 @@ let initialState = {
     status: 'pending' as StatusType
 }
 
-const chatReducer = (state = initialState,action:ActionType):initialStateType => {
+export const chatReducer = (state = initialState,action:ActionChatType):initialChatStateType => {
     switch (action.type) {
         case "SET_NEW_MESSAGES":
             return {
@@ -44,7 +44,7 @@ let _newMessageHandler:((messages: ChatMessageAPIType[]) => void) | null = null
 const newMessageHandlerCreator = (dispatch: Dispatch)  => {
         if(_newMessageHandler === null) {
             _newMessageHandler = (messages) => {
-                dispatch(actions.setNewMessages(messages))
+                dispatch(chatActions.setNewMessages(messages))
             }
         }
         return _newMessageHandler
@@ -56,36 +56,28 @@ let _statusChangedHandler:((status: StatusType) => void) | null = null
 const newStatusHandlerCreator = (dispatch: Dispatch)  => {
         if(_statusChangedHandler === null) {
             _statusChangedHandler = (status) => {
-                dispatch(actions.changedStatus(status))
+                dispatch(chatActions.changedStatus(status))
             }
         }
         return _statusChangedHandler
 }
 
-export const startChatListening = ():ThunkType =>  async (dispatch) => {
+export const startChatListening = ():ThunkChatType =>  async (dispatch) => {
         chatAPI.start()
         chatAPI.subscribe('message-received', newMessageHandlerCreator(dispatch))
         chatAPI.subscribe('status-changed', newStatusHandlerCreator(dispatch))
 
     }
- export const stopChatListening = ():ThunkType =>  async (dispatch) => {
+ export const stopChatListening = ():ThunkChatType =>  async (dispatch) => {
        chatAPI.unsubscribe('message-received', newMessageHandlerCreator(dispatch))
        chatAPI.unsubscribe('status-changed', newStatusHandlerCreator(dispatch))
        chatAPI.stop()
-       dispatch(actions.deleteMessages())
+       dispatch(chatActions.deleteMessages())
     }
- export const sendMessage = (message: string):ThunkType =>  async (dispatch) => {
+ export const sendMessage = (message: string):ThunkChatType =>  async (dispatch) => {
        chatAPI.sendMessage(message)
     }
 
 
 
-export const actions = {
-    setNewMessages: (messages: ChatMessageAPIType[]) => ({type : "SET_NEW_MESSAGES", payload : {messages}} as const),
-    changedStatus: (status: StatusType) => ({type : "STATUS_CHANGED", payload : {status}} as const),
-    deleteMessages: () => ({type : "DELETE_MESSAGES"} as const)
-}
 
-
-
-export default chatReducer

@@ -1,9 +1,9 @@
 import React from "react";
-import './App.scss';
+import 'CSS/App.scss';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect} from "react-redux";
-import {setInitializeThunkCreator} from "redux/Reducers/appReducer";
+import {setInitializeThunkCreator} from "redux/Reducers";
 import {WithLazyLoading} from "components/HOC";
 import {AppStateType} from "redux/reduxStore";
 import {Layout, Spin} from 'antd';

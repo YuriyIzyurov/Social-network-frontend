@@ -1,7 +1,7 @@
 import React from "react"
-import {CurrentProfileType} from "typings/types";
+import {CurrentProfileType} from "typings";
 import {useAppDispatch} from "redux/reduxStore";
-import {sendProfileDataOnServ} from "redux/Reducers/profileReducer";
+import {sendProfileDataOnServ} from "redux/Reducers";
 import {Button, Checkbox, Form, Input} from 'antd';
 import {GithubOutlined, InstagramOutlined, QuestionOutlined} from '@ant-design/icons';
 import {VkontakteSvg} from "assets/VectorComponents";

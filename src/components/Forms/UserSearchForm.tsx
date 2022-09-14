@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {actions, FilterType} from "redux/Reducers/usersReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {getSearchFilter} from "redux/Selectors/user-selectors";
+import {getSearchFilter} from "redux/Selectors";
 import {Select} from "antd";
 import {StyledSearch} from "components/Forms";
 import './UserSearchForm.scss'
+import {userActions} from "redux/Actions";
+import { FilterType } from "typings";
 
 const { Option } = Select;
 
@@ -19,7 +20,7 @@ export const UserSearchForm = React.memo(({handlingFilteredUsers}:{handlingFilte
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actions.filterSettings({term: '', friend: null}))
+        dispatch(userActions.filterSettings({term: '', friend: null}))
     },[])
 
     const searchUsers = () => {

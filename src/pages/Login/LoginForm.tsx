@@ -3,12 +3,12 @@ import {Button, Form, Input} from 'antd';
 import React, {useEffect} from 'react';
 import {FormikProps, withFormik} from "formik";
 import 'pages/Login/Login.scss'
-import {actions, ThunkType} from 'redux/Reducers/authReducer';
+import {ThunkDialogType,ThunkBlogType} from 'redux/Reducers';
 import {openNotification} from 'utils/notifications/notificationTop';
 import {useDispatch} from "react-redux";
-import {ThunkBlogType} from "redux/Reducers/authBlogReducer";
 import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 import {getAPIKey} from "utils/validators/getAPIKey";
+import {authActions} from "redux/Actions";
 
 
 interface FormValues {
@@ -21,8 +21,8 @@ interface FormValues {
 interface OtherProps {
     captcha: string | null
     error: string | null
-    askForCaptcha: () => ThunkType
-    sendAuthDataOnServ: (email:string, password:string, remember:boolean, captcha:string, APIKey:string) => ThunkType
+    askForCaptcha: () => ThunkDialogType
+    sendAuthDataOnServ: (email:string, password:string, remember:boolean, captcha:string, APIKey:string) => ThunkDialogType
     handlingBlogUserAuth: (email:string, password:string) => ThunkBlogType
     isFetching: boolean
 }
@@ -34,14 +34,13 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting
     } = props
     let dispatch = useDispatch()
 
     useEffect(() => {
         if(props.error) {
             openNotification("error","top", props.error)
-            dispatch(actions.deleteIncorrectData())
+            dispatch(authActions.deleteIncorrectData())
         }
     }, [props.error])
 

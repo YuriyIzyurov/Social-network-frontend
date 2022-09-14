@@ -2,7 +2,7 @@ import React, {LegacyRef} from 'react';
 import {Button as AntButton, List, Skeleton, Tooltip} from "antd";
 import {GradientCharAvatar} from "components/CustomAvatars";
 import {CommentOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
-import {UserType} from "typings/types";
+import {UserType} from "typings";
 import {Link} from 'react-router-dom';
 
 type PropsType = {
