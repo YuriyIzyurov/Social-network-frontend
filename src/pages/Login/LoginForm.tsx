@@ -39,7 +39,7 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
 
     useEffect(() => {
         if(props.error) {
-            openNotification("error","top", props.error)
+            openNotification("error","top", props.error,`Проверьте правильность вводимых данных`)
             dispatch(authActions.deleteIncorrectData())
         }
     }, [props.error])

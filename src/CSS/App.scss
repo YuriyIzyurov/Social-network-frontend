@@ -25,7 +25,7 @@
   height: 100vh;
   background: radial-gradient(73.23% 106% at 34.94% 108.33%, #F7CBFD 0%, #7758D1 100%);
   &-content{
-
+    margin-top:2px;
   }
   .ant-layout-sider {
     background: transparent;
@@ -220,7 +220,7 @@
             line-height: 60px;
             text-align: start;
             white-space: nowrap;
-            font-size: 17px;
+            font-size: 20px;
 
           }
         }
@@ -333,7 +333,7 @@
           line-height: 60px;
           text-align: start;
           white-space: nowrap;
-          font-size: 17px;
+          font-size: 20px;
 
         }
       }
@@ -400,7 +400,7 @@
 }
 .ant-menu-item a,
 .ant-menu-submenu-title {
-  font-family: 'Lato', serif;
+  font-family: 'Roboto', serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

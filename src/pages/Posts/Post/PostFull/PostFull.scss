@@ -7,7 +7,10 @@
   align-items: center;
   color: black;
   overflow: auto;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   &__main{
+    width: 100%;
     max-width: 100%;
     margin-bottom: 2px;
     background: white;

@@ -54,7 +54,7 @@ type PropsType = {
                 {status === 'error' && <div>Error occurred, refresh page</div>}
                 <>
                     <div className="chat__block-name">
-                        <span>Chat</span>
+                        <span>Чат</span>
                     </div>
                     <ChatMessages />
                     <SendMessageForm sendMessage={sendMessageHandler}/>

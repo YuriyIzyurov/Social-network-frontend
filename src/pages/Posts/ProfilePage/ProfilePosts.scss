@@ -154,6 +154,7 @@
       }
     }
     &-adding{
+      overflow: auto;
       display: flex;
       flex-direction: column;
       left:19px;
@@ -187,6 +188,7 @@
       }
       .CodeMirror{
         background: #edf5ff !important;
+
       }
       &-buttons{
         height: 80px;

@@ -15,6 +15,7 @@ import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {SendComment} from 'components/Forms';
 import { AddPost } from 'components/Main';
 import {Spin} from "antd";
+import {GetMessageTime} from "utils/Time/CustomTime";
 
 const PostFull = () => {
 
@@ -47,7 +48,7 @@ const PostFull = () => {
                     scrollbarRef.current?.scrollToBottom()
                 }
             })
-
+        console.log(comments)
     },[])
 
     const editPost = () => {
@@ -95,7 +96,7 @@ const PostFull = () => {
                                 </div>
                                 <div className="name">
                                     <span>{post.user.fullName}</span>
-                                    <span>{post.createdAt}</span>
+                                    <span><GetMessageTime date={post.createdAt} showFullDate/></span>
                                 </div>
                             </div>
                             {id === post.user._id && <EditSettings editPost={editPost} id={post._id}
@@ -151,14 +152,21 @@ const PostFull = () => {
                        Комментарии
                     </span>
                     </div>
-                    {comments?.map((item) =>
+                    {comments?.length !== 0
+                        ?
+                        comments?.map((item) =>
                         <Comment
                             key={item._id}
                             item={item}
                             bloggerId={id}
                             getCommentsOfPost={getCommentsOfPost}
 
-                        />)}
+                        />)
+                        :
+                        <div className="chat__block-empty">
+                            <p>Тут пока никто ничего не написал.</p>
+                            <p>Будьте первыми!</p>
+                        </div>}
                     <SendComment sendComment={sendComment}/>
                 </div>
             </div>

@@ -84,22 +84,22 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
                 })}>
                     <ul>
                         <li>
-                            <NavLink to="/profile"><HomeOutlined className='nav-icon'/><span>Profile</span></NavLink>
+                            <NavLink to="/profile"><HomeOutlined className='nav-icon'/><span>Главная</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/dialogs"><MessageOutlined className='nav-icon'/><span>Messages</span></NavLink>
+                            <NavLink to="/dialogs"><MessageOutlined className='nav-icon'/><span>Сообщения</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/posts"><ReadOutlined className='nav-icon'/><span>All posts</span></NavLink>
+                            <NavLink to="/posts"><ReadOutlined className='nav-icon'/><span>Статьи</span></NavLink>
                         </li>
                         <li>
-                            <NavLink to="/users"><TeamOutlined className='nav-icon'/><span>Find friends</span></NavLink>
+                            <NavLink to="/users"><TeamOutlined className='nav-icon'/><span>Сообщество</span></NavLink>
                         </li>
                     </ul>
                     {!isActive && <div className="friends-block">
                         {friends.length !== 0
                             && <div className="friends">
-                                <span onClick={openFriendList}>Friends ({totalFriends})</span>
+                                <span onClick={openFriendList}>Друзья ({totalFriends})</span>
                             </div>}
                         <div className="friends__list">
                             {friends && friends.map((item) => <FriendItem key={item.id} item={item}/>)}
@@ -118,7 +118,7 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
                         item ? <animated.div style={style} className="friends-block-short">
                             {friends
                                 &&  <div className="friends-short">
-                                    <span onClick={openFriendList}>Friends ({totalFriends})</span>
+                                    <span onClick={openFriendList}>Друзья ({totalFriends})</span>
                                 </div>}
                             <div className="friends__list-short">
                                 {friends && friends.slice(0,5).map((item) => <FriendItemShort key={item.id} item={item}/>)}

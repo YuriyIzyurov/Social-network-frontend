@@ -125,7 +125,7 @@ const ProfileInfo = React.memo(() => {
             }
             <div className="profile__info-members">
                 <div className="new-members">
-                    <span>Top viewed</span>
+                    <span>Топ авторов</span>
                 </div>
                 <div className="members__list">
                     {topUsers?.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)}
@@ -137,7 +137,7 @@ const ProfileInfo = React.memo(() => {
                         &&
                         <div className="follow">
                             <span>
-                                Follow me
+                                Контакты
                             </span>
                             {currentProfile.userId === authID &&
                             <span onClick={() => changeEditMode(true)}>

@@ -10,7 +10,8 @@ import {getPostID} from "redux/Selectors";
 import {useNavigate, useParams} from "react-router";
 import AddPostButton from "components/CustomButtons/AddPostButton";
 import {postActions} from "redux/Actions";
-
+import {Scrollbar} from 'react-scrollbars-custom';
+import {openNotification} from "utils/notifications/notificationTop";
 
 
 
@@ -59,10 +60,15 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     },[])
 
     const sendNewPost = () => {
-        if(currentPost) {
-            dispatch(publicPost({title, tags, text, imageUrl}, id))
+        if(text.length > 500) {
+            if(currentPost) {
+                dispatch(publicPost({title, tags, text, imageUrl}, id))
+            } else {
+                dispatch(publicPost({title, tags, text, imageUrl}))
+            }
         } else {
-            dispatch(publicPost({title, tags, text, imageUrl}))
+            const error = `Символов в вашем тексте:${text.length}`
+            openNotification("error","top", error , "Слишком короткий текст. Минимальная длина - 500 символов.")
         }
     }
     const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,9 +87,12 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     }, [])
 
     return (
+        <Scrollbar>
         <div style={{
-            position: currentPost ? "unset" : "absolute",
-            width: currentPost ? "unset" : "97%",
+            position: currentPost ? "inherit" : "absolute",
+            width: currentPost ? "100%" : "97%",
+            height: currentPost ? "100%" : "unset",
+            display: currentPost ? "grid" : "unset",
             boxShadow: currentPost ? "" : "-10px 20px 10px rgba(0,0,0,0.2)"
         }} className="profile__posts-adding">
             <div className="profile__posts-adding-preview">
@@ -124,5 +133,6 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                 <AddPostButton onClick={postHandler} text='Отмена' animation={false}/>
             </div>
         </div>
+        </Scrollbar>
     );
 };

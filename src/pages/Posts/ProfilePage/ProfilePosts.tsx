@@ -72,8 +72,8 @@ const ProfilePosts = () => {
             </div>
             <div className="profile__posts-recommended">
                 <div className="description">
-                    <span>Featured</span>
-                    <NavLink to="/posts"><span>See all</span></NavLink>
+                    <span>Популярные</span>
+                    <NavLink to="/posts"><span>Посмотреть все</span></NavLink>
                 </div>
             </div>
             <div className="profile__posts-publications">
@@ -88,10 +88,10 @@ const ProfilePosts = () => {
                 <>
                     <div className="profile__posts-mine">
                         <div className="description">
-                            <span>My posts</span>
+                            <span>Мои статьи</span>
                             <div className="description-options">
                                 <span onClick={postHandler}><FormOutlined/></span>
-                                <span onClick={setMyPosts}>See all</span>
+                                <span onClick={setMyPosts}>Посмотреть все</span>
                             </div>
                         </div>
                     </div>

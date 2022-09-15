@@ -112,9 +112,9 @@ const ProfileContactsInput: React.FC<PropsType> = ({currentProfile,  changeEditM
                     return <Contact key={key} socialMedia={key} contactValue={currentProfile.contacts[key as any]}/>})}
                     <div className="contacts-button">
                         <Form.Item>
-                            <Button htmlType="submit" type="primary" ghost style={{width:"100px"}}>Submit</Button>
+                            <Button htmlType="submit" type="primary" ghost style={{width:"100px"}}>ОК</Button>
                         </Form.Item>
-                        <Button onClick={() => changeEditMode(false)} type="primary" ghost style={{width:"100px"}}>Cancel</Button>
+                        <Button onClick={() => changeEditMode(false)} type="primary" ghost style={{width:"100px"}}>Отмена</Button>
                     </div>
                 </Form>
 
