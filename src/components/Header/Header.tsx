@@ -10,7 +10,7 @@ import {useAppDispatch} from "redux/reduxStore";
 import {logoutFromServer} from "redux/Reducers";
 import {chatAPI} from "api/chatAPI";
 import { MiniAvatarBorder } from "assets/VectorComponents";
-import {appActions, userActions} from "redux/Actions";
+import {appActions, dialogActions, userActions} from "redux/Actions";
 
 
 type PropsLoginType = {
@@ -29,6 +29,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
     const Logout = () => {
         dispatch(logoutFromServer()).then(() => {
             dispatch(userActions.deleteFriendsFromSidebar())
+            dispatch(dialogActions.deleteNotificationNewMessages())
             navigate('/login')
         })
         handlingBlogUserLogout()

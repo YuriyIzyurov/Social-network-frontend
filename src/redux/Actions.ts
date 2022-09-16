@@ -46,6 +46,7 @@ export const dialogActions = {
     deleteMark: (messageId:string) => ({type: "REMOVE_MARK_OF_DELETE", messageId}as const),
     setRedirectToDialogPage: (status:boolean) => ({type: "SET_REDIRECT_TO_DIALOG_PAGE", status} as const),
     setNumberOfNewMessages: (number:number) => ({type: "SET_NUMBER_OF_NEW_MESSAGES", number} as const),
+    deleteNotificationNewMessages: () => ({type: "DELETE_NOTIFICATIONS_NEW_MESSAGES"} as const),
 }
 
 

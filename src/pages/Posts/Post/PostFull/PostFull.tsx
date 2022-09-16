@@ -48,8 +48,10 @@ const PostFull = () => {
                     scrollbarRef.current?.scrollToBottom()
                 }
             })
-        console.log(comments)
     },[])
+    useEffect(() => {
+        console.log(post?.imageUrl)
+    }, [post?.imageUrl])
 
     const editPost = () => {
         setEdit(!edit)

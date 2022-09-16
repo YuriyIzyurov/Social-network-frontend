@@ -104,6 +104,11 @@ export  const dialogReducer = (state = initialState,action:ActionType ):InitialD
                 ...state,
                 numberOfNewMessages: action.number
             }
+        case "DELETE_NOTIFICATIONS_NEW_MESSAGES":
+            return {
+                ...state,
+                numberOfNewMessages: 0
+            }
         default:
             return state
     }
