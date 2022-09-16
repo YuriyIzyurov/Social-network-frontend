@@ -30,9 +30,9 @@ export const appReducer = (state = initialState,action:ActionType): InitialAppSt
 
 export const setInitializeThunkCreator = ():ThunkType => {
     return async (dispatch) => {
-        let promise1 = dispatch(handlingAuthData())
+        //let promise1 = dispatch(handlingAuthData())
         let promise2 = dispatch(handlingAuthDataBlog())
-        Promise.all([promise1, promise2])
+        Promise.all([ promise2])
             .then(() => {
                 dispatch(appActions.setInitialize())
             })

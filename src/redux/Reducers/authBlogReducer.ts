@@ -71,7 +71,7 @@ export const handlingAuthDataBlog = ():ThunkBlogType => {
                 console.log(response.message)
             }
         } catch (e) {
-            dispatch(blogAuthActions.incorrectData('Blog database is unavailable'))
+            dispatch(blogAuthActions.incorrectData(`Error ---> ${e}`))
             throw new Error('Connecting to database')
         }
     }

@@ -57,7 +57,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                 </div>
             )}
         if(this.props.blogError || this.props.socialError) {
-            return <ErrorPage/>
+            return <ErrorPage blogError={this.props.blogError} socialError={this.props.socialError}/>
         }
 
         return (

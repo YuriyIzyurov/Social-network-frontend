@@ -79,7 +79,7 @@ export const handlingAuthData = ():ThunkAuthType => {
                 dispatch(authActions.dataIsFetching(false))
             }
         } catch (e) {
-            dispatch(authActions.incorrectData('Social database is unavailable'))
+            dispatch(authActions.incorrectData(`Error ---> ${e}`))
             throw new Error('Connecting to database')
         }
     }
