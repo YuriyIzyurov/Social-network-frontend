@@ -74,7 +74,7 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files) {
             const response = await postsAPI.uploadPreview(e.target.files[0])
-            const imageUrl = `http://localhost:4444${response.data.url}`
+            const imageUrl = `${process.env.REACT_APP_API_URL}/${response.data.url}`
             setImageUrl(imageUrl)
         }
     }

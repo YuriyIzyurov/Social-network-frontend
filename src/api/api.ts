@@ -19,7 +19,7 @@ export const instanceSocial = axios.create(socialConfig)
 //Egich-Misharing "API-KEY": "340cff0d-c6af-4cab-ad3e-1d7e1fbb29f6"
 //LevandowskyR "API-KEY": "6f8432f3-fe36-4304-842c-4117d261f09b"
 export const instanceBlog = axios.create({
-    baseURL: "http://localhost:4444/"
+    baseURL: process.env.REACT_APP_API_URL
 })
 instanceBlog.interceptors.request.use((config) => {
     if(config.headers) {
