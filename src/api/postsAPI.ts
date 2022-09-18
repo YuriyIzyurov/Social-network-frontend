@@ -1,11 +1,22 @@
 import {instanceBlog} from "./api"
-import {AddPostType, CommentsType, PostType, PostUserType} from "typings";
+import {AddPostType, CommentsType, PhotosType, PostType, PostUserType} from "typings";
 
 type BlogResponseType<D = {}|[]> = {
     data: D
     resultCode: number
     message:string
 }
+type uploadImagesType =  {
+    originalname: string,
+    original: FileType
+    medium: FileType
+    small: FileType
+}
+type FileType = {
+    filename: string,
+    path: string
+}
+
 type PostResponse = {
     posts: PostType[]
     totalCount: number
@@ -48,7 +59,7 @@ export const postsAPI = {
     uploadPreview(file: File) {
         const formData = new FormData()
         formData.append("preview", file)
-      return instanceBlog.post<BlogResponseType<{url:string}>>(`upload`, formData).then(response => response.data)
+      return instanceBlog.post<BlogResponseType<uploadImagesType>>(`upload`, formData).then(response => response.data)
     },
     getPostById(id:string | undefined) {
         return instanceBlog.get<BlogResponseType<PostType>>(`posts/${id}`).then(response => response.data)
@@ -105,7 +116,7 @@ export const authBlogAPI = {
     uploadAvatar(file: File) {
         const formData = new FormData()
         formData.append("avatar", file)
-        return  instanceBlog.post<BlogResponseType<{messages: string,avatarUrl: string}>>('user/avatar',formData).then(response => response.data)
+        return  instanceBlog.post<BlogResponseType<{messages: string,avatarUrl: PhotosType}>>('user/avatar',formData).then(response => response.data)
     }
 }
 

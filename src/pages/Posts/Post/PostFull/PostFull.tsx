@@ -49,9 +49,7 @@ const PostFull = () => {
                 }
             })
     },[])
-    useEffect(() => {
-        console.log(post?.imageUrl)
-    }, [post?.imageUrl])
+
 
     const editPost = () => {
         setEdit(!edit)
@@ -83,10 +81,10 @@ const PostFull = () => {
         <Scrollbar ref={scrollbarRef}>
         <div className="post">
             <div className="post__main">
-                {post.imageUrl
+                {post.imageUrl.large
                     ?
                     <div className="post__main-headerImg">
-                    <img src={post.imageUrl} alt='image'/>
+                    <img src={post.imageUrl.large} alt='image'/>
                 </div>
                     :
                     <div></div>}

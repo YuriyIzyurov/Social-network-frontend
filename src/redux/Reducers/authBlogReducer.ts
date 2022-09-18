@@ -86,7 +86,7 @@ export const handlingChangeAvatar = (file: File):ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.uploadAvatar(file)
         if(response.resultCode === 0) {
-            dispatch(blogAuthActions.setAvatar(response.data.avatarUrl))
+            dispatch(blogAuthActions.setAvatar(response.data.avatarUrl.small as string))
         }
     }
 }

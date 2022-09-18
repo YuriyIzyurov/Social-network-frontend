@@ -22,7 +22,7 @@ export const authActions = {
 export const blogAuthActions = {
     setBlogUserAuth: (payload: any) => ({type:"BLOG_LOGIN_USER", payload} as const),
     logoutBlogUserAuth: () => ({type:"BLOG_LOGOUT"} as const),
-    setAvatar: (avatarUrl: string) => ({type:"SET_BLOG_AVATAR", avatarUrl} as const),
+    setAvatar: (avatarUrl: string ) => ({type:"SET_BLOG_AVATAR", avatarUrl} as const),
     incorrectData: (message: string) => ({type : "ERROR_MESSAGE_BLOG", message} as const),
 }
 export const appActions = {

@@ -12,6 +12,7 @@ import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {GetMessageTime} from "utils/Time/CustomTime";
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
 import {Tag} from "pages/Posts";
+import { PostImgType } from 'typings';
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -19,7 +20,7 @@ const { TextArea } = Input;
 
 type PropsType = {
     id: string,
-    imageUrl: string,
+    imageUrl: PostImgType,
     title: string,
     tags: string[],
     text: string,

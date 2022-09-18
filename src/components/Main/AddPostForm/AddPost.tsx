@@ -25,7 +25,7 @@ type PropsType = {
 
 export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
 
-    const [imageUrl, setImageUrl] = useState(``)
+    const [imageUrl, setImageUrl] = useState({large:``, small:``})
     const [title, setTitle] = useState(``)
     const [tags, setTags] = useState([] as string[])
     const [text, setText] = useState(``)
@@ -52,7 +52,7 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     useEffect(() => {
         if(currentPost) {
             const {imageUrl, title, tags, text} = currentPost
-            setImageUrl(imageUrl as string)
+            setImageUrl(imageUrl)
             setTitle(title)
             setTags(tags)
             setText(text)
@@ -74,8 +74,8 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files) {
             const response = await postsAPI.uploadPreview(e.target.files[0])
-            const imageUrl = `https://blog-social-backend.onrender.com${response.data.url}`
-            setImageUrl(imageUrl)
+            console.log(response.data.original)
+            setImageUrl({large:response.data.original.path , small: response.data.small.path})
         }
     }
     const makeArrayOfTags = (e: ChangeEvent<HTMLInputElement>) => {
@@ -102,10 +102,10 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                            onChange={handleFile}
                            ref={inputImgRef}
                            hidden/>
-                {imageUrl && <AddPostButton onClick={() => setImageUrl('')} text='Удалить' animation={false}/>}
+                {imageUrl && <AddPostButton onClick={() => setImageUrl({large:``, small:``})} text='Удалить' animation={false}/>}
             </div>
-            {imageUrl && <div>
-                <img src={imageUrl} alt='preview'/>
+            {imageUrl.small && <div>
+                <img src={imageUrl.small} alt='preview'/>
             </div>}
             <div className="profile__posts-adding-inputs">
                 <Divider orientation="left" orientationMargin={0} plain>
