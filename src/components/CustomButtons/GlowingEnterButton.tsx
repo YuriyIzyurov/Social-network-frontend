@@ -25,7 +25,7 @@ export const GlowingEnterButton:React.FC<PropsType> = ({onClick, sizeX, disabled
         }}
         >
                 <span>
-                    Enter
+                    Войти
                 </span><i></i>
         </button>
     )

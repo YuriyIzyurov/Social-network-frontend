@@ -1,9 +1,14 @@
 @media only screen and (max-width: 1735px) {
     .publication {
-        width: 32.3% !important;
+        width: 32% !important;
         height: 230px !important;
     }
-
+    .ant-skeleton-title{
+        margin: 11px auto 0 !important;
+    }
+    .ant-skeleton-paragraph{
+        margin-top: 12px !important;
+    }
     .publication__glass h2{
         font-size: 18px !important;
         line-height: 18px !important;
@@ -14,11 +19,24 @@
     }
     .profile__posts-publications{
         justify-content: unset !important;
-        gap: 14px !important;
+        gap: 17px !important;
     }
 }
 
 @media only screen and (max-width: 1655px) {
+    .authInfo-data span{
+        font-size: 13px;
+    }
+    .login span{
+        font-size:15px !important;
+    }
+    .popup-descr{
+        left: 15px !important;
+        top: -2px !important;
+    }
+    .serverError__body img{
+        height: 500px !important;
+    }
     .ava-border{
         left:127px !important;
     }
@@ -76,12 +94,12 @@
 }
 @media only screen and (max-width: 1500px){
     .publication {
-        width: 32.7% !important;
+        width: 31.9% !important;
         height: 220px !important;
     }
     .profile__posts-publications{
         justify-content: unset !important;
-        gap: 7px !important;
+        gap: 16px !important;
     }
     .profile__posts-animation{
         height: 130px !important;
@@ -92,73 +110,29 @@
 }
 
 @media only screen and (max-width: 1335px) {
-    .clip-avatar{
-        min-width: 33px !important;
-        width: 33px !important;
-        height: 33px !important;
-        align-self: center !important;
+    .site__layout{
+        overflow-y: auto;
+        width: 1335px !important;
     }
-    .list-item-card{
-        padding: 2px 1px 2px 3px !important;
+    .site__layout-left-sider{
+        position: absolute !important;
     }
-    .ava-border{
-        left:111px !important;
+    .serverError__body img{
+        height: 300px !important;
     }
-    .profile__info-main svg:not(:first-child) {
-        left: 23px !important;
+    .authInfo-data{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    .profile__info-main-avatar{
-        left:42px !important;
-    }
-    .description{
-        font-size: 18px !important;
-
-    }
-    .publication {
-        width: 32% !important;
-    }
-    .profile__posts-publications {
-        justify-content: space-between !important;
-    }
-    .profile__posts-animation{
-        min-height: 100px !important;
-    }
-    .site__layout-left-sider {
-        width: 217px !important;
-    }
-    .login{
-        width: 217px !important;
-    }
-    .friends-block-short{
-        width: 217px !important;
-    }
-    .chat__block{
-        width: 217px !important;
-    }
-    .friends__list-item-name span:nth-child(1),
-    .members__list-item-name span:nth-child(1)
-    {
-        font-size: 12px !important;
-        line-height: 12px !important;
+    .popup-descr{
+        top: 0 !important;
     }
 
-    .friends__list-item-name {
-        width: 100%;
-        justify-content: center !important;
-    }
-
-    .anticon-eye{
-        height: 11px !important;
-    }
-    .members__list-item-name span:nth-child(2) {
-        width: 40px;
-        font-size: 11px !important;
-        line-height: 11px !important;
-    }
-    .members__list-item-name span:nth-child(1){
-        margin-bottom: 2px !important;
-    }
-    .friends__list-short-item{
-        width: 37px !important;
+}
+@media only screen and (max-width: 1210px){
+    .serverError{
+        min-width: 1210px;
+        overflow-y: auto;
     }
 }

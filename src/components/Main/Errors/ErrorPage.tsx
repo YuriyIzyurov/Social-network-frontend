@@ -13,19 +13,17 @@ const ErrorPage:React.FC<PropsType> = ({blogError, socialError}) => {
                 Что-то пошло не так. Невозможно подключиться к серверу.
             </header>
             <body className='serverError__body'>
-                <img src={CatImage} alt=""/>
-                <p>
-                    По какой-то причине связь с серверами пропала :( Попробйуте зайти позже или можете сообщить о поломке на почту для скорейшего возобновления работы сайта.
-                </p>
-                <p>
-                    {blogError ? `Ошибка при получении статей : ${blogError}` : socialError ? `Ошибка при подключении к соц.сети : ${socialError}` : 'Ошибок нет'}
-                </p>
-                <div className='serverError__body-footer'>
-                    <button>
-                        Отправить письмо
-                    </button>
-                </div>
+                    <img src={CatImage} alt=""/>
+                    <p>
+                        По какой-то причине связь с серверами пропала :( Попробйуте зайти позже или можете сообщить о поломке на почту для скорейшего возобновления работы сайта.
+                        {blogError ? `Ошибка при получении статей : ${blogError}` : socialError ? `Ошибка при подключении к соц.сети : ${socialError}` : 'Ошибок нет'}
+                    </p>
             </body>
+            <footer className='serverError__body-footer'>
+                <a href="mailto:batm1x1@gmail.com?subject=Не%20работает%20приложение">Отправить письмо</a>
+                <span>Электронная почта:</span>
+                <span>batm1x1@gmail.com</span>
+            </footer>
         </div>
     );
 };

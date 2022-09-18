@@ -10,7 +10,7 @@ export const PostSkeleton = () => {
                     <Skeleton.Avatar active size='large' shape='circle' />
                     <Skeleton.Input active size='small'/>
                 </Space>
-                <Skeleton className='post__skeleton-content-title' active title={{width:'600px'}} paragraph={{ rows: 12}}/>
+                <Skeleton className='post__skeleton-content-title' active paragraph={{ rows: 12}}/>
             </div>
         </div>
     );

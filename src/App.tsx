@@ -82,6 +82,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/" element={<ProfilePosts/>}/>
                             <Route path="/author/:id" element={<PostsPage />}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
+                            <Route path="/test" element={<ErrorPage blogError={this.props.blogError} socialError={this.props.socialError}/>}/>
                         </Routes>
                 </Content>
             </Layout>

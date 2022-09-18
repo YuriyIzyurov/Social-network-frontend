@@ -111,7 +111,7 @@ const ProfileInfo = React.memo(() => {
                 :
                 <div className="profile__info-login">
                     <span>
-                        Authorization
+                        Авторизация
                     </span>
                     {isRedirect
                         ?

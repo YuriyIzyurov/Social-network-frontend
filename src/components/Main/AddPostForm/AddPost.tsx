@@ -87,7 +87,6 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     }, [])
 
     return (
-        <Scrollbar>
         <div style={{
             position: currentPost ? "inherit" : "absolute",
             width: currentPost ? "100%" : "97%",
@@ -95,8 +94,8 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
             display: currentPost ? "grid" : "unset",
             boxShadow: currentPost ? "" : "-10px 20px 10px rgba(0,0,0,0.2)"
         }} className="profile__posts-adding">
+
             <div className="profile__posts-adding-preview">
-                {/*<Button size="large" ghost onClick={() => inputImgRef.current?.click()}>Загрузить превью</Button>*/}
                     <AddPostButton onClick={() => inputImgRef.current?.click()} text='Загрузить превью'/>
                     <input name='image'
                            type='file'
@@ -133,6 +132,6 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                 <AddPostButton onClick={postHandler} text='Отмена' animation={false}/>
             </div>
         </div>
-        </Scrollbar>
+
     );
 };

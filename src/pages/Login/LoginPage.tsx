@@ -13,6 +13,7 @@ export const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> =
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        dispatch(appActions.setRedirectToLogin(true))
         return () => {
             dispatch(appActions.setRedirectToLogin(false))
         }

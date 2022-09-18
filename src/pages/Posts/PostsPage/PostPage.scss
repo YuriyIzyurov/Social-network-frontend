@@ -130,7 +130,7 @@
     justify-content: center;
     align-items: flex-end;
     &-content{
-      width: 900px;
+      width: 100%;
       background-color: #2C2F48FF;
       display: flex;
       flex-direction: column;
@@ -139,14 +139,13 @@
       .ant-skeleton{
         width: auto;
         &-image{
-          width: 900px;
+          width: auto;
           height: 400px;
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
         }
       }
       .ant-space{
-        width: 900px;
         padding: 20px 10px 20px 40px ;
       }
       &-title {

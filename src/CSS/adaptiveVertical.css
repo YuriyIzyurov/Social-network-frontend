@@ -88,6 +88,9 @@
     }
 }
 @media only screen and (max-height: 700px) {
+    .serverError__body img{
+        height: 400px !important;
+    }
     .profile__info-social {
         position: initial !important;
     }
@@ -106,5 +109,9 @@
     .left-sider-inactive {
         overflow: auto;
     }
-
+}
+@media only screen and (max-height: 470px){
+    .serverError{
+        min-height: 470px;
+    }
 }

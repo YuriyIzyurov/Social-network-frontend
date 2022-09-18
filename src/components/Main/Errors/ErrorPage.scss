@@ -11,28 +11,40 @@
   }
   &__body{
     display: flex;
+    align-items: center;
     position: relative;
     background: #2C2F48;
     width: 60%;
     height: 78%;
-    p{
-      align-self: center;
-      color: white;
-      font-size: 25px;
-    }
+      img{
+        height: 600px;
+      }
+      p{
+        align-self: center;
+        color: white;
+        font-size: 25px;
+      }
     &-footer{
-      position: absolute;
-      bottom: 0;
-      left: 540px;
-      button{
-        width: 171px;
-        height: 50px;
+      margin-top:7px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      a{
+        cursor: pointer;
+        padding: 10px 15px;
         border-radius: 30px;
         background: orangered;
         color: #ffffff;
         font-size: 18px;
         border: none;
       }
+      span {
+        color: white;
+        opacity: 0.6;
+      }
+    }
+    &-footer:hover a {
+      background: #d73800;
     }
   }
 
