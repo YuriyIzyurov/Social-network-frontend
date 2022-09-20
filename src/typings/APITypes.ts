@@ -9,3 +9,13 @@ export type GetItemsType<T> = {
     totalCount: number
     error: string | null
 }
+export type uploadImagesType =  {
+    originalname: string,
+    original: FileType
+    medium: FileType
+    small: FileType
+}
+export type FileType = {
+    filename: string,
+    path: string
+}

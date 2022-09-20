@@ -6,6 +6,7 @@ import {animated, useTransition} from "react-spring";
 import {ChatMessages} from "components/Main/Chat/ChatMessages";
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import './ChatPage.scss'
+import {getCurrentProfile} from "redux/Selectors";
 
 type PropsType = {
     isActive: boolean
@@ -15,6 +16,7 @@ type PropsType = {
 
     const dispatch = useAppDispatch()
     const status = useSelector((state: AppStateType) => state.chat.status)
+   // const currentProfile = useSelector(getCurrentProfile)
 
     const pageHeight = document.documentElement.scrollHeight
     const transition = useTransition(isActive, {

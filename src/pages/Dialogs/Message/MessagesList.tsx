@@ -44,7 +44,7 @@ export const MessagesList: React.FC<PropsType> = React.memo(({dialogs, id, setMe
                     key={m.id}
                     messageId={m.id}
                     message={m.body}
-                    avatar={m.senderId === isMe ? authAvatar : recipientAvatar}
+                    avatar={m.senderId === isMe ? authAvatar as string: recipientAvatar as string}
                     date={m.addedAt}
                     isMe={m.senderId === isMe}
                     viewed={m.senderId !== isMe ? true : m.viewed}

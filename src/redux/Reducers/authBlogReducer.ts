@@ -10,7 +10,10 @@ let initialState = {
     email: null as string | null,
     id: null as string | null,
     fullName: null as string | null,
-    avatarUrl: null as string | null,
+    avatarUrl: {
+        large: null as string | null,
+        small: null as string | null,
+    },
     isAuth: false as boolean | false,
     errorBlog:null as string | null,
 }
@@ -28,14 +31,17 @@ export const authBlogReducer = (state = initialState, action: ActionType):initia
                 email: null,
                 id: null,
                 fullName: null,
-                avatarUrl: null,
+                avatarUrl: {
+                    large: null,
+                    small: null,
+                },
                 isAuth: false,
                 errorBlog: null
             }
         case "SET_BLOG_AVATAR":
             return {
                 ...state,
-                avatarUrl: action.avatarUrl
+                avatarUrl: action.payload
             }
         case "ERROR_MESSAGE_BLOG":
             return {
@@ -86,7 +92,7 @@ export const handlingChangeAvatar = (file: File):ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.uploadAvatar(file)
         if(response.resultCode === 0) {
-            dispatch(blogAuthActions.setAvatar(response.data.avatarUrl.small as string))
+            dispatch(blogAuthActions.setAvatar(response.data.avatarUrl))
         }
     }
 }

@@ -81,10 +81,10 @@ const PostFull = () => {
         <Scrollbar ref={scrollbarRef}>
         <div className="post">
             <div className="post__main">
-                {post.imageUrl.large
+                {post.imageUrl.original
                     ?
                     <div className="post__main-headerImg">
-                    <img src={post.imageUrl.large} alt='image'/>
+                    <img src={post.imageUrl.original} alt='image'/>
                 </div>
                     :
                     <div></div>}

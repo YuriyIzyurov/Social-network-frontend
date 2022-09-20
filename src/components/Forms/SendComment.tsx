@@ -18,7 +18,7 @@ export const SendComment = ({sendComment}:{sendComment: (value: string) => void}
        <>
            <div className="post__comments-textarea">
                <div className="post-avatar">
-                   {isAuth && <img src={profileAvatar?.small} alt="ava"/>}
+                   {isAuth && <img src={profileAvatar?.small as string} alt="ava"/>}
                </div>
                <SendMessageForm sendMessage={handleComment}/>
            </div>

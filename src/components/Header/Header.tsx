@@ -1,9 +1,9 @@
-import React from "react"
+import React, {useEffect} from "react"
 import './Header.scss'
 import {NavLink} from "react-router-dom";
 import {LogoutOutlined, LoginOutlined} from '@ant-design/icons';
 import {useSelector} from "react-redux";
-import {getLoggedUserPhoto, getMainColors} from "redux/Selectors";
+import {getBloggerAvatar, getCurrentProfile, getLoggedUserPhoto, getMainColors} from "redux/Selectors";
 import {useNavigate} from "react-router";
 import {HeaderAvatar} from "components/CustomAvatars";
 import {useAppDispatch} from "redux/reduxStore";
@@ -11,6 +11,7 @@ import {logoutFromServer} from "redux/Reducers";
 import {chatAPI} from "api/chatAPI";
 import { MiniAvatarBorder } from "assets/VectorComponents";
 import {appActions, dialogActions, userActions} from "redux/Actions";
+import {Tooltip} from "antd";
 
 
 type PropsLoginType = {
@@ -21,10 +22,12 @@ type PropsLoginType = {
 }
 const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout }) =>{
 
-    const loggedUserPhoto = useSelector(getLoggedUserPhoto)
+    const currentProfile = useSelector(getCurrentProfile)
     const colors = useSelector(getMainColors)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+
+
 
     const Logout = () => {
         dispatch(logoutFromServer()).then(() => {
@@ -35,6 +38,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
         handlingBlogUserLogout()
         chatAPI.stop()
     }
+
 
     return <div className="login">
             {!isAuth
@@ -49,11 +53,15 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
                 :
                 <>
                     <div className="login__avatar">
-                        <MiniAvatarBorder colors={colors}/>
-                        <HeaderAvatar photos={loggedUserPhoto}/>
+                        <HeaderAvatar photo={currentProfile?.photos.small as string} colors={colors}/>
                         <span>{login}</span>
                     </div>
-                    <LogoutOutlined onClick={Logout}/>
+                    <Tooltip mouseLeaveDelay={0.05}
+                             mouseEnterDelay={0.3}
+                             title="Выйти из аккаунта"
+                    >
+                        <LogoutOutlined onClick={Logout}/>
+                    </Tooltip>
                 </>
             }
         </div>

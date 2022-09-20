@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ProxyImageUrl} from "utils/ChangeURL/ProxifyURL";
 import {PhotosType} from "typings";
-import {UserDefaultPhoto} from 'assets/VectorComponents';
+import {MiniAvatarBorder, UserDefaultPhoto} from 'assets/VectorComponents';
 
 type PropsType = {
-    photos: PhotosType | null
+    photo: string
+    colors:string[]
 }
-export const HeaderAvatar:React.FC<PropsType> = ({photos}) => {
+export const HeaderAvatar:React.FC<PropsType> = ({photo, colors}) => {
+
+    useEffect(()=>{
+        console.log(photo)
+    },[photo])
 
     return (
-        <div className="profile__info-main-avatar" >
-            {photos?.large ? <img
-                    src={ProxyImageUrl(photos.large)}
-                    alt="user"/>
-                : <UserDefaultPhoto/>}
-        </div>
+        <>
+            <MiniAvatarBorder colors={colors}/>
+            <div className="profile__info-main-avatar" >
+                {photo
+                    ? <img src={photo} alt="user"/>
+                    : <UserDefaultPhoto/>}
+            </div>
+        </>
     );
 };
 

@@ -22,7 +22,7 @@ export const authActions = {
 export const blogAuthActions = {
     setBlogUserAuth: (payload: any) => ({type:"BLOG_LOGIN_USER", payload} as const),
     logoutBlogUserAuth: () => ({type:"BLOG_LOGOUT"} as const),
-    setAvatar: (avatarUrl: string ) => ({type:"SET_BLOG_AVATAR", avatarUrl} as const),
+    setAvatar: (payload: PhotosType ) => ({type:"SET_BLOG_AVATAR", payload} as const),
     incorrectData: (message: string) => ({type : "ERROR_MESSAGE_BLOG", message} as const),
 }
 export const appActions = {
@@ -32,7 +32,8 @@ export const appActions = {
 export const chatActions = {
     setNewMessages: (messages: ChatMessageAPIType[]) => ({type : "SET_NEW_MESSAGES", payload : {messages}} as const),
     changedStatus: (status: StatusType) => ({type : "STATUS_CHANGED", payload : {status}} as const),
-    deleteMessages: () => ({type : "DELETE_MESSAGES"} as const)
+    deleteMessages: () => ({type : "DELETE_MESSAGES"} as const),
+   // addMyMessage: (message:ChatMessageAPIType) => ({type : "ADD_MY_MESSAGE", message} as const),
 }
 export const dialogActions = {
     sendNewMessage: (messageData: SelfPrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),

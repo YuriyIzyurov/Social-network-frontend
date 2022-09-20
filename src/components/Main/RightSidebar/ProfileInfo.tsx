@@ -59,6 +59,7 @@ const ProfileInfo = React.memo(() => {
     const getTopWriters = async () => {
         const response = await postsAPI.getTopWriters()
         if(response.resultCode === 0) {
+            console.log(response.data.top)
             setTopUsers(response.data.top)
         } else {
             console.log('не удалось загрузить авторов')

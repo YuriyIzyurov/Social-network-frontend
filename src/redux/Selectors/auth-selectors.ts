@@ -12,4 +12,7 @@ export const getMe = (state:AppStateType) => {
 export const getBloggerID = (state:AppStateType) => {
     return state.blogAuth.id
 }
+export const getBloggerAvatar = (state:AppStateType) => {
+    return state.blogAuth.avatarUrl.small
+}
 

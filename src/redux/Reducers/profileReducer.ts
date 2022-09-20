@@ -80,7 +80,6 @@ export const handlePhotoChange = (image:File):ThunkProfileType =>{
     return async (dispatch) => {
         const response = await profileAPI.uploadPhoto(image)
             if(response.resultCode === ResultCode.Success) {
-
                 dispatch(profileActions.setPhotoOnProfile(response.data.photos))
             }
     }

@@ -17,7 +17,7 @@ const { confirm } = Modal;
 
 type PropsType = {
     message: string
-    avatar: string | undefined
+    avatar: string | null
     date: string
     isMe: boolean
     viewed: boolean
@@ -93,7 +93,7 @@ export const Message: React.FC<PropsType> = React.memo(({message, messageId, ava
         <div className="message__content">
             <div className="message__content-info">
                 <div className="message__content-info-avatar">
-                    <img src={avatar} alt="User"/>
+                    <img src={avatar as string} alt="User"/>
                 </div>
                     <div
                         className={classnames("message__content-info-bubble",{"deleted-message":isDeleted})}

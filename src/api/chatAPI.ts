@@ -21,6 +21,7 @@ const errorHandler = () => {
     notifySubscribersAboutStatus('error')
 }
 const messageHandler = (e: MessageEvent) => {
+
     const newMessages = JSON.parse(e.data)
     subscribers['message-received'].forEach(s => s(newMessages))
 }

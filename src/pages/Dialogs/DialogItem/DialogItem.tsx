@@ -85,7 +85,7 @@ export const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNe
                         "dialog__item--selected": id === selectedId
                     })}>
                     <div className="dialog__item-avatar">
-                        <GradientCharAvatar avatarUrl={src} name={name} height={'40px'}/>
+                        <GradientCharAvatar avatarUrl={src as string} name={name} height={'40px'}/>
                     </div>
                     <div className="dialog__item-info">
                         <div className="dialog__item-info-top">

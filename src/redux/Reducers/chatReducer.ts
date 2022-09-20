@@ -22,8 +22,13 @@ export const chatReducer = (state = initialState,action:ActionChatType):initialC
         case "SET_NEW_MESSAGES":
             return {
                 ...state,
-                messages: [...state.messages, ...action.payload.messages.map(m => ({...m, id: v1()}))].filter((m, index, array) => index >= array.length - 100)
+                messages: [
+                    ...state.messages,
+                    ...action.payload.messages
+                        .map(m => ({...m, id: v1()}))]
+                        .filter((m, index, array) => index >= array.length - 100)
             }
+
         case "STATUS_CHANGED":
             return {
                 ...state,
@@ -76,6 +81,7 @@ export const startChatListening = ():ThunkChatType =>  async (dispatch) => {
     }
  export const sendMessage = (message: string):ThunkChatType =>  async (dispatch) => {
        chatAPI.sendMessage(message)
+       //chatActions.addMyMessage(senderInfo)
     }
 
 

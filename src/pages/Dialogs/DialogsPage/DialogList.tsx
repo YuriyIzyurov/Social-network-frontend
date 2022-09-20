@@ -20,7 +20,7 @@ export const DialogList: React.FC<PropsType> = ({dialogs, filter, selectedId}) =
             {filteredDialogs.map(n => <DialogItem name={n.userName}
                                                   key={n.id}
                                                   id={n.id}
-                                                  src={n.photos.small}
+                                                  src={n.photos.small as string}
                                                   hasNewMessages={n.hasNewMessages}
                                                   newMessagesCount={n.newMessagesCount}
                                                   date={n.lastDialogActivityDate}

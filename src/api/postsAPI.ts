@@ -1,21 +1,12 @@
 import {instanceBlog} from "./api"
-import {AddPostType, CommentsType, PhotosType, PostType, PostUserType} from "typings";
+import {AddPostType, CommentsType, PhotosType, PostType, PostUserType, uploadImagesType} from "typings";
 
 type BlogResponseType<D = {}|[]> = {
     data: D
     resultCode: number
     message:string
 }
-type uploadImagesType =  {
-    originalname: string,
-    original: FileType
-    medium: FileType
-    small: FileType
-}
-type FileType = {
-    filename: string,
-    path: string
-}
+
 
 type PostResponse = {
     posts: PostType[]
@@ -61,10 +52,14 @@ export const postsAPI = {
         formData.append("preview", file)
       return instanceBlog.post<BlogResponseType<uploadImagesType>>(`upload`, formData).then(response => response.data)
     },
+    deletePreview(id:string) {
+        return instanceBlog.delete<BlogResponseType<uploadImagesType>>(`upload/${id}`).then(response => response.data)
+    },
     getPostById(id:string | undefined) {
         return instanceBlog.get<BlogResponseType<PostType>>(`posts/${id}`).then(response => response.data)
     },
     updatePost(post: AddPostType, id:string) {
+
         return instanceBlog.patch<BlogResponseType<PatchResponse>>(`posts/${id}`, post).then(response => response.data)
     },
     deletePost(id:string) {

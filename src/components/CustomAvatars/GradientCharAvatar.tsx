@@ -3,7 +3,7 @@ import {customAvatar} from "utils/Avatar/AvatarGenerator";
 import './GradientCharAvatar.scss'
 
 type PropsType = {
-    avatarUrl:string | undefined
+    avatarUrl:string | null
     name:string
     height?:string
 }

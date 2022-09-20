@@ -33,7 +33,7 @@ export const PublicationShort = ({item}:{item: PostType}) => {
                 }
             }}>
             <Link to={`/posts/${item._id}`}>
-                <img src={item.imageUrl ? item.imageUrl : DefaultImage} alt='image'/>
+                <img src={item.imageUrl.medium ? item.imageUrl.medium : DefaultImage} alt='image'/>
                 <div className="publication__glass">
                     <h2>{item.title}</h2>
                     <p>{item.tags.map((item,index)=><Tag key={'tag-' + index} item={item}/>)}</p>

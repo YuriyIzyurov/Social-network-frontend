@@ -4,7 +4,7 @@ import { publicPost} from "redux/Reducers";
 import {postsAPI} from "api/postsAPI";
 import {useAppDispatch} from "redux/reduxStore";
 import SimpleMDERedactor from 'SimpleMDERedactor';
-import {AddPostType} from "typings";
+import {AddPostType, FileType, PostImgType, uploadImagesType} from "typings";
 import {useSelector} from "react-redux";
 import {getPostID} from "redux/Selectors";
 import {useNavigate, useParams} from "react-router";
@@ -12,6 +12,8 @@ import AddPostButton from "components/CustomButtons/AddPostButton";
 import {postActions} from "redux/Actions";
 import {Scrollbar} from 'react-scrollbars-custom';
 import {openNotification} from "utils/notifications/notificationTop";
+import {PreviewComponent} from "components/Main";
+
 
 
 
@@ -25,7 +27,7 @@ type PropsType = {
 
 export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
 
-    const [imageUrl, setImageUrl] = useState({large:``, small:``})
+    const [imageUrl, setImageUrl] = useState<PostImgType | null>(null)
     const [title, setTitle] = useState(``)
     const [tags, setTags] = useState([] as string[])
     const [text, setText] = useState(``)
@@ -37,7 +39,8 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     const navigate = useNavigate()
     const params = useParams()
 
-    useEffect(() => {
+
+        useEffect(() => {
         if(params.id && postId && getPostById) {
             getPostById()
             dispatch(postActions.deleteCreatedPostId())
@@ -73,9 +76,27 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     }
     const handleFile = async (e: ChangeEvent<HTMLInputElement>) => {
         if(e.target.files) {
-            const response = await postsAPI.uploadPreview(e.target.files[0])
-            console.log(response.data.original)
-            setImageUrl({large:response.data.original.path , small: response.data.small.path})
+                await postsAPI.uploadPreview(e.target.files[0]).then((response) => {
+                    setTimeout(() => {
+                        setImageUrl({
+                            original: response.data.original.path,
+                            medium: response.data.medium.path
+                        })
+                    }, 2000)
+            })
+        }
+    }
+    useEffect(() => {
+        console.log(imageUrl)
+    }, [imageUrl])
+
+    const deleteFileFromServ = async () => {
+        const imageID = imageUrl?.original.replace(/.*\//g,'')
+        if(imageID) {
+            const response = await postsAPI.deletePreview(imageID)
+            if(response.resultCode === 0)
+                setImageUrl(null)
+
         }
     }
     const makeArrayOfTags = (e: ChangeEvent<HTMLInputElement>) => {
@@ -102,11 +123,13 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                            onChange={handleFile}
                            ref={inputImgRef}
                            hidden/>
-                {imageUrl && <AddPostButton onClick={() => setImageUrl({large:``, small:``})} text='Удалить' animation={false}/>}
+                {imageUrl?.medium && <AddPostButton onClick={deleteFileFromServ} text='Удалить' animation={false}/>}
             </div>
-            {imageUrl.small && <div>
-                <img src={imageUrl.small} alt='preview'/>
-            </div>}
+            {imageUrl?.medium
+                &&
+                <div>
+                    <img src={imageUrl?.medium} alt='preview'/>
+                </div>}
             <div className="profile__posts-adding-inputs">
                 <Divider orientation="left" orientationMargin={0} plain>
                     Заголовок

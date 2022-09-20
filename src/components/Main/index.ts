@@ -9,6 +9,7 @@ export * from './RightSidebar/ProfileInfoMain'
 export * from './RightSidebar/AuthData'
 export * from './RightSidebar/SocialMediaContact'
 export * from './AddPostForm/AddPost'
+export * from './AddPostForm/PreviewComponent'
 export * from './Errors/ErrorPage'
 
 export {default as ProfileInfo} from './RightSidebar/ProfileInfo'

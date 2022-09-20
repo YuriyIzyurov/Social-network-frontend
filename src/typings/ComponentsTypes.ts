@@ -20,7 +20,7 @@ export type CurrentProfileType = {
     aboutMe: string
 }
 export type PhotosType = {
-    small: string | undefined
+    small: string | null
     large: string | null
 }
 //User types
@@ -104,11 +104,11 @@ export type AddPostType = {
     title: string
     text: string
     tags: string[] | []
-    imageUrl: PostImgType
+    imageUrl: PostImgType | null
 }
 export type PostImgType = {
-    large:string,
-    small:string
+    original:string,
+    medium:string
 }
 export type CommentsType = {
     "_id": string,
