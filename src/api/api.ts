@@ -5,9 +5,9 @@ const APIKey:string|null = window.localStorage.getItem('API-KEY')
 const socialConfig:AxiosRequestConfig = {
     withCredentials: true,
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
-    headers: {
+    /*headers: {
         "API-KEY": APIKey || "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
-    }
+    }*/
 }
 if(APIKey && socialConfig.headers) {
     socialConfig.headers["API-KEY"] = APIKey

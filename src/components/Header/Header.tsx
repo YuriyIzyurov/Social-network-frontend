@@ -3,7 +3,7 @@ import './Header.scss'
 import {NavLink} from "react-router-dom";
 import {LogoutOutlined, LoginOutlined} from '@ant-design/icons';
 import {useSelector} from "react-redux";
-import {getBloggerAvatar, getCurrentProfile, getLoggedUserPhoto, getMainColors} from "redux/Selectors";
+import {getAuthAvatar, getBloggerAvatar, getCurrentProfile, getLoggedUserPhoto, getMainColors} from "redux/Selectors";
 import {useNavigate} from "react-router";
 import {HeaderAvatar} from "components/CustomAvatars";
 import {useAppDispatch} from "redux/reduxStore";
@@ -22,7 +22,7 @@ type PropsLoginType = {
 }
 const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout }) =>{
 
-    const currentProfile = useSelector(getCurrentProfile)
+    const authProfile = useSelector(getAuthAvatar)
     const colors = useSelector(getMainColors)
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -53,7 +53,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
                 :
                 <>
                     <div className="login__avatar">
-                        <HeaderAvatar photo={currentProfile?.photos.small as string} colors={colors}/>
+                        <HeaderAvatar photo={authProfile} colors={colors}/>
                         <span>{login}</span>
                     </div>
                     <Tooltip mouseLeaveDelay={0.05}

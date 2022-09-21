@@ -68,6 +68,7 @@ export const getUserStatusInProfile = (id:number):ThunkProfileType =>{
     }
 }
 export const updateMyStatus = (status:string):ThunkProfileType =>{
+
     return async (dispatch) => {
         const response = await profileAPI.updateStatus(status)
             if(response.resultCode === ResultCode.Success) {

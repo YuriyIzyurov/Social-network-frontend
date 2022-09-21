@@ -22,7 +22,6 @@ export const ProfileStatus:React.FC<PropsType> = ({status, updateStatus,currentP
     const updateStatusOnServ = () => {
         setState(false)
         updateStatus(localStatus)
-
     }
 
     return(

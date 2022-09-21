@@ -12,7 +12,7 @@ import {nightOwl} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import {GetMessageTime} from "utils/Time/CustomTime";
 import DefaultImage from 'assets/images/defaultPostImage.jpg'
 import {Tag} from "pages/Posts";
-import { PostImgType } from 'typings';
+import {PostImgType, PostUserType} from 'typings';
 
 const { TextArea } = Input;
 //todo: в один компонент сделать инпут?
@@ -26,7 +26,7 @@ type PropsType = {
     text: string,
     viewsCount: number,
     commentsCount: number,
-    user: any,
+    user: PostUserType,
     createdAt: string,
     isEditable: boolean
 }
@@ -49,13 +49,13 @@ export const PostShorten: React.FC<PropsType> = ({id, user, imageUrl, title, tag
                 <div className={classnames("postPreview__main", {"postPreview__main-tooltip": isTooltipVisible})}>
                     <Link to={`/posts/${id}`}>
                         <div className="postPreview__main-headerImg">
-                            <img src={imageUrl ? imageUrl : DefaultImage} alt='image' />
+                            <img src={imageUrl ? imageUrl.medium : DefaultImage} alt='image' />
                         </div>
                     </Link>
                     <div className="postPreview__main-info">
                         <div className="postPreview__main-info-author">
                             <div className="post-avatar">
-                                <img src={user.avatarUrl} alt="ava"/>
+                                <img src={user.avatarUrl.small as string} alt="ava"/>
                             </div>
                             <div className="postAuthor-name">
                                 <span>{user.fullName}</span>

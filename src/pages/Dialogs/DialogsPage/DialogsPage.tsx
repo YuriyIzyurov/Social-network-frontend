@@ -73,9 +73,7 @@ const DialogsPage: React.FC<PropsType> = React.memo(({dialogs, privateMessageDat
             </div>
             <div className="chat__dialog">
                 <div className="chat__dialog-header">
-                    <div></div>
                     <DialogHeader dialogs={dialogs} id={id}/>
-                    <EllipsisOutlined style={{fontSize: "23px"}}/>
                 </div>
                 <div className="chat__dialog-messages">
                     {userID &&

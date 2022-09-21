@@ -8,7 +8,7 @@ export const LastComment = ({item}:{item:CommentsType}) => {
         <Link to={`/posts/${item.post}`} state={{scrollToBottom: true}}>
         <div className="searchPost__comments-list-item  common-card-animation">
             <div style={{width:'52px'}} className="clip-comment-avatar">
-                <img  src={item.user.avatarUrl} alt='ava'/>
+                <img  src={item.user.avatarUrl.small as string} alt='ava'/>
             </div>
             <div className="searchPost__comments-list-item-name">
                 <div className="headerOf-comment">

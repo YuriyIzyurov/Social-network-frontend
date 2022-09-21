@@ -45,7 +45,7 @@ const Comment:React.FC<PropsType> = ({item, bloggerId, getCommentsOfPost}) => {
         <div className="post__comments-commentWrapper">
             <div className="post-comment">
                 <div className="post-avatar">
-                    <img src={item.user.avatarUrl} alt='ava'/>
+                    <img src={item.user.avatarUrl.small as string} alt='ava'/>
                 </div>
                 <div className="nameAndText">
                     <div className="headerOf-comment">

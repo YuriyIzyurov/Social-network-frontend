@@ -4,6 +4,7 @@ import {postsAPI} from "api/postsAPI";
 import {EyeOutlined} from '@ant-design/icons';
 import {TopUserType} from "typings";
 import { postActions } from 'redux/Actions';
+import {getUserStatusInProfile, setProfileOnPage} from "redux/Reducers";
 
 
 export const TopWriter = ({user, index}:{user:TopUserType, index:number}) => {
@@ -11,7 +12,10 @@ export const TopWriter = ({user, index}:{user:TopUserType, index:number}) => {
     const dispatch = useAppDispatch()
 
     const getPostsByAuthor = async () => {
+        console.log(user)
         const response = await postsAPI.getPostsByAuthor(user.id)
+        dispatch(setProfileOnPage(user.socialId))
+        dispatch(getUserStatusInProfile(user.socialId))
         dispatch(postActions.setScrollToTop(true))
         dispatch(postActions.setActivePostPage(1))
         dispatch(postActions.setTotalPosts(response.data.length))

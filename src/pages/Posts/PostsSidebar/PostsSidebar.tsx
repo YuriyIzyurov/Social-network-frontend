@@ -15,9 +15,10 @@ type PropsType= {
     loadAllPosts: () => void
     loadMyPosts: () => void
     isAuthorTabPicked: boolean
+    isMyTabPicked:boolean
     isAuth: boolean
 }
-export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isAuthorTabPicked, isAuth}) => {
+export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts, loadMyPosts, isAuthorTabPicked, isMyTabPicked, isAuth}) => {
 
     const [tags, setTags] = useState<string[] | undefined>(undefined)
     const [comments, setComments] = useState<CommentsType[] | undefined>(undefined)
@@ -28,7 +29,10 @@ export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts
     useEffect(() => {
         getTags()
         getComments()
+        if(isMyTabPicked)
+            handleSegmentChange("Мои")
     }, [])
+
 
     const getComments = async () => {
         const response = await commentsAPI.getAll()
@@ -46,14 +50,17 @@ export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts
     const newTabHandler = () => {
         loadAllPosts()
         dispatch(postActions.pickAuthorTab(false))
+        dispatch(postActions.pickMyTab(false))
     }
     const popTabHandler = () => {
         loadPopularPosts()
         dispatch(postActions.pickAuthorTab(false))
+        dispatch(postActions.pickMyTab(false))
     }
     const myTabHandler = () => {
         loadMyPosts()
         dispatch(postActions.pickAuthorTab(false))
+        dispatch(postActions.pickMyTab(false))
     }
     const handleSegmentChange = (value:SegmentedValue) => {
         switch (value) {
@@ -86,7 +93,7 @@ export const PostsSidebar:React.FC<PropsType> = ({loadPopularPosts, loadAllPosts
                     block
                     onChange={handleSegmentChange}
                     defaultValue={"Новые"}
-                    value={isAuthorTabPicked ? "Автор" : currentValue}
+                    value={isAuthorTabPicked ? "Автор" : isMyTabPicked ? "Мои" : currentValue}
                     options={[
                     "Новые",
                     "Популярные",

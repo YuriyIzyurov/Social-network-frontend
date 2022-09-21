@@ -27,6 +27,7 @@ export const SendMessageForm: React.FC<PropsType> = React.memo(({sendMessage}) =
                     placeholder="Введите текст сообщения..."
                     value={value}
                     onChange={e => setValue(e.target.value)}
+                    onPressEnter={handleMessage}
                 />
                 {value && <SendOutlined onClick={handleMessage} disabled className="message__form-icon"/>}
             </div>

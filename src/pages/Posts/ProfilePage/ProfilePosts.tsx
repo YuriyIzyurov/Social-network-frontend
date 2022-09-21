@@ -61,6 +61,7 @@ const ProfilePosts = () => {
         setPostAdding(!isPostAdding)
     }
     const setMyPosts = () => {
+        dispatch(postActions.pickMyTab(true))
         navigate("/posts")
     }
 

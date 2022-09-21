@@ -1,5 +1,5 @@
 import {instanceBlog} from "./api"
-import {AddPostType, CommentsType, PhotosType, PostType, PostUserType, uploadImagesType} from "typings";
+import {AddPostType, CommentsType, PhotosType, PostType, PostUserType, TopUserType, uploadImagesType} from "typings";
 
 type BlogResponseType<D = {}|[]> = {
     data: D
@@ -26,12 +26,6 @@ type MyPostsType = {
 }
 type TopType = {
     top:TopUserType[]
-}
-type TopUserType = {
-    avatarUrl: string
-    fullName: string
-    id: string
-    viewsCount: number
 }
 
 

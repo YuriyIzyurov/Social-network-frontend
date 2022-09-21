@@ -1,9 +1,13 @@
 import React from 'react';
 
-export const UserDefaultPhoto = () => {
+type PropsType = {
+    height?:string
+    width?:string
+}
+export const UserDefaultPhoto:React.FC<PropsType> = ({height, width}) => {
     return (
-        <svg width="140" height="140"  viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="4 1" clipPath="url(#clip0_6_200)">
+        <svg width={width || "140"} height={height || "140"}  viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="4 1" clipPath={width ? "polygon(50% 0%, 91% 21%, 96% 29%, 96% 69%, 93% 78%, 50% 104%, 9% 78%, 4% 66%, 4% 34%, 9% 23%)" : "url(#clip0_6_200)"}>
                 <g id="chelik">
                     <g id="Rectangle 2">
                         <path id="Vector" d="M98 -0.985382H53V77.1387H98V-0.985382Z" fill="#B397FD"/>

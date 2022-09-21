@@ -79,13 +79,15 @@ export type PostUserType = {
     "createdAt": string,
     "updatedAt": string,
     "__v": number,
-    "avatarUrl": string
+    "avatarUrl": PhotosType,
+    "socialId": number
 }
 export type TopUserType = {
     id: string
     fullName: string
     avatarUrl:string
     viewsCount: number
+    socialId: number
 }
 export type PostType = {
     "_id": string,

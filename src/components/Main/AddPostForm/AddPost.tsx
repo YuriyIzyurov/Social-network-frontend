@@ -82,7 +82,7 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
                             original: response.data.original.path,
                             medium: response.data.medium.path
                         })
-                    }, 2000)
+                    }, 2500)
             })
         }
     }

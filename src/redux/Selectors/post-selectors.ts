@@ -25,8 +25,11 @@ export const getPostID = (state: AppStateType) => {
 export const getFetching = (state: AppStateType) => {
     return state.blog.isFetching
 }
-export const getMyTabPickStatus = (state: AppStateType) => {
+export const getAuthorTabPickStatus = (state: AppStateType) => {
     return state.blog.isAuthorTabPicked
+}
+export const getMyTabPickStatus = (state: AppStateType) => {
+    return state.blog.isMyTabPicked
 }
 export const getCurrentFilter = (state: AppStateType) => {
     return state.blog.searchFilter

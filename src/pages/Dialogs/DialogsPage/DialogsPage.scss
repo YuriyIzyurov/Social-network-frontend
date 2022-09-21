@@ -1,15 +1,15 @@
 .chat {
   font-family: -apple-system,'Open Sans',sans-serif;
+  border-top-left-radius: 15px;
   color: white;
   display: flex;
   background-color: #393d5d;
   margin: 0 auto;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
   &__sidebar {
     width: 320px;
     border-right: 1px solid #f7f7f7;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 67px);
     &-header {
       display: flex;
       justify-content: space-between;
@@ -26,7 +26,7 @@
         background-color: #f7f8f9;
       }
       span :nth-child(1) {
-        background-color: #f7f8f9;
+        background-color: #393d5d;
       }
     }
     &-list {
@@ -40,6 +40,9 @@
         margin-bottom: 0;
         cursor: pointer;
       }
+      .ant-empty-description{
+        color: #FFFFFF;
+      }
     }
   }
   &__dialog {
@@ -47,7 +50,7 @@
 
     &-header {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 21px;
       height: 55px;
@@ -80,8 +83,6 @@
       &-name {
         font-weight: 500;
         display: block;
-        margin-bottom: 5px;
-
       }
     }
     &-messages{

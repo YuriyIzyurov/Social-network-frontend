@@ -8,7 +8,7 @@ import {
     getFetching, getMyPosts, getMyTabPickStatus, getMyTotalPosts,
     getPosts,
     getPostsOnPage, getScrollState,
-    getTotalCount,getBloggerID, getMe
+    getTotalCount, getBloggerID, getMe, getAuthorTabPickStatus
 } from "redux/Selectors";
 import Scrollbar from "react-scrollbars-custom";
 import {PostList, PostsSidebar} from 'pages/Posts';
@@ -28,7 +28,8 @@ const PostsPage = () => {
     const postsOnPage = useSelector(getPostsOnPage)
     const activePage = useSelector(getActivePostPage)
     const isFetching = useSelector(getFetching)
-    const isAuthorTabPicked = useSelector(getMyTabPickStatus)
+    const isAuthorTabPicked = useSelector(getAuthorTabPickStatus)
+    const isMyTabPicked = useSelector(getMyTabPickStatus)
     const id = useSelector(getBloggerID)
     const isAuth = useSelector(getMe)
     const searchFilter = useSelector(getCurrentFilter)
@@ -43,7 +44,7 @@ const PostsPage = () => {
     const nextPage = activePage + 1
 
     useEffect(() => {
-        if(!isAuthorTabPicked) {
+        if(!isAuthorTabPicked && !isMyTabPicked) {
             loadAllPosts()
         }
         return () => {
@@ -110,6 +111,7 @@ const PostsPage = () => {
                                   loadPopularPosts={loadPopularPosts}
                                   isAuthorTabPicked={isAuthorTabPicked}
                                   isAuth={isAuth}
+                                  isMyTabPicked={isMyTabPicked}
                     />
                     <Scrollbar  ref={scrollbarRef} onScroll={scrollHandler} >
                         <PostList posts={posts} id={id} isFetching={isFetching}/>

@@ -63,6 +63,7 @@ export const postActions = {
     loadMyPosts: (posts: PostType[],count: number) => ({type: 'LOAD_POSTS', payload: {posts, count}} as const),
     addSearchFilter: (filter: string | null) => ({type: 'ADD_POST_SEARCH_FILTER', filter} as const),
     pickAuthorTab: (status:boolean) => ({type: 'PICK_AUTHOR_POSTS_TAB', status} as const),
+    pickMyTab: (status:boolean) => ({type: 'PICK_MY_POSTS_TAB', status} as const),
     setCurrentAuthorId: (id:string) => ({type: 'SET_CURRENT_AUTHOR_ID', id} as const),
     setScrollToTop: (isScrollTop:boolean) => ({type: 'SET_SCROLL_TO_TOP', isScrollTop} as const)
 }

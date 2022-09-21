@@ -18,6 +18,7 @@ let initialState = {
     myPosts: [] as Array<PostType>,
     countOfMyPosts: null as number | null,
     isAuthorTabPicked: false as boolean | false,
+    isMyTabPicked: false as boolean | false,
     currentAuthorID: null as string | null,
     isScrollTop: false as boolean | false
 }
@@ -79,6 +80,12 @@ export const postsReducer = (state = initialState, action: ActionType ):initialP
             return {
                 ...state,
                 isAuthorTabPicked: action.status
+            }
+        }
+        case "PICK_MY_POSTS_TAB":{
+            return {
+                ...state,
+                isMyTabPicked: action.status
             }
         }
         case 'SET_CURRENT_AUTHOR_ID': {
