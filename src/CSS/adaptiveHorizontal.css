@@ -91,6 +91,10 @@
     .ant-segmented-item-label{
         font-size: 11px !important;
     }
+    .profile__info-main-social {
+        width: 250px !important;
+        font-size: 14px !important;
+    }
 }
 @media only screen and (max-width: 1500px){
     .publication {
