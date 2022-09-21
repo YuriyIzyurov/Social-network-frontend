@@ -49,6 +49,7 @@ const PostsPage = () => {
         }
         return () => {
             dispatch(postActions.addSearchFilter(null))
+            dispatch(postActions.pickAuthorTab(false))
         }
     },[])
 

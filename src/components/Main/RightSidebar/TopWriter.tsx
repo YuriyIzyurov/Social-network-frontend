@@ -12,7 +12,6 @@ export const TopWriter = ({user, index}:{user:TopUserType, index:number}) => {
     const dispatch = useAppDispatch()
 
     const getPostsByAuthor = async () => {
-        console.log(user)
         const response = await postsAPI.getPostsByAuthor(user.id)
         dispatch(setProfileOnPage(user.socialId))
         dispatch(getUserStatusInProfile(user.socialId))

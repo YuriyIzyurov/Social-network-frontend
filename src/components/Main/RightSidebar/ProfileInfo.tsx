@@ -132,7 +132,7 @@ const ProfileInfo = React.memo(() => {
                     {topUsers?.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)}
                 </div>
             </div>
-            {currentProfile &&
+            {authID && currentProfile &&
                 <div className="profile__info-social">
                     {isFollowBlockVisible
                         &&

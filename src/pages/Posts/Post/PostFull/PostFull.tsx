@@ -49,7 +49,7 @@ const PostFull = () => {
                     scrollbarRef.current?.scrollToBottom()
                 }
             })
-    },[])
+    }, [])
 
 
     const editPost = () => {
