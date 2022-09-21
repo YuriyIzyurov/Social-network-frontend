@@ -1,19 +1,28 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const APIKey:string|null = window.localStorage.getItem('API-KEY')
 
-const socialConfig:AxiosRequestConfig = {
-    withCredentials: true,
-    baseURL: "https://social-network.samuraijs.com/api/1.0/",
-    headers: {
-        "API-KEY": APIKey || "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
+
+const makeConfig = () => {
+    const APIKey:string|null = window.localStorage.getItem('API-KEY')
+    if(APIKey) {
+        return {
+            withCredentials: true,
+            baseURL: "https://social-network.samuraijs.com/api/1.0/",
+            headers: {
+                "API-KEY": APIKey
+            }
+        }
+    } else return {
+        withCredentials: true,
+        baseURL: "https://social-network.samuraijs.com/api/1.0/"
     }
 }
-if(APIKey && socialConfig.headers) {
-    socialConfig.headers["API-KEY"] = APIKey
-}
 
-export const instanceSocial = axios.create(socialConfig)
+/*if(APIKey && socialConfig.headers) {
+    socialConfig.headers["API-KEY"] = APIKey
+}*/
+
+export const instanceSocial = axios.create(makeConfig())
 //Yourets "API-KEY": "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
 //Petr_Filyak "API-KEY": "54324abc-85b8-4e66-9338-c1af345ca7dc"
 //Egich-Misharing "API-KEY": "340cff0d-c6af-4cab-ad3e-1d7e1fbb29f6"
