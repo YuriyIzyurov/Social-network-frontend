@@ -27,12 +27,17 @@
     .authInfo-data span{
         font-size: 13px;
     }
+    .authInfo-data{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .login span{
         font-size:15px !important;
     }
     .popup-descr{
         left: 15px !important;
-        top: -2px !important;
+
     }
     .serverError__body img{
         height: 500px !important;

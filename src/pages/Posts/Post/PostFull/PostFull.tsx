@@ -33,7 +33,6 @@ const PostFull = () => {
     const getPostById = async () => {
         const response = await postsAPI.getPostById(params.id)
         setPost(response.data)
-        console.log(response.data)
     }
     const getCommentsOfPost = async () => {
             const response = await commentsAPI.getAllCommentsOfPost(params.id)
@@ -93,7 +92,11 @@ const PostFull = () => {
                         <div className="post__main-info-author">
                             <div style={{display: "flex"}}>
                                 <div className="post-avatar">
-                                    <img src={post.user.avatarUrl.small as string} alt="User"/>
+                                    {post.user.avatarUrl
+                                        ?
+                                        <img src={post.user.avatarUrl.small as string} alt="User"/>
+                                        :
+                                        <img src="https://bipbap.ru/wp-content/uploads/2021/07/9-1.jpeg" alt='User'/>}
                                 </div>
                                 <div className="name">
                                     <span>{post.user.fullName}</span>

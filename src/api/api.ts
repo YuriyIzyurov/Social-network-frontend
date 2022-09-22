@@ -24,6 +24,7 @@ const makeConfig = () => {
 export const instanceSocial = axios.create(makeConfig())
 export const instanceBlog = axios.create({
     baseURL: 'https://blog-social-backend.onrender.com/'
+    //baseURL: 'http://localhost:4444/'
 })
 instanceBlog.interceptors.request.use((config) => {
     if(config.headers) {
