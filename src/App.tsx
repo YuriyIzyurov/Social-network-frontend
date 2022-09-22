@@ -9,15 +9,15 @@ import {AppStateType} from "redux/reduxStore";
 import {Layout, Spin} from 'antd';
 import HeaderRouter from "./components/Header/HeaderRouter";
 import {ProfileInfo, AnimatedSider} from "components/Main";
+import ErrorPage from "components/Main/Errors/ErrorPage";
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
-const LazyChatContainer = React.lazy(() => import("./components/Main/Chat/ChatPage"))
 const LazyLoginContainer = React.lazy(() => import("pages/Login/LoginPageContainer"))
 const LazyPostsPage = React.lazy(() => import("pages/Posts/PostsPage/PostsPage"))
 const LazyProfilePosts = React.lazy(() => import("pages/Posts/ProfilePage/ProfilePosts"))
 const LazyUsersContainer = React.lazy(() => import("pages/Users/UsersContainer"))
 const LazyPostFull = React.lazy(() => import("pages/Posts/Post/PostFull/PostFull"))
-const LazyErrorPage = React.lazy(() => import("./components/Main/Errors/ErrorPage"))
+
 
 const DialogsContainer =  WithLazyLoading(LazyDialogsContainer)
 const LoginContainer =  WithLazyLoading(LazyLoginContainer)
@@ -25,8 +25,7 @@ const PostsPage =  WithLazyLoading(LazyPostsPage)
 const ProfilePosts =  WithLazyLoading(LazyProfilePosts)
 const UsersContainer =  WithLazyLoading(LazyUsersContainer)
 const PostFull =  WithLazyLoading(LazyPostFull)
-const ErrorPage =  WithLazyLoading(LazyErrorPage)
-export const ChatPage =  WithLazyLoading(LazyChatContainer)
+
 
 
 const { Header, Content, Sider } = Layout

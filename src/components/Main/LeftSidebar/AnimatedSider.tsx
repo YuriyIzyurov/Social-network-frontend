@@ -10,7 +10,8 @@ import {useAppDispatch} from "redux/reduxStore";
 import {handlingSidebarUsers} from "redux/Reducers";
 import {useNavigate} from "react-router";
 import { FriendItem, FriendItemShort} from './../index';
-import { ChatPage } from 'App';
+import ChatPage from '../Chat/ChatPage';
+
 
 
 const {Sider} = Layout

@@ -6,7 +6,7 @@ type PropsType = {
     blogError:string | null
     socialError:string | null
 }
-const ErrorPage:React.FC<PropsType> = ({blogError, socialError}) => {
+const ErrorPage:React.ComponentType<PropsType> = ({blogError, socialError}) => {
     return (
         <div className='serverError'>
             <header className='serverError__header'>

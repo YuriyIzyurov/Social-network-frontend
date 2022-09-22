@@ -3,7 +3,7 @@ import { Divider, Input} from "antd";
 import { publicPost} from "redux/Reducers";
 import {postsAPI} from "api/postsAPI";
 import {useAppDispatch} from "redux/reduxStore";
-import SimpleMDERedactor from 'SimpleMDERedactor';
+import SimpleMDERedactor from 'utils/EditSettings/SimpleMDERedactor';
 import {AddPostType, FileType, PostImgType, uploadImagesType} from "typings";
 import {useSelector} from "react-redux";
 import {getPostID} from "redux/Selectors";

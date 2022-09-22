@@ -6,7 +6,7 @@ import {animated, useTransition} from "react-spring";
 import {ChatMessages} from "components/Main/Chat/ChatMessages";
 import {SendMessageForm} from "components/FormikInput/SendMessageForm";
 import './ChatPage.scss'
-import {getCurrentProfile} from "redux/Selectors";
+
 
 type PropsType = {
     isActive: boolean

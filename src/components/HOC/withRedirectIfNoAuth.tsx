@@ -14,7 +14,7 @@ let mapStateToPropsForRedirect = (state: AppStateType): MapPropsType => {
     }
 }
 
-export function withRedirectIfNoAuth<P>(Component: React.ComponentType<P>) {
+export function withRedirectIfNoAuth<P extends JSX.IntrinsicAttributes>(Component: React.ComponentType<P>) {
 
     const RedirectComponent: React.FC<MapPropsType & DispatchPropsType> = (props) =>{
         let {isAuth, ...restProps} = props

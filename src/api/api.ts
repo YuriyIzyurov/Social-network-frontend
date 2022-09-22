@@ -16,7 +16,7 @@ const makeConfig = () => {
         withCredentials: true,
         baseURL: "https://social-network.samuraijs.com/api/1.0/",
         headers: {
-            "API-KEY": "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
+            "API-KEY": "3cb27ece-7074-4bcc-828d-409589c818b6"
         }
     }
 }
@@ -30,6 +30,7 @@ export const instanceSocial = axios.create(makeConfig())
 //Petr_Filyak "API-KEY": "54324abc-85b8-4e66-9338-c1af345ca7dc"
 //Egich-Misharing "API-KEY": "340cff0d-c6af-4cab-ad3e-1d7e1fbb29f6"
 //LevandowskyR "API-KEY": "6f8432f3-fe36-4304-842c-4117d261f09b"
+//TestACcountFTW "API-KEY": "3cb27ece-7074-4bcc-828d-409589c818b6"
 export const instanceBlog = axios.create({
     baseURL: 'https://blog-social-backend.onrender.com/'
     //baseURL: 'http://localhost:4444/'
