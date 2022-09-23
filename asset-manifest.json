@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/social-network-frontend/static/css/main.de6ad1ae.css",
-    "main.js": "/social-network-frontend/static/js/main.770d4612.js",
+    "main.js": "/social-network-frontend/static/js/main.dacfa04d.js",
     "static/css/670.dfa3fac6.chunk.css": "/social-network-frontend/static/css/670.dfa3fac6.chunk.css",
     "static/js/670.e2793ad8.chunk.js": "/social-network-frontend/static/js/670.e2793ad8.chunk.js",
     "static/css/187.00626645.chunk.css": "/social-network-frontend/static/css/187.00626645.chunk.css",
@@ -30,7 +30,7 @@
     "static/media/readed.svg": "/social-network-frontend/static/media/readed.da3c99324b4eb3958865b24076453ba3.svg",
     "static/media/noreaded.svg": "/social-network-frontend/static/media/noreaded.a7c0ab31b14324a6272d3bb9feae835b.svg",
     "main.de6ad1ae.css.map": "/social-network-frontend/static/css/main.de6ad1ae.css.map",
-    "main.770d4612.js.map": "/social-network-frontend/static/js/main.770d4612.js.map",
+    "main.dacfa04d.js.map": "/social-network-frontend/static/js/main.dacfa04d.js.map",
     "670.dfa3fac6.chunk.css.map": "/social-network-frontend/static/css/670.dfa3fac6.chunk.css.map",
     "670.e2793ad8.chunk.js.map": "/social-network-frontend/static/js/670.e2793ad8.chunk.js.map",
     "187.00626645.chunk.css.map": "/social-network-frontend/static/css/187.00626645.chunk.css.map",
@@ -54,6 +54,6 @@
   },
   "entrypoints": [
     "static/css/main.de6ad1ae.css",
-    "static/js/main.770d4612.js"
+    "static/js/main.dacfa04d.js"
   ]
 }
