@@ -5,6 +5,7 @@ import {profileAPI} from "api/profileAPI";
 import {PhotosType} from "typings";
 import {authActions} from "redux/Actions";
 import {openNotification} from "utils/notifications/notificationTop";
+import {ErrorCORSMessage, StatusCode403} from "constants/constants";
 
 
 
@@ -80,6 +81,9 @@ export const handlingAuthData = ():ThunkAuthType => {
                 dispatch(authActions.dataIsFetching(false))
             }
         } catch (e) {
+            if(e === StatusCode403) {
+                dispatch(authActions.incorrectData(ErrorCORSMessage))
+            }
             throw new Error(`Error ---> ${e}`)
         }
     }
