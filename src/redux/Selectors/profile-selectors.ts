@@ -17,6 +17,9 @@ export const getLoggedUserPhoto = (state:AppStateType) => {
 export const getStatus = (state:AppStateType) => {
     return state.profile.status
 }
+export const getContactsErrors = (state:AppStateType) => {
+    return state.profile.contactsError
+}
 
 export const getId = (state:AppStateType) => {
     return state.auth.id

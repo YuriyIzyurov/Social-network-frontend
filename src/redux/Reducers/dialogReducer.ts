@@ -161,7 +161,6 @@ export const handlingSpamMessage =  (messageId: string, message: string): ThunkD
 export const handlingDeleteMessage =  (messageId: string, message: string): ThunkDialogType => {
     return async (dispatch, getState) => {
         let response = await dialogsAPI.deleteMessage(messageId)
-        console.log(response)
         dispatch(dialogActions.mutateMessageList(messageId, undefined, 'delete'))
         const payload:SpamDataType = {messageId, message}
         dispatch(dialogActions.markMessageIdAsDeleted(payload))

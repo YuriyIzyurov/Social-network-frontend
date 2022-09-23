@@ -57,11 +57,13 @@ export const authBlogReducer = (state = initialState, action: ActionType):initia
 export const handlingBlogUserAuth = (email: string, password: string): ThunkBlogType => {
     return async (dispatch) => {
         let response = await authBlogAPI.submitAuth(email, password)
-        if(response.data._id) {
+        if(response.resultCode === 0) {
             const {_id, fullName, email, avatarUrl} = response.data
             dispatch(blogAuthActions.setBlogUserAuth({email: email, id: _id, fullName: fullName, avatarUrl}))
             const {token} = response.data
             window.localStorage.setItem('token', token)
+        } else if(response.resultCode === 1) {
+            console.log('На сервере постов:',response.message)
         }
     }
 }

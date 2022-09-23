@@ -5,6 +5,8 @@ import {sendProfileDataOnServ} from "redux/Reducers";
 import {Button, Checkbox, Form, Input} from 'antd';
 import {GithubOutlined, InstagramOutlined, QuestionOutlined} from '@ant-design/icons';
 import {VkontakteSvg} from "assets/VectorComponents";
+import { useSelector } from "react-redux";
+import {getContactsErrors} from "redux/Selectors";
 
 
 type PropsType = {
@@ -14,6 +16,7 @@ type PropsType = {
 
 
 const ProfileContactsInput: React.FC<PropsType> = ({currentProfile,  changeEditMode}) => {
+
 
     const dispatch = useAppDispatch()
     const [form] = Form.useForm()

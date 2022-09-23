@@ -50,11 +50,11 @@
 }
 .captchaBlock {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   &__button {
     max-width: 32px;
-    margin-left: 10px
+    margin: 10px
   }
 }
 

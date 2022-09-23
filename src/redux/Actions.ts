@@ -5,7 +5,7 @@ import {
     PhotosType,
     PostType,
     SelfPrivateMessageType, UserType,
-    ChatMessageAPIType,FilterType, SpamDataType, StatusType
+    ChatMessageAPIType, FilterType, SpamDataType, StatusType, ContactsErrorType
 } from "typings";
 
 
@@ -74,6 +74,8 @@ export const profileActions = {
     setMainColors: (colors: string[]) => ({type: "SET_COLORS", colors} as const),
     setRedirect: (id:number) => ({type: "SET_REDIRECT_TO_DIALOG",id} as const),
     setEditMode: (status:boolean) => ({type: "SET_PROFILE_EDIT_MODE",status} as const),
+    setContactsError: (errorObj:ContactsErrorType) => ({type: "SET_CONTACTS_ERROR",errorObj} as const),
+    deleteErrors: () => ({type: "DELETE_CONTACTS_ERROR"} as const),
 }
 export const userActions = {
     followToggle: (userID:number) => ({type : "FOLLOW", userID} as const),

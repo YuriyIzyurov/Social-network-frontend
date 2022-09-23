@@ -6,10 +6,11 @@ import {connect} from "react-redux";
 import {setInitializeThunkCreator} from "redux/Reducers";
 import {WithLazyLoading} from "components/HOC";
 import {AppStateType} from "redux/reduxStore";
-import {Layout, Spin} from 'antd';
+import {Layout} from 'antd';
 import HeaderRouter from "./components/Header/HeaderRouter";
 import {ProfileInfo, AnimatedSider} from "components/Main";
 import ErrorPage from "components/Main/Errors/ErrorPage";
+import {Preloader} from "components/Preloader/Preloader";
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
 const LazyLoginContainer = React.lazy(() => import("pages/Login/LoginPageContainer"))
@@ -37,8 +38,6 @@ type DispatchPropsAppType = {
 class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
     catchAllErrors = (err: any) => {
         console.log(err)
-        //alert("Something go wrong, try again")
-        //alert(err)
     }
     componentDidMount() {
         this.props.setInitializeThunkCreator()
@@ -50,11 +49,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
 
     render() {
         if(!this.props.initialized && !this.props.socialError && !this.props.blogError) {
-            return (
-                <div className='main-spin'>
-                    <Spin  size="large" />
-                </div>
-            )}
+            return <Preloader/>}
         if(this.props.blogError || this.props.socialError) {
             return <ErrorPage blogError={this.props.blogError} socialError={this.props.socialError}/>
         }
@@ -95,7 +90,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
 }
 const mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized,
-    isAuth: state.auth.isAuth && state.blogAuth.isAuth,
+    isAuth: state.auth.isAuth,
     socialError: state.auth.error,
     blogError: state.blogAuth.errorBlog
 })

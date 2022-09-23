@@ -7,6 +7,6 @@ export const openNotification = (type:NotificationType = "error", placement: Not
         message: message,
         description: error,
         placement,
-        duration: 3
+        duration: 0.5
     });
 };

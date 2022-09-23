@@ -84,7 +84,6 @@ const LoginForm = (props: OtherProps & FormikProps<FormValues>) => {
                 >
                     {props.captcha && <div className="captchaBlock">
                         <Input
-                            style={{width: '45%'}}
                             size="large"
                             name="captcha"
                             onChange={handleChange}

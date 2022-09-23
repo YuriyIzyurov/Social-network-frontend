@@ -13,6 +13,7 @@ import {postActions} from "redux/Actions";
 import {Scrollbar} from 'react-scrollbars-custom';
 import {openNotification} from "utils/notifications/notificationTop";
 import {PreviewComponent} from "components/Main";
+import {checkChangePossibility} from "utils/EditSettings/checkEditable";
 
 
 
@@ -27,7 +28,7 @@ type PropsType = {
 
 export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPostById}) => {
 
-    const [imageUrl, setImageUrl] = useState<PostImgType | null>(null)
+    const [imageUrl, setImageUrl] = useState<PostImgType>({original:null, medium:null})
     const [title, setTitle] = useState(``)
     const [tags, setTags] = useState([] as string[])
     const [text, setText] = useState(``)
@@ -65,7 +66,7 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
     const sendNewPost = () => {
         if(text.length > 500) {
             if(currentPost) {
-                dispatch(publicPost({title, tags, text, imageUrl}, id))
+                checkChangePossibility(id, () => dispatch(publicPost({title, tags, text, imageUrl}, id)))
             } else {
                 dispatch(publicPost({title, tags, text, imageUrl}))
             }
@@ -86,26 +87,31 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
             })
         }
     }
-    useEffect(() => {
-        console.log(imageUrl)
-    }, [imageUrl])
 
-    const deleteFileFromServ = async () => {
-        const imageID = imageUrl?.original.replace(/.*\//g,'')
+    const deletePreview = async () => {
+        const imageID = imageUrl.original?.replace(/.*\//g,'')
         if(imageID) {
             const response = await postsAPI.deletePreview(imageID)
             if(response.resultCode === 0)
-                setImageUrl(null)
-
+                setImageUrl({original:null, medium:null})
         }
     }
+    const deleteFileFromServ =  () => {
+        checkChangePossibility(id,deletePreview)
+    }
+
     const makeArrayOfTags = (e: ChangeEvent<HTMLInputElement>) => {
         const tags = e.currentTarget.value.replace(/\s/g, '').split(',')
         setTags(tags)
     }
+
     const handleSetText = useCallback((value: string) => {
         setText(value)
     }, [])
+
+    const uploadPreview = () => {
+        checkChangePossibility(id, () => inputImgRef.current?.click())
+    }
 
     return (
         <div style={{
@@ -117,7 +123,7 @@ export const AddPost: React.FC<PropsType> = ({postHandler, currentPost,id, getPo
         }} className="profile__posts-adding">
 
             <div className="profile__posts-adding-preview">
-                    <AddPostButton onClick={() => inputImgRef.current?.click()} text='Загрузить превью'/>
+                    <AddPostButton onClick={uploadPreview} text='Загрузить превью'/>
                     <input name='image'
                            type='file'
                            onChange={handleFile}

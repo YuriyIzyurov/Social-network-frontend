@@ -5,6 +5,7 @@ import {CheckOutlined, CloseOutlined, DeleteOutlined, FormOutlined} from "@ant-d
 import {deletePublication} from "redux/Reducers";
 import {useAppDispatch} from "redux/reduxStore";
 import {useNavigate} from "react-router";
+import {checkChangePossibility} from "utils/EditSettings/checkEditable";
 
 type PropsType = {
     editPost: () => void
@@ -39,8 +40,10 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
         if(!visible) setVisibleDeleteTooltip(newVisible)
     }
     const sendDeleteDataOnServ = () => {
-        dispatch(deletePublication(id)).then(() => {
-            navigate('/posts')
+        checkChangePossibility(id, () => {
+            dispatch(deletePublication(id)).then(() => {
+                navigate('/posts')
+            })
         })
     }
 
@@ -49,16 +52,16 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
             <div className="edit">
                 <Tooltip mouseLeaveDelay={0.05}
                          mouseEnterDelay={0.3}
-                         visible={visibleEditTooltip}
-                         onVisibleChange={showEditTooltip}
+                         open={visibleEditTooltip}
+                         onOpenChange={showEditTooltip}
                          title="Редактировать пост"
                 >
                     <FormOutlined onClick={editPost}/>
                 </Tooltip>
                 <Tooltip mouseLeaveDelay={0.05}
                          mouseEnterDelay={0.3}
-                         visible={visibleDeleteTooltip}
-                         onVisibleChange={showDeleteTooltip}
+                         open={visibleDeleteTooltip}
+                         onOpenChange={showDeleteTooltip}
                          title="Удалить пост">
                     <Popover
                         content={
@@ -75,8 +78,8 @@ const EditSettings:React.FC<PropsType> = ({editPost, id, handleTooltipVisibility
                         }
                         title="Вы действительно хотите удалить пост?"
                         trigger="click"
-                        visible={visible}
-                        onVisibleChange={handleVisibleChange}
+                        open={visible}
+                        onOpenChange={handleVisibleChange}
                         color={"#2c2f48"}
                         overlayClassName="custom-popover"
                     >

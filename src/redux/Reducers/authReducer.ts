@@ -4,6 +4,7 @@ import {authAPI} from "api/authAPI";
 import {profileAPI} from "api/profileAPI";
 import {PhotosType} from "typings";
 import {authActions} from "redux/Actions";
+import {openNotification} from "utils/notifications/notificationTop";
 
 
 
@@ -96,7 +97,9 @@ export const sendAuthDataOnServ = (email:string, password:string, rememberMe:boo
                 if(response.resultCode === ResultCodeForCaptcha.NeedCaptcha) {
                     dispatch(askForCaptcha())
                 }
-                dispatch(authActions.incorrectData(response.messages[0]))
+                if(response.resultCode === ResultCode.GoWrong) {
+                    openNotification("error","top", null , response.messages[0])
+                }
                 dispatch(authActions.dataIsFetching(false))
             }
     }

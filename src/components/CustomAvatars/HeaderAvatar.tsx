@@ -9,10 +9,6 @@ type PropsType = {
 }
 export const HeaderAvatar:React.FC<PropsType> = ({photo, colors}) => {
 
-    useEffect(()=>{
-        console.log(photo)
-    },[photo])
-
     return (
         <>
             <MiniAvatarBorder colors={colors}/>

@@ -49,8 +49,8 @@ export const Bell: React.FC<PropsType> = ({count, onClick}) => {
     return (
         <Tooltip mouseLeaveDelay={0.05}
                  mouseEnterDelay={0.3}
-                 visible={visibleNotificationTooltip}
-                 onVisibleChange={showNotificationTooltip}
+                 open={visibleNotificationTooltip}
+                 onOpenChange={showNotificationTooltip}
                  title="Оповещения"
         >
             <Popover

@@ -10,10 +10,15 @@ export type ThunkProfileType = BaseThunkType<ActionProfileType>
 
 let initialState = {
     currentProfile: null as CurrentProfileType | null,
-    status: "",
+    status: '',
     avatarBorderColors: ["#A73EE7","#00EBFF"] as string[],
     redirectToDialog: null as number | null,
-    editMode: false
+    editMode: false,
+    contactsError: {
+        vk:null as string | null,
+        instagram:null as string | null,
+        github:null as string | null
+    }
 }
 export const profileReducer = (state = initialState, action: ActionProfileType):InitialProfileStateType => {
     switch (action.type) {
@@ -47,6 +52,20 @@ export const profileReducer = (state = initialState, action: ActionProfileType):
             return {
                 ...state,
                 editMode: action.status
+            }
+        case "SET_CONTACTS_ERROR":
+            return {
+                ...state,
+                contactsError: action.errorObj
+            }
+        case "DELETE_CONTACTS_ERROR":
+            return {
+                ...state,
+                contactsError:{
+                    vk:null,
+                    instagram:null,
+                    github:null
+                }
             }
         default:
             return state
@@ -95,20 +114,21 @@ export const sendProfileDataOnServ = (newData:CurrentProfileType):ThunkProfileTy
         if (response.resultCode === ResultCode.Success && userId) {
             dispatch(setProfileOnPage(userId))
         } else {
-            debugger
-            const error = response.messages[0]
             const errorObj = {
-                '_error': error,
-                'contacts': {}
+                vk:null,
+                instagram:null,
+                github:null
             }
-            const match = error.match(/Invalid url format \(Contacts->(.+)\)/)
-            if (match) {
-                const fieldName = match[1].toLowerCase()
-                // @ts-ignore
-                errorObj.contacts[fieldName] = error
+            for(let i=0; i<response.messages.length; i++) {
+                const error = response.messages[i]
+                const match = error.match(/Invalid url format \(Contacts->(.+)\)/)
+                if (match) {
+                    const fieldName = match[1].toLowerCase()
+                    // @ts-ignore
+                    errorObj[fieldName] = "Некорректный тип ссылки"
+                }
             }
-            console.log(errorObj)
-            throw error
+            dispatch(profileActions.setContactsError(errorObj))
         }
     }
 }

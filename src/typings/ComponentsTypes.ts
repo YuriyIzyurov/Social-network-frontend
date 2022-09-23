@@ -23,6 +23,11 @@ export type PhotosType = {
     small: string | null
     large: string | null
 }
+export type ContactsErrorType = {
+    vk: string | null
+    github: string | null
+    instagram: string | null
+}
 //User types
 export type UserType = {
     name: string
@@ -106,11 +111,11 @@ export type AddPostType = {
     title: string
     text: string
     tags: string[] | []
-    imageUrl: PostImgType | null
+    imageUrl: PostImgType
 }
 export type PostImgType = {
-    original:string,
-    medium:string
+    original:string | null
+    medium:string | null
 }
 export type CommentsType = {
     "_id": string,
