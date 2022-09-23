@@ -45,7 +45,8 @@ export const AnimatedSider:React.FC<{isAuth:boolean}> = ({isAuth}) => {
     })
 
     useEffect(() => {
-        dispatch(handlingSidebarUsers())
+        if(isAuth)
+            dispatch(handlingSidebarUsers())
     },[totalFriends])
 
     useEffect(() => {

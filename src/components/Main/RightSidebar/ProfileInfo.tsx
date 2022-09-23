@@ -11,7 +11,7 @@ import {
     getRedirectLoginStatus,
     getNumberOfNewMessages,
     getAuthID,
-    getContactsErrors
+    getContactsErrors, getMe, getAuth
 } from "redux/Selectors";
 import {AuthData, ProfileInfoMain, TopWriter} from "./../index";
 import {postsAPI} from "api/postsAPI";
@@ -38,6 +38,7 @@ const ProfileInfo = React.memo(() => {
     const editMode = useSelector(getEditMode)
     const count = useSelector(getNumberOfNewMessages)
     const errors = useSelector(getContactsErrors)
+    const isAuth = useSelector(getAuth)
 
     const dispatch = useAppDispatch()
 
@@ -55,8 +56,10 @@ const ProfileInfo = React.memo(() => {
     },[colors])
 
     useEffect(() => {
-        getNewMessages()
-        getFollowBlockStatus()
+        if(isAuth) {
+            getNewMessages()
+            getFollowBlockStatus()
+        }
     }, [currentProfile])
 
     useEffect(() => {
