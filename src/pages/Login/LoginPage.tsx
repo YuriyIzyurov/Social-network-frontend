@@ -5,12 +5,15 @@ import {DispatchPropsLoginType, StatePropsLoginType} from "pages/Login/LoginPage
 import {Navigate} from "react-router";
 import {useAppDispatch} from "redux/reduxStore";
 import {appActions} from "redux/Actions";
+import {useSelector} from "react-redux";
+import {getError} from "redux/Selectors";
 
 
 
 export const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> = ({handlingBlogUserAuth, sendAuthDataOnServ, isAuth, askForCaptcha, captcha, error, isFetching}) => {
 
     const dispatch = useAppDispatch()
+    const socialError = useSelector(getError)
 
     useEffect(() => {
         dispatch(appActions.setRedirectToLogin(true))
@@ -21,6 +24,9 @@ export const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> =
 
     if(isAuth) {
         return <Navigate to={"/profile"}/>
+    }
+    if(socialError) {
+        window.location.reload()
     }
     return <section className="auth">
         <div className="auth__content">
