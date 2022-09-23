@@ -81,10 +81,12 @@ export const handlingAuthData = ():ThunkAuthType => {
                 dispatch(authActions.dataIsFetching(false))
             }
         } catch (e) {
+            console.log(e, typeof e)
             if(e === StatusCode403) {
                 dispatch(authActions.incorrectData(ErrorCORSMessage))
+                return
             }
-            throw new Error(`Error ---> ${e}`)
+            throw new Error(`Error --->${e}`)
         }
     }
 }
