@@ -4,7 +4,7 @@ import {LoginFormWithFormik} from "pages/Login";
 import {DispatchPropsLoginType, StatePropsLoginType} from "pages/Login/LoginPageContainer";
 import {Navigate} from "react-router";
 import {useAppDispatch} from "redux/reduxStore";
-import {appActions} from "redux/Actions";
+import {appActions, authActions} from "redux/Actions";
 import {useSelector} from "react-redux";
 import {getError} from "redux/Selectors";
 
@@ -26,6 +26,7 @@ export const LoginPage: React.FC<StatePropsLoginType & DispatchPropsLoginType> =
         return <Navigate to={"/profile"}/>
     }
     if(socialError) {
+        dispatch(authActions.deleteIncorrectData())
         window.location.reload()
     }
     return <section className="auth">
