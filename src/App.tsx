@@ -11,6 +11,7 @@ import HeaderRouter from "./components/Header/HeaderRouter";
 import {ProfileInfo, AnimatedSider} from "components/Main";
 import ErrorPage from "components/Main/Errors/ErrorPage";
 import {Preloader} from "components/Preloader/Preloader";
+import Loading from "components/Preloader/Loading";
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
 const LazyLoginContainer = React.lazy(() => import("pages/Login/LoginPageContainer"))
@@ -49,7 +50,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
 
     render() {
         if(!this.props.initialized && !this.props.socialError && !this.props.blogError) {
-            return <Preloader/>}
+            return <Loading/>}
         if(this.props.blogError || this.props.socialError) {
             return <ErrorPage blogError={this.props.blogError} socialError={this.props.socialError}/>
         }
@@ -77,6 +78,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
                             <Route path="/author/:id" element={<PostsPage />}/>
                             <Route path="*" element={<div> 404 NOT FOUND</div>}/>
                             <Route path="/test" element={<ErrorPage blogError={this.props.blogError} socialError={this.props.socialError}/>}/>
+                            <Route path="/loading" element={<Loading/>}/>
                         </Routes>
                 </Content>
             </Layout>
