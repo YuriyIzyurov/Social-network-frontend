@@ -20,6 +20,10 @@
         height: 38px;
         overflow: hidden;
     }
+    .ant-skeleton-avatar-lg{
+        width: 30px !important;
+        height: 30px !important;
+    }
     .clip-avatar{
         clip-path: none !important;
         height: 33px !important;

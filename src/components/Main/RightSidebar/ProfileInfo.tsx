@@ -22,6 +22,7 @@ import {GlowingEnterButton} from "components/CustomButtons/GlowingEnterButton";
 import {dialogsAPI} from "api/dialogsAPI";
 import {appActions, authActions, dialogActions, profileActions} from "redux/Actions";
 import {openNotification} from "utils/notifications/notificationTop";
+import {TopWriterSkeleton} from "components/Skeletons/TopWriterSkeleton";
 
 
 const ProfileInfo = React.memo(() => {
@@ -149,7 +150,11 @@ const ProfileInfo = React.memo(() => {
                     <span>Топ авторов</span>
                 </div>
                 <div className="members__list">
-                    {topUsers?.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)}
+                    {topUsers
+                        ?
+                        topUsers.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)
+                        :
+                        Array.from({length:4}).map((_, index) => <TopWriterSkeleton key={index} index={index + 1}/>)}
                 </div>
             </div>
             {authID && currentProfile &&
