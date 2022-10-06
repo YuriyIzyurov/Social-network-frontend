@@ -150,7 +150,7 @@ const ProfileInfo = React.memo(() => {
                     <span>Топ авторов</span>
                 </div>
                 <div className="members__list">
-                    {topUsers
+                    {topUsers.length !== 0
                         ?
                         topUsers.map((user, index) => <TopWriter key={user.id} user={user} index={index + 1}/>)
                         :
