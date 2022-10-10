@@ -187,6 +187,6 @@ export  type ScrollState = {
     zoomLevel: number;
 };
 
-
+export type NotificationType = 'success' | 'info' | 'warning' | 'error'
 
 

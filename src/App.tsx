@@ -12,6 +12,8 @@ import {ProfileInfo, AnimatedSider} from "components/Main";
 import ErrorPage from "components/Main/Errors/ErrorPage";
 import {Preloader} from "components/Preloader/Preloader";
 import Loading from "components/Preloader/Loading";
+import {openNotification} from "utils/notifications/notificationTop";
+import {mainPageNotification} from "utils/notifications/mainPageNotification";
 
 const LazyDialogsContainer = React.lazy(() => import("pages/Dialogs/DialogsPage/DialogsPageContainer"))
 const LazyLoginContainer = React.lazy(() => import("pages/Login/LoginPageContainer"))
@@ -43,6 +45,7 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
     componentDidMount() {
         this.props.setInitializeThunkCreator()
         window.addEventListener("unhandledrejection",this.catchAllErrors)
+        mainPageNotification()
     }
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection",this.catchAllErrors)
