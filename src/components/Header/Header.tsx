@@ -45,7 +45,7 @@ const Header: React.FC<PropsLoginType> = ({isAuth, login, handlingBlogUserLogout
                 ?
 
                     <div className="login__header">
-                        <span>Login</span>
+                        <span>Войти</span>
                         <NavLink to={'/login'}>
                             <LoginOutlined onClick={() => dispatch(appActions.setRedirectToLogin(true)) }/>
                         </NavLink>
