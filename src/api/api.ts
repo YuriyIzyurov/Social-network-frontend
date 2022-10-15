@@ -16,7 +16,7 @@ const makeConfig = () => {
         withCredentials: true,
         baseURL: "https://social-network.samuraijs.com/api/1.0/",
         headers: {
-            "API-KEY": "3cb27ece-7074-4bcc-828d-409589c818b6"
+            "API-KEY": "fd4ca5d8-d6c6-4455-a6f0-9223d3ba2b4d"
         }
     }
 }

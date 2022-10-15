@@ -88,7 +88,7 @@ export const DialogItem: React.FC<PropsType> = React.memo(({name, id, src, hasNe
                         <GradientCharAvatar avatarUrl={src as string} name={name} height={'40px'}/>
                     </div>
                     <div className="dialog__item-info">
-                        <div className="dialog__item-info-top">
+                        <div className={name.length < 18 ? "dialog__item-info-top" : "dialog__item-info-top dialog-name-font"}>
                             <b>{name}</b>
                             {!isShown && <span><GetMessageTime date={date} showFullDate={false}/></span>}
                             {isShown

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'pages/Dialogs/DialogsPage/DialogsPage.scss'
 import {DialogType} from "typings";
 import {isUserOnline} from "utils/Time/isUserOnline";
@@ -11,9 +11,9 @@ type PropsType = {
 
 export const DialogHeader: React.FC<PropsType> = React.memo(({dialogs, id}) => {
 
-    if(dialogs.length && id) {
-        const userName = dialogs.find(dialog => dialog.id === id)
-        const isOnline = isUserOnline(userName!.lastUserActivityDate)
+    debugger
+    const userName = dialogs.find(dialog => dialog.id === id)
+    const isOnline = userName ? isUserOnline(userName.lastUserActivityDate) : false
 
     return (
         <div className="chat__dialog-header-center">
@@ -25,8 +25,5 @@ export const DialogHeader: React.FC<PropsType> = React.memo(({dialogs, id}) => {
             </div>
         </div>
     );
-    } else {
-        return <div></div>
-    }
 })
 

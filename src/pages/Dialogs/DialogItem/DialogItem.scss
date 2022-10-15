@@ -74,6 +74,9 @@
           opacity: 1;
         }
       }
+      .dialog-name-font span{
+        font-size: 10px;
+      }
       &-bottom {
         position: relative;
         p {
@@ -97,7 +100,7 @@
           border-radius: 30px;
           font-size: 11px;
           text-align: center;
-          line-height: 18px;
+          line-height: 20px;
         }
         &-png {
           position: absolute;
