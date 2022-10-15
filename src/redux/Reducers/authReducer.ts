@@ -83,7 +83,9 @@ export const handlingAuthData = ():ThunkAuthType => {
         } catch (e:any) {
 
             if(e.message === StatusCode403) {
-                dispatch(authActions.incorrectData(ErrorCORSMessage))
+                //dispatch(authActions.incorrectData(ErrorCORSMessage))
+                console.log(ErrorCORSMessage)
+                window.location.reload()
                 return
             }
             throw new Error(`Error --->${e}`)
