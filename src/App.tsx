@@ -45,7 +45,6 @@ class App extends React.Component<StatePropsAppType & DispatchPropsAppType> {
     componentDidMount() {
         this.props.setInitializeThunkCreator()
         window.addEventListener("unhandledrejection",this.catchAllErrors)
-        mainPageNotification()
     }
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection",this.catchAllErrors)
