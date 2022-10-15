@@ -74,8 +74,12 @@
           opacity: 1;
         }
       }
-      .dialog-name-font span{
+      .dialog-tiny-font span{
         font-size: 10px;
+      }
+      .dialog-small-font span{
+        font-size: 13px;
+        line-height: 25px;
       }
       &-bottom {
         position: relative;
