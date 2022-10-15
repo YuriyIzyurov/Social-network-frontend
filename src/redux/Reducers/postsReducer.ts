@@ -94,6 +94,12 @@ export const postsReducer = (state = initialState, action: ActionType ):initialP
                 currentAuthorID: action.id
             }
         }
+        case 'DELETE_CURRENT_AUTHOR_ID': {
+            return {
+                ...state,
+                currentAuthorID: null
+            }
+        }
         case 'SET_SCROLL_TO_TOP':{
             return {
                 ...state,

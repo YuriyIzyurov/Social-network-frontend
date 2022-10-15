@@ -33,7 +33,6 @@ export const chatActions = {
     setNewMessages: (messages: ChatMessageAPIType[]) => ({type : "SET_NEW_MESSAGES", payload : {messages}} as const),
     changedStatus: (status: StatusType) => ({type : "STATUS_CHANGED", payload : {status}} as const),
     deleteMessages: () => ({type : "DELETE_MESSAGES"} as const),
-   // addMyMessage: (message:ChatMessageAPIType) => ({type : "ADD_MY_MESSAGE", message} as const),
 }
 export const dialogActions = {
     sendNewMessage: (messageData: SelfPrivateMessageType) => ({type : "SEND_MESSAGE", payload : messageData} as const),
@@ -65,6 +64,7 @@ export const postActions = {
     pickAuthorTab: (status:boolean) => ({type: 'PICK_AUTHOR_POSTS_TAB', status} as const),
     pickMyTab: (status:boolean) => ({type: 'PICK_MY_POSTS_TAB', status} as const),
     setCurrentAuthorId: (id:string) => ({type: 'SET_CURRENT_AUTHOR_ID', id} as const),
+    deleteCurrentAuthorId: () => ({type: 'DELETE_CURRENT_AUTHOR_ID'} as const),
     setScrollToTop: (isScrollTop:boolean) => ({type: 'SET_SCROLL_TO_TOP', isScrollTop} as const)
 }
 export const profileActions = {
